@@ -27,7 +27,15 @@ gss_get_mic (OM_uint32 * minor_status,
 	     gss_qop_t qop_req,
 	     const gss_buffer_t message_buffer, gss_buffer_t message_token)
 {
-  return GSS_S_FAILURE;
+  _gss_mech_api_t mech;
+
+  if (!context_handle)
+    return GSS_S_NO_CONTEXT;
+
+  mech = _gss_find_mech (context_handle->mech);
+
+  return mech->get_mic (minor_status, context_handle, qop_req,
+			message_buffer, message_token);
 }
 
 OM_uint32
@@ -36,7 +44,15 @@ gss_verify_mic (OM_uint32 * minor_status,
 		const gss_buffer_t message_buffer,
 		const gss_buffer_t token_buffer, gss_qop_t * qop_state)
 {
-  return GSS_S_FAILURE;
+  _gss_mech_api_t mech;
+
+  if (!context_handle)
+    return GSS_S_NO_CONTEXT;
+
+  mech = _gss_find_mech (context_handle->mech);
+
+  return mech->verify_mic (minor_status, context_handle,
+			   message_buffer, token_buffer, qop_state);
 }
 
 OM_uint32
@@ -47,9 +63,16 @@ gss_wrap (OM_uint32 * minor_status,
 	  const gss_buffer_t input_message_buffer,
 	  int *conf_state, gss_buffer_t output_message_buffer)
 {
-  return krb5_gss_wrap (minor_status, context_handle, conf_req_flag, qop_req,
-			input_message_buffer, conf_state,
-			output_message_buffer);
+  _gss_mech_api_t mech;
+
+  if (!context_handle)
+    return GSS_S_NO_CONTEXT;
+
+  mech = _gss_find_mech (context_handle->mech);
+
+  return mech->wrap (minor_status, context_handle, conf_req_flag, qop_req,
+		     input_message_buffer, conf_state,
+		     output_message_buffer);
 }
 
 OM_uint32
@@ -59,6 +82,13 @@ gss_unwrap (OM_uint32 * minor_status,
 	    gss_buffer_t output_message_buffer,
 	    int *conf_state, gss_qop_t * qop_state)
 {
-  return krb5_gss_unwrap (minor_status, context_handle, input_message_buffer,
-			  output_message_buffer, conf_state, qop_state);
+  _gss_mech_api_t mech;
+
+  if (!context_handle)
+    return GSS_S_NO_CONTEXT;
+
+  mech = _gss_find_mech (context_handle->mech);
+
+  return mech->unwrap (minor_status, context_handle, input_message_buffer,
+		       output_message_buffer, conf_state, qop_state);
 }

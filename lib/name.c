@@ -83,7 +83,7 @@ gss_compare_name (OM_uint32 * minor_status,
   if (!name1 || !name2)
     return GSS_S_BAD_NAME;
 
-  if (!_gss_oid_equal (name1->type, name2->type))
+  if (!gss_oid_equal (name1->type, name2->type))
     return GSS_S_BAD_NAMETYPE;
 
   name_equal == (name1->length == name2->length) &&
@@ -138,8 +138,12 @@ gss_canonicalize_name (OM_uint32 * minor_status,
 		       const gss_name_t input_name,
 		       const gss_OID mech_type, gss_name_t * output_name)
 {
-  return krb5_gss_canonicalize_name (minor_status, input_name,
-				     mech_type, output_name);
+  _gss_mech_api_t mech;
+
+  mech = _gss_find_mech (mech_type);
+
+  return mech->canonicalize_name (minor_status, input_name,
+				  mech_type, output_name);
 }
 
 OM_uint32
