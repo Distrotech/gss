@@ -57,15 +57,19 @@ gss_krb5_init_sec_context (OM_uint32 * minor_status,
     return GSS_S_NO_CRED;
 
   if (k5 == NULL)
+    k5 = ctx->krb5 = xcalloc (sizeof (*k5), 1);
+
+  if (k5->sh == NULL)
     {
-      gss_buffer_desc tmp;
-      Shishi_tkts_hint hint;
-
-      k5 = ctx->krb5 = xcalloc (sizeof (*k5), 1);
-
       rc = shishi_init (&k5->sh);
       if (rc != SHISHI_OK)
 	return GSS_S_FAILURE;
+    }
+
+  if (!k5->reqdone)
+    {
+      gss_buffer_desc tmp;
+      Shishi_tkts_hint hint;
 
       maj_stat = gss_krb5_canonicalize_name (minor_status, target_name,
 					     GSS_C_NO_OID, &ctx->peerptr);
@@ -136,6 +140,8 @@ gss_krb5_init_sec_context (OM_uint32 * minor_status,
       rc = gss_encapsulate_token (&tmp, GSS_KRB5, output_token);
       if (!rc)
 	return GSS_S_FAILURE;
+
+      k5->reqdone = 1;
 
       if (req_flags & GSS_C_MUTUAL_FLAG)
 	return GSS_S_CONTINUE_NEEDED;
