@@ -303,78 +303,76 @@ gss_krb5_wrap (OM_uint32 * minor_status,
 	       const gss_buffer_t input_message_buffer,
 	       int *conf_state, gss_buffer_t output_message_buffer)
 {
+  _gss_krb5_ctx_t k5 = context_handle->krb5;
   size_t padlength;
-  char *data;
-  size_t len, tmplen;
+  gss_buffer_desc data;
+  size_t tmplen;
   int rc;
 
-  switch (shishi_key_type (shishi_tkt_key (context_handle->krb5->tkt)))
+  switch (shishi_key_type (shishi_tkt_key (k5->tkt)))
     {
       /* XXX implement other checksums */
 
     case SHISHI_DES3_CBC_HMAC_SHA1_KD:
 
       padlength = 8 - input_message_buffer->length % 8;
-      len = 8 + 8 + 20 + 8 + input_message_buffer->length + padlength;
-      data = malloc(len);
-      if (!data)
+      data.length = 8 + 8 + 20 + 8 + input_message_buffer->length + padlength;
+      data.value = malloc(data.length);
+      if (!data.value)
 	return GSS_S_FAILURE;
 
       /* XXX encrypt data iff confidential option chosen */
 
       /* Compute checksum over header, confounder, input string, and pad */
 
-      memcpy (data, "\x02\x01", 2);      /* TOK_ID: Wrap */
-      memcpy (data + 2, "\x04\x00", 2);  /* SGN_ALG: 3DES */
-      memcpy (data + 4, "\xFF\xFF", 2);  /* SEAL_ALG: none */
-      memcpy (data + 6, "\xFF\xFF", 2);  /* filler */
-      rc = shishi_randomize(context_handle->krb5->sh, data + 8, 8);
+      memcpy (data.value, "\x02\x01", 2);      /* TOK_ID: Wrap */
+      memcpy (data.value + 2, "\x04\x00", 2);  /* SGN_ALG: 3DES */
+      memcpy (data.value + 4, "\xFF\xFF", 2);  /* SEAL_ALG: none */
+      memcpy (data.value + 6, "\xFF\xFF", 2);  /* filler */
+      rc = shishi_randomize(k5->sh, data.value + 8, 8);
       if (rc != SHISHI_OK)
 	return GSS_S_FAILURE;
-      memcpy (data + 16, input_message_buffer->value,
+      memcpy (data.value + 16, input_message_buffer->value,
 	      input_message_buffer->length);
-      memset (data + 16 + input_message_buffer->length, padlength, padlength);
+      memset (data.value + 16 + input_message_buffer->length, padlength, padlength);
 
       tmplen = 20;
-      rc = shishi_checksum (context_handle->krb5->sh,
-			    shishi_tkt_key(context_handle->krb5->tkt),
+      rc = shishi_checksum (k5->sh,
+			    shishi_tkt_key(k5->tkt),
 			    SHISHI_KEYUSAGE_GSS_R2, SHISHI_HMAC_SHA1_DES3_KD,
-			    data,
+			    data.value,
 			    16 + input_message_buffer->length + padlength,
-			    data + 16, &tmplen);
+			    data.value + 16, &tmplen);
       if (rc != SHISHI_OK)
 	return GSS_S_FAILURE;
 
-      memcpy (data + 36, data + 8, 8);
+      memcpy (data.value + 36, data.value + 8, 8);
 
       /* seq_nr */
-      ((char*)data + 8)[0] = context_handle->krb5->initseqnr & 0xFF;
-      ((char*)data + 8)[1] = context_handle->krb5->initseqnr >> 8 & 0xFF;
-      ((char*)data + 8)[2] = context_handle->krb5->initseqnr >> 16 & 0xFF;
-      ((char*)data + 8)[3] = context_handle->krb5->initseqnr >> 24 & 0xFF;
-      memset(data + 8 + 4, context_handle->krb5->acceptor ? 0xFF : 0, 4);
+      ((char*)data.value + 8)[0] = k5->initseqnr & 0xFF;
+      ((char*)data.value + 8)[1] = k5->initseqnr >> 8 & 0xFF;
+      ((char*)data.value + 8)[2] = k5->initseqnr >> 16 & 0xFF;
+      ((char*)data.value + 8)[3] = k5->initseqnr >> 24 & 0xFF;
+      memset(data.value + 8 + 4, k5->acceptor ? 0xFF : 0, 4);
       tmplen = 8;
-      rc = shishi_encrypt_iv_etype(context_handle->krb5->sh,
-				   shishi_tkt_key(context_handle->krb5->tkt),
+      rc = shishi_encrypt_iv_etype(k5->sh,
+				   shishi_tkt_key(k5->tkt),
 				   0, SHISHI_DES3_CBC_NONE,
-				   data + 16, 8, /* cksum */
-				   data + 8, 8,
-				   data + 8, &tmplen);
+				   data.value + 16, 8, /* cksum */
+				   data.value + 8, 8,
+				   data.value + 8, &tmplen);
       if (rc != SHISHI_OK || tmplen != 8)
 	return GSS_S_FAILURE;
 
-      memcpy (data + 8 + 8 + 20 + 8, input_message_buffer->value,
+      memcpy (data.value + 8 + 8 + 20 + 8, input_message_buffer->value,
 	      input_message_buffer->length);
-      memset (data + 8 + 8 + 20 + 8 + input_message_buffer->length,
+      memset (data.value + 8 + 8 + 20 + 8 + input_message_buffer->length,
 	      padlength, padlength);
 
-      rc = _gss_encapsulate_token(GSS_KRB5->elements, GSS_KRB5->length,
-				  data, len,
-				  (void**)&(output_message_buffer->value),
-				  &output_message_buffer->length);
+      rc = gss_encapsulate_token(&data, GSS_KRB5, output_message_buffer);
       if (!rc)
 	return GSS_S_FAILURE;
-      context_handle->krb5->initseqnr++;
+      k5->initseqnr++;
       break;
 
     default:
