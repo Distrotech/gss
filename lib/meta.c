@@ -195,7 +195,6 @@ gss_inquire_mechs_for_name (OM_uint32 * minor_status,
   if (maj_stat != GSS_S_COMPLETE)
     return maj_stat;
 
-  /* XXX we only care about type of input name.  care about content too? */
   maj_stat = _gss_inquire_mechs_for_name1 (minor_status, input_name->type,
 					   mech_types);
   if (maj_stat != GSS_S_COMPLETE)
