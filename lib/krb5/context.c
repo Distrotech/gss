@@ -154,15 +154,15 @@ init_reply (OM_uint32 * minor_status,
   rc = gss_decapsulate_token_check (input_token, TOK_AP_REP, TOK_LEN,
 				    GSS_KRB5, &data);
   if (!rc)
-    return GSS_S_BAD_MIC;
+    return GSS_S_DEFECTIVE_TOKEN;
 
   rc = shishi_ap_rep_der_set (k5->ap, data.value, data.length);
   if (rc != SHISHI_OK)
-    return GSS_S_FAILURE;
+    return GSS_S_DEFECTIVE_TOKEN;
 
   rc = shishi_ap_rep_verify (k5->ap);
   if (rc != SHISHI_OK)
-    return GSS_S_FAILURE;
+    return GSS_S_DEFECTIVE_TOKEN;
 
   rc = shishi_encapreppart_seqnumber_get (k5->sh,
 					  shishi_ap_encapreppart (k5->ap),
