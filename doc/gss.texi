@@ -713,10 +713,10 @@ void (*my_gss_alloc_failer) (void)
 ...
 int
 main (int argc, char *argv[])
-{
+@{
   ...
   gss_alloc_fail_function = my_gss_alloc_failer;
-}
+@}
 @end example
 
 The GSS library will invoke @code{gss_alloc_fail_function} if an out
