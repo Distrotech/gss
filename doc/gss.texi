@@ -83,8 +83,8 @@ Indices
 GSS is an implementation of the Generic Security Service Application
 Program Interface (GSS-API).  GSS-API is used by network servers
 (e.g., IMAP, SMTP) to provide security security services, e.g.,
-authenticate clients against servers.  GSS contains a library
-(`libgss') and a manual.
+authenticate clients against servers.  GSS consists of a library and a
+manual.
 
 GSS is developed for the GNU/Linux system, but runs on over 20
 platforms including most major Unix platforms and Windows, and many
@@ -325,22 +325,37 @@ GSS may be to look at the examples at the end of this manual.
 @node Header
 @section Header
 
-@cindex gssapi.h, gss.h
-All standard interfaces (data types and functions) of the GSS are
-defined in the header file `gssapi.h'.  In addition, a few
-non-standard (not described in the RFC) interfaces of this library are
-defined in the header file `gss.h'.  You must include either file in
-all programs using the library, either directly or through some other
-header file, like this:
+@cindex gssapi.h, api.h, gss.h, krb5.h
+All standard interfaces (data types and functions) of the official GSS
+API are defined in the header file `gss/api.h'.  The file is taken
+verbatim from the RFC (after correcting a few typos) where it is known
+as gssapi.h.  However, to be able to co-exist gracefully with other
+GSS-API implementation, the name gssapi.h was changed.
+
+The header file `gss.h' contains a few non-standard extensions, C++
+namespace fixes, and takes care of including header files related to
+all supported mechanisms (e.g., gss/krb5.h).  Therefore, including
+`gss.h' in your project is recommended over `gss/api.h'.  If using
+`gss.h' instead of `gss/api.h' causes problems, it should be regarded
+a bug.
+
+You must include either file in all programs using the library, either
+directly or through some other header file, like this:
 
 @example
-#include <gssapi.h>
+#include <gss.h>
 @end example
 
 The name space of GSS is @code{gss_*} for function names, @code{gss_*}
 for data types and @code{GSS_*} for other symbols.  In addition the
 same name prefixes with one prepended underscore are reserved for
 internal use and should never be used by an application.
+
+Each supported GSS mechanism may want to expose mechanism specific
+functionality, and can do so through one or more header files under
+the `gss/' directory.  The Kerberos 5 mechanism uses the file
+`gss/krb5.h', but again, it is included (with C++ namespace fixes)
+from `gss.h'.
 
 @node Initialization
 @section Initialization
@@ -354,24 +369,9 @@ It is often desirable to check that the version of GSS used is indeed
 one which fits all requirements.  Even with binary compatibility new
 features may have been introduced but due to problem with the dynamic
 linker an old version is actually used.  So you may want to check that
-the version is okay right after program startup.
-
-@deftypefun {const char *} gss_check_version (const char * @var{req_version})
-
-@var{req_version}:  version string to compare with, or NULL
-
-Check library version.
-
- Check that the the version of the library is at
-minimum the one given as a string in @code{req_version} and return the
-actual version string of the library; return NULL if the condition
-is not met.  If @var{NULL} is passed to this function no check is done
-and only the version string is returned.  It is a pretty good idea
-to run this function as soon as possible, because it may also
-intializes some subsystems.  In a multithreaded environment if
-should be called before any more threads are created.
-
-@end deftypefun
+the version is okay right after program startup.  The function is
+called @code{gss_check_version()} and is described in @xref{Extended
+GSS API}.
 
 The normal way to use the function is to put something similar to the
 following early in your @code{main()}:
@@ -391,7 +391,7 @@ following early in your @code{main()}:
 @section Building the source
 @cindex Compiling your application
 
-If you want to compile a source file including the `gssapi.h' header
+If you want to compile a source file that includes the `gss.h' header
 file, you must make sure that the compiler can find it in the
 directory hierarchy.  This is accomplished by adding the path to the
 directory in which the header file is located to the compilers include
@@ -410,8 +410,8 @@ gcc -c foo.c `pkg-config gss --cflags`
 @end example
 
 Adding the output of @samp{pkg-config gss --cflags} to the compilers
-command line will ensure that the compiler can find the `gssapi.h'
-header file.
+command line will ensure that the compiler can find the `gss.h' header
+file.
 
 A similar problem occurs when linking the program with the library.
 Again, the compiler has to find the library files.  For this to work,
@@ -469,7 +469,7 @@ when building Shishi.  You must include this in all programs using the
 library, either directly or through some other header file, like this:
 
 @example
-#include <shishi/gssapi.h>
+#include <gss.h>
 @end example
 
 The library `libshishi-gss' is installed in the normal object code
@@ -1360,20 +1360,46 @@ is no storage associated with the buffer).
 @node Extended GSS API
 @chapter Extended GSS API
 
+None of the following functions are standard GSS API functions.  As
+such, they are not declared in `gss/api.h', but rather in `gss.h'.
+
 @deftypefun {const char *} gss_check_version (const char * @var{req_version})
 
 @var{req_version}:  version string to compare with, or NULL
 
-Check library version.
+Check that the the version of the library is at minimum the one given
+as a string in @code{req_version} and return the actual version string
+of the library; return NULL if the condition is not met.  If
+@var{NULL} is passed to this function no check is done and only the
+version string is returned.  It is a pretty good idea to run this
+function as soon as possible, because it may also intializes some
+subsystems.  In a multithreaded environment if should be called before
+any more threads are created.
 
- Check that the the version of the library is at
-minimum the one given as a string in @code{req_version} and return the
-actual version string of the library; return NULL if the condition
-is not met.  If @var{NULL} is passed to this function no check is done
-and only the version string is returned.  It is a pretty good idea
-to run this function as soon as possible, because it may also
-intializes some subsystems.  In a multithreaded environment if
-should be called before any more threads are created.
+@end deftypefun
+
+@deftypefun {int} gss_encapsulate_token (gss_buffer_t @var{input_message},
+             gss_OID @var{token_oid}, gss_buffer_t @var{output_message})
+@var{input_message}: Message to be encapsulated.
+@var{token_oid}: OID of mechanism.
+@var{input_message}: Output buffer with encapsulated message.
+
+Wrap a buffer in the mechanism-independent token format.  This is used
+for the initial token of a GSS-API context establishment sequence.  It
+incorporates an identifier of the mechanism type to be used on that
+context, and enables tokens to be interpreted unambiguously at GSS-API
+peers.  See further section 3.1 of RFC 2743.
+@end deftypefun
+
+@deftypefun {int} gss_decapsulate_token (gss_buffer_t @var{input_message},
+             gss_OID @var{token_oid}, gss_buffer_t @var{output_message})
+@var{input_message}: Message to decapsulated.
+@var{token_oid}: Output buffer with mechanism OID used in message.
+@var{input_message}: Output buffer with encapsulated message.
+
+Unwrap a buffer in the mechanism-independent token format.  This is
+the reverse of @code{gss_encapsulate_token}.  The translation is
+loss-less, all data is preserved as is.
 
 @end deftypefun
 
