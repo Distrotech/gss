@@ -18,16 +18,14 @@
 # the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 # Boston, MA 02111-1307, USA.
 
-tests =
+EXTRA_DIST = utils.c
 
-check_PROGRAMS = $(tests)
-
-TESTS = $(tests)
+TESTS = name
 
 INCLUDES = -I$(top_srcdir)/lib
 LDADD = ../lib/libgss.la
 
-noinst_PROGRAMS = $(tests)
+noinst_PROGRAMS = $(TESTS)
 
 indent:
 	indent $(SOURCES)
