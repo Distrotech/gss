@@ -291,8 +291,6 @@ sub output_highlight {
     my $contents = join "\n", @_;
     my $line;
 
-    $contents =~ s:{:\@{:gs if ($output_mode eq "texinfo");
-    $contents =~ s:}:\@}:gs if ($output_mode eq "texinfo");
     eval $dohighlight;
     foreach $line (split "\n", $contents) {
 	if ($line eq ""){
@@ -330,6 +328,7 @@ sub output_texinfo {
 	}
     }
     foreach $section (@{$args{'sectionlist'}}) {
+	$args{'sections'}{$section} =~ s:([{@}]):\@\1:gs;
 	output_highlight($args{'sections'}{$section});
     }
     print "\@end deftypefun\n\n";
