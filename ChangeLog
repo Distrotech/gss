@@ -1,3 +1,190 @@
+2004-10-15  Simon Josefsson <simon@josefsson.org>
+
+	* po/fr.po, po/pl.po, po/ro.po, po/sv.po: Generated.
+
+2004-10-15  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS: Version 0.0.14.
+
+2004-10-15  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS: Fix.
+
+2004-10-15  Simon Josefsson <simon@josefsson.org>
+
+	* tests/threadsafety: Fix.
+
+2004-10-15  Simon Josefsson <simon@josefsson.org>
+
+	* tests/Makefile.am: Dist threadsafety.
+
+2004-10-15  Simon Josefsson <simon@josefsson.org>
+
+	* AUTHORS: Update PGP key.
+
+2004-10-14  Simon Josefsson <simon@josefsson.org>
+
+	* lib/asn1.c, lib/context.c, lib/ext.h, lib/meta.h, lib/name.c,
+	lib/krb5/checksum.c, lib/krb5/checksum.h, lib/krb5/context.c,
+	lib/krb5/msg.c, lib/krb5/name.c: Indent.
+
+2004-10-14  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS: Add.
+
+2004-10-14  Simon Josefsson <simon@josefsson.org>
+
+	* lib/krb5/context.c:
+	(gss_krb5_accept_sec_context): For src_name, don't duplicate type
+	OID, just set pointer.
+
+2004-10-14  Simon Josefsson <simon@josefsson.org>
+
+	* lib/krb5/context.c: Fix mem leak.
+
+2004-10-14  Simon Josefsson <simon@josefsson.org>
+
+	* lib/krb5/cred.c: Fix mem leak.
+
+2004-10-14  Simon Josefsson <simon@josefsson.org>
+
+	* doc/gss.texi, NEWS: Add.
+
+2004-10-14  Simon Josefsson <simon@josefsson.org>
+
+	* lib/name.c:
+	(gss_import_name, gss_duplicate_name): Don't clone OID.
+
+2004-10-14  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS: Add.
+
+2004-10-14  Simon Josefsson <simon@josefsson.org>
+
+	* lib/krb5/context.c:
+	(gss_krb5_accept_sec_context): Extract sequence numbers, for
+	gss_wrap and gss_unwrap.
+
+2004-10-14  Simon Josefsson <simon@josefsson.org>
+
+	* lib/krb5/context.c:
+	(gss_krb5_accept_sec_context): Handle NULL ret_flags.
+
+2004-10-14  Simon Josefsson <simon@josefsson.org>
+
+	* tests/krb5context.c: Enable debug by default.  Remove --verbose.
+	Indent.
+
+2004-10-05  Simon Josefsson <simon@josefsson.org>
+
+	* gl/Makefile.am, gl/xalloc.h, gl/xmalloc.c, gl/xstrdup.c,
+	gl/m4/gnulib.m4, gl/m4/xalloc.m4, lib/name.c: Update Gnulib.  Fix
+	callers.
+
+2004-09-17  Simon Josefsson <simon@josefsson.org>
+
+	* lib/krb5/context.c: Use new API.
+
+2004-09-17  Simon Josefsson <simon@josefsson.org>
+
+	* tests/Makefile.am: Add threadsafety.
+
+2004-09-17  Simon Josefsson <simon@josefsson.org>
+
+	* tests/threadsafety: Add.
+
+2004-09-17  Simon Josefsson <simon@josefsson.org>
+
+	* lib/ext.c: Fix gettext.
+
+2004-09-17  Simon Josefsson <simon@josefsson.org>
+
+	* lib/ext.c:
+	(xalloc_die): Don't use strerror, for thread safety.
+
+2004-09-14  Simon Josefsson <simon@josefsson.org>
+
+	* Makefile.am:
+	(POURL): New URL.
+
+2004-09-14  Simon Josefsson <simon@josefsson.org>
+
+	* po/fr.po, po/pl.po, po/ro.po, po/sv.po: Sync with TP.
+
+2004-09-14  Simon Josefsson <simon@josefsson.org>
+
+	* doc/reference/Makefile.am:
+	(clean-local): Add style.css.
+
+2004-09-14  Simon Josefsson <simon@josefsson.org>
+
+	* doc/reference/.cvsignore: [no log message]
+
+2004-09-14  Simon Josefsson <simon@josefsson.org>
+
+	*
+	doc/specification/draft-morris-java-gssapi-update-for-csharp-00.txt:
+	Add.
+
+2004-08-23  Simon Josefsson <simon@josefsson.org>
+
+	* m4/autobuild.m4: Update.
+
+2004-08-20  Simon Josefsson <simon@josefsson.org>
+
+	* m4/gtk-doc.m4: Add.
+
+2004-08-18  Simon Josefsson <simon@josefsson.org>
+
+	* configure.ac, NEWS: Bump version.
+
+2004-08-18  Simon Josefsson <simon@josefsson.org>
+
+	* gl/m4/gnulib.m4: Update.
+
+2004-08-18  Simon Josefsson <simon@josefsson.org>
+
+	* doc/gss.texi: Fix.
+
+2004-08-16  Simon Josefsson <simon@josefsson.org>
+
+	* configure.ac, gl/Makefile.am, gl/m4/gnulib.m4: Update.
+
+2004-08-12  Simon Josefsson <simon@josefsson.org>
+
+	* doc/specification/draft-williams-gssapi-channel-bindings-00.txt:
+	Add.
+
+2004-08-09  Simon Josefsson <simon@josefsson.org>
+
+	* doc/gss.texi: Typo.
+
+2004-08-09  Simon Josefsson <simon@josefsson.org>
+
+	* doc/gss.texi: Alloc fix.
+
+2004-08-09  Simon Josefsson <simon@josefsson.org>
+
+	* lib/ext.c: Fix.
+
+2004-08-09  Simon Josefsson <simon@josefsson.org>
+
+	* configure.ac, gl/Makefile.am, gl/xalloc.h, gl/xmalloc.c,
+	gl/xstrdup.c, gl/m4/gnulib.m4, gl/m4/xalloc.m4, lib/ext.c,
+	lib/ext.h: Use new xmalloc interface.  Gnulib update.
+
+2004-08-08  Simon Josefsson <simon@josefsson.org>
+
+	* gss.fms: Fix.
+
+2004-08-08  Simon Josefsson <simon@josefsson.org>
+
+	* gss.fms: Add.
+
+2004-08-08  Simon Josefsson <simon@josefsson.org>
+
+	* ChangeLog: [no log message]
+
 2004-08-08  Simon Josefsson <simon@josefsson.org>
 
 	* po/fr.po, po/pl.po, po/ro.po, po/sv.po: Generated.
