@@ -29,13 +29,16 @@ TESTS_ENVIRONMENT = SHISHI_KEYS=$(srcdir)/krb5context.key \
 	SHISHI_TICKETS=$(srcdir)/krb5context.tkt \
 	SHISHI_CONFIG=ignore-this-warning \
 	SHISHI_HOME=ignore-this-warning \
-	SHISHI_USER=ignore-this-warning
+	SHISHI_USER=ignore-this-warning \
+	THREADSAFETY_FILES="$(top_srcdir)/lib/*.c \
+		$(top_srcdir)/lib/krb5/*.c"
 
-TESTS = basic
+buildtests = basic
 if KRB5
-TESTS += krb5context
+buildtests += krb5context
 endif
-check_PROGRAMS = $(TESTS)
+TESTS = $(buildtests) threadsafety
+check_PROGRAMS = $(buildtests)
 
 EXTRA_DIST = krb5context.key krb5context.tkt
 
