@@ -64,7 +64,6 @@ AC_HEADER_TIME
 AC_CHECK_DECLS(errno)
 
 # Checks for library functions.
-AC_REPLACE_FUNCS(gethostname strdup strerror memmove memset)
 AC_SEARCH_LIBS(gethostbyname, xnet)
 
 # Test if the libc includes a good enough argp.
