@@ -27,5 +27,8 @@ LDADD = ../lib/libgss.la
 
 noinst_PROGRAMS = $(TESTS)
 
+localedir = $(datadir)/locale
+DEFS = -DLOCALEDIR=\"$(localedir)\" @DEFS@
+
 indent:
 	indent $(SOURCES)
