@@ -25,7 +25,7 @@ pkgconfig_DATA = gss.pc
 
 SUBDIRS = m4 po gl lib tests doc
 
-ACLOCAL_AMFLAGS = -I m4
+ACLOCAL_AMFLAGS = -I m4 -I gl/m4
 
 # Maintainer targets
 
