@@ -70,6 +70,9 @@ gss_krb5_inquire_cred (OM_uint32 * minor_status,
 		       OM_uint32 * lifetime,
 		       gss_cred_usage_t * cred_usage,
 		       gss_OID_set * mechanisms);
+extern OM_uint32
+gss_krb5_release_cred (OM_uint32 * minor_status,
+		       gss_cred_id_t * cred_handle);
 
 /* See error.c. */
 extern OM_uint32
