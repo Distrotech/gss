@@ -55,7 +55,6 @@
 #include "api.h"
 #include "ext.h"
 
-
 #define _(String) dgettext (PACKAGE, String)
 #define gettext_noop(String) String
 #define N_(String) gettext_noop (String)
@@ -135,18 +134,5 @@ typedef struct _gss_mech_api_strict {
 } _gss_mech_api_desc, *_gss_mech_api_t;
 
 _gss_mech_api_t _gss_find_mech (gss_OID oid);
-
-OM_uint32
-_gss_indicate_mechs (OM_uint32 * minor_status, gss_OID_set * mech_set);
-
-int
-_gss_encapsulate_token (char *oid, size_t oidlen,
-			char *in, size_t inlen,
-			char **out, size_t *outlen);
-int
-_gss_decapsulate_token (char *in, size_t inlen,
-			char **oid, size_t *oidlen,
-			char **out, size_t *outlen);
-
 
 #endif /* _INTERNAL_H */
