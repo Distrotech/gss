@@ -45,6 +45,7 @@ AM_MISSING_PROG(PERL, perl, $missing_dir)
 
 # Checks for header files.
 AC_HEADER_STDC
+AC_CHECK_HEADERS(locale.h)
 
 # For gnulib stuff in gl/.
 gl_FUNC_GETHOSTNAME
