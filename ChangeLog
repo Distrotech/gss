@@ -1,5 +1,13 @@
 2003-06-02  Simon Josefsson <simon@josefsson.org>
 
+	* NEWS: Version 0.0.0.
+
+2003-06-02  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS: Fix.
+
+2003-06-02  Simon Josefsson <simon@josefsson.org>
+
 	* Makefile.am, configure.ac: Remove argp.
 
 2003-06-02  Simon Josefsson <simon@josefsson.org>
