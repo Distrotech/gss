@@ -5,3 +5,4 @@ lib/krb5/error.c
 lib/obsolete.c
 lib/error.c
 lib/meta.c
+src/gss.c
