@@ -28,10 +28,41 @@ gss_acquire_cred (OM_uint32 * minor_status,
 		  const gss_OID_set desired_mechs,
 		  gss_cred_usage_t cred_usage,
 		  gss_cred_id_t * output_cred_handle,
-		  gss_OID_set * actual_mechs, OM_uint32 * time_rec)
+		  gss_OID_set * actual_mechs,
+		  OM_uint32 * time_rec)
 {
-  if (minor_status)
-    *minor_status = 0;
+  gss_cred_id_desc *p;
+
+  p = malloc(sizeof(*p));
+  if (!p)
+    return GSS_S_FAILURE;
+  memset(p, 0, sizeof(*p));
+  *output_cred_handle = p;
+
+  /* XXX */
+  if (actual_mechs)
+    *actual_mechs = GSS_C_NO_OID_SET;
+  if (time_rec)
+    *time_rec = GSS_C_INDEFINITE;
+
+  if (desired_mechs == GSS_C_NO_OID_SET)
+    {
+      _gss_mech_api_t mech;
+
+      mech = _gss_find_mech (GSS_C_NO_OID);
+
+      return mech->acquire_cred (minor_status,
+				 desired_name,
+				 time_req,
+				 desired_mechs,
+				 cred_usage,
+				 output_cred_handle,
+				 actual_mechs,
+				 time_rec);
+    }
+  else
+    /* XXX iterate through desired_mechs */;
+
   return GSS_S_FAILURE;
 }
 
