@@ -13,6 +13,8 @@ to print text describing the error condition.
 
 ** The Swedish translation has been updated.
 
+** Various cleanups and improvements.
+
 * Changes in 0.0.9 (released 2004-01-15)
 
 ** Implemented gss_export_name and gss_krb5_inquire_cred_by_mech.
