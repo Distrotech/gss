@@ -81,13 +81,12 @@ main (int argc, char *argv[])
   if (GSS_ROUTINE_ERROR (args.major_arg))
     {
       if (!args.quiet_given)
-	printf ("Masked routine error %ld (0x%lx) shifted into %ld (0x%lx):\n",
-		GSS_ROUTINE_ERROR (args.major_arg),
-		GSS_ROUTINE_ERROR (args.major_arg),
-		GSS_ROUTINE_ERROR (args.major_arg) >>
-		GSS_C_ROUTINE_ERROR_OFFSET,
-		GSS_ROUTINE_ERROR (args.major_arg) >>
-		GSS_C_ROUTINE_ERROR_OFFSET);
+	printf
+	  ("Masked routine error %ld (0x%lx) shifted into %ld (0x%lx):\n",
+	   GSS_ROUTINE_ERROR (args.major_arg),
+	   GSS_ROUTINE_ERROR (args.major_arg),
+	   GSS_ROUTINE_ERROR (args.major_arg) >> GSS_C_ROUTINE_ERROR_OFFSET,
+	   GSS_ROUTINE_ERROR (args.major_arg) >> GSS_C_ROUTINE_ERROR_OFFSET);
 
       message_context = 0;
       do
@@ -97,7 +96,8 @@ main (int argc, char *argv[])
 				    &message_context, &status_string);
 	  if (GSS_ERROR (maj))
 	    {
-	      fprintf (stderr, "%s: displaying status code failed\n", argv[0]);
+	      fprintf (stderr, "%s: displaying status code failed\n",
+		       argv[0]);
 	      rc = 1;
 	      break;
 	    }
@@ -116,13 +116,12 @@ main (int argc, char *argv[])
   if (GSS_CALLING_ERROR (args.major_arg))
     {
       if (!args.quiet_given)
-	printf ("Masked calling error %ld (0x%lx) shifted into %ld (0x%lx):\n",
-		GSS_CALLING_ERROR (args.major_arg),
-		GSS_CALLING_ERROR (args.major_arg),
-		GSS_CALLING_ERROR (args.major_arg) >>
-		GSS_C_CALLING_ERROR_OFFSET,
-		GSS_CALLING_ERROR (args.major_arg) >>
-		GSS_C_CALLING_ERROR_OFFSET);
+	printf
+	  ("Masked calling error %ld (0x%lx) shifted into %ld (0x%lx):\n",
+	   GSS_CALLING_ERROR (args.major_arg),
+	   GSS_CALLING_ERROR (args.major_arg),
+	   GSS_CALLING_ERROR (args.major_arg) >> GSS_C_CALLING_ERROR_OFFSET,
+	   GSS_CALLING_ERROR (args.major_arg) >> GSS_C_CALLING_ERROR_OFFSET);
 
       message_context = 0;
       do
@@ -132,7 +131,8 @@ main (int argc, char *argv[])
 				    &message_context, &status_string);
 	  if (GSS_ERROR (maj))
 	    {
-	      fprintf (stderr, "%s: displaying status code failed\n", argv[0]);
+	      fprintf (stderr, "%s: displaying status code failed\n",
+		       argv[0]);
 	      rc = 1;
 	      break;
 	    }
@@ -169,7 +169,8 @@ main (int argc, char *argv[])
 				    &message_context, &status_string);
 	  if (GSS_ERROR (maj))
 	    {
-	      fprintf (stderr, "%s: displaying status code failed\n", argv[0]);
+	      fprintf (stderr, "%s: displaying status code failed\n",
+		       argv[0]);
 	      rc = 1;
 	      break;
 	    }

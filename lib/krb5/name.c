@@ -117,7 +117,7 @@ gss_krb5_export_name (OM_uint32 * minor_status,
   exported_name->length = len;
   p = exported_name->value = xmalloc (len);
 
-  sprintf (p, "\x04\x01\x01\x0B\x06\x09%s", (char*) GSS_KRB5->elements);
+  sprintf (p, "\x04\x01\x01\x0B\x06\x09%s", (char *) GSS_KRB5->elements);
   p[2] = '\0';
   p += 15;
   *p++ = (msglen >> 24) & 0xFF;
