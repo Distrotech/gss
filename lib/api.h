@@ -1,4 +1,4 @@
-/* gssapi.h	Header file for GSS-API.
+/* api.h	Header file for GSS-API.
  * Copyright (C) 2003  Simon Josefsson
  *
  * This file is part of the Generic Security Service (GSS).
@@ -21,7 +21,7 @@
 
 /*
  * This file was extracted by Simon Josefsson, for the GSS project,
- * from RFC 2744, written by John Wray.  RFC 2744 contain the
+ * from RFC 2744, written by John Wray.  RFC 2744 contains the
  * copyright statement below.
  *
  *   Copyright (C) The Internet Society (2000).  All Rights Reserved.
@@ -63,6 +63,14 @@
 #include <stddef.h>
 
 
+#ifdef GSS_SHOULD_INCLUDE_XOM
+/*
+ * If the platform supports the xom.h header file, it should be
+ * included here.
+ */
+#include <xom.h>
+#endif
+
 /*
  * Now define the three implementation-dependent types.
  */
@@ -84,6 +92,19 @@ typedef unsigned int gss_uint32;
 typedef unsigned long gss_uint32;
 #endif
 
+#ifdef OM_STRING
+/*
+ * We have included the xom.h header file.  Verify that OM_uint32
+ * is defined correctly.
+ */
+
+#if sizeof(gss_uint32) != sizeof(OM_uint32)
+#error Incompatible definition of OM_uint32 from xom.h
+#endif
+
+typedef OM_object_identifier gss_OID_desc, *gss_OID;
+
+#else
 /*
  * We can't use X/Open definitions, so roll our own.
  */
@@ -96,6 +117,7 @@ typedef struct gss_OID_desc_struct
   void *elements;
 } gss_OID_desc, *gss_OID;
 
+#endif
 
 typedef struct gss_OID_set_desc_struct
 {
