@@ -1,0 +1,12 @@
+Project: gss
+Home-Page-URL: http://www.gnu.org/software/gss/
+Gzipped-Tar-URL: http://josefsson.org/gss/releases/
+Changelog-URL: http://josefsson.org/cgi-bin/viewcvs.cgi/gss/ChangeLog?rev=HEAD&content-type=text/vnd.viewcvs-markup
+OSX-URL: http://fink.sourceforge.net/pdb/package.php/gss
+BSD-Port-URL: http://www.freshports.org/security/gss/
+CVS-URL: http://josefsson.org/cgi-bin/viewcvs.cgi/gss/
+Mirror-Site-URL: http://josefsson.org/gss/
+Version: 0.0.13
+Release-Focus: Minor feature enhancements
+
+Revamp of gnulib compatibility files.  More translations.
