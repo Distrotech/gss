@@ -20,11 +20,9 @@
  */
 
 #include "internal.h"
-
-#ifdef USE_KERBEROS5
+#include "krb5.h"
 
 #include <shishi.h>
-#include "krb5.h"
 
 typedef struct _gss_krb5_cred_struct
 {
@@ -256,14 +254,20 @@ gss_krb5_canonicalize_name (OM_uint32 * minor_status,
 			    const gss_OID mech_type,
 			    gss_name_t * output_name)
 {
+  OM_uint32 maj_stat;
+
+  if (minor_status)
+    *minor_status = 0;
+
   if (gss_oid_equal (input_name->type, GSS_C_NT_HOSTBASED_SERVICE))
     {
       char *p;
 
-      /* XXX we don't do DNS name canoncalization */
+      /* XXX we don't do DNS name canoncalization, it may be insecure */
 
-      (*output_name)->value = strdup(input_name->value);
-      (*output_name)->length = strlen((*output_name)->value);
+      maj_stat = gss_duplicate_name (minor_status, input_name, output_name);
+      if (GSS_ERROR(maj_stat))
+	return maj_stat;
       (*output_name)->type = GSS_KRB5_NT_PRINCIPAL_NAME;
 
       if ((p = strchr((*output_name)->value, '@')))
@@ -272,11 +276,14 @@ gss_krb5_canonicalize_name (OM_uint32 * minor_status,
 	}
       else
 	{
-	  /* XXX add "/gethostname()" to outputname->value */
+	  /* XXX add "/gethostname()" to outputname->value. good idea? */
 	}
     }
   else
-    return GSS_S_FAILURE;
+    {
+      *output_name = GSS_C_NO_NAME;
+      return GSS_S_BAD_NAMETYPE;
+    }
 
   return GSS_S_COMPLETE;
 }
@@ -673,4 +680,163 @@ gss_krb5_unwrap (OM_uint32 * minor_status,
   return GSS_S_COMPLETE;
 }
 
-#endif /* USE_KERBEROS5 */
+struct gss_status_codes
+{
+  gss_uint32 err;
+  char *name;
+  char *text;
+};
+
+struct gss_status_codes gss_krb5_errors[] = {
+  /* 4.1.1. Non-Kerberos-specific codes */
+  {GSS_KRB5_S_G_BAD_SERVICE_NAME, "GSS_KRB5_S_G_BAD_SERVICE_NAME",
+   "No @ in SERVICE-NAME name string"},
+  {GSS_KRB5_S_G_BAD_STRING_UID, "GSS_KRB5_S_G_BAD_STRING_UID",
+   "STRING-UID-NAME contains nondigits"},
+  {GSS_KRB5_S_G_NOUSER, "GSS_KRB5_S_G_NOUSER",
+   "UID does not resolve to username"},
+  {GSS_KRB5_S_G_VALIDATE_FAILED, "GSS_KRB5_S_G_VALIDATE_FAILED",
+   "Validation error"},
+  {GSS_KRB5_S_G_BUFFER_ALLOC, "GSS_KRB5_S_G_BUFFER_ALLOC",
+   "Couldn't allocate gss_buffer_t data"},
+  {GSS_KRB5_S_G_BAD_MSG_CTX, "GSS_KRB5_S_G_BAD_MSG_CTX",
+   "Message context invalid"},
+  {GSS_KRB5_S_G_WRONG_SIZE, "GSS_KRB5_S_G_WRONG_SIZE",
+   "Buffer is the wrong size"},
+  {GSS_KRB5_S_G_BAD_USAGE, "GSS_KRB5_S_G_BAD_USAGE",
+   "Credential usage type is unknown"},
+  {GSS_KRB5_S_G_UNKNOWN_QOP, "GSS_KRB5_S_G_UNKNOWN_QOP",
+   "Unknown quality of protection specified"},
+  /* 4.1.2. Kerberos-specific-codes */
+  {GSS_KRB5_S_KG_CCACHE_NOMATCH, "GSS_KRB5_S_KG_CCACHE_NOMATCH",
+   "Principal in credential cache does not match desired name"},
+  {GSS_KRB5_S_KG_KEYTAB_NOMATCH, "GSS_KRB5_S_KG_KEYTAB_NOMATCH",
+   "No principal in keytab matches desired name"},
+  {GSS_KRB5_S_KG_TGT_MISSING, "GSS_KRB5_S_KG_TGT_MISSING",
+   "Credential cache has no TGT"},
+  {GSS_KRB5_S_KG_NO_SUBKEY, "GSS_KRB5_S_KG_NO_SUBKEY",
+   "Authenticator has no subkey"},
+  {GSS_KRB5_S_KG_CONTEXT_ESTABLISHED, "GSS_KRB5_S_KG_CONTEXT_ESTABLISHED",
+   "Context is already fully established"},
+  {GSS_KRB5_S_KG_BAD_SIGN_TYPE, "GSS_KRB5_S_KG_BAD_SIGN_TYPE",
+   "Unknown signature type in token"},
+  {GSS_KRB5_S_KG_BAD_LENGTH, "GSS_KRB5_S_KG_BAD_LENGTH",
+   "Invalid field length in token"},
+  {GSS_KRB5_S_KG_CTX_INCOMPLETE, "GSS_KRB5_S_KG_CTX_INCOMPLETE",
+   "Attempt to use incomplete security context"}
+};
+
+OM_uint32
+gss_krb5_display_status (OM_uint32 * minor_status,
+			 OM_uint32 status_value,
+			 int status_type,
+			 const gss_OID mech_type,
+			 OM_uint32 * message_context,
+			 gss_buffer_t status_string)
+{
+  if (minor_status)
+    *minor_status = 0;
+
+  switch (status_value)
+    {
+    case 0:
+      status_string->value = strdup("No krb5 error");
+      status_string->length = strlen(status_string->value);
+      break;
+
+      /* 4.1.1. Non-Kerberos-specific codes */
+    case GSS_KRB5_S_G_BAD_SERVICE_NAME:
+    case GSS_KRB5_S_G_BAD_STRING_UID:
+    case GSS_KRB5_S_G_NOUSER:
+    case GSS_KRB5_S_G_VALIDATE_FAILED:
+    case GSS_KRB5_S_G_BUFFER_ALLOC:
+    case GSS_KRB5_S_G_BAD_MSG_CTX:
+    case GSS_KRB5_S_G_WRONG_SIZE:
+    case GSS_KRB5_S_G_BAD_USAGE:
+    case GSS_KRB5_S_G_UNKNOWN_QOP:
+      /* 4.1.2. Kerberos-specific-codes */
+    case GSS_KRB5_S_KG_CCACHE_NOMATCH:
+    case GSS_KRB5_S_KG_KEYTAB_NOMATCH:
+    case GSS_KRB5_S_KG_TGT_MISSING:
+    case GSS_KRB5_S_KG_NO_SUBKEY:
+    case GSS_KRB5_S_KG_CONTEXT_ESTABLISHED:
+    case GSS_KRB5_S_KG_BAD_SIGN_TYPE:
+    case GSS_KRB5_S_KG_BAD_LENGTH:
+    case GSS_KRB5_S_KG_CTX_INCOMPLETE:
+      status_string->value = strdup(gss_krb5_errors[status_value-1].text);
+      status_string->length = strlen(gss_krb5_errors[status_value-1].text);
+      break;
+
+    default:
+      status_string->value = strdup("Unknown krb5 error");
+      status_string->length = strlen(status_string->value);
+      break;
+    }
+
+  return GSS_S_COMPLETE;
+}
+
+/*
+ * To support ongoing experimentation, testing, and evolution of the
+ * specification, the Kerberos V5 GSS-API mechanism as defined in this
+ * and any successor memos will be identified with the following
+ * Object Identifier, as defined in RFC-1510, until the specification
+ * is advanced to the level of Proposed Standard RFC:
+ *
+ * {iso(1), org(3), dod(5), internet(1), security(5), kerberosv5(2)}
+ *
+ * Upon advancement to the level of Proposed Standard RFC, the
+ * Kerberos V5 GSS-API mechanism will be identified by an Object
+ * Identifier having the value:
+ *
+ * {iso(1) member-body(2) United States(840) mit(113554) infosys(1)
+ * gssapi(2) krb5(2)}
+ */
+gss_OID_desc GSS_KRB5_static = {
+  9, (void *) "\x2a\x86\x48\x86\xf7\x12\x01\x02\x02"
+};
+gss_OID GSS_KRB5 = &GSS_KRB5_static;
+
+/*
+ * This name form shall be represented by the Object Identifier
+ * {iso(1) member-body(2) United States(840) mit(113554) infosys(1)
+ * gssapi(2) generic(1) user_name(1)}.  The recommended symbolic name
+ * for this type is "GSS_KRB5_NT_USER_NAME".
+ */
+gss_OID_desc GSS_KRB5_NT_USER_NAME_static = {
+  10, (void *) "\x2a\x86\x48\x86\xf7\x12\x01\x02\x01\x01"
+};
+gss_OID GSS_KRB5_NT_USER_NAME = &GSS_KRB5_NT_USER_NAME_static;
+
+/*
+ * This name form shall be represented by the Object Identifier
+ * {iso(1) member-body(2) United States(840) mit(113554) infosys(1)
+ * gssapi(2) generic(1) service_name(4)}.  The previously recommended
+ * symbolic name for this type is
+ * "GSS_KRB5_NT_HOSTBASED_SERVICE_NAME".  The currently preferred
+ * symbolic name for this type is "GSS_C_NT_HOSTBASED_SERVICE".
+ */
+gss_OID GSS_KRB5_NT_HOSTBASED_SERVICE_NAME =
+  &GSS_C_NT_HOSTBASED_SERVICE_static;
+
+/*
+ * This name form shall be represented by the Object Identifier
+ * {iso(1) member-body(2) United States(840) mit(113554) infosys(1)
+ * gssapi(2) krb5(2) krb5_name(1)}.  The recommended symbolic name for
+ * this type is "GSS_KRB5_NT_PRINCIPAL_NAME".
+ */
+gss_OID_desc GSS_KRB5_NT_PRINCIPAL_NAME_static = {
+  10, (void *) "\x2a\x86\x48\x86\xf7\x12\x01\x02\x02\x01"
+};
+gss_OID GSS_KRB5_NT_PRINCIPAL_NAME = &GSS_KRB5_NT_PRINCIPAL_NAME_static;
+
+/*
+ * This name form shall be represented by the Object Identifier
+ * {iso(1) member-body(2) United States(840) mit(113554) infosys(1)
+ * gssapi(2) generic(1) string_uid_name(3)}.  The recommended symbolic
+ * name for this type is "GSS_KRB5_NT_STRING_UID_NAME".
+ */
+gss_OID_desc GSS_KRB5_NT_STRING_UID_NAME_static = {
+  10, (void *) "\x2a\x86\x48\x86\xf7\x12\x01\x02\x01\x03"
+};
+gss_OID GSS_KRB5_NT_STRING_UID_NAME = &GSS_KRB5_NT_STRING_UID_NAME_static;
