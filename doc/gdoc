@@ -69,7 +69,7 @@
 # (* @parameterx: (description of parameter x)?)*
 # (* a blank line)?
 #  * (Description:)? (Description of function)?
-#  * (section header: (section description)? )*
+#  * (Section header: (section description)? )*
 #  (*)?*/
 #
 # So .. the trivial example would be:
@@ -728,7 +728,7 @@ $doc_start = "^/\\*\\*\$";
 $doc_end = "\\*/";
 $doc_com = "\\s*\\*\\s*";
 $doc_func = $doc_com."(\\w+):?";
-$doc_sect = $doc_com."([".$doc_special."]?[\\w ]+):(.*)";
+$doc_sect = $doc_com."([".$doc_special."[:upper:]][\\w ]+):(.*)";
 $doc_content = $doc_com."(.*)";
 
 %constants = ();
