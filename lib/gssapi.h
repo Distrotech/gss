@@ -53,7 +53,10 @@
  *
  * It has been modified as follows:
  *
- * $log$
+ * $Log$
+ * Revision 1.5  2003-04-30 18:56:08  jas
+ * Add CVS log to comment.
+ *
  *
  */
 
