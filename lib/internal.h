@@ -48,7 +48,7 @@
 
 typedef struct gss_name_struct
 {
-  int length;
+  size_t length;
   char *value;
   gss_OID type;
 } gss_name_desc;
@@ -94,6 +94,9 @@ typedef struct _gss_mech_api_struct
     (OM_uint32 * minor_status,
      const gss_name_t input_name,
      const gss_OID mech_type, gss_name_t * output_name);
+  OM_uint32 (*export_name)
+    (OM_uint32 * minor_status,
+     const gss_name_t input_name, gss_buffer_t exported_name);
     OM_uint32 (*wrap)
     (OM_uint32 * minor_status,
      const gss_ctx_id_t context_handle, int conf_req_flag,
