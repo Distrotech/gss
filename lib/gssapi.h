@@ -8,40 +8,28 @@
  */
 #include <stddef.h>
 
-/*
- * If the platform supports the xom.h header file, it should be
- * included here.
- */
-#include <xom.h>
-
 
 /*
  * Now define the three implementation-dependent types.
  */
-typedef <platform-specific> gss_ctx_id_t;
-typedef <platform-specific> gss_cred_id_t;
-typedef <platform-specific> gss_name_t;
+typedef struct gss_ctx_id_t  *gss_ctx_id_t;
+typedef struct gss_cred_id_t *gss_cred_id_t;
+typedef struct gss_name_t    *gss_name_t;
 
 /*
  * The following type must be defined as the smallest natural
  * unsigned integer supported by the platform that has at least
  * 32 bits of precision.
  */
-typedef <platform-specific> gss_uint32;
-
-
-#ifdef OM_STRING
-/*
- * We have included the xom.h header file.  Verify that OM_uint32
- * is defined correctly.
- */
-
-#if sizeof(gss_uint32) != sizeof(OM_uint32)
-#error Incompatible definition of OM_uint32 from xom.h
+#if UCHAR_MAX == 4294967295
+typedef unsigned char gss_uint32;
+#elif USHRT_MAX == 4294967295
+typedef unsigned short gss_uint32;
+#elif UINT_MAX == 4294967295
+typedef unsigned int gss_uint32;
+#else /* Minimum allowed UINT_MAX, according to K&R, is 429649667295 */
+typedef unsigned long gss_uint32;
 #endif
-
-typedef OM_object_identifier gss_OID_desc, *gss_OID;
-#else
 
 /*
  * We can't use X/Open definitions, so roll our own.
@@ -54,7 +42,6 @@ typedef struct gss_OID_desc_struct {
   void      *elements;
 } gss_OID_desc, *gss_OID;
 
-#endif
 
 typedef struct gss_OID_set_desc_struct  {
   size_t     count;
@@ -320,43 +307,25 @@ extern gss_OID GSS_C_NT_EXPORT_NAME;
 /*
  * Routine errors:
  */
-#define GSS_S_BAD_MECH             (1ul <<
-GSS_C_ROUTINE_ERROR_OFFSET)
-#define GSS_S_BAD_NAME             (2ul <<
-GSS_C_ROUTINE_ERROR_OFFSET)
-#define GSS_S_BAD_NAMETYPE         (3ul <<
-GSS_C_ROUTINE_ERROR_OFFSET)
-#define GSS_S_BAD_BINDINGS         (4ul <<
-GSS_C_ROUTINE_ERROR_OFFSET)
-#define GSS_S_BAD_STATUS           (5ul <<
-GSS_C_ROUTINE_ERROR_OFFSET)
-#define GSS_S_BAD_SIG              (6ul <<
-GSS_C_ROUTINE_ERROR_OFFSET)
+#define GSS_S_BAD_MECH             (1ul << GSS_C_ROUTINE_ERROR_OFFSET)
+#define GSS_S_BAD_NAME             (2ul << GSS_C_ROUTINE_ERROR_OFFSET)
+#define GSS_S_BAD_NAMETYPE         (3ul << GSS_C_ROUTINE_ERROR_OFFSET)
+#define GSS_S_BAD_BINDINGS         (4ul << GSS_C_ROUTINE_ERROR_OFFSET)
+#define GSS_S_BAD_STATUS           (5ul << GSS_C_ROUTINE_ERROR_OFFSET)
+#define GSS_S_BAD_SIG              (6ul << GSS_C_ROUTINE_ERROR_OFFSET)
 #define GSS_S_BAD_MIC GSS_S_BAD_SIG
-#define GSS_S_NO_CRED              (7ul <<
-GSS_C_ROUTINE_ERROR_OFFSET)
-#define GSS_S_NO_CONTEXT           (8ul <<
-GSS_C_ROUTINE_ERROR_OFFSET)
-#define GSS_S_DEFECTIVE_TOKEN      (9ul <<
-GSS_C_ROUTINE_ERROR_OFFSET)
-#define GSS_S_DEFECTIVE_CREDENTIAL (10ul <<
-GSS_C_ROUTINE_ERROR_OFFSET)
-#define GSS_S_CREDENTIALS_EXPIRED  (11ul <<
-GSS_C_ROUTINE_ERROR_OFFSET)
-#define GSS_S_CONTEXT_EXPIRED      (12ul <<
-GSS_C_ROUTINE_ERROR_OFFSET)
-#define GSS_S_FAILURE              (13ul <<
-GSS_C_ROUTINE_ERROR_OFFSET)
-#define GSS_S_BAD_QOP              (14ul <<
-GSS_C_ROUTINE_ERROR_OFFSET)
-#define GSS_S_UNAUTHORIZED         (15ul <<
-GSS_C_ROUTINE_ERROR_OFFSET)
-#define GSS_S_UNAVAILABLE          (16ul <<
-GSS_C_ROUTINE_ERROR_OFFSET)
-#define GSS_S_DUPLICATE_ELEMENT    (17ul <<
-GSS_C_ROUTINE_ERROR_OFFSET)
-#define GSS_S_NAME_NOT_MN          (18ul <<
-GSS_C_ROUTINE_ERROR_OFFSET)
+#define GSS_S_NO_CRED              (7ul << GSS_C_ROUTINE_ERROR_OFFSET)
+#define GSS_S_NO_CONTEXT           (8ul << GSS_C_ROUTINE_ERROR_OFFSET)
+#define GSS_S_DEFECTIVE_TOKEN      (9ul << GSS_C_ROUTINE_ERROR_OFFSET)
+#define GSS_S_DEFECTIVE_CREDENTIAL (10ul << GSS_C_ROUTINE_ERROR_OFFSET)
+#define GSS_S_CREDENTIALS_EXPIRED  (11ul << GSS_C_ROUTINE_ERROR_OFFSET)
+#define GSS_S_CONTEXT_EXPIRED      (12ul << GSS_C_ROUTINE_ERROR_OFFSET)
+#define GSS_S_FAILURE              (13ul << GSS_C_ROUTINE_ERROR_OFFSET)
+#define GSS_S_BAD_QOP              (14ul << GSS_C_ROUTINE_ERROR_OFFSET)
+#define GSS_S_UNAUTHORIZED         (15ul << GSS_C_ROUTINE_ERROR_OFFSET)
+#define GSS_S_UNAVAILABLE          (16ul << GSS_C_ROUTINE_ERROR_OFFSET)
+#define GSS_S_DUPLICATE_ELEMENT    (17ul << GSS_C_ROUTINE_ERROR_OFFSET)
+#define GSS_S_NAME_NOT_MN          (18ul << GSS_C_ROUTINE_ERROR_OFFSET)
 
 /*
  * Supplementary info bits:
