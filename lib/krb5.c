@@ -922,6 +922,7 @@ gss_krb5_acquire_cred (OM_uint32 * minor_status,
     }
 
   p = xcalloc(sizeof(*p), 1);
+  p->mech = GSS_KRB5;
   p->krb5 = xcalloc(sizeof(*p->krb5), 1);
   p->krb5->peerptr = &p->krb5->peer;
 
@@ -943,6 +944,64 @@ gss_krb5_acquire_cred (OM_uint32 * minor_status,
     }
 
   *output_cred_handle = p;
+
+  return GSS_S_COMPLETE;
+}
+
+OM_uint32
+gss_krb5_inquire_cred (OM_uint32 * minor_status,
+		       const gss_cred_id_t cred_handle,
+		       gss_name_t * name,
+		       OM_uint32 * lifetime,
+		       gss_cred_usage_t * cred_usage,
+		       gss_OID_set * mechanisms)
+{
+  OM_uint32 maj_stat;
+
+  if (minor_status)
+    *minor_status = 0;
+
+  if (cred_handle == GSS_C_NO_CREDENTIAL)
+    {
+      
+    }
+
+  if (name)
+    {
+      maj_stat = gss_duplicate_name (minor_status, cred_handle->krb5->peerptr,
+				     name);
+      if (GSS_ERROR (maj_stat))
+	return maj_stat;
+    }
+
+  if (lifetime)
+    {
+      if (cred_handle->krb5->tkt)
+	{
+	  time_t end = shishi_tkt_endctime (cred_handle->krb5->tkt);
+	  time_t now = time(NULL);
+
+	  if (shishi_tkt_valid_now_p (cred_handle->krb5->tkt))
+	    *lifetime = (OM_uint32) difftime (now, end);
+	  else
+	    *lifetime = 0;
+	}
+      else
+	*lifetime = GSS_C_INDEFINITE;
+    }
+
+  if (cred_usage)
+    *cred_usage = GSS_C_BOTH;
+
+  if (mechanisms)
+    {
+      maj_stat = gss_create_empty_oid_set (minor_status, mechanisms);
+      if (GSS_ERROR (maj_stat))
+	return maj_stat;
+      maj_stat = gss_add_oid_set_member (minor_status, GSS_KRB5, mechanisms);
+      if (GSS_ERROR (maj_stat))
+	return maj_stat;
+    }
 
   return GSS_S_COMPLETE;
 }
