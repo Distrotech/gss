@@ -562,7 +562,7 @@ known as @file{gssapi.h}.  However, to be able to co-exist gracefully
 with other GSS-API implementation, the name @file{gssapi.h} was
 changed.
 
-The header file @file{gss.h} includes @file{gss/api.h}, and a few
+The header file @file{gss.h} includes @file{gss/api.h}, and add a few
 non-standard extensions (by including @file{gss/ext.h}), takes care of
 including header files related to all supported mechanisms (e.g.,
 @file{gss/krb5.h}) and finally add C++ namespace protection of all
