@@ -1,4 +1,4 @@
-/* name.c	Implementation of GSS-API Name Manipulation functions.
+/* msg.c --- Implementation of GSS-API Per-Message functions.
  * Copyright (C) 2003, 2004  Simon Josefsson
  *
  * This file is part of the Generic Security Service (GSS).
