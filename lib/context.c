@@ -787,9 +787,6 @@ gss_delete_sec_context (OM_uint32 * minor_status,
 
   ret = mech->delete_sec_context (NULL, context_handle, output_token);
 
-  if ((*context_handle)->peerptr != GSS_C_NO_NAME)
-    gss_release_name (NULL, &(*context_handle)->peerptr);
-
   free (*context_handle);
   *context_handle = GSS_C_NO_CONTEXT;
 
