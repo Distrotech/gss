@@ -2,7 +2,7 @@ GSS NEWS -- History of user-visible changes.                    -*- outline -*-
 Copyright (C) 2003 Simon Josefsson
 See the end for copying conditions.
 
-* Changes in 0.0.6 (unreleased)
+* Changes in 0.0.6 (released 2003-09-22)
 
 ** Update for Shishi 0.0.7 API.
 
