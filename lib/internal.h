@@ -26,40 +26,21 @@
 #include "config.h"
 #endif
 
-#ifdef STDC_HEADERS
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdarg.h>
 #include <ctype.h>
-#endif
-
-#if HAVE_INTTYPES_H
-# include <inttypes.h>
-#else
-# if HAVE_STDINT_H
-#  include <stdint.h>
-# endif
-#endif
-
-#if HAVE_STRING_H
-# if !STDC_HEADERS && HAVE_MEMORY_H
-#  include <memory.h>
-# endif
-# include <string.h>
-#endif
-#if HAVE_STRINGS_H
-# include <strings.h>
-#endif
-
-#include "xalloc.h"
+#include <string.h>
 
 #include "gettext.h"
-#include "api.h"
-#include "ext.h"
-
 #define _(String) dgettext (PACKAGE, String)
 #define gettext_noop(String) String
 #define N_(String) gettext_noop (String)
+
+#include "api.h"
+#include "ext.h"
+
+#include "xalloc.h"
 
 typedef struct gss_name_struct
 {
