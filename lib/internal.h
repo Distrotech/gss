@@ -64,7 +64,6 @@ typedef struct gss_cred_id_struct
 typedef struct gss_ctx_id_struct
 {
   gss_OID mech;
-  gss_name_desc peer;
   gss_name_t peerptr;
 #ifdef USE_KERBEROS5
   struct _gss_krb5_ctx_struct *krb5;
