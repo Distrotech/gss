@@ -39,6 +39,7 @@ buildtests += krb5context
 endif
 TESTS = $(buildtests) threadsafety
 check_PROGRAMS = $(buildtests)
+dist_check_SCRIPTS = threadsafety
 
 EXTRA_DIST = krb5context.key krb5context.tkt
 
