@@ -178,6 +178,9 @@ gss_release_oid (OM_uint32 * minor_status, gss_OID *oid)
  * question whether the particular mechanism would authenticate them
  * as the same principal
  *
+ * WARNING: This function is a GNU GSS specific extension, and is not
+ * part of the official GSS API.
+ *
  * Return value: Returns 0 if the names match, non-0 otherwise.
  **/
 int
