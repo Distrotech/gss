@@ -1,16 +1,242 @@
-# Swedish translations for GNU ggssapi package.
-# Copyright (C) 2003 THE GNU ggssapi'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the GNU ggssapi package.
-# Simon Josefsson <simon@josefsson.org>, 2003.
+# Copyright (C) 2003  Simon Josefsson
+# This file is distributed under the same license as the GSS package.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: GNU ggssapi 0.0.0\n"
-"POT-Creation-Date: 2003-04-30 19:54+0200\n"
-"PO-Revision-Date: 2003-04-30 20:01+0200\n"
+"Project-Id-Version: gss 0.0.1\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2003-06-10 12:04+0200\n"
+"PO-Revision-Date: 2003-06-10 12:03+0200\n"
 "Last-Translator: Simon Josefsson <simon@josefsson.org>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=ASCII\n"
+"Content-Type: text/plain; charset=ISO-8859-1\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: ../lib/error.c:32
+msgid "GSS_S_CALL_INACCESSIBLE_READ"
+msgstr ""
+
+#: ../lib/error.c:33
+msgid "A required input parameter could not be read"
+msgstr "Nödvändig indata kunde ej läsas"
+
+#: ../lib/error.c:34
+msgid "GSS_S_CALL_INACCESSIBLE_WRITE"
+msgstr ""
+
+#: ../lib/error.c:35
+msgid "A required output parameter could not be written"
+msgstr "Nödvändig utdata kunde ej skrivas"
+
+#: ../lib/error.c:36
+msgid "GSS_S_CALL_BAD_STRUCTURE"
+msgstr ""
+
+#: ../lib/error.c:37
+msgid "A parameter was malformed"
+msgstr "Parameter felaktig"
+
+#: ../lib/error.c:41
+msgid "GSS_S_BAD_MECH"
+msgstr ""
+
+#: ../lib/error.c:42
+msgid "An unsupported mechanism was requested"
+msgstr "Efterfrågad mekanism stöds ej"
+
+#: ../lib/error.c:43
+msgid "GSS_S_BAD_NAME"
+msgstr ""
+
+#: ../lib/error.c:44
+msgid "An invalid name was supplied"
+msgstr "Felaktigt namn angiven"
+
+#: ../lib/error.c:45
+msgid "GSS_S_BAD_NAMETYPE"
+msgstr ""
+
+#: ../lib/error.c:46
+msgid "A supplied name was of an unsupported type"
+msgstr "Typen på angivet namn stöds ej"
+
+#: ../lib/error.c:47
+msgid "GSS_S_BAD_BINDINGS"
+msgstr ""
+
+#: ../lib/error.c:48
+msgid "Incorrect channel bindings were supplied"
+msgstr "Ogiltig kanalbindning angiven"
+
+#: ../lib/error.c:49
+msgid "GSS_S_BAD_STATUS"
+msgstr ""
+
+#: ../lib/error.c:50
+msgid "An invalid status code was supplied"
+msgstr "Felaktig statuskod angiven"
+
+#: ../lib/error.c:51
+msgid "GSS_S_BAD_SIG"
+msgstr ""
+
+#: ../lib/error.c:52
+msgid "A token had an invalid MIC"
+msgstr "Meddelande har felaktig integritetskontroll"
+
+#: ../lib/error.c:53
+msgid "GSS_S_NO_CRED"
+msgstr ""
+
+#: ../lib/error.c:54
+msgid ""
+"No credentials were supplied, or the credentials were unavailable or "
+"inaccessible"
+msgstr ""
+"Ingen credential tillgänglig, eller så var angiven credential otillgänglig"
+
+#: ../lib/error.c:56
+msgid "GSS_S_NO_CONTEXT"
+msgstr ""
+
+#: ../lib/error.c:57
+msgid "No context has been established"
+msgstr "Ingen säkerhetskontext har upprättats"
+
+#: ../lib/error.c:58
+msgid "GSS_S_DEFECTIVE_TOKEN"
+msgstr ""
+
+#: ../lib/error.c:59
+msgid "A token was invalid"
+msgstr "Meddelande felaktig"
+
+#: ../lib/error.c:60
+msgid "GSS_S_DEFECTIVE_CREDENTIAL"
+msgstr ""
+
+#: ../lib/error.c:61
+msgid "A credential was invalid"
+msgstr "Credential felaktig"
+
+#: ../lib/error.c:62
+msgid "GSS_S_CREDENTIALS_EXPIRED"
+msgstr ""
+
+#: ../lib/error.c:63
+msgid "The referenced credentials have expired"
+msgstr "Angiven credential har gått ut"
+
+#: ../lib/error.c:64
+msgid "GSS_S_CONTEXT_EXPIRED"
+msgstr ""
+
+#: ../lib/error.c:65
+msgid "The context has expired"
+msgstr "Giltighetstiden för säkerhetskontext har gått ut"
+
+#: ../lib/error.c:66
+msgid "GSS_S_FAILURE"
+msgstr ""
+
+#: ../lib/error.c:67
+msgid "Unspecified error in underlying mechanism"
+msgstr "Okänt fel i underliggande mekanism"
+
+#: ../lib/error.c:68
+msgid "GSS_S_BAD_QOP"
+msgstr ""
+
+#: ../lib/error.c:69
+msgid "The quality-of-protection requested could not be provided"
+msgstr "Efterfrågad skyddsnivå kan inte tillhandahållas"
+
+#: ../lib/error.c:70
+msgid "GSS_S_UNAUTHORIZED"
+msgstr ""
+
+#: ../lib/error.c:71
+msgid "The operation is forbidden by local security policy"
+msgstr "Funktionen förbjuden av lokal säkerhetspolicy"
+
+#: ../lib/error.c:72
+msgid "GSS_S_UNAVAILABLE"
+msgstr ""
+
+#: ../lib/error.c:73
+msgid "The operation or option is unavailable"
+msgstr "Funktion eller parameter är inte tillgänglig"
+
+#: ../lib/error.c:74
+msgid "GSS_S_DUPLICATE_ELEMENT"
+msgstr ""
+
+#: ../lib/error.c:75
+msgid "The requested credential element already exists"
+msgstr "Efterfrågad credential existerar redan"
+
+#: ../lib/error.c:76
+msgid "GSS_S_NAME_NOT_MN"
+msgstr ""
+
+#: ../lib/error.c:77
+msgid "The provided name was not a mechanism name"
+msgstr "Givet namn är inte ett mekanism-namn"
+
+#: ../lib/error.c:81
+msgid "GSS_S_CONTINUE_NEEDED"
+msgstr ""
+
+#: ../lib/error.c:82
+msgid ""
+"The gss_init_sec_context() or gss_accept_sec_context() function must be "
+"called again to complete its function"
+msgstr ""
+"Funktionerna gss_init_sec_context() eller gss_accept_sec_context() måste "
+"anropas igen för att fullfölja operationen"
+
+#: ../lib/error.c:84
+msgid "GSS_S_DUPLICATE_TOKEN"
+msgstr ""
+
+#: ../lib/error.c:85
+msgid "The token was a duplicate of an earlier token"
+msgstr "Meddelandet är en dubblett"
+
+#: ../lib/error.c:86
+msgid "GSS_S_OLD_TOKEN"
+msgstr ""
+
+#: ../lib/error.c:87
+msgid "The token's validity period has expired"
+msgstr "Meddelandets giltighetstid har gått ut"
+
+#: ../lib/error.c:88
+msgid "GSS_S_UNSEQ_TOKEN"
+msgstr ""
+
+#: ../lib/error.c:89
+msgid "A later token has already been processed"
+msgstr "Senare meddelande redan behandlat"
+
+#: ../lib/error.c:90
+msgid "GSS_S_GAP_TOKEN"
+msgstr ""
+
+#: ../lib/error.c:91
+msgid "An expected per-message token was not received"
+msgstr "Tidigare meddelande inte mottaget"
+
+#: ../lib/error.c:125
+msgid "Unknown calling error"
+msgstr "Okänt fel i applikationen"
+
+#: ../lib/error.c:163
+msgid "Unknown routine error"
+msgstr "Okänt fel i rutin"
+
+#: ../lib/error.c:168
+msgid "No error"
+msgstr "Inget fel"
