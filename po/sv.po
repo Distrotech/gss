@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gss 0.0.1\n"
 "Report-Msgid-Bugs-To: bug-gss@josefsson.org\n"
-"POT-Creation-Date: 2004-04-18 17:16+0200\n"
+"POT-Creation-Date: 2004-08-08 00:59+0200\n"
 "PO-Revision-Date: 2004-01-16 12:27+0100\n"
 "Last-Translator: Simon Josefsson <simon@josefsson.org>\n"
 "Language-Team: Swedish <sv@li.org>\n"
@@ -14,94 +14,94 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: lib/error.c:33
+#: lib/error.c:46
 msgid "A required input parameter could not be read"
 msgstr "Nödvändig indata kunde ej läsas"
 
-#: lib/error.c:35
+#: lib/error.c:48
 msgid "A required output parameter could not be written"
 msgstr "Nödvändig utdata kunde ej skrivas"
 
-#: lib/error.c:37
+#: lib/error.c:50
 msgid "A parameter was malformed"
 msgstr "Parameter felaktig"
 
-#: lib/error.c:42
+#: lib/error.c:55
 msgid "An unsupported mechanism was requested"
 msgstr "Efterfrågad mekanism stöds ej"
 
-#: lib/error.c:44
+#: lib/error.c:57
 msgid "An invalid name was supplied"
 msgstr "Felaktigt namn angiven"
 
-#: lib/error.c:46
+#: lib/error.c:59
 msgid "A supplied name was of an unsupported type"
 msgstr "Typen på angivet namn stöds ej"
 
-#: lib/error.c:48
+#: lib/error.c:61
 msgid "Incorrect channel bindings were supplied"
 msgstr "Ogiltig kanalbindning angiven"
 
-#: lib/error.c:50
+#: lib/error.c:63
 msgid "An invalid status code was supplied"
 msgstr "Felaktig statuskod angiven"
 
-#: lib/error.c:52
+#: lib/error.c:65
 msgid "A token had an invalid MIC"
 msgstr "Meddelande har felaktig integritetskontroll"
 
-#: lib/error.c:54
+#: lib/error.c:67
 msgid ""
 "No credentials were supplied, or the credentials were unavailable or "
 "inaccessible"
 msgstr ""
 "Ingen credential tillgänglig, eller så var angiven credential otillgänglig"
 
-#: lib/error.c:57
+#: lib/error.c:70
 msgid "No context has been established"
 msgstr "Ingen säkerhetskontext har upprättats"
 
-#: lib/error.c:59
+#: lib/error.c:72
 msgid "A token was invalid"
 msgstr "Meddelande felaktig"
 
-#: lib/error.c:61
+#: lib/error.c:74
 msgid "A credential was invalid"
 msgstr "Credential felaktig"
 
-#: lib/error.c:63
+#: lib/error.c:76
 msgid "The referenced credentials have expired"
 msgstr "Angiven credential har gått ut"
 
-#: lib/error.c:65
+#: lib/error.c:78
 msgid "The context has expired"
 msgstr "Giltighetstiden för säkerhetskontext har gått ut"
 
-#: lib/error.c:67
+#: lib/error.c:80
 msgid "Unspecified error in underlying mechanism"
 msgstr "Okänt fel i underliggande mekanism"
 
-#: lib/error.c:69
+#: lib/error.c:82
 msgid "The quality-of-protection requested could not be provided"
 msgstr "Efterfrågad skyddsnivå kan inte tillhandahållas"
 
-#: lib/error.c:71
+#: lib/error.c:84
 msgid "The operation is forbidden by local security policy"
 msgstr "Funktionen förbjuden av lokal säkerhetspolicy"
 
-#: lib/error.c:73
+#: lib/error.c:86
 msgid "The operation or option is unavailable"
 msgstr "Funktion eller parameter är inte tillgänglig"
 
-#: lib/error.c:75
+#: lib/error.c:88
 msgid "The requested credential element already exists"
 msgstr "Efterfrågad credential existerar redan"
 
-#: lib/error.c:77
+#: lib/error.c:90
 msgid "The provided name was not a mechanism name"
 msgstr "Givet namn är inte ett mekanism-namn"
 
-#: lib/error.c:82
+#: lib/error.c:95
 msgid ""
 "The gss_init_sec_context() or gss_accept_sec_context() function must be "
 "called again to complete its function"
@@ -109,99 +109,99 @@ msgstr ""
 "Funktionerna gss_init_sec_context() eller gss_accept_sec_context() måste "
 "anropas igen för att fullfölja operationen"
 
-#: lib/error.c:85
+#: lib/error.c:98
 msgid "The token was a duplicate of an earlier token"
 msgstr "Meddelandet är en dubblett"
 
-#: lib/error.c:87
+#: lib/error.c:100
 msgid "The token's validity period has expired"
 msgstr "Meddelandets giltighetstid har gått ut"
 
-#: lib/error.c:89
+#: lib/error.c:102
 msgid "A later token has already been processed"
 msgstr "Senare meddelande redan behandlat"
 
-#: lib/error.c:91
+#: lib/error.c:104
 msgid "An expected per-message token was not received"
 msgstr "Tidigare meddelande inte mottaget"
 
-#: lib/error.c:288
+#: lib/error.c:301
 msgid "No error"
 msgstr "Inget fel"
 
-#: lib/krb5/error.c:34
+#: lib/krb5/error.c:40
 msgid "No @ in SERVICE-NAME name string"
 msgstr "Tecknet @ saknas i SERVICE-NAME namnsträng"
 
-#: lib/krb5/error.c:36
+#: lib/krb5/error.c:42
 msgid "STRING-UID-NAME contains nondigits"
 msgstr "STRING-UID-NAME innehåller ickesiffror"
 
-#: lib/krb5/error.c:38
+#: lib/krb5/error.c:44
 msgid "UID does not resolve to username"
 msgstr "UID identifierar inget användarnamn"
 
-#: lib/krb5/error.c:40
+#: lib/krb5/error.c:46
 msgid "Validation error"
 msgstr "Valideringsfel"
 
-#: lib/krb5/error.c:42
+#: lib/krb5/error.c:48
 msgid "Couldn't allocate gss_buffer_t data"
 msgstr "Kan inte allokera gss_buffer_t data"
 
-#: lib/krb5/error.c:44
+#: lib/krb5/error.c:50
 msgid "Message context invalid"
 msgstr "Ogiltig Meddelandekontext"
 
-#: lib/krb5/error.c:46
+#: lib/krb5/error.c:52
 msgid "Buffer is the wrong size"
 msgstr "Buffer har fel storlek"
 
-#: lib/krb5/error.c:48
+#: lib/krb5/error.c:54
 msgid "Credential usage type is unknown"
 msgstr "Credential har okänd typ"
 
-#: lib/krb5/error.c:50
+#: lib/krb5/error.c:56
 msgid "Unknown quality of protection specified"
 msgstr "Okänd skyddsnivå begärd"
 
-#: lib/krb5/error.c:53
+#: lib/krb5/error.c:59
 msgid "Principal in credential cache does not match desired name"
 msgstr "Namn på credential matchar inte begärt namn"
 
-#: lib/krb5/error.c:55
+#: lib/krb5/error.c:61
 msgid "No principal in keytab matches desired name"
 msgstr "Inget namn i nyckelfil matchar begärt namn"
 
-#: lib/krb5/error.c:57
+#: lib/krb5/error.c:63
 msgid "Credential cache has no TGT"
 msgstr "Credential-cache har ingen TGT"
 
-#: lib/krb5/error.c:59
+#: lib/krb5/error.c:65
 msgid "Authenticator has no subkey"
 msgstr "Autenticerare har ingen nyckel"
 
-#: lib/krb5/error.c:61
+#: lib/krb5/error.c:67
 msgid "Context is already fully established"
 msgstr "Ingen säkerhetskontext har upprättats"
 
-#: lib/krb5/error.c:63
+#: lib/krb5/error.c:69
 msgid "Unknown signature type in token"
 msgstr "Okänd signaturtyp i token"
 
-#: lib/krb5/error.c:65
+#: lib/krb5/error.c:71
 msgid "Invalid field length in token"
 msgstr "Felaktigt längdfält i token"
 
-#: lib/krb5/error.c:67
+#: lib/krb5/error.c:73
 msgid "Attempt to use incomplete security context"
 msgstr "Försökte använda ofullständig säkerhetskontext"
 
-#: lib/krb5/error.c:84
+#: lib/krb5/error.c:90
 msgid "No krb5 error"
 msgstr "Inget krb5 fel"
 
-#: lib/krb5/error.c:113
+#: lib/krb5/error.c:119
 msgid "Unknown krb5 error"
 msgstr "Okänt krb5 fel"
 
