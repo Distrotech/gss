@@ -31,7 +31,7 @@
 
 /* Request part of gss_krb5_init_sec_context.  Assumes that
    context_handle is valid, and has krb5 specific structure, and that
-   output_token is valid. */
+   output_token is valid and cleared. */
 static OM_uint32
 init_request (OM_uint32 * minor_status,
 	      const gss_cred_id_t initiator_cred_handle,
@@ -135,7 +135,7 @@ init_request (OM_uint32 * minor_status,
 
 /* Reply part of gss_krb5_init_sec_context.  Assumes that
    context_handle is valid, and has krb5 specific structure, and that
-   output_token is valid. */
+   output_token is valid and cleared. */
 static OM_uint32
 init_reply (OM_uint32 * minor_status,
 	    const gss_cred_id_t initiator_cred_handle,
@@ -181,7 +181,7 @@ init_reply (OM_uint32 * minor_status,
 
 /* Initiates the establishment of a krb5 security context between the
    application and a remote peer.  Assumes that context_handle and
-   output_token are valid. */
+   output_token are valid and cleared. */
 OM_uint32
 gss_krb5_init_sec_context (OM_uint32 * minor_status,
 			   const gss_cred_id_t initiator_cred_handle,
