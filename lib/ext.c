@@ -181,7 +181,7 @@ gss_release_oid (OM_uint32 * minor_status, gss_OID *oid)
  * Return value: Returns 0 if the names match, non-0 otherwise.
  **/
 int
-gss_userok (gss_name_t name, char *username)
+gss_userok (const gss_name_t name, const char *username)
 {
   /* FIXME: Call gss_export_name, then remove OID. */
   return name->length == strlen (username) &&
