@@ -1,4 +1,4 @@
-# Copyright (C) 2003  Simon Josefsson
+# Copyright (C) 2003 Simon Josefsson
 # This file is distributed under the same license as the GSS package.
 #
 #, fuzzy
@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-06-10 11:19+0200\n"
+"POT-Creation-Date: 2003-06-10 12:04+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -27,7 +27,7 @@ msgid "GSS_S_CALL_INACCESSIBLE_WRITE"
 msgstr ""
 
 #: ../lib/error.c:35
-msgid "A required output parameter could not be written."
+msgid "A required output parameter could not be written"
 msgstr ""
 
 #: ../lib/error.c:36
@@ -93,7 +93,7 @@ msgstr ""
 #: ../lib/error.c:54
 msgid ""
 "No credentials were supplied, or the credentials were unavailable or "
-"inaccessible."
+"inaccessible"
 msgstr ""
 
 #: ../lib/error.c:56
@@ -191,7 +191,7 @@ msgstr ""
 #: ../lib/error.c:82
 msgid ""
 "The gss_init_sec_context() or gss_accept_sec_context() function must be "
-"called again to complete its function."
+"called again to complete its function"
 msgstr ""
 
 #: ../lib/error.c:84
