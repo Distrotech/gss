@@ -777,20 +777,14 @@ gss_delete_sec_context (OM_uint32 * minor_status,
   mech = _gss_find_mech ((*context_handle)->mech);
 
   ret = mech->delete_sec_context (NULL, context_handle, output_token);
-  if (GSS_ERROR (ret))
-    /* XXX? Ignore error. */ ;
 
-  (*context_handle)->peerptr = &(*context_handle)->peer;
-  ret = gss_release_name (NULL, &(*context_handle)->peerptr);
-  if (GSS_ERROR (ret))
-    /* XXX? Ignore error. */ ;
+  if ((*context_handle)->peerptr != GSS_C_NO_NAME)
+    gss_release_name (NULL, &(*context_handle)->peerptr);
 
   free (*context_handle);
   *context_handle = GSS_C_NO_CONTEXT;
 
-  if (minor_status)
-    *minor_status = 0;
-  return GSS_S_COMPLETE;
+  return ret;
 }
 
 /**
