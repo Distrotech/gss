@@ -83,9 +83,11 @@ typedef struct gss_ctx_id_struct
 #endif
 } gss_ctx_id_desc;
 
+#define MAX_NT 5
+
 typedef struct _gss_mech_api_strict {
   gss_OID mech;
-  gss_OID_set_desc name_types;
+  gss_OID name_types[MAX_NT];
   OM_uint32 (*init_sec_context)
        (OM_uint32 * minor_status,
 	const gss_cred_id_t initiator_cred_handle,
