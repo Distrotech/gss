@@ -36,6 +36,7 @@ static _gss_mech_api_desc _gss_mech_apis[] = {
     &GSS_KRB5_NT_STRING_UID_NAME_static},
    gss_krb5_init_sec_context,
    gss_krb5_canonicalize_name,
+   gss_krb5_export_name,
    gss_krb5_wrap,
    gss_krb5_unwrap,
    gss_krb5_get_mic,
