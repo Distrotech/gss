@@ -1,5 +1,5 @@
 ## Process this file with automake to produce Makefile.in
-# Copyright (C) 2003 Simon Josefsson.
+# Copyright (C) 2003, 2004 Simon Josefsson.
 #
 # This file is part of the Generic Security Service (GSS).
 #
@@ -20,7 +20,20 @@
 
 EXTRA_DIST = gss.html gss.ps gss.pdf
 
-info_TEXINFOS = gss.texi
+info_TEXINFOS = gss.texi $(gdoc_TEXINFOS)
 gss_TEXINFOS = gpl.texi fdl.texi
 
 AM_MAKEINFOHTMLFLAGS = --no-split --number-sections
+
+dist_man_MANS = $(gdoc_MANS)
+MAINTAINERCLEANFILES = $(dist_man_MANS)
+
+# GDOC
+
+GDOC_SRC = $(top_srcdir)/lib/context.c
+GDOC_TEXI_PREFIX = texi/
+GDOC_MAN_PREFIX = man/
+GDOC_MAN_EXTRA_ARGS = -module $(PACKAGE) -sourceversion $(VERSION) \
+	-bugsto $(PACKAGE_BUGREPORT) -includefuncprefix -seeinfo $(PACKAGE) \
+	-copyright "2003, 2004 Simon Josefsson" -verbatimcopying
+include $(srcdir)/Makefile.gdoci
