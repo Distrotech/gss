@@ -88,9 +88,9 @@ _gss_encapsulate_token (char *oid, size_t oidlen,
 			char *in, size_t inlen,
 			char **out, size_t *outlen);
 int
-_gss_decapsulate_token (gss_buffer_t input_message,
-			gss_OID token_oid,
-			gss_buffer_t output_message);
+_gss_decapsulate_token (char *in, size_t inlen,
+			char **oid, size_t *oidlen,
+			char **out, size_t *outlen);
 
 int
 _gss_oid_equal (gss_OID first_oid, gss_OID second_oid);

@@ -62,23 +62,46 @@ _gss_encapsulate_token (char *oid, size_t oidlen,
 			char *in, size_t inlen,
 			char **out, size_t *outlen)
 {
+  size_t oidlenlen;
   size_t asn1len, asn1lenlen;
+  char *p;
   int rc;
 
-  asn1len = oidlen + inlen;
+  _gss_asn1_length_der(oidlen, NULL, &oidlenlen);
+  asn1len = 1 + oidlenlen + oidlen + inlen;
   _gss_asn1_length_der(asn1len, NULL, &asn1lenlen);
 
   *outlen = 1 + asn1lenlen + asn1len;
-  *out = malloc(*outlen);
-  if (!*out)
+  p = malloc(*outlen);
+  if (!p)
     return 0;
 
-  **out = '\x60';
-  _gss_asn1_length_der(asn1len, *out + 1, &asn1lenlen);
-  memcpy(*out + 1 + asn1lenlen, oid, oidlen);
-  memcpy(*out + 1 + asn1lenlen + oidlen, in, inlen);
+  *out = p;
+
+  *p++ = '\x60';
+  _gss_asn1_length_der(asn1len, p, &asn1lenlen);
+  p += asn1lenlen;
+  *p++ = '\x06';
+  _gss_asn1_length_der(oidlen, p, &oidlenlen);
+  p += oidlenlen;
+  memcpy(p, oid, oidlen);
+  p += oidlen;
+  memcpy(p, in, inlen);
 
   return 1;
+}
+
+int
+gss_encapsulate_token (gss_buffer_t input_message,
+		       gss_OID token_oid,
+		       gss_buffer_t output_message)
+{
+  return _gss_encapsulate_token (token_oid->elements,
+				 token_oid->length,
+				 input_message->value,
+				 input_message->length,
+				 &output_message->value,
+				 &output_message->length);
 }
 
 static unsigned long
@@ -105,9 +128,9 @@ _gss_asn1_get_length_der (const unsigned char *der, int *len)
 }
 
 int
-_gss_decapsulate_token_1 (char *in, size_t inlen,
-			  char **oid, size_t *oidlen,
-			  char **out, size_t *outlen)
+_gss_decapsulate_token (char *in, size_t inlen,
+			char **oid, size_t *oidlen,
+			char **out, size_t *outlen)
 {
   int i;
   size_t asn1lenlen;
@@ -163,18 +186,18 @@ _gss_decapsulate_token_1 (char *in, size_t inlen,
 }
 
 int
-_gss_decapsulate_token (gss_buffer_t input_message,
-			gss_OID token_oid,
-			gss_buffer_t output_message)
+gss_decapsulate_token (gss_buffer_t input_message,
+		       gss_OID token_oid,
+		       gss_buffer_t output_message)
 {
   char *oid, *out;
   size_t oidlen, outlen;
   int rc;
 
-  rc = _gss_decapsulate_token_1 (input_message->value,
-				 input_message->length,
-				 &oid, &oidlen,
-				 &out, &outlen);
+  rc = _gss_decapsulate_token (input_message->value,
+			       input_message->length,
+			       &oid, &oidlen,
+			       &out, &outlen);
   if (!rc)
     return 0;
 

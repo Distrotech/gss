@@ -23,6 +23,8 @@
 
 #ifdef USE_KERBEROS5
 
+#include "krb5.h"
+
 #include <shishi.h>
 
 typedef struct _gss_krb5_cred_struct
@@ -43,14 +45,6 @@ typedef struct _gss_krb5_ctx_struct
 } _gss_krb5_ctx_desc, *_gss_krb5_ctx_t;
 
 #define _GSS_KRB5_OID "\x2a\x86\x48\x86\xf7\x12\x01\x02\x02"
-#define _GSS_KRB5_OID_STRING "1.2.840.113554.1.2.2"
-
-gss_OID_desc GSS_KRB5_MECH_OID_static = {
-  9, (void *) _GSS_KRB5_OID
-};
-gss_OID GSS_KRB5_MECH_OID = &GSS_KRB5_MECH_OID_static;
-gss_OID GSS_KRB5_NT_PRINCIPAL_NAME = &GSS_KRB5_MECH_OID_static;
-
 
 #define _GSS_KRB5_OID_DER "\x06\x09" _GSS_KRB5_OID
 #define _GSS_KRB5_OID_LEN  strlen(_GSS_KRB5_OID_DER)
@@ -58,24 +52,15 @@ gss_OID GSS_KRB5_NT_PRINCIPAL_NAME = &GSS_KRB5_MECH_OID_static;
 #define _GSS_KRB5_AP_REQ_DATA    _GSS_KRB5_OID_DER "\x01\x00"
 #define _GSS_KRB5_AP_REQ_LEN     (_GSS_KRB5_OID_LEN+2)
 
-#define _GSS_KRB5_AP_REP_DATA    _GSS_KRB5_OID_DER "\x02\x00"
-#define _GSS_KRB5_AP_REP_LEN     (_GSS_KRB5_OID_LEN+2)
-
-#define _GSS_KRB5_KRB_ERROR_DATA _GSS_KRB5_OID_DER "\x03\x00"
-#define _GSS_KRB5_KRB_ERROR_LEN  (_GSS_KRB5_OID_LEN+2)
-
-#define _GSS_KRB5_WRAP_DATA _GSS_KRB5_OID_DER "\x02\x01"
-#define _GSS_KRB5_WRAP_LEN  (_GSS_KRB5_OID_LEN+2)
-
 #define _GSS_KRB5_TOK_AP_REQ_DATA "\x01\x00"
-#define _GSS_KRB5_TOK_AP_REQ_LEN  strlen(_GSS_KRB5_TOK_AP_REQ_DATA)
+#define _GSS_KRB5_TOK_AP_REQ_LEN  2
 #define _GSS_KRB5_TOK_AP_REP_DATA "\x02\x00"
-#define _GSS_KRB5_TOK_AP_REP_LEN  strlen(_GSS_KRB5_TOK_AP_REP_DATA)
+#define _GSS_KRB5_TOK_AP_REP_LEN  2
 
 #define _GSS_KRB5_TOK_MIC_DATA  "\x01\x01"
-#define _GSS_KRB5_TOK_MIC_LEN   strlen(_GSS_KRB5_TOK_MIC_DATA)
+#define _GSS_KRB5_TOK_MIC_LEN   2
 #define _GSS_KRB5_TOK_WRAP_DATA "\x02\x01"
-#define _GSS_KRB5_TOK_WRAP_LEN  strlen(_GSS_KRB5_TOK_WRAP_DATA)
+#define _GSS_KRB5_TOK_WRAP_LEN  2
 
 
 static void
@@ -96,6 +81,29 @@ hexprint (const unsigned char *str, int len)
 	printf ("\n\t ;; ");
     }
   printf ("\n");
+}
+
+int
+_gss_encapsulate_token_krb5 (char *oid, size_t oidlen,
+			     char *type, size_t typelen,
+			     char *in, size_t inlen,
+			     char **out, size_t *outlen)
+{
+  char *p;
+  int rc;
+
+  p = malloc(typelen + inlen);
+  if (!p)
+    return 0;
+
+  memcpy(p, type, typelen);
+  memcpy(p + typelen, in, inlen);
+
+  rc = _gss_encapsulate_token(oid, oidlen, p, typelen + inlen, out, outlen);
+
+  free(p);
+
+  return 1;
 }
 
 OM_uint32
@@ -125,6 +133,7 @@ krb5_gss_init_sec_context (OM_uint32 * minor_status,
   if (*context_handle == GSS_C_NO_CONTEXT)
     {
       gss_ctx_id_t ctx;
+      gss_buffer_desc tmp;
 
       ctx = malloc(sizeof(*ctx));
       if (!ctx)
@@ -178,13 +187,14 @@ krb5_gss_init_sec_context (OM_uint32 * minor_status,
 	}
       ctx->krb5->tkt = tkt;
 
-      data = malloc(24);
-      memcpy(&data[0], "\x10\x00\x00\x00", 4); /* length of Bnd */
-      memset(&data[4], 0, 16); /* XXX we only support GSS_C_NO_BINDING */
-      data[20] = req_flags & 0xFF;
-      data[21] = (req_flags >> 8) & 0xFF;
-      data[22] = (req_flags >> 16) & 0xFF;
-      data[23] = (req_flags >> 24) & 0xFF;
+      data = malloc(2 + 24);
+      memcpy(&data[0], _GSS_KRB5_TOK_AP_REQ_DATA, _GSS_KRB5_TOK_AP_REQ_LEN);
+      memcpy(&data[2], "\x10\x00\x00\x00", 4); /* length of Bnd */
+      memset(&data[6], 0, 16); /* XXX we only support GSS_C_NO_BINDING */
+      data[22] = req_flags & 0xFF;
+      data[23] = (req_flags >> 8) & 0xFF;
+      data[24] = (req_flags >> 16) & 0xFF;
+      data[25] = (req_flags >> 24) & 0xFF;
       ctx->krb5->flags = req_flags;
 
       rc = shishi_ap_tktoptionsdata (h, &ap, tkt, 0, "a", 1);
@@ -197,7 +207,7 @@ krb5_gss_init_sec_context (OM_uint32 * minor_status,
 	return GSS_S_FAILURE;
 
       rc = shishi_authenticator_set_cksum (h, shishi_ap_authenticator(ap),
-					   0x8003, data, 24);
+					   0x8003, data + 2, 24);
       if (rc != SHISHI_OK)
 	return GSS_S_FAILURE;
 
@@ -208,14 +218,20 @@ krb5_gss_init_sec_context (OM_uint32 * minor_status,
       if (rc != SHISHI_OK)
 	return GSS_S_FAILURE;
 
+      free(data);
+
       rc = shishi_new_a2d (h, shishi_ap_req(ap), &data, &len);
       if (rc != SHISHI_OK)
 	return GSS_S_FAILURE;
 
-      rc = _gss_encapsulate_token(_GSS_KRB5_AP_REQ_DATA, _GSS_KRB5_AP_REQ_LEN,
-				  data, len,
-				  (void**)&(output_token->value),
-				  &output_token->length);
+      tmp.length = len + _GSS_KRB5_TOK_AP_REQ_LEN;
+      tmp.value = malloc(tmp.length);
+      if (!tmp.value)
+	return GSS_S_FAILURE;
+      memcpy(tmp.value, _GSS_KRB5_TOK_AP_REQ_DATA, _GSS_KRB5_TOK_AP_REQ_LEN);
+      memcpy((char*)tmp.value + _GSS_KRB5_TOK_AP_REQ_LEN, data, len);
+
+      rc = gss_encapsulate_token(&tmp, GSS_KRB5, output_token);
       if (!rc)
 	return GSS_S_FAILURE;
 
@@ -231,11 +247,11 @@ krb5_gss_init_sec_context (OM_uint32 * minor_status,
       gss_OID_desc tokenoid;
       gss_buffer_desc data;
 
-      rc = _gss_decapsulate_token (input_token, &tokenoid, &data);
+      rc = gss_decapsulate_token (input_token, &tokenoid, &data);
       if (!rc)
 	return GSS_S_BAD_MIC;
 
-      if (!_gss_oid_equal (&tokenoid, GSS_KRB5_MECH_OID))
+      if (!_gss_oid_equal (&tokenoid, GSS_KRB5))
 	return GSS_S_BAD_MIC;
 
       if (memcmp(data.value, _GSS_KRB5_TOK_AP_REP_DATA,
@@ -368,7 +384,7 @@ krb5_gss_wrap (OM_uint32 * minor_status,
       memset (data + 8 + 8 + 20 + 8 + input_message_buffer->length,
 	      padlength, padlength);
 
-      rc = _gss_encapsulate_token(_GSS_KRB5_OID_DER, _GSS_KRB5_OID_LEN,
+      rc = _gss_encapsulate_token(GSS_KRB5->elements, GSS_KRB5->length,
 				  data, len,
 				  (void**)&(output_message_buffer->value),
 				  &output_message_buffer->length);
@@ -398,11 +414,11 @@ krb5_gss_unwrap (OM_uint32 * minor_status,
   size_t tmplen;
   int rc;
 
-  rc = _gss_decapsulate_token (input_message_buffer, &tokenoid, &data);
+  rc = gss_decapsulate_token (input_message_buffer, &tokenoid, &data);
   if (!rc)
     return GSS_S_BAD_MIC;
 
-  if (!_gss_oid_equal (&tokenoid, GSS_KRB5_MECH_OID))
+  if (!_gss_oid_equal (&tokenoid, GSS_KRB5))
     return GSS_S_BAD_MIC;
 
   if (data.length < 8 + 8 + 20 + 8 + 8)
