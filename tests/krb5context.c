@@ -404,8 +404,6 @@ main (int argc, char *argv[])
 			    GSS_C_PROT_READY_FLAG))
 	    fail ("loop 1 ret_flags failure (%d)\n", ret_flags);
 	  break;
-
-	  /* No case 2. */
 	}
       if (GSS_ERROR (maj_stat))
 	{
