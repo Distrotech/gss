@@ -4,6 +4,10 @@ See the end for copying conditions.
 
 * Changes in 0.0.12 (unreleased)
 
+** Cross compile builds should work.
+It should work for any sane cross compile target, but the only tested
+platform is uClibc/uClinux on Motorola Coldfire.
+
 * Changes in 0.0.11 (released 2004-04-18)
 
 ** Minor cleanups to the core header file.
