@@ -353,6 +353,12 @@ gss_krb5_accept_sec_context (OM_uint32 * minor_status,
       return GSS_S_FAILURE;
     }
 
+  rc = shishi_authenticator_seqnumber_get (cxk5->sh,
+					   shishi_ap_authenticator (cxk5->ap),
+					   &cxk5->initseqnr);
+  if (rc != SHISHI_OK)
+    return GSS_S_FAILURE;
+
   if (shishi_ap_authenticator_cksumtype (cxk5->ap) != 0x8003)
     {
       if (minor_status)
@@ -374,6 +380,17 @@ gss_krb5_accept_sec_context (OM_uint32 * minor_status,
 	{
 	  printf ("Error creating AP-REP: %s\n", shishi_strerror (rc));
 	  return GSS_S_FAILURE;
+	}
+
+      rc = shishi_encapreppart_seqnumber_get (cxk5->sh,
+					      shishi_ap_encapreppart (cxk5->ap),
+					      &cxk5->acceptseqnr);
+      if (rc != SHISHI_OK)
+	{
+	  /* A strict 1964 implementation would return
+	     GSS_S_DEFECTIVE_TOKEN here.  gssapi-cfx permit absent
+	     sequence number, though. */
+	  cxk5->acceptseqnr = 0;
 	}
 
       rc = shishi_asn1_to_der (crk5->sh, aprep,
