@@ -31,7 +31,7 @@ gss_import_name (OM_uint32 * minor_status,
   if (!output_name)
     return GSS_S_FAILURE;
 
-  *output_name = malloc (sizeof (*output_name));
+  *output_name = malloc (sizeof (**output_name));
   if (!*output_name)
     return GSS_S_FAILURE;
 
@@ -157,8 +157,11 @@ gss_duplicate_name (OM_uint32 * minor_status,
 
   maj_stat = gss_duplicate_oid (minor_status, src_name->type,
 				&((*dest_name)->type));
+  if (GSS_ERROR(maj_stat))
+    return maj_stat;
   (*dest_name)->length = src_name->length;
   (*dest_name)->value = malloc(src_name->length);
+
   if (!(*dest_name)->value)
     return GSS_S_FAILURE;
   memcpy((*dest_name)->value, src_name->value, src_name->length);
