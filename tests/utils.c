@@ -30,6 +30,12 @@
 #include <ctype.h>
 #endif
 
+#ifdef HAVE_LOCALE_H
+#include <locale.h>
+#endif
+
+#include "gettext.h"
+
 #include "api.h"
 #include "ext.h"
 #ifdef USE_KERBEROS5

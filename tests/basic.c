@@ -33,10 +33,10 @@ main (int argc, char *argv[])
   gss_name_t service;
   gss_OID_set oids;
 
-#if ENABLE_NLS
+#if HAVE_LOCALE_H
   setlocale (LC_ALL, "");
-  bindtextdomain (PACKAGE, LOCALEDIR);
 #endif
+  bindtextdomain (PACKAGE, LOCALEDIR);
 
   do
     if (strcmp (argv[argc - 1], "-v") == 0 ||
