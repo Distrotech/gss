@@ -692,7 +692,7 @@ gss_accept_sec_context (OM_uint32 * minor_status,
  * token is required, and that gss_delete_sec_context should simply
  * delete local context data structures.  If the application does pass
  * a valid buffer to gss_delete_sec_context, mechanisms are encouraged
- * to return a zero- length token, indicating that no peer action is
+ * to return a zero-length token, indicating that no peer action is
  * necessary, and that no token should be transferred by the
  * application.
  *
@@ -707,6 +707,9 @@ gss_delete_sec_context (OM_uint32 * minor_status,
 			gss_ctx_id_t * context_handle,
 			gss_buffer_t output_token)
 {
+  _gss_mech_api_t mech;
+  OM_uint32 ret;
+
   if (!context_handle || *context_handle == GSS_C_NO_CONTEXT)
     return GSS_S_NO_CONTEXT;
 
@@ -716,7 +719,16 @@ gss_delete_sec_context (OM_uint32 * minor_status,
       output_token->value = NULL;
     }
 
-  /* XXX krb5 deallocate */
+  mech = _gss_find_mech ((*context_handle)->mech);
+
+  ret = mech->delete_sec_context (minor_status, context_handle, output_token);
+  if (GSS_S_ERROR (ret))
+    /* XXX? Ignore error. */;
+
+  (*context_handle)->peerptr = &(*context_handle)->peer;
+  ret = gss_release_name (minor_status, &(*context_handle)->peerptr);
+  if (GSS_S_ERROR (ret))
+    /* XXX? Ignore error. */;
 
   free (*context_handle);
   *context_handle = GSS_C_NO_CONTEXT;
