@@ -100,6 +100,11 @@ _gss_krb5_checksum1964_pack (const gss_cred_id_t initiator_cred_handle,
    *                 in little-endian form.
    */
 
+  req_flags &= /* GSS_C_DELEG_FLAG | */
+    GSS_C_MUTUAL_FLAG |
+    GSS_C_REPLAY_FLAG | GSS_C_SEQUENCE_FLAG |
+    GSS_C_CONF_FLAG | GSS_C_INTEG_FLAG;
+
   p[20] = req_flags & 0xFF;
   p[21] = (req_flags >> 8) & 0xFF;
   p[22] = (req_flags >> 16) & 0xFF;
