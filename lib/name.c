@@ -1,5 +1,5 @@
 /* name.c	Implementation of GSS-API Name Manipulation functions.
- * Copyright (C) 2003  Simon Josefsson
+ * Copyright (C) 2003, 2004  Simon Josefsson
  *
  * This file is part of the Generic Security Service (GSS).
  *
@@ -95,9 +95,27 @@ gss_compare_name (OM_uint32 * minor_status,
   return GSS_S_COMPLETE;
 }
 
+/**
+ * gss_release_name:
+ * @minor_status: (Integer, modify) Mechanism specific status code.
+ * @name: (gss_name_t, modify) The name to be deleted.
+ *
+ * Free GSSAPI-allocated storage associated with an internal-form
+ * name.  Implementations are encouraged to set the name to
+ * GSS_C_NO_NAME on successful completion of this call.
+ *
+ * Valid return values and their meaning:
+ *
+ * `GSS_S_COMPLETE`: Successful completion.
+ *
+ * `GSS_S_BAD_NAME`: The name parameter did not contain a valid name.
+ **/
 OM_uint32
 gss_release_name (OM_uint32 * minor_status, gss_name_t * name)
 {
+  if (minor_status)
+    *minor_status = 0;
+
   if (!name || *name == GSS_C_NO_NAME)
     return GSS_S_BAD_NAME;
 
@@ -107,8 +125,6 @@ gss_release_name (OM_uint32 * minor_status, gss_name_t * name)
   free(*name);
   *name = GSS_C_NO_NAME;
 
-  if (minor_status)
-    *minor_status = 0;
   return GSS_S_COMPLETE;
 }
 
