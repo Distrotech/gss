@@ -71,7 +71,7 @@ gss_add_oid_set_member (OM_uint32 * minor_status,
   gss_OID new_oid;
   int present;
 
-  if (member_oid->length == 0 || member_oid->elements == NULL)
+  if (!member_oid || member_oid->length == 0 || member_oid->elements == NULL)
     return GSS_S_FAILURE;
 
   major_stat = gss_test_oid_set_member (minor_status, member_oid,
