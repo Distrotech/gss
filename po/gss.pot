@@ -16,80 +16,40 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: lib/error.c:32
-msgid "GSS_S_CALL_INACCESSIBLE_READ"
-msgstr ""
-
 #: lib/error.c:33
 msgid "A required input parameter could not be read"
-msgstr ""
-
-#: lib/error.c:34
-msgid "GSS_S_CALL_INACCESSIBLE_WRITE"
 msgstr ""
 
 #: lib/error.c:35
 msgid "A required output parameter could not be written"
 msgstr ""
 
-#: lib/error.c:36
-msgid "GSS_S_CALL_BAD_STRUCTURE"
-msgstr ""
-
 #: lib/error.c:37
 msgid "A parameter was malformed"
-msgstr ""
-
-#: lib/error.c:41
-msgid "GSS_S_BAD_MECH"
 msgstr ""
 
 #: lib/error.c:42
 msgid "An unsupported mechanism was requested"
 msgstr ""
 
-#: lib/error.c:43
-msgid "GSS_S_BAD_NAME"
-msgstr ""
-
 #: lib/error.c:44
 msgid "An invalid name was supplied"
-msgstr ""
-
-#: lib/error.c:45
-msgid "GSS_S_BAD_NAMETYPE"
 msgstr ""
 
 #: lib/error.c:46
 msgid "A supplied name was of an unsupported type"
 msgstr ""
 
-#: lib/error.c:47
-msgid "GSS_S_BAD_BINDINGS"
-msgstr ""
-
 #: lib/error.c:48
 msgid "Incorrect channel bindings were supplied"
-msgstr ""
-
-#: lib/error.c:49
-msgid "GSS_S_BAD_STATUS"
 msgstr ""
 
 #: lib/error.c:50
 msgid "An invalid status code was supplied"
 msgstr ""
 
-#: lib/error.c:51
-msgid "GSS_S_BAD_SIG"
-msgstr ""
-
 #: lib/error.c:52
 msgid "A token had an invalid MIC"
-msgstr ""
-
-#: lib/error.c:53
-msgid "GSS_S_NO_CRED"
 msgstr ""
 
 #: lib/error.c:54
@@ -98,96 +58,48 @@ msgid ""
 "inaccessible"
 msgstr ""
 
-#: lib/error.c:56
-msgid "GSS_S_NO_CONTEXT"
-msgstr ""
-
 #: lib/error.c:57
 msgid "No context has been established"
-msgstr ""
-
-#: lib/error.c:58
-msgid "GSS_S_DEFECTIVE_TOKEN"
 msgstr ""
 
 #: lib/error.c:59
 msgid "A token was invalid"
 msgstr ""
 
-#: lib/error.c:60
-msgid "GSS_S_DEFECTIVE_CREDENTIAL"
-msgstr ""
-
 #: lib/error.c:61
 msgid "A credential was invalid"
-msgstr ""
-
-#: lib/error.c:62
-msgid "GSS_S_CREDENTIALS_EXPIRED"
 msgstr ""
 
 #: lib/error.c:63
 msgid "The referenced credentials have expired"
 msgstr ""
 
-#: lib/error.c:64
-msgid "GSS_S_CONTEXT_EXPIRED"
-msgstr ""
-
 #: lib/error.c:65
 msgid "The context has expired"
-msgstr ""
-
-#: lib/error.c:66
-msgid "GSS_S_FAILURE"
 msgstr ""
 
 #: lib/error.c:67
 msgid "Unspecified error in underlying mechanism"
 msgstr ""
 
-#: lib/error.c:68
-msgid "GSS_S_BAD_QOP"
-msgstr ""
-
 #: lib/error.c:69
 msgid "The quality-of-protection requested could not be provided"
-msgstr ""
-
-#: lib/error.c:70
-msgid "GSS_S_UNAUTHORIZED"
 msgstr ""
 
 #: lib/error.c:71
 msgid "The operation is forbidden by local security policy"
 msgstr ""
 
-#: lib/error.c:72
-msgid "GSS_S_UNAVAILABLE"
-msgstr ""
-
 #: lib/error.c:73
 msgid "The operation or option is unavailable"
-msgstr ""
-
-#: lib/error.c:74
-msgid "GSS_S_DUPLICATE_ELEMENT"
 msgstr ""
 
 #: lib/error.c:75
 msgid "The requested credential element already exists"
 msgstr ""
 
-#: lib/error.c:76
-msgid "GSS_S_NAME_NOT_MN"
-msgstr ""
-
 #: lib/error.c:77
 msgid "The provided name was not a mechanism name"
-msgstr ""
-
-#: lib/error.c:81
-msgid "GSS_S_CONTINUE_NEEDED"
 msgstr ""
 
 #: lib/error.c:82
@@ -196,32 +108,16 @@ msgid ""
 "called again to complete its function"
 msgstr ""
 
-#: lib/error.c:84
-msgid "GSS_S_DUPLICATE_TOKEN"
-msgstr ""
-
 #: lib/error.c:85
 msgid "The token was a duplicate of an earlier token"
-msgstr ""
-
-#: lib/error.c:86
-msgid "GSS_S_OLD_TOKEN"
 msgstr ""
 
 #: lib/error.c:87
 msgid "The token's validity period has expired"
 msgstr ""
 
-#: lib/error.c:88
-msgid "GSS_S_UNSEQ_TOKEN"
-msgstr ""
-
 #: lib/error.c:89
 msgid "A later token has already been processed"
-msgstr ""
-
-#: lib/error.c:90
-msgid "GSS_S_GAP_TOKEN"
 msgstr ""
 
 #: lib/error.c:91
@@ -240,136 +136,68 @@ msgstr ""
 msgid "No error"
 msgstr ""
 
-#: lib/krb5.c:692
-msgid "GSS_KRB5_S_G_BAD_SERVICE_NAME"
-msgstr ""
-
 #: lib/krb5.c:693
 msgid "No @ in SERVICE-NAME name string"
-msgstr ""
-
-#: lib/krb5.c:694
-msgid "GSS_KRB5_S_G_BAD_STRING_UID"
 msgstr ""
 
 #: lib/krb5.c:695
 msgid "STRING-UID-NAME contains nondigits"
 msgstr ""
 
-#: lib/krb5.c:696
-msgid "GSS_KRB5_S_G_NOUSER"
-msgstr ""
-
 #: lib/krb5.c:697
 msgid "UID does not resolve to username"
-msgstr ""
-
-#: lib/krb5.c:698
-msgid "GSS_KRB5_S_G_VALIDATE_FAILED"
 msgstr ""
 
 #: lib/krb5.c:699
 msgid "Validation error"
 msgstr ""
 
-#: lib/krb5.c:700
-msgid "GSS_KRB5_S_G_BUFFER_ALLOC"
-msgstr ""
-
 #: lib/krb5.c:701
 msgid "Couldn't allocate gss_buffer_t data"
-msgstr ""
-
-#: lib/krb5.c:702
-msgid "GSS_KRB5_S_G_BAD_MSG_CTX"
 msgstr ""
 
 #: lib/krb5.c:703
 msgid "Message context invalid"
 msgstr ""
 
-#: lib/krb5.c:704
-msgid "GSS_KRB5_S_G_WRONG_SIZE"
-msgstr ""
-
 #: lib/krb5.c:705
 msgid "Buffer is the wrong size"
-msgstr ""
-
-#: lib/krb5.c:706
-msgid "GSS_KRB5_S_G_BAD_USAGE"
 msgstr ""
 
 #: lib/krb5.c:707
 msgid "Credential usage type is unknown"
 msgstr ""
 
-#: lib/krb5.c:708
-msgid "GSS_KRB5_S_G_UNKNOWN_QOP"
-msgstr ""
-
 #: lib/krb5.c:709
 msgid "Unknown quality of protection specified"
-msgstr ""
-
-#: lib/krb5.c:711
-msgid "GSS_KRB5_S_KG_CCACHE_NOMATCH"
 msgstr ""
 
 #: lib/krb5.c:712
 msgid "Principal in credential cache does not match desired name"
 msgstr ""
 
-#: lib/krb5.c:713
-msgid "GSS_KRB5_S_KG_KEYTAB_NOMATCH"
-msgstr ""
-
 #: lib/krb5.c:714
 msgid "No principal in keytab matches desired name"
-msgstr ""
-
-#: lib/krb5.c:715
-msgid "GSS_KRB5_S_KG_TGT_MISSING"
 msgstr ""
 
 #: lib/krb5.c:716
 msgid "Credential cache has no TGT"
 msgstr ""
 
-#: lib/krb5.c:717
-msgid "GSS_KRB5_S_KG_NO_SUBKEY"
-msgstr ""
-
 #: lib/krb5.c:718
 msgid "Authenticator has no subkey"
-msgstr ""
-
-#: lib/krb5.c:719
-msgid "GSS_KRB5_S_KG_CONTEXT_ESTABLISHED"
 msgstr ""
 
 #: lib/krb5.c:720
 msgid "Context is already fully established"
 msgstr ""
 
-#: lib/krb5.c:721
-msgid "GSS_KRB5_S_KG_BAD_SIGN_TYPE"
-msgstr ""
-
 #: lib/krb5.c:722
 msgid "Unknown signature type in token"
 msgstr ""
 
-#: lib/krb5.c:723
-msgid "GSS_KRB5_S_KG_BAD_LENGTH"
-msgstr ""
-
 #: lib/krb5.c:724
 msgid "Invalid field length in token"
-msgstr ""
-
-#: lib/krb5.c:725
-msgid "GSS_KRB5_S_KG_CTX_INCOMPLETE"
 msgstr ""
 
 #: lib/krb5.c:726
