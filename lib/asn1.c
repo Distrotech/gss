@@ -22,8 +22,8 @@
 #include "internal.h"
 
 /*
- * The following function borrowed from libtasn.1, under LGPL.
- * Copyright (C) 2002  Fabio Fiorina
+ * The following two functions borrowed from libtasn.1, under LGPL.
+ * Copyright (C) 2002 Fabio Fiorina.
  */
 static void
 _gss_asn1_length_der(size_t len, unsigned char *ans, size_t *ans_len)
@@ -31,33 +31,60 @@ _gss_asn1_length_der(size_t len, unsigned char *ans, size_t *ans_len)
   size_t k;
   unsigned char temp[sizeof(len)];
 
-  if(len<128)
+  if(len < 128)
     {
-      if(ans!=NULL) ans[0]=(unsigned char)len;
-      *ans_len=1;
+      if(ans != NULL)
+	ans[0] = (unsigned char)len;
+      *ans_len = 1;
     }
   else
     {
       k=0;
 
-      while(len)
+      while (len)
 	{
-	  temp[k++]=len&0xFF;
-	  len=len>>8;
+	  temp[k++] = len & 0xFF;
+	  len = len>>8;
 	}
 
-      *ans_len=k+1;
+      *ans_len = k+1;
 
-      if(ans!=NULL)
+      if(ans != NULL)
 	{
-	  ans[0]=((unsigned char)k&0x7F)+128;
-	  while(k--)
-	    ans[*ans_len-1-k]=temp[k];
+	  ans[0] = ((unsigned char)k & 0x7F) + 128;
+	  while (k--)
+	    ans[*ans_len-1-k] = temp[k];
 	}
     }
 }
 
-int
+static unsigned long
+_gss_asn1_get_length_der (const unsigned char *der, int *len)
+{
+  unsigned long ans;
+  int k, punt;
+
+  if (!(der[0] & 128))
+    {
+      /* short form */
+      *len = 1;
+      return der[0];
+    }
+  else
+    {
+      /* Long form */
+      k = der[0] & 0x7F;
+      punt = 1;
+      ans = 0;
+      while (punt <= k && *len < punt)
+	ans = ans * 256 + der[punt++];
+
+      *len = punt;
+      return ans;
+    }
+}
+
+static int
 _gss_encapsulate_token (char *oid, size_t oidlen,
 			char *in, size_t inlen,
 			char **out, size_t *outlen)
@@ -104,30 +131,7 @@ gss_encapsulate_token (gss_buffer_t input_message,
 				 &output_message->length);
 }
 
-static unsigned long
-_gss_asn1_get_length_der (const unsigned char *der, int *len)
-{
-  unsigned long ans;
-  int k, punt;
-
-  if(!(der[0]&128)){
-    /* short form */
-    *len=1;
-    return der[0];
-  }
-  else{
-    /* Long form */
-    k=der[0]&0x7F;
-    punt=1;
-    ans=0;
-    while(punt<=k && *len < punt) ans=ans*256+der[punt++];
-
-    *len=punt;
-    return ans;
-  }
-}
-
-int
+static int
 _gss_decapsulate_token (char *in, size_t inlen,
 			char **oid, size_t *oidlen,
 			char **out, size_t *outlen)
