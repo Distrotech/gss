@@ -68,16 +68,16 @@ _gss_asn1_get_length_der (const char *der, int *len)
     {
       /* short form */
       *len = 1;
-      return der[0];
+      return (unsigned char) der[0];
     }
   else
     {
       /* Long form */
-      k = der[0] & 0x7F;
+      k = (unsigned char) der[0] & 0x7F;
       punt = 1;
       ans = 0;
       while (punt <= k && punt < *len)
-	ans = ans * 256 + der[punt++];
+	ans = ans * 256 + (unsigned char) der[punt++];
 
       *len = punt;
       return ans;
