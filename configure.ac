@@ -69,22 +69,6 @@ fi
 AC_MSG_CHECKING([if the Kerberos V5 mechanism should be supported])
 AC_MSG_RESULT($kerberos5)
 
-# Test if the libc includes a good enough argp.
-AC_ARG_WITH(system-argp,
-  AC_HELP_STRING([--without-system-argp], [Don't use the system's argp]))
-if test "$with_system_argp" != "no" ; then
-  AC_LIB_ARGP(,with_system_argp=no)
-fi
-if test "$with_system_argp" = "no" ; then
-  ARGP_LIBS="\$(top_builddir)/argp/libargp.a"
-  ARGP_CFLAGS="-I\$(top_srcdir)/argp"
-  ARGP=argp
-fi
-AC_SUBST(ARGP)
-AC_SUBST(ARGP_LIBS)
-AC_SUBST(ARGP_CFLAGS)
-AC_CONFIG_SUBDIRS(argp)
-
 # We are done
 AC_CONFIG_FILES(Makefile gss.pc lib/gss.h po/Makefile.in m4/Makefile \
 		doc/Makefile lib/Makefile tests/Makefile)
