@@ -227,3 +227,34 @@ gss_decapsulate_token (gss_buffer_t input_message,
 
   return 1;
 }
+
+int
+gss_decapsulate_token_check (gss_buffer_t input_message,
+			     char *prefix, size_t prefixlen,
+			     gss_OID token_oid,
+			     gss_buffer_t output_message)
+{
+  gss_OID_desc tmp;
+  gss_buffer_desc data;
+  int rc;
+
+  rc = gss_decapsulate_token (input_message, &tmp, &data);
+  if (!rc)
+    return 0;
+
+  if (!gss_oid_equal (&tmp, token_oid) ||
+      data.length < prefixlen ||
+      memcmp (data.value, prefix, prefixlen) != 0)
+    {
+      gss_release_oid (NULL, &tmp);
+      gss_release_buffer (NULL, &data);
+      return 0;
+    }
+
+  memmove (data.value, data.value + prefixlen, data.length - prefixlen);
+
+  output_message->length = data.length - prefixlen;
+  output_message->value = data.value;
+
+  return 1;
+}
