@@ -1,3 +1,97 @@
+2003-08-10  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS: Version 0.0.4.
+
+2003-08-09  Simon Josefsson <simon@josefsson.org>
+
+	* Makefile.am: Remove scp from release target.
+
+2003-08-09  Simon Josefsson <simon@josefsson.org>
+
+	* Makefile.am: Fix release target.
+
+2003-08-09  Simon Josefsson <simon@josefsson.org>
+
+	* po/gss.pot, po/sv.po: Generated.
+
+2003-08-09  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS: Fix.
+
+2003-08-09  Simon Josefsson <simon@josefsson.org>
+
+	* lib/krb5.c: Don't hard code ad-hoc GSS Shishi checksum type.
+
+2003-08-09  Simon Josefsson <simon@josefsson.org>
+
+	* lib/Makefile.am: Link gnulib properly.
+
+2003-08-09  Simon Josefsson <simon@josefsson.org>
+
+	* lib/internal.h: Fix title.
+
+2003-08-09  Simon Josefsson <simon@josefsson.org>
+
+	* lib/krb5.c: Set oid in cred struct.  Add unfinished inquire_cred.
+
+2003-08-09  Simon Josefsson <simon@josefsson.org>
+
+	* lib/meta.c, lib/krb5.h: Add inquire_cred.
+
+2003-08-09  Simon Josefsson <simon@josefsson.org>
+
+	* lib/internal.h: Add mech OID to cred struct.	Add inquire_cred to
+	  meta structure.
+
+2003-08-09  Simon Josefsson <simon@josefsson.org>
+
+	* lib/cred.c: Add inquire_cred jump.
+
+2003-08-09  Simon Josefsson <simon@josefsson.org>
+
+	* gl/Makefile.am: Use libtool.
+
+2003-07-31  Simon Josefsson <simon@josefsson.org>
+
+	* README, ANNOUNCE: Use gnu.org web site.
+
+2003-07-31  Simon Josefsson <simon@josefsson.org>
+
+	* Makefile.am: Distribute files via gnuftp.
+
+2003-07-10  Simon Josefsson <simon@josefsson.org>
+
+	* po/Makevars: Use proper bug email address.
+
+2003-07-10  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS: Add.
+
+2003-07-10  Simon Josefsson <simon@josefsson.org>
+
+	* configure.ac: Bump version.
+
+2003-07-08  Simon Josefsson <simon@josefsson.org>
+
+	* lib/krb5.c: (gss_krb5_unwrap): Decrypt properly.
+
+2003-07-08  Simon Josefsson <simon@josefsson.org>
+
+	* lib/krb5.c: Use new Shishi crypto API.
+
+2003-07-06  Simon Josefsson <simon@josefsson.org>
+
+	* lib/krb5.c: Fixes.
+
+2003-07-06  Simon Josefsson <simon@josefsson.org>
+
+	* TODO: Add.
+
+2003-07-05  Simon Josefsson <simon@josefsson.org>
+
+	* lib/krb5.c: (gss_krb5_init_sec_context): Reuse shishi handle from
+	  credential, if available.
+
 2003-07-02  Simon Josefsson <simon@josefsson.org>
 
 	* NEWS: Version 0.0.3.
