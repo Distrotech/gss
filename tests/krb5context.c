@@ -359,8 +359,7 @@ main (int argc, char *argv[])
 	  display_status ("server delete_sec_context", maj_stat, min_stat);
 	}
 
-      if (debug)
-	printf ("loop %d ok\n", i);
+      success ("loop %d ok\n", i);
     }
 
   /* Clean up. */
