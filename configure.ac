@@ -83,7 +83,7 @@ AC_SUBST(ARGP_CFLAGS)
 AC_CONFIG_SUBDIRS(argp)
 
 # We are done
-AC_CONFIG_FILES(Makefile po/Makefile.in m4/Makefile \
-		doc/Makefile doc/reference/Makefile lib/Makefile \
-		ggssapi.pc src/Makefile tests/Makefile)
+AC_CONFIG_FILES(Makefile ggssapi.pc po/Makefile.in m4/Makefile \
+		doc/Makefile lib/Makefile src/Makefile tests/Makefile)
+
 AC_OUTPUT
