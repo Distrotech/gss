@@ -508,6 +508,8 @@ This would be an API extension.  It could work by forking a process
 and interface to it, or by using a user-specific daemon.  E.g., h =
 START(accept_sec_context(...)), FINISHED(h), ret = FINISH(h), ABORT(h).
 
+@item Compute MD5 of non-empty channel bindings.
+
 @item Support loadable modules via dlopen, a'la Solaris GSS.
 
 @item Port to Cyclone? CCured?
