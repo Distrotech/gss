@@ -42,7 +42,6 @@ AM_GNU_GETTEXT_VERSION(0.12.1)
 AC_PROG_CC
 
 # Checks for header files.
-AC_GNU_SOURCE
 AC_HEADER_STDC
 
 # We use libtool.
