@@ -26,6 +26,13 @@ extern const char *
 gss_check_version (const char *req_version);
 
 extern int
+gss_oid_equal (gss_OID first_oid, gss_OID second_oid);
+
+extern OM_uint32
+gss_duplicate_oid (OM_uint32 * minor_status,
+		   const gss_OID src_oid, gss_OID * dest_oid);
+
+extern int
 gss_encapsulate_token (gss_buffer_t input_message,
 		       gss_OID token_oid,
 		       gss_buffer_t output_message);
