@@ -20,21 +20,21 @@
 
 EXTRA_DIST =
 
-lib_LTLIBRARIES = libggssapi.la
+lib_LTLIBRARIES = libgss.la
 
 INCLUDES = -I../intl
 
 include_HEADERS = gssapi.h ggssapi.h
 
-libggssapi_la_SOURCES = internal.h version.c error.c \
+libgss_la_SOURCES = internal.h version.c error.c \
 	context.c cred.c misc.c msg.c name.c obsolete.c oid.c
 
-libggssapi_la_LIBADD = @LTLIBINTL@ @LTLIBOBJS@
-libggssapi_la_LDFLAGS = -version-info $(LT_CURRENT):$(LT_REVISION):$(LT_AGE)
+libgss_la_LIBADD = @LTLIBINTL@ @LTLIBOBJS@
+libgss_la_LDFLAGS = -version-info $(LT_CURRENT):$(LT_REVISION):$(LT_AGE)
 
 localedir = $(datadir)/locale
 
 DEFS = -DLOCALEDIR=\"$(localedir)\" @DEFS@
 
 indent:
-	indent $(libggssapi_la_SOURCES) gssapi.h gssapi.h.in
+	indent $(libgss_la_SOURCES) gssapi.h gssapi.h.in
