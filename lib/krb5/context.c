@@ -256,7 +256,11 @@ gss_krb5_accept_sec_context (OM_uint32 * minor_status,
 
   rc = shishi_ap_req_process (cxk5->ap, crk5->key);
   if (rc != SHISHI_OK)
-    return GSS_S_FAILURE;
+    {
+      if (minor_status)
+	*minor_status = GSS_KRB5_S_G_VALIDATE_FAILED;
+      return GSS_S_FAILURE;
+    }
 
   cxk5->tkt = shishi_ap_tkt (cxk5->ap);
   cxk5->key = shishi_tkt_key (cxk5->tkt);
