@@ -1430,6 +1430,8 @@ allocated.  Any length field associated with such pointers (as in a
                                    if necessary.
 @end verbatim
 
+@include texi/gss_get_mic.texi
+@include texi/gss_verify_mic.texi
 @include texi/gss_wrap.texi
 @include texi/gss_unwrap.texi
 
