@@ -33,7 +33,7 @@ gss_TEXINFOS = gpl.texi fdl.texi
 
 gss.1: $(top_srcdir)/src/gss.c $(top_builddir)/src/gss
 	$(HELP2MAN) \
-		--name="GPL GSS-API library command line interface" \
+		--name="Generic Security Service command line interface" \
 		--output=$@ $(top_builddir)/src/gss
 
 gss.html: gss.texi
