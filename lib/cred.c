@@ -69,8 +69,6 @@ gss_acquire_cred (OM_uint32 * minor_status,
 			     output_cred_handle,
 			     actual_mechs,
 			     time_rec);
-
-  return GSS_S_FAILURE;
 }
 
 OM_uint32
