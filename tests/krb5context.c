@@ -415,7 +415,8 @@ main (int argc, char *argv[])
 	  display_status ("server delete_sec_context", maj_stat, min_stat);
 	}
 
-      printf ("loop %d ok\n", i);
+      if (debug)
+	printf ("loop %d ok\n", i);
     }
   /* Clean up. */
 

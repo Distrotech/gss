@@ -25,7 +25,8 @@ endif
 AM_LDFLAGS = -no-install
 LDADD = ../lib/libgss.la
 
-TESTS_ENVIRONMENT = SHISHI_CONFIG=krb5context.cfg SHISHI_HOME=krb5context.home SHISHI_TICKETS=krb5context.tkt
+TESTS_ENVIRONMENT = SHISHI_CONFIG=ignore-this-warning \
+	SHISHI_HOME=ignore-this-warning SHISHI_TICKETS=krb5context.tkt
 
 TESTS = basic krb5context
 check_PROGRAMS = $(TESTS)
