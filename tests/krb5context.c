@@ -74,70 +74,6 @@ success (const char *format, ...)
 }
 
 static void
-escapeprint (const unsigned char *str, int len)
-{
-  int i;
-
-  if (!str || !len)
-    return;
-
-  printf ("\t ;; `");
-  for (i = 0; i < len; i++)
-    if ((str[i] >= 'A' && str[i] <= 'Z') ||
-	(str[i] >= 'a' && str[i] <= 'z') ||
-	(str[i] >= '0' && str[i] <= '9') || str[i] == '.')
-      printf ("%c", str[i]);
-    else
-      printf ("\\x%02x", str[i]);
-  printf ("' (length %d bytes)\n", len);
-}
-
-static void
-hexprint (const unsigned char *str, int len)
-{
-  int i;
-
-  if (!str || !len)
-    return;
-
-  printf ("\t ;; ");
-  for (i = 0; i < len; i++)
-    {
-      printf ("%02x ", str[i]);
-      if ((i + 1) % 8 == 0)
-	printf (" ");
-      if ((i + 1) % 16 == 0 && i + 1 < len)
-	printf ("\n\t ;; ");
-    }
-}
-
-static void
-binprint (const unsigned char *str, int len)
-{
-  int i;
-
-  if (!str || !len)
-    return;
-
-  printf ("\t ;; ");
-  for (i = 0; i < len; i++)
-    {
-      printf ("%d%d%d%d%d%d%d%d ",
-	      str[i] & 0x80 ? 1 : 0,
-	      str[i] & 0x40 ? 1 : 0,
-	      str[i] & 0x20 ? 1 : 0,
-	      str[i] & 0x10 ? 1 : 0,
-	      str[i] & 0x08 ? 1 : 0,
-	      str[i] & 0x04 ? 1 : 0,
-	      str[i] & 0x02 ? 1 : 0, str[i] & 0x01 ? 1 : 0);
-      if ((i + 1) % 3 == 0)
-	printf (" ");
-      if ((i + 1) % 6 == 0 && i + 1 < len)
-	printf ("\n\t ;; ");
-    }
-}
-
-static void
 display_status_1 (char *m, OM_uint32 code, int type)
 {
   OM_uint32 maj_stat, min_stat;
@@ -209,10 +145,6 @@ main (int argc, char *argv[])
 	return 1;
       }
   while (argc-- > 1);
-
-  escapeprint (NULL, 0);
-  hexprint (NULL, 0);
-  binprint (NULL, 0);
 
   handle = shishi ();
 
@@ -404,6 +336,8 @@ main (int argc, char *argv[])
 			    GSS_C_PROT_READY_FLAG))
 	    fail ("loop 1 ret_flags failure (%d)\n", ret_flags);
 	  break;
+
+	  /* No case 2. */
 	}
       if (GSS_ERROR (maj_stat))
 	{
