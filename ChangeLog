@@ -1,3 +1,350 @@
+2004-01-11  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS: Version 0.0.8.
+
+2004-01-11  Simon Josefsson <simon@josefsson.org>
+
+	* lib/asn1.c, lib/misc.c, lib/name.c, lib/krb5/context.c,
+	lib/krb5/cred.c, lib/krb5/k5internal.h, lib/krb5/msg.c,
+	tests/basic.c, tests/utils.c: Fix warnings.
+
+2004-01-11  Simon Josefsson <simon@josefsson.org>
+
+	* COPYING: Remove.
+
+2004-01-11  Simon Josefsson <simon@josefsson.org>
+
+	* po/gss.pot, po/sv.po: Generated.
+
+2004-01-11  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS: Add.
+
+2004-01-11  Simon Josefsson <simon@josefsson.org>
+
+	* doc/gss.texi: Add.
+
+2004-01-11  Simon Josefsson <simon@josefsson.org>
+
+	* doc/gss.texi: Use gdoc.
+
+2004-01-11  Simon Josefsson <simon@josefsson.org>
+
+	* lib/misc.c: Add gss_release_oid.  Error fixes.  Doc fix.
+
+2004-01-11  Simon Josefsson <simon@josefsson.org>
+
+	* lib/name.c: Doc fix.
+
+2004-01-11  Simon Josefsson <simon@josefsson.org>
+
+	* lib/name.c: Fix.
+
+2004-01-11  Simon Josefsson <simon@josefsson.org>
+
+	* doc/gss.texi: Use gdoc.
+
+2004-01-11  Simon Josefsson <simon@josefsson.org>
+
+	* lib/cred.c: Doc fix.
+
+2004-01-11  Simon Josefsson <simon@josefsson.org>
+
+	* doc/gss.texi: Use gdoc.
+
+2004-01-11  Simon Josefsson <simon@josefsson.org>
+
+	* lib/misc.c: Typo.
+
+2004-01-11  Simon Josefsson <simon@josefsson.org>
+
+	* lib/misc.c: Doc fix.
+
+2004-01-11  Simon Josefsson <simon@josefsson.org>
+
+	* lib/error.c: Doc fix.
+
+2004-01-11  Simon Josefsson <simon@josefsson.org>
+
+	* doc/gss.texi: Fix.
+
+2004-01-11  Simon Josefsson <simon@josefsson.org>
+
+	* doc/gss.texi: Add.
+
+2004-01-11  Simon Josefsson <simon@josefsson.org>
+
+	* doc/gss.texi: Use gdoc.
+
+2004-01-11  Simon Josefsson <simon@josefsson.org>
+
+	* lib/name.c: Doc fix.
+
+2004-01-11  Simon Josefsson <simon@josefsson.org>
+
+	* doc/gss.texi: Fix per-msg API.
+
+2004-01-11  Simon Josefsson <simon@josefsson.org>
+
+	* doc/gdoc: Fix.
+
+2004-01-11  Simon Josefsson <simon@josefsson.org>
+
+	* lib/context.c: Fix error codes.
+
+2004-01-11  Simon Josefsson <simon@josefsson.org>
+
+	* lib/name.c: Typo.
+
+2004-01-11  Simon Josefsson <simon@josefsson.org>
+
+	* lib/name.c: Doc fix.
+
+2004-01-11  Simon Josefsson <simon@josefsson.org>
+
+	* lib/name.c: Fix.
+
+2004-01-11  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS: Add.
+
+2004-01-11  Simon Josefsson <simon@josefsson.org>
+
+	* lib/krb5/context.c, lib/krb5/cred.c, lib/krb5/k5internal.h: Fix
+	gss_duplicate_name usage.
+
+2004-01-11  Simon Josefsson <simon@josefsson.org>
+
+	* lib/name.c:
+	(gss_duplicate_name): Allocate DEST_NAME.  Fix return value.  Doc
+	fix.
+
+2004-01-11  Simon Josefsson <simon@josefsson.org>
+
+	* lib/misc.c: Fix.
+
+2004-01-11  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS: Fix.
+
+2004-01-11  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS: Add.
+
+2004-01-11  Simon Josefsson <simon@josefsson.org>
+
+	* lib/asn1.c, lib/context.c, lib/cred.c, lib/error.c, lib/ext.h,
+	lib/meta.c, lib/misc.c, lib/msg.c, lib/name.c, lib/obsolete.c,
+	lib/version.c, lib/krb5/context.c, lib/krb5/cred.c,
+	lib/krb5/error.c, lib/krb5/k5internal.h, lib/krb5/msg.c,
+	lib/krb5/name.c, lib/krb5/protos.h, po/gss.pot, po/sv.po,
+	tests/basic.c: Indent.
+
+2004-01-11  Simon Josefsson <simon@josefsson.org>
+
+	* lib/Makefile.am: Fix indent.
+
+2004-01-11  Simon Josefsson <simon@josefsson.org>
+
+	* lib/Makefile.am, lib/krb5/Makefile.am: Distcheck fixes.
+
+2004-01-11  Simon Josefsson <simon@josefsson.org>
+
+	* po/POTFILES.in: Fix.
+
+2004-01-11  Simon Josefsson <simon@josefsson.org>
+
+	* tests/Makefile.am: Add -I for lib/krb5/.
+
+2004-01-11  Simon Josefsson <simon@josefsson.org>
+
+	* lib/Makefile.am, lib/krb5.h, lib/meta.c, lib/krb5/Makefile.am,
+	lib/krb5/krb5.h, lib/krb5/protos.h: Split krb5.h into krb5/krb5.h
+	(public) and krb5/protos.h (private).
+
+2004-01-11  Simon Josefsson <simon@josefsson.org>
+
+	* configure.ac, lib/Makefile.am, lib/krb5.c, lib/krb5/Makefile.am,
+	lib/krb5/context.c, lib/krb5/cred.c, lib/krb5/error.c,
+	lib/krb5/k5internal.h, lib/krb5/msg.c, lib/krb5/name.c,
+	lib/krb5/oid.c, lib/krb5/utils.c: Split up lib/krb5.c into
+	lib/krb/*.c.
+
+2004-01-11  Simon Josefsson <simon@josefsson.org>
+
+	* lib/msg.c: Typo.
+
+2004-01-11  Simon Josefsson <simon@josefsson.org>
+
+	* lib/context.c: Typo.
+
+2004-01-11  Simon Josefsson <simon@josefsson.org>
+
+	* lib/msg.c: Doc fix.
+
+2004-01-11  Simon Josefsson <simon@josefsson.org>
+
+	* lib/krb5.c: Typo.
+
+2004-01-11  Simon Josefsson <simon@josefsson.org>
+
+	* lib/krb5.c: Cleanup ticket lifetime calculations.
+
+2004-01-11  Simon Josefsson <simon@josefsson.org>
+
+	* lib/context.c, lib/internal.h, lib/krb5.c, lib/krb5.h,
+	lib/meta.c: Make context_time work.
+
+2004-01-10  Simon Josefsson <simon@josefsson.org>
+
+	* lib/context.c: Typo.
+
+2004-01-10  Simon Josefsson <simon@josefsson.org>
+
+	* lib/context.c:
+	(gss_delete_sec_context): Do mech specifics too.
+
+2004-01-10  Simon Josefsson <simon@josefsson.org>
+
+	* lib/name.c: Doc fix.
+
+2004-01-10  Simon Josefsson <simon@josefsson.org>
+
+	* lib/meta.c, lib/krb5.h, lib/krb5.c: Add delete_sec_context.
+
+2004-01-10  Simon Josefsson <simon@josefsson.org>
+
+	* lib/internal.h: Add delete_sec_context.  Remove xstrdup.h.
+	Indent.
+
+2004-01-10  Simon Josefsson <simon@josefsson.org>
+
+	* gl/Makefile.am, gl/xmalloc.c, gl/xstrdup.c, gl/xstrdup.h: Move
+	xstrdup into xmalloc.
+
+2004-01-10  Simon Josefsson <simon@josefsson.org>
+
+	* doc/Makefile.am: Dist texinfo.css.
+
+2004-01-10  Simon Josefsson <simon@josefsson.org>
+
+	* doc/gendocs.sh, doc/gendocs_template: Sync with Texinfo.
+
+2004-01-10  Simon Josefsson <simon@josefsson.org>
+
+	* doc/gss.texi: Fix title.
+
+2004-01-10  Simon Josefsson <simon@josefsson.org>
+
+	* doc/Makefile.am, doc/gss.css, doc/texinfo.css: Rename gss.css to
+	texinfo.css.
+
+2004-01-10  Simon Josefsson <simon@josefsson.org>
+
+	* doc/gss.css: Fix.
+
+2004-01-10  Simon Josefsson <simon@josefsson.org>
+
+	* doc/gss.css: Fix.
+
+2004-01-10  Simon Josefsson <simon@josefsson.org>
+
+	* doc/Makefile.am: Use CSS for HTML.
+
+2004-01-10  Simon Josefsson <simon@josefsson.org>
+
+	* doc/gss.css: Fix.
+
+2004-01-10  Simon Josefsson <simon@josefsson.org>
+
+	* doc/gss.css: Add.
+
+2004-01-09  Simon Josefsson <simon@josefsson.org>
+
+	* lib/context.c: Fix.
+
+2004-01-09  Simon Josefsson <simon@josefsson.org>
+
+	* doc/Makefile.am: Gdoc fix.
+
+2004-01-09  Simon Josefsson <simon@josefsson.org>
+
+	* doc/texinfo.conf: Add simple asciidoc texinfo configuration.
+
+2004-01-09  Simon Josefsson <simon@josefsson.org>
+
+	* doc/gdoc: fix
+
+2004-01-09  Simon Josefsson <simon@josefsson.org>
+
+	* doc/gdoc: use asciidoc on parameter too
+
+2004-01-09  Simon Josefsson <simon@josefsson.org>
+
+	* doc/gss.texi: Use @finalout.
+
+2004-01-09  Simon Josefsson <simon@josefsson.org>
+
+	* doc/gss.texi: Header template fix.
+
+2004-01-09  Simon Josefsson <simon@josefsson.org>
+
+	* doc/gss.texi: Use gdoc more.
+
+2004-01-09  Simon Josefsson <simon@josefsson.org>
+
+	* lib/context.c: Doc fix.
+
+2004-01-09  Simon Josefsson <simon@josefsson.org>
+
+	* configure.ac: Check for perl, for gdoc.
+
+2004-01-09  Simon Josefsson <simon@josefsson.org>
+
+	* doc/Makefile.am: Fix.
+
+2004-01-09  Simon Josefsson <simon@josefsson.org>
+
+	* doc/Makefile.gdoci: Add.
+
+2004-01-09  Simon Josefsson <simon@josefsson.org>
+
+	* doc/Makefile.am, doc/gss.texi: Use gdoc.
+
+2004-01-09  Simon Josefsson <simon@josefsson.org>
+
+	* tests/Makefile.am, lib/Makefile.am: Replace INCLUDES with
+	AM_CPPFLAGS.
+
+2004-01-09  Simon Josefsson <simon@josefsson.org>
+
+	* lib/context.c: Doc fix.
+
+2004-01-09  Simon Josefsson <simon@josefsson.org>
+
+	* doc/gdoc: disable (most) section processing pipe data through
+	asciidoc don't skip leading whitespace
+
+2004-01-09  Simon Josefsson <simon@josefsson.org>
+
+	* doc/gdoc: Sync with libidn.
+
+2004-01-01  Simon Josefsson <simon@josefsson.org>
+
+	* configure.ac: Work on autoconf 2.58 and libtool 1.5.
+
+2003-11-30  Simon Josefsson <simon@josefsson.org>
+
+	* README: Fix.
+
+2003-11-27  Simon Josefsson <simon@josefsson.org>
+
+	* doc/gss.texi: Fix.
+
+2003-11-26  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS, configure.ac: Bump versions.
+
 2003-11-26  Simon Josefsson <simon@josefsson.org>
 
 	* NEWS: Version 0.0.7.
