@@ -77,3 +77,14 @@ gss_krb5_canonicalize_name (OM_uint32 * minor_status,
 
   return GSS_S_COMPLETE;
 }
+
+OM_uint32
+gss_krb5_export_name (OM_uint32 * minor_status,
+		      const gss_name_t input_name, gss_buffer_t exported_name)
+{
+  exported_name->length = input_name->length;
+  exported_name->value = xclone (input_name->value, input_name->length);
+  if (minor_status)
+    *minor_status = 0;
+  return GSS_S_COMPLETE;
+}
