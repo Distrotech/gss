@@ -18,27 +18,17 @@
 # Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 # 02111-1307, USA.
 
-AM_CPPFLAGS = -I$(top_srcdir)/gl
+AM_CPPFLAGS = -I$(top_srcdir)/gl -I..
 
-lib_LTLIBRARIES = libgss.la
-include_HEADERS = gss.h
+noinst_LTLIBRARIES = libgss-shishi.la
 
-gssincludedir=$(includedir)/gss
-gssinclude_HEADERS = api.h ext.h
-
-libgss_la_SOURCES = internal.h gettext.h version.c error.c meta.c asn1.c \
-	context.c cred.c misc.c msg.c name.c obsolete.c oid.c
-libgss_la_LIBADD = @LTLIBINTL@
-libgss_la_LDFLAGS = -version-info $(LT_CURRENT):$(LT_REVISION):$(LT_AGE)
-
-if KRB5
-SUBDIRS = krb5
-gssinclude_HEADERS += krb5.h
-libgss_la_LIBADD += krb5/libgss-shishi.la
-endif
+libgss_shishi_la_SOURCES = k5internal.h \
+	context.c error.c name.c cred.c msg.c oid.c utils.c
+libgss_shishi_la_LIBADD = @LTLIBINTL@ $(top_builddir)/gl/libgl.la
+libgss_shishi_la_LDFLAGS = -version-info $(LT_CURRENT):$(LT_REVISION):$(LT_AGE)
 
 localedir = $(datadir)/locale
 DEFS = -DLOCALEDIR=\"$(localedir)\" @DEFS@
 
 indent:
-	indent $(libgss_la_SOURCES) $(gssinclude_HEADERS)
+	indent $(libgss_shishi_la_SOURCES)

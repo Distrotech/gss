@@ -67,5 +67,6 @@ AC_SUBST(INCLUDE_GSS_KRB5)
 
 # We are done.
 AC_CONFIG_FILES(Makefile gss.pc lib/gss.h po/Makefile.in \
-		doc/Makefile gl/Makefile lib/Makefile tests/Makefile)
+		doc/Makefile gl/Makefile lib/Makefile tests/Makefile \
+		lib/krb5/Makefile)
 AC_OUTPUT
