@@ -334,6 +334,8 @@ gss_krb5_accept_sec_context (OM_uint32 * minor_status,
       return GSS_S_FAILURE;
     }
 
+  /* XXX Parse authenticator.checksum data. */
+
   cxk5->tkt = shishi_ap_tkt (cxk5->ap);
   cxk5->key = shishi_ap_key (cxk5->ap);
 
