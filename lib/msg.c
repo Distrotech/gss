@@ -78,6 +78,12 @@ gss_get_mic (OM_uint32 * minor_status,
     }
 
   mech = _gss_find_mech (context_handle->mech);
+  if (mech == NULL)
+    {
+      if (minor_status)
+	*minor_status = 0;
+      return GSS_S_BAD_MECH;
+    }
 
   return mech->get_mic (minor_status, context_handle, qop_req,
 			message_buffer, message_token);
@@ -147,6 +153,12 @@ gss_verify_mic (OM_uint32 * minor_status,
     }
 
   mech = _gss_find_mech (context_handle->mech);
+  if (mech == NULL)
+    {
+      if (minor_status)
+	*minor_status = 0;
+      return GSS_S_BAD_MECH;
+    }
 
   return mech->verify_mic (minor_status, context_handle,
 			   message_buffer, token_buffer, qop_state);
@@ -215,6 +227,12 @@ gss_wrap (OM_uint32 * minor_status,
     }
 
   mech = _gss_find_mech (context_handle->mech);
+  if (mech == NULL)
+    {
+      if (minor_status)
+	*minor_status = 0;
+      return GSS_S_BAD_MECH;
+    }
 
   return mech->wrap (minor_status, context_handle, conf_req_flag, qop_req,
 		     input_message_buffer, conf_state, output_message_buffer);
@@ -290,6 +308,12 @@ gss_unwrap (OM_uint32 * minor_status,
     }
 
   mech = _gss_find_mech (context_handle->mech);
+  if (mech == NULL)
+    {
+      if (minor_status)
+	*minor_status = 0;
+      return GSS_S_BAD_MECH;
+    }
 
   return mech->unwrap (minor_status, context_handle, input_message_buffer,
 		       output_message_buffer, conf_state, qop_state);
