@@ -70,6 +70,7 @@ typedef struct gss_name_struct
 
 typedef struct gss_cred_id_struct
 {
+  gss_OID mech;
 #ifdef USE_KERBEROS5
   struct _gss_krb5_cred_struct *krb5;
 #endif
@@ -163,6 +164,13 @@ typedef struct _gss_mech_api_strict {
 	OM_uint32 * ret_flags,
 	OM_uint32 * time_rec,
 	gss_cred_id_t * delegated_cred_handle);
+  OM_uint32 (*inquire_cred)
+       (OM_uint32 * minor_status,
+	const gss_cred_id_t cred_handle,
+	gss_name_t * name,
+	OM_uint32 * lifetime,
+	gss_cred_usage_t * cred_usage,
+	gss_OID_set * mechanisms);
 } _gss_mech_api_desc, *_gss_mech_api_t;
 
 extern _gss_mech_api_desc _gss_mech_apis[];
