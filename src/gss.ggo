@@ -1,4 +1,4 @@
-# gss.ggo --- Process this file with gengetopt to produce gss_cmd.*.
+# gss.ggo --- Run gengetopt on this file to produce gss_cmd.*.       -*- sh -*-
 # Copyright (C) 2003, 2004 Simon Josefsson.
 #
 # This file is part of the Generic Security Service (GSS).
@@ -18,7 +18,7 @@
 # Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 # 02111-1307, USA.
 
-purpose "Command line interface to GSS."
+purpose "Command line interface to GSS, used to explain error codes."
 
 option "major" m "Describe a `major status' error code vaue in plain text." int no
 option "quiet" - "Silent operation" flag off
