@@ -6,7 +6,7 @@ msgstr ""
 "Project-Id-Version: gss 0.0.1\n"
 "Report-Msgid-Bugs-To: bug-gss@josefsson.org\n"
 "POT-Creation-Date: 2004-01-16 11:39+0100\n"
-"PO-Revision-Date: 2004-01-16 11:40+0100\n"
+"PO-Revision-Date: 2004-01-16 12:27+0100\n"
 "Last-Translator: Simon Josefsson <simon@josefsson.org>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -248,6 +248,7 @@ msgstr ""
 "|\n"
 "   +-----------------+-----------------+---------------------------------+\n"
 "Bit 31            24  23            16  15                             0\n"
+"\n"
 
 #: src/gss.c:99
 #, c-format
