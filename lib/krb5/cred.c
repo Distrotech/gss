@@ -203,8 +203,11 @@ gss_krb5_inquire_cred_by_mech (OM_uint32 * minor_status,
 OM_uint32
 gss_krb5_release_cred (OM_uint32 * minor_status, gss_cred_id_t * cred_handle)
 {
-  shishi_done ((*cred_handle)->krb5->sh);
-  free ((*cred_handle)->krb5);
+  _gss_krb5_cred_t k5 = (*cred_handle)->krb5;
+
+  shishi_key_done (k5->key);
+  shishi_done (k5->sh);
+  free (k5);
 
   if (minor_status)
     *minor_status = 0;
