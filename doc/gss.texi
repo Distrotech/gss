@@ -1544,7 +1544,6 @@ such, they are not declared in @file{gss/api.h}, but rather in
 @include texi/gss_oid_equal.texi
 @include texi/gss_copy_oid.texi
 @include texi/gss_duplicate_oid.texi
-@include texi/gss_release_oid.texi
 @include texi/gss_userok.texi
 
 @deftypefun {int} gss_encapsulate_token (gss_buffer_t @var{input_message}, gss_OID @var{token_oid}, gss_buffer_t @var{output_message})
@@ -1636,6 +1635,13 @@ Instead, the API should be the sole owner of all @code{gss_ctx_id_t},
 @code{gss_cred_id_t}, and @code{gss_buffer_t} structures: they should
 be allocated by the library, and deallocated (using the utility
 functions defined for this purpose) by the library.
+
+TBA: specification is unclear how memory for OIDs are managed.  For
+example, who is responsible for deallocate potentially newly allocated
+OIDs returned as @code{actual_mechs} in @code{gss_acquire_cred}?
+Further, are OIDs deeply copied into OID sets?  In other words, if I
+add an OID into an OID set, and modify the original OID, will the OID
+in the OID set be modified too?
 
 Another illustrating example is the sample GSS header file given in
 the RFC, which contains:
