@@ -34,7 +34,7 @@
  *   requested, gss_get_mic will return a major_status of
  *   GSS_S_BAD_QOP.
  * @message_buffer: (buffer, opaque, read) Message to be protected.
- * @msg_token: (buffer, opaque, modify) Buffer to receive token.  The
+ * @message_token: (buffer, opaque, modify) Buffer to receive token.  The
  *   application must free storage associated with this buffer after
  *   use with a call to gss_release_buffer().
  *
@@ -47,7 +47,7 @@
  * emitted by gss_wrap() to provide "secure framing", implementations
  * must support derivation of MICs from zero-length messages.
  *
- * Valid return values and their meaning:
+ * Return value:
  *
  * `GSS_S_COMPLETE`: Successful completion.
  *
@@ -101,7 +101,7 @@ gss_get_mic (OM_uint32 * minor_status,
  * must support the calculation and verification of MICs over
  * zero-length messages.
  *
- * Valid return values and their meaning:
+ * Return value:
  *
  * `GSS_S_COMPLETE`: Successful completion.
  *
@@ -182,7 +182,7 @@ gss_verify_mic (OM_uint32 * minor_status,
  * emitted by gss_wrap() to provide "secure framing", implementations
  * must support the wrapping of zero-length messages.
  *
- * Valid return values and their meaning:
+ * Return value:
  *
  * `GSS_S_COMPLETE`: Successful completion.
  *
@@ -243,7 +243,7 @@ gss_wrap (OM_uint32 * minor_status,
  * emitted by gss_wrap() to provide "secure framing", implementations
  * must support the wrapping and unwrapping of zero-length messages.
  *
- * Valid return values and their meaning:
+ * Return value:
  *
  * `GSS_S_COMPLETE`: Successful completion.
  *

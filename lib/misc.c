@@ -62,7 +62,7 @@ gss_oid_equal (gss_OID first_oid, gss_OID second_oid)
  * WARNING: This function is a GNU GSSLib specific extension, and is
  * not part of the official GSS API.
  *
- * Valid return values and their meaning:
+ * Return value:
  *
  * `GSS_S_COMPLETE`: Successful completion.
  **/
@@ -100,7 +100,7 @@ gss_copy_oid (OM_uint32 * minor_status,
  * WARNING: This function is a GNU GSSLib specific extension, and is
  * not part of the official GSS API.
  *
- * Valid return values and their meaning:
+ * Return value:
  *
  * `GSS_S_COMPLETE`: Successful completion.
  **/
@@ -144,7 +144,7 @@ gss_duplicate_oid (OM_uint32 * minor_status,
  * WARNING: This function is a GNU GSSLib specific extension, and is
  * not part of the official GSS API.
  *
- * Valid return values and their meaning:
+ * Return value:
  *
  * `GSS_S_COMPLETE`: Successful completion.
  **/
@@ -182,7 +182,7 @@ gss_release_oid (OM_uint32 * minor_status, gss_OID *oid)
  * be used to construct sets of mechanism object identifiers, for
  * input to gss_acquire_cred.
  *
- * Valid return values and their meaning:
+ * Return value:
  *
  * `GSS_S_COMPLETE`: Successful completion.
  **/
@@ -220,7 +220,7 @@ gss_create_empty_oid_set (OM_uint32 * minor_status, gss_OID_set * oid_set)
  * not already contained within the elements array; if the member_oid
  * is already present, the oid_set should remain unchanged.
  *
- * Valid return values and their meaning:
+ * Return value:
  *
  * `GSS_S_COMPLETE`: Successful completion.
  **/
@@ -276,7 +276,7 @@ gss_add_oid_set_member (OM_uint32 * minor_status,
  * gss_acquire_cred(), and gss_inquire_cred(), but will also work with
  * user-generated sets.
  *
- * Valid return values and their meaning:
+ * Return value:
  *
  * `GSS_S_COMPLETE`: Successful completion.
  **/
@@ -324,7 +324,7 @@ gss_test_oid_set_member (OM_uint32 * minor_status,
  * The gss_OID_set parameter is set to GSS_C_NO_OID_SET on successful
  * completion of this routine.
  *
- * Valid return values and their meaning:
+ * Return value:
  *
  * `GSS_S_COMPLETE`: Successful completion.
  **/
@@ -361,7 +361,7 @@ gss_release_oid_set (OM_uint32 * minor_status, gss_OID_set * set)
  * Allows an application to determine which underlying security
  * mechanisms are available.
  *
- * Valid return values and their meaning:
+ * Return value:
  *
  * `GSS_S_COMPLETE`: Successful completion.
  **/
@@ -407,7 +407,7 @@ gss_indicate_mechs (OM_uint32 * minor_status, gss_OID_set * mech_set)
  * GSS-API routine may be passed to gss_release_buffer (even if there
  * is no storage associated with the buffer).
  *
- * Valid return values and their meaning:
+ * Return value:
  *
  * `GSS_S_COMPLETE`: Successful completion.
  **/

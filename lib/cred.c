@@ -95,7 +95,7 @@
  * gss_acquire_cred must return valid credential data, and may
  * therefore incur the overhead of a deferred credential acquisition.
  *
- * Valid return values and their meaning:
+ * Return value:
  *
  * `GSS_S_COMPLETE`: Successful completion.
  *
@@ -277,7 +277,7 @@ gss_acquire_cred (OM_uint32 * minor_status,
  * If GSS_C_NO_CREDENTIAL is specified as the input_cred_handle
  * parameter, a non-NULL output_cred_handle must be supplied.
  *
- * Valid return values and their meaning:
+ * Return value:
  *
  * `GSS_S_COMPLETE`: Successful completion.
  *
@@ -338,7 +338,7 @@ gss_add_cred (OM_uint32 * minor_status,
  *
  * Obtains information about a credential.
  *
- * Valid return values and their meaning:
+ * Return value:
  *
  * `GSS_S_COMPLETE`: Successful completion.
  *
@@ -402,7 +402,7 @@ gss_inquire_cred (OM_uint32 * minor_status,
  *
  * Obtains per-mechanism information about a credential.
  *
- * Valid return values and their meaning:
+ * Return value:
  *
  * `GSS_S_COMPLETE`: Successful completion.
  *
@@ -439,7 +439,7 @@ gss_inquire_cred_by_mech (OM_uint32 * minor_status,
  * Implementations are encouraged to set the cred_handle to
  * GSS_C_NO_CREDENTIAL on successful completion of this call.
  *
- * Valid return values and their meaning:
+ * Return value:
  *
  * `GSS_S_COMPLETE`: Successful completion.
  *

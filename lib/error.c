@@ -165,7 +165,7 @@ struct gss_status_codes gss_supplementary_errors[] = {
  * } while (message_context != 0);
  * ---------------------------------------------------
  *
- * Valid return values and their meaning:
+ * Return value:
  *
  * `GSS_S_COMPLETE`: Successful completion.
  *

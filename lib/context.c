@@ -290,7 +290,7 @@
  *
  * All other bits should be set to zero.
  *
- * Valid return values and their meaning:
+ * Return value:
  *
  * `GSS_S_COMPLETE`: Successful completion.
  *
@@ -583,7 +583,7 @@ gss_init_sec_context (OM_uint32 * minor_status,
  *
  * All other bits should be set to zero.
  *
- * Valid return values and their meaning:
+ * Return value:
  *
  * `GSS_S_CONTINUE_NEEDED`: Indicates that a token from the peer
  * application is required to complete the context, and that
@@ -692,7 +692,7 @@ gss_accept_sec_context (OM_uint32 * minor_status,
  * necessary, and that no token should be transferred by the
  * application.
  *
- * Valid return values and their meaning:
+ * Return value:
  *
  * `GSS_S_COMPLETE`: Successful completion.
  *
@@ -762,7 +762,7 @@ gss_delete_sec_context (OM_uint32 * minor_status,
  * Gss_process_context_token provides a way to pass such a token to
  * the mechanism at any time.
  *
- * Valid return values and their meaning:
+ * Return value:
  *
  * `GSS_S_COMPLETE`: Successful completion.
  *
@@ -793,7 +793,7 @@ gss_process_context_token (OM_uint32 * minor_status,
  * Determines the number of seconds for which the specified context
  * will remain valid.
  *
- * Valid return values and their meaning:
+ * Return value:
  *
  * `GSS_S_COMPLETE`: Successful completion.
  *
@@ -918,7 +918,7 @@ gss_context_time (OM_uint32 * minor_status,
  * processes via a call to gss_export_sec_context().
  * - False - The security context is not transferable.
  *
- * Valid return values and their meaning:
+ * Return value:
  *
  * `GSS_S_COMPLETE`: Successful completion.
  *
@@ -977,7 +977,7 @@ gss_inquire_context (OM_uint32 * minor_status,
  * should not return a value via max_input_bytes that is greater than
  * this length.
  *
- * Valid return values and their meaning:
+ * Return value:
  *
  * `GSS_S_COMPLETE`: Successful completion.
  *
@@ -1049,7 +1049,7 @@ gss_wrap_size_limit (OM_uint32 * minor_status,
  * providing it also sets the context_handle parameter to
  * GSS_C_NO_CONTEXT.
  *
- * Valid return values and their meaning:
+ * Return value:
  *
  * `GSS_S_COMPLETE`: Successful completion.
  *
@@ -1081,7 +1081,7 @@ gss_export_sec_context (OM_uint32 * minor_status,
  * another process.  A given interprocess token may be imported only
  * once.  See gss_export_sec_context.
  *
- * Valid return values and their meaning:
+ * Return value:
  *
  * `GSS_S_COMPLETE`: Successful completion.
  *
