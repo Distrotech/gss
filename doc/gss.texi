@@ -64,6 +64,7 @@ developing GNU and protecting and promoting software freedom.''
 * Introduction::                How to use this manual.
 * Preparation::                 What you should do before using the library.
 * Standard GSS API::            Reference documentation for the Standard API.
+* Extended GSS API::            Non-standard functions.
 * Invoking gss::                Command line interface to the library.
 * Acknowledgements::            Whom to blame.
 
@@ -657,6 +658,14 @@ this manual (@pxref{Building the source}), but note that you must use
 @end verbatim
 
 @include gss-api-misc.texi
+
+@c **********************************************************
+@c ************** Generic Security Services  ****************
+@c **********************************************************
+@node Extended GSS API
+@chapter Extended GSS API
+
+@include gss-api-version.texi
 
 @c **********************************************************
 @c *******************  Invoking ggssapi  *******************
