@@ -22,7 +22,8 @@
 #include "internal.h"
 
 #ifdef USE_KERBEROS5
-#include "krb5.h"
+# include "krb5/krb5.h"
+# include "krb5/protos.h"
 #endif
 
 OM_uint32

@@ -33,7 +33,7 @@ libgss_la_LDFLAGS = -version-info $(LT_CURRENT):$(LT_REVISION):$(LT_AGE)
 
 if KRB5
 SUBDIRS = krb5
-gssinclude_HEADERS += krb5.h
+gssinclude_HEADERS += krb5/krb5.h
 libgss_la_LIBADD += krb5/libgss-shishi.la
 endif
 
