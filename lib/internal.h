@@ -154,8 +154,6 @@ typedef struct _gss_mech_api_strict
      gss_cred_usage_t * cred_usage, gss_OID_set * mechanisms);
 } _gss_mech_api_desc, *_gss_mech_api_t;
 
-extern _gss_mech_api_desc _gss_mech_apis[];
-
 _gss_mech_api_t _gss_find_mech (gss_OID oid);
 
 #endif /* _INTERNAL_H */
