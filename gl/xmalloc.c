@@ -1,5 +1,6 @@
 /* xmalloc.c -- malloc with out of memory checking
 
+   Copyright (C) 2004 Simon Josefsson
    Copyright (C) 1990, 1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998, 2003,
    1999, 2000, 2002, 2003 Free Software Foundation, Inc.
 
@@ -28,9 +29,6 @@
 #include <string.h>
 
 #include <errno.h>
-#ifndef errno
-extern int errno;
-#endif
 
 #ifndef SIZE_MAX
 # define SIZE_MAX ((size_t) -1)
@@ -44,8 +42,10 @@ xalloc_die (void)
 {
   if (xalloc_fail_func)
     (*xalloc_fail_func) ();
-  errno = ENOMEM;
-  perror (PACKAGE);
+  printf ("%s\n", strerror (ENOMEM));
+  /* The `noreturn' cannot be given to error, since it may return if
+     its first argument is 0.  To help compilers understand the
+     xalloc_die does terminate, call abort.  */
   abort ();
 }
 
