@@ -41,6 +41,7 @@ AB_INIT
 AM_GNU_GETTEXT(external)
 AM_GNU_GETTEXT_VERSION(0.14.1)
 AC_PROG_CC
+gl_EARLY
 AC_PROG_LIBTOOL
 AM_MISSING_PROG(PERL, perl, $missing_dir)
 AM_MISSING_PROG(HELP2MAN, help2man, $missing_dir)
@@ -50,8 +51,11 @@ AC_HEADER_STDC
 AC_CHECK_HEADERS(locale.h)
 
 # For gnulib stuff in gl/.
+gl_SOURCE_BASE(gl)
+gl_M4_BASE(gl/m4)
+gl_MODULES(getopt)
+gl_INIT
 gl_FUNC_GETHOSTNAME
-gl_GETOPT
 
 # Test for Shishi.
 sj_CHECK_HEADERLIB(shishi.h, shishi, shishi_check_version,
