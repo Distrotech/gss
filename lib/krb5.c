@@ -647,7 +647,7 @@ gss_krb5_unwrap (OM_uint32 * minor_status,
 				      cksum, 8,
 				      p, 8,
 				      &t, &i);
-	if (rc != SHISHI_OK || i != 20)
+	if (rc != SHISHI_OK || i != 8)
 	  return GSS_S_FAILURE;
 
 	memcpy(p, t, i);
