@@ -48,9 +48,11 @@ release:
 	rm -f ChangeLog
 	$(MAKE) ChangeLog distcheck
 	cvs commit -m "" ChangeLog
-	rm -f $(distdir).tar.gz.asc
-	gpg -a --sign --detach $(distdir).tar.gz
-	gpg --verify $(distdir).tar.gz.asc
 	cvs rtag $(tag) $(PACKAGE)
-	-cd doc && ./gendocs.sh -o ../$(htmldir)/manual/ $(PACKAGE) "GNU Generic Security Service Library"
-	-cd $(htmldir) && cvs commit -m "Update." manual/
+	gpg -b $(distdir).tar.gz
+	gpg --verify $(distdir).tar.gz.sig
+	echo "directory: $(PACKAGE)" > $(distdir).tar.gz.directive
+	gpg --clearsign $(distdir).tar.gz.directive
+	cd doc && ./gendocs.sh -o ../$(htmldir)/manual/ $(PACKAGE) "GNU Generic Security Service Library"
+	cd $(htmldir) && cvs commit -m "Update." manual/
+	ncftpput ftp-upload.gnu.org /incoming/alpha $(distdir).tar.gz{,.sig,.directive.asc}
