@@ -74,10 +74,9 @@ init_request (OM_uint32 * minor_status,
     }
 
   /* Create Authenticator checksum field. */
-  maj_stat = _gss_krb5_checksum1964_pack (initiator_cred_handle,
-					  input_chan_bindings,
-					  req_flags,
-					  &cksum, &cksumlen);
+  maj_stat = _gss_krb5_checksum_pack (initiator_cred_handle,
+				      input_chan_bindings, req_flags,
+				      &cksum, &cksumlen);
   if (GSS_ERROR (maj_stat))
     return maj_stat;
 

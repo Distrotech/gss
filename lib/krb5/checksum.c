@@ -25,12 +25,12 @@
 /* Get specification. */
 #include "checksum.h"
 
-/* Create the RFC 1964 checksum value field from input parameters. */
+/* Create the checksum value field from input parameters. */
 OM_uint32
-_gss_krb5_checksum1964_pack (const gss_cred_id_t initiator_cred_handle,
-			     const gss_channel_bindings_t input_chan_bindings,
-			     OM_uint32 req_flags,
-			     char **data, size_t *datalen)
+_gss_krb5_checksum_pack (const gss_cred_id_t initiator_cred_handle,
+			 const gss_channel_bindings_t input_chan_bindings,
+			 OM_uint32 req_flags,
+			 char **data, size_t *datalen)
 {
   char *p;
 
@@ -38,7 +38,7 @@ _gss_krb5_checksum1964_pack (const gss_cred_id_t initiator_cred_handle,
   p = *data = xmalloc (*datalen);
 
   /*
-   * RFC 1964:
+   * RFC 1964 / gssapi-cfx:
    *
    * The checksum value field's format is as follows:
    *
@@ -111,16 +111,24 @@ _gss_krb5_checksum1964_pack (const gss_cred_id_t initiator_cred_handle,
   p[23] = (req_flags >> 24) & 0xFF;
 
   /*
-   * 24..25  DlgOpt  The Delegation Option identifier (=1) [optional]
-   * 26..27  Dlgth   The length of the Deleg field. [optional]
-   * 28..n   Deleg   A KRB_CRED message (n = Dlgth + 29) [optional]
+   *    24..25       DlgOpt  The delegation option identifier (=1) in
+   *                 little-endian order [optional].  This field
+   *                 and the next two fields are present if and
+   *                 only if GSS_C_DELEG_FLAG is set as described
+   *                 in section 4.1.1.1.
+   *    26..27       Dlgth   The length of the Deleg field in little-
+   *                 endian order [optional].
+   *    28..(n-1)    Deleg   A KRB_CRED message (n = Dlgth + 28)
+   *                 [optional].
+   *    n..last      Exts    Extensions [optional].
    *
    */
 
   if (req_flags & GSS_C_DELEG_FLAG)
     {
       /* XXX We don't support credential delegation yet.  We should
-	 not fail here, as GSS_C_DELEG_FLAG is masked out above. */
+	 not fail here, as GSS_C_DELEG_FLAG is masked out above, and
+	 in context.c. */
     }
 
   return GSS_S_COMPLETE;
