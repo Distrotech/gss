@@ -4,9 +4,10 @@ See the end for copying conditions.
 
 * Changes in 0.0.9 (unreleased)
 
-** gss_export_name is now implemented, and the Kerberos 5 backend support it.
+** Implemented gss_export_name and gss_krb5_inquire_cred_by_mech.
+The Kerberos 5 backend also support them.
 
-** Kerberos 5 gss_inquire_cred support default credentials.
+** gss_inquire_cred support default credentials.
 
 ** Kerberos 5 gss_canonicalize_name now support all mandatory name types.
 

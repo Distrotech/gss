@@ -19,6 +19,7 @@
  *
  */
 
+/* Get specification. */
 #include "k5internal.h"
 
 /*
