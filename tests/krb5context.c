@@ -170,16 +170,15 @@ display_status (char *msg, OM_uint32 maj_stat, OM_uint32 min_stat)
 int
 main (int argc, char *argv[])
 {
-  gss_uint32 maj_stat, min_stat, msgctx;
+  gss_uint32 maj_stat, min_stat, msgctx, ret_flags, time_rec;
   gss_buffer_desc bufdesc, bufdesc2;
   gss_name_t servername = GSS_C_NO_NAME, name;
   gss_OID_set oids;
   gss_ctx_id_t cctx = GSS_C_NO_CONTEXT;
   gss_ctx_id_t sctx = GSS_C_NO_CONTEXT;
   gss_cred_id_t cred_handle, server_creds;
-  int n;
-  Shishi_asn1 apreq;
   Shishi * handle;
+  size_t i;
 
   do
     if (strcmp (argv[argc - 1], "-v") == 0 ||
@@ -229,68 +228,195 @@ main (int argc, char *argv[])
       display_status ("acquire credentials", maj_stat, min_stat);
     }
 
-  /* Start client. */
-
-  maj_stat = gss_init_sec_context (&min_stat,
-				   GSS_C_NO_CREDENTIAL,
-				   &cctx,
-				   servername,
-				   GSS_KRB5,
-				   GSS_C_MUTUAL_FLAG |
-				   GSS_C_REPLAY_FLAG |
-				   GSS_C_SEQUENCE_FLAG,
-				   0,
-				   GSS_C_NO_CHANNEL_BINDINGS,
-				   GSS_C_NO_BUFFER, NULL,
-				   &bufdesc2, NULL, NULL);
-  if (maj_stat != GSS_S_CONTINUE_NEEDED)
+  for (i = 0; i < 3; i++)
     {
-      fail ("gss_init_sec_context failure\n");
-      display_status ("init_sec_context", maj_stat, min_stat);
+      /* Start client. */
+
+      switch (i)
+	{
+	case 0:
+	  maj_stat = gss_init_sec_context (&min_stat,
+					   GSS_C_NO_CREDENTIAL,
+					   &cctx,
+					   servername,
+					   GSS_KRB5,
+					   GSS_C_MUTUAL_FLAG |
+					   GSS_C_REPLAY_FLAG |
+					   GSS_C_SEQUENCE_FLAG,
+					   0,
+					   GSS_C_NO_CHANNEL_BINDINGS,
+					   GSS_C_NO_BUFFER, NULL,
+					   &bufdesc2, NULL, NULL);
+	  if (maj_stat != GSS_S_CONTINUE_NEEDED)
+	    fail ("loop 0 init failure\n");
+	  break;
+
+	case 1:
+	  /* Default OID. */
+	  maj_stat = gss_init_sec_context (&min_stat,
+					   GSS_C_NO_CREDENTIAL,
+					   &cctx,
+					   servername,
+					   GSS_C_NO_OID,
+					   GSS_C_MUTUAL_FLAG |
+					   GSS_C_REPLAY_FLAG |
+					   GSS_C_SEQUENCE_FLAG,
+					   0,
+					   GSS_C_NO_CHANNEL_BINDINGS,
+					   GSS_C_NO_BUFFER, NULL,
+					   &bufdesc2, NULL, NULL);
+	  if (maj_stat != GSS_S_CONTINUE_NEEDED)
+	    fail ("loop 0 init failure\n");
+	  break;
+
+	case 2:
+	  /* No mutual authentication. */
+	  maj_stat = gss_init_sec_context (&min_stat,
+					   GSS_C_NO_CREDENTIAL,
+					   &cctx,
+					   servername,
+					   GSS_KRB5,
+					   GSS_C_REPLAY_FLAG |
+					   GSS_C_CONF_FLAG |
+					   GSS_C_SEQUENCE_FLAG,
+					   0,
+					   GSS_C_NO_CHANNEL_BINDINGS,
+					   GSS_C_NO_BUFFER, NULL,
+					   &bufdesc2, &ret_flags, NULL);
+	  if (ret_flags != (GSS_C_REPLAY_FLAG |
+			    GSS_C_CONF_FLAG|
+			    GSS_C_SEQUENCE_FLAG|
+			    GSS_C_PROT_READY_FLAG))
+	    fail ("loop 2 ret_flags failure (%d)\n", ret_flags);
+	  if (maj_stat != GSS_S_COMPLETE)
+	    fail ("loop 1 init failure\n");
+	  break;
+	}
+      if (GSS_ERROR (maj_stat))
+	{
+	  fail ("gss_accept_sec_context failure\n");
+	  display_status ("accept_sec_context", maj_stat, min_stat);
+	}
+
+      if (debug)
+	{
+	  Shishi_asn1 apreq = shishi_der2asn1_apreq (handle, bufdesc2.value + 17,
+						     bufdesc2.length - 17);
+	  printf ("\nClient AP-REQ:\n\n");
+	  shishi_apreq_print (handle, stdout, apreq);
+	}
+
+      /* Start server. */
+
+      switch (i)
+	{
+	case 0:
+	  maj_stat = gss_accept_sec_context (&min_stat,
+					     &sctx,
+					     server_creds,
+					     &bufdesc2,
+					     GSS_C_NO_CHANNEL_BINDINGS,
+					     &name,
+					     NULL,
+					     &bufdesc,
+					     &ret_flags,
+					     &time_rec,
+					     NULL);
+	  if (ret_flags != (GSS_C_MUTUAL_FLAG |
+			    /* XXX GSS_C_REPLAY_FLAG |
+			       GSS_C_SEQUENCE_FLAG | */
+			    GSS_C_PROT_READY_FLAG))
+	    fail ("loop 0 accept flag failure (%d)\n", ret_flags);
+	  break;
+
+	default:
+	  maj_stat = gss_accept_sec_context (&min_stat,
+					     &sctx,
+					     server_creds,
+					     &bufdesc2,
+					     GSS_C_NO_CHANNEL_BINDINGS,
+					     &name,
+					     NULL,
+					     &bufdesc,
+					     &ret_flags,
+					     &time_rec,
+					     NULL);
+	  break;
+	}
+      if (GSS_ERROR (maj_stat))
+	{
+	  fail ("gss_accept_sec_context failure\n");
+	  display_status ("accept_sec_context", maj_stat, min_stat);
+	}
+
+      if (debug)
+	{
+	  Shishi_asn1 aprep = shishi_der2asn1_aprep (handle, bufdesc.value + 15,
+						     bufdesc.length - 15);
+	  printf ("\nServer AP-REP:\n\n");
+	  shishi_aprep_print (handle, stdout, aprep);
+	}
+
+      switch (i)
+	{
+	case 0:
+	  maj_stat = gss_init_sec_context (&min_stat,
+					   GSS_C_NO_CREDENTIAL,
+					   &cctx,
+					   servername,
+					   GSS_KRB5,
+					   GSS_C_MUTUAL_FLAG |
+					   GSS_C_REPLAY_FLAG |
+					   GSS_C_SEQUENCE_FLAG,
+					   0,
+					   GSS_C_NO_CHANNEL_BINDINGS,
+					   &bufdesc, NULL,
+					   &bufdesc2, NULL, NULL);
+	  break;
+
+	case 1:
+	  /* Check ret_flags. */
+	  maj_stat = gss_init_sec_context (&min_stat,
+					   GSS_C_NO_CREDENTIAL,
+					   &cctx,
+					   servername,
+					   GSS_KRB5,
+					   GSS_C_MUTUAL_FLAG |
+					   GSS_C_REPLAY_FLAG |
+					   GSS_C_SEQUENCE_FLAG,
+					   0,
+					   GSS_C_NO_CHANNEL_BINDINGS,
+					   &bufdesc, NULL,
+					   &bufdesc2, &ret_flags, &time_rec);
+	  if (ret_flags != (GSS_C_MUTUAL_FLAG |
+			    GSS_C_REPLAY_FLAG |
+			    GSS_C_SEQUENCE_FLAG|
+			    GSS_C_PROT_READY_FLAG))
+	    fail ("loop 1 ret_flags failure (%d)\n", ret_flags);
+	  break;
+	}
+      if (GSS_ERROR (maj_stat))
+	{
+	  fail ("gss_init_sec_context failure (2)\n");
+	  display_status ("init_sec_context", maj_stat, min_stat);
+	}
+
+      maj_stat = gss_delete_sec_context (&min_stat, &cctx, GSS_C_NO_BUFFER);
+      if (GSS_ERROR(maj_stat))
+	{
+	  fail ("client gss_delete_sec_context failure\n");
+	  display_status ("client delete_sec_context", maj_stat, min_stat);
+	}
+
+      maj_stat = gss_delete_sec_context (&min_stat, &sctx, GSS_C_NO_BUFFER);
+      if (GSS_ERROR(maj_stat))
+	{
+	  fail ("server gss_delete_sec_context failure\n");
+	  display_status ("server delete_sec_context", maj_stat, min_stat);
+	}
+
+      printf ("loop %d ok\n", i);
     }
-
-  apreq = shishi_der2asn1_apreq (handle, bufdesc2.value + 17,
-				 bufdesc2.length - 17);
-  if (debug)
-    shishi_apreq_print (handle, stdout, apreq);
-
-  /* Start server. */
-
-  maj_stat = gss_accept_sec_context (&min_stat,
-				     &sctx,
-				     server_creds,
-				     &bufdesc2,
-				     GSS_C_NO_CHANNEL_BINDINGS,
-				     &name,
-				     NULL,
-				     &bufdesc,
-				     NULL,
-				     NULL,
-				     NULL);
-  if (GSS_ERROR (maj_stat))
-    {
-      fail ("gss_accept_sec_context failure\n");
-      display_status ("accept_sec_context", maj_stat, min_stat);
-    }
-
-  maj_stat = gss_init_sec_context (&min_stat,
-				   GSS_C_NO_CREDENTIAL,
-				   &cctx,
-				   servername,
-				   GSS_KRB5,
-				   GSS_C_MUTUAL_FLAG |
-				   GSS_C_REPLAY_FLAG |
-				   GSS_C_SEQUENCE_FLAG,
-				   0,
-				   GSS_C_NO_CHANNEL_BINDINGS,
-				   &bufdesc, NULL,
-				   &bufdesc2, NULL, NULL);
-  if (GSS_ERROR (maj_stat))
-    {
-      fail ("gss_init_sec_context failure (2)\n");
-      display_status ("init_sec_context", maj_stat, min_stat);
-    }
-
   /* Clean up. */
 
   maj_stat = gss_release_name (&min_stat, &servername);
@@ -298,20 +424,6 @@ main (int argc, char *argv[])
     {
       fail ("gss_release_name failure\n");
       display_status ("gss_release_name", maj_stat, min_stat);
-    }
-
-  maj_stat = gss_delete_sec_context (&min_stat, &cctx, GSS_C_NO_BUFFER);
-  if (GSS_ERROR(maj_stat))
-    {
-      fail ("client gss_delete_sec_context failure\n");
-      display_status ("client delete_sec_context", maj_stat, min_stat);
-    }
-
-  maj_stat = gss_delete_sec_context (&min_stat, &sctx, GSS_C_NO_BUFFER);
-  if (GSS_ERROR(maj_stat))
-    {
-      fail ("server gss_delete_sec_context failure\n");
-      display_status ("server delete_sec_context", maj_stat, min_stat);
     }
 
   /* We're done. */
