@@ -705,6 +705,8 @@ function and set the library variable @code{gss_alloc_fail_function}
 to that function.  This could be implemented as follows.
 
 @example
+#include <gss/ext.h>
+...
 void my_gss_alloc_failer (void)
 @{
       syslog (LOG_CRIT, "GSS library out of memory");
