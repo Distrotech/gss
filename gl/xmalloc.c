@@ -46,9 +46,6 @@ xalloc_die (void)
     (*xalloc_fail_func) ();
   errno = ENOMEM;
   perror (PACKAGE);
-  /* The `noreturn' cannot be given to error, since it may return if
-     its first argument is 0.  To help compilers understand the
-     xalloc_die does terminate, call abort.  */
   abort ();
 }
 
