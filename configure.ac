@@ -68,6 +68,7 @@ if test "$kerberos5" != "no" ; then
 fi
 AC_MSG_CHECKING([if the Kerberos V5 mechanism should be supported])
 AC_MSG_RESULT($kerberos5)
+AM_CONDITIONAL(KRB5, test "$kerberos5" = "yes")
 
 # We are done
 AC_CONFIG_FILES(Makefile gss.pc lib/gss.h po/Makefile.in m4/Makefile \
