@@ -2520,6 +2520,10 @@ TBA: krb5: firewall/pre-IP: iakerb status?
 
 TBA: krb5: single-DES only
 
+TBA: the API may block, unusable in select() based servers.
+Especially if the servers contacted is decided by the, yet
+unauthenticated, remote client.
+
 Finally we note that few free security applications uses GSS, perhaps
 the only major exception to this are Kerberos 5 implementations.
 While not substantial evidence, this do suggest that the GSS may not
