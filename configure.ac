@@ -34,7 +34,7 @@ AC_SUBST(LT_REVISION)
 AC_SUBST(LT_AGE)
 
 AM_INIT_AUTOMAKE(gnits)
-AM_CONFIG_HEADER(config.h)
+AC_CONFIG_HEADERS(config.h)
 
 # Checks for programs.
 AM_GNU_GETTEXT(external)
