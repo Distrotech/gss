@@ -2,7 +2,7 @@ GSS NEWS -- History of user-visible changes.                    -*- outline -*-
 Copyright (C) 2003, 2004 Simon Josefsson
 See the end for copying conditions.
 
-* Changes in 0.0.14 (unreleased)
+* Version 0.0.14 (unreleased)
 
 ** gss_import_name and gss_duplicate_name no longer clone the OID.
 Instead, only the pointer to the OID is cloned.  It seem unclear where
@@ -16,14 +16,14 @@ a cloned OID would be deallocated.
 
 ** Sync with new Shishi 0.0.18 API.
 
-* Changes in 0.0.13 (released 2004-08-08)
+* Version 0.0.13 (released 2004-08-08)
 
 ** Revamp of gnulib compatibility files.
 
 ** More translations.
 French (by Michel Robitaille) and Romanian (by Laurentiu Buzdugan).
 
-* Changes in 0.0.12 (released 2004-08-01)
+* Version 0.0.12 (released 2004-08-01)
 
 ** Added rudimentary self tests of Kerberos 5 context init/accept.
 Tests client and server authentication, with and without mutual
@@ -36,7 +36,7 @@ work.
 It should work for any sane cross compile target, but the only tested
 platform is uClibc/uClinux on Motorola Coldfire.
 
-* Changes in 0.0.11 (released 2004-04-18)
+* Version 0.0.11 (released 2004-04-18)
 
 ** Minor cleanups to the core header file.
 Using xom.h is no longer supported (the file doesn't exist on modern
@@ -55,7 +55,7 @@ numbers by default in Shishi 0.0.15.
 
 ** Polish translation added, by Jakub Bogusz.
 
-* Changes in 0.0.10 (released 2004-01-22)
+* Version 0.0.10 (released 2004-01-22)
 
 ** A command line tool "gss" added in src/.
 The tool can be used to split up an GSS-API error code into the
@@ -68,7 +68,7 @@ to print text describing the error condition.
 
 ** Various cleanups and improvements.
 
-* Changes in 0.0.9 (released 2004-01-15)
+* Version 0.0.9 (released 2004-01-15)
 
 ** Implemented gss_export_name and gss_krb5_inquire_cred_by_mech.
 The Kerberos 5 backend also support them.
@@ -85,7 +85,7 @@ OID, and then comparing the remaining material using memcmp.
 
 ** API documentation in HTML format from GTK-DOC included in doc/reference/.
 
-* Changes in 0.0.8 (released 2004-01-11)
+* Version 0.0.8 (released 2004-01-11)
 
 ** Moved all backend specific code into sub-directories of lib/.
 This means everything related to the Kerberos 5 backend is now located
@@ -99,7 +99,7 @@ dynamically load backends.
 
 ** Documentation fixes.  For example, all official APIs are now documented.
 
-* Changes in 0.0.7 (released 2003-11-26)
+* Version 0.0.7 (released 2003-11-26)
 
 ** Fixed typo that broke gss_wrap for 3DES with Kerberos 5.
 
@@ -109,24 +109,24 @@ mechanism is disabled.
 
 ** Autoconf 2.59, Automake 1.8 beta, Libtool CVS used.
 
-* Changes in 0.0.6 (released 2003-09-22)
+* Version 0.0.6 (released 2003-09-22)
 
 ** Update for Shishi 0.0.7 API.
 
-* Changes in 0.0.5 (released 2003-08-31)
+* Version 0.0.5 (released 2003-08-31)
 
 ** Kerberos 5: Subkeys are supported. Shishi 0.0.4 required.
 
 ** Bug fixes.
 
-* Changes in 0.0.4 (released 2003-08-10)
+* Version 0.0.4 (released 2003-08-10)
 
 ** GSS is a GNU project.
 
 ** Kerberos 5 crypto fixes.
 This release accompany Shishi 0.0.1.
 
-* Changes in 0.0.3 (released 2003-07-02)
+* Version 0.0.3 (released 2003-07-02)
 
 ** Includes compatibility functionality from gnulib in gl/.
 
@@ -138,7 +138,7 @@ currently.
 
 ** Bugfixes and cleanups.
 
-* Changes in 0.0.2 (released 2003-06-28)
+* Version 0.0.2 (released 2003-06-28)
 
 ** Server mode works (a little).
 GNU MailUtils can use GSS for its native GSSAPI authentication in
@@ -149,7 +149,7 @@ command line client using GSS.
 This takes care of out of memory errors, see the new section in the
 manual named "Out of Memory handling".
 
-* Changes in 0.0.1 (released 2003-06-12)
+* Version 0.0.1 (released 2003-06-12)
 
 ** Error handling.
 
@@ -159,7 +159,7 @@ manual named "Out of Memory handling".
 
 ** Bug fixes.
 
-* Changes in 0.0.0 (released 2003-06-02)
+* Version 0.0.0 (released 2003-06-02)
 
 ** Initial release.
 The source code framework is in place, an outline of the documentation
