@@ -76,7 +76,7 @@ _gss_asn1_get_length_der (const unsigned char *der, int *len)
       k = der[0] & 0x7F;
       punt = 1;
       ans = 0;
-      while (punt <= k && *len < punt)
+      while (punt <= k && punt < *len)
 	ans = ans * 256 + der[punt++];
 
       *len = punt;
