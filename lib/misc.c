@@ -349,6 +349,9 @@ gss_release_oid_set (OM_uint32 * minor_status, gss_OID_set * set)
   return GSS_S_COMPLETE;
 }
 
+OM_uint32
+gss_indicate_mechs1 (OM_uint32 * minor_status, gss_OID_set *mech_set);
+
 /**
  * gss_indicate_mechs:
  * @minor_status: (integer, modify) Mechanism specific status code.
@@ -369,21 +372,17 @@ OM_uint32
 gss_indicate_mechs (OM_uint32 * minor_status, gss_OID_set * mech_set)
 {
   OM_uint32 maj_stat;
-  int i;
 
   maj_stat = gss_create_empty_oid_set (minor_status, mech_set);
-  if (maj_stat != GSS_S_COMPLETE)
+  if (GSS_ERROR (maj_stat))
     return maj_stat;
 
-  for (i = 0; _gss_mech_apis[i].mech; i++)
+  maj_stat = gss_indicate_mechs1 (minor_status, mech_set);
+  if (GSS_ERROR (maj_stat))
     {
-      maj_stat = gss_add_oid_set_member (minor_status, _gss_mech_apis[i].mech,
-					 mech_set);
-      if (maj_stat != GSS_S_COMPLETE)
-	{
-	  gss_release_oid_set (minor_status, mech_set);
-	  return maj_stat;
-	}
+      OM_uint32 tmp_minor_status;
+      gss_release_oid_set (&tmp_minor_status, mech_set);
+      return maj_stat;
     }
 
   if (minor_status)
