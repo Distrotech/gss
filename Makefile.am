@@ -32,6 +32,12 @@ indent:
 	(cd src && make indent)
 	(cd tests && make indent)
 
+update-po:
+	cd po && \
+	wget --timestamping --retr-symlinks \
+		ftp://ftp.unex.es/pub/gnu-i18n/po/maint/$(PACKAGE)/??.po && \
+	cvs commit -m "Sync with TP." ??.po
+
 ChangeLog:
 	test ! -f .cvsusers || \
 	(cvs2cl --fsf --FSF --usermap .cvsusers \
