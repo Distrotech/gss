@@ -324,8 +324,7 @@ library is initialized, and how the requirements of the library are
 verified.
 
 A faster way to find out how to adapt your application for use with
-`Libggssapi' may be to look at the examples at the end of this manual
-(@pxref{Examples}).
+`Libggssapi' may be to look at the examples at the end of this manual.
 
 @menu
 * Header::
@@ -355,7 +354,7 @@ reserved for internal use and should never be used by an application.
 @section Initialization
 
 `Libggssapi' must be initialized before it can be used.  The library is
-initialized by calling @code{ggssapi_init()} (@pxref{Global Functions}).
+initialized by calling @code{ggssapi_init()}.
 The resources allocated by the initialization process can be released
 if the application no longer has a need to call `Libggssapi' functions,
 this is done by calling @code{ggssapi_done()}.
@@ -469,6 +468,36 @@ specifying both options to @command{pkg-config}:
 @example
 gcc -o foo foo.c `pkg-config libggssapi --cflags --libs`
 @end example
+
+@c **********************************************************
+@c *******************  Invoking ggssapi  *******************
+@c **********************************************************
+@node Invoking ggssapi
+@chapter Invoking ggssapi
+
+@pindex ggssapi
+@cindex invoking @command{ggssapi}
+@cindex command line
+
+@majorheading Name
+
+GPL GSS-API (ggssapi) -- Generic Security Service command line interface
+
+@majorheading Description
+@code{ggssapi} is the main program of GPL GSS-API.
+
+This section only lists the commands and options available.
+
+Mandatory or optional arguments to long options are also mandatory or
+optional for any corresponding short options.
+
+@c **********************************************************
+@c *******************  Acknowledgements  *******************
+@c **********************************************************
+@node Acknowledgements
+@chapter Acknowledgements
+
+TBA
 
 @c **********************************************************
 @c *******************  Appendices  *************************
