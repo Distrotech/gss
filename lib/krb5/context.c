@@ -435,7 +435,8 @@ gss_krb5_delete_sec_context (OM_uint32 * minor_status,
   if (k5->peerptr != GSS_C_NO_NAME)
     gss_release_name (NULL, &k5->peerptr);
 
-  shishi_done (k5->sh);
+  if (!k5->acceptor)
+    shishi_done (k5->sh);
   free (k5);
 
   if (minor_status)
