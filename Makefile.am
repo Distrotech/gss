@@ -18,6 +18,8 @@
 # Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 # 02111-1307, USA.
 
+DISTCHECK_CONFIGURE_FLAGS = --enable-gtk-doc
+
 pkgconfigdir = $(libdir)/pkgconfig
 pkgconfig_DATA = gss.pc
 
