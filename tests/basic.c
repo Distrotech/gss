@@ -30,9 +30,7 @@ main (int argc, char *argv[])
   gss_OID_set oids;
   int n;
 
-#if HAVE_LOCALE_H
   setlocale (LC_ALL, "");
-#endif
   bindtextdomain (PACKAGE, LOCALEDIR);
 
   do

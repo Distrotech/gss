@@ -20,7 +20,7 @@
  */
 
 #if HAVE_CONFIG_H
-#include "config.h"
+# include "config.h"
 #endif
 
 #include <stdio.h>
@@ -29,16 +29,19 @@
 #include <ctype.h>
 #include <string.h>
 
+/* i18n. */
 #ifdef HAVE_LOCALE_H
-#include <locale.h>
+# include <locale.h>
+#else
+# define setlocale(Category, Locale)	/* empty */
 #endif
-
 #include "gettext.h"
 
+/* Get GSS prototypes. */
 #include "api.h"
 #include "ext.h"
 #ifdef USE_KERBEROS5
-#include "krb5.h"
+# include "krb5.h"
 #endif
 
 static int verbose = 0;
