@@ -20,11 +20,11 @@ Copyright @copyright{} 2003 Simon Josefsson.
 @quotation
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.1 or
-any later version published by the Free Software Foundation; with no
-Invariant Sections, with the Front-Cover Texts being ``A GNU Manual,''
-and with the Back-Cover Texts as in (a) below.  A copy of the
-license is included in the section entitled ``GNU Free Documentation
-License.''
+any later version published by the Free Software Foundation; with the
+Invariant Sections including ``Criticism of GSS'', with the
+Front-Cover Texts being ``A GNU Manual,'' and with the Back-Cover
+Texts as in (a) below.  A copy of the license is included in the
+section entitled ``GNU Free Documentation License.''
 
 (a) The FSF's Back-Cover Text is: ``You have freedom to copy and modify
 this GNU Manual, like GNU software.  Copies published by the Free
@@ -1782,7 +1782,8 @@ GSS_C_GSS_CODE nor GSS_C_MECH_CODE.
 @chapter Extended GSS API
 
 None of the following functions are standard GSS API functions.  As
-such, they are not declared in `gss/api.h', but rather in `gss.h'.
+such, they are not declared in @file{gss/api.h}, but rather in
+@file{gss/ext.h} (which is included from @file{gss.h}).
 
 @deftypefun {const char *} gss_check_version (const char * @var{req_version})
 
@@ -1866,10 +1867,13 @@ API formally.
 @node Criticism of GSS
 @appendix Criticism of GSS
 
-The author has doubts whether GSS is a good solution for new projects
-looking for a implementation agnostic security framework.  We express
-these doubts in this section.  GSS can be criticized on several
-levels.  We start with the actual implementation.
+The author has doubts whether GSS is the best solution for new
+projects looking for a implementation agnostic security framework.  We
+express these doubts in this section, so that the reader can judge for
+herself if any of the potential problems discussed here are relevant
+for their project, or if the benefit outweigh the problems.  GSS can
+be criticized on several levels.  We start with the actual
+implementation.
 
 GSS do not appear to be designed by experienced C programmers.  While
 generally this may be a good thing (C is not the best language), but
@@ -1917,15 +1921,22 @@ TBA: krb5: firewall/pre-IP: iakerb status?
 
 TBA: krb5: single-DES only
 
-We also note that very few free security systems uses GSS, perhaps the
-only exception to this are Kerberos 5 implementations.  This suggest
-that the GSS may not have been so ``generic'' as it was thought to be.
+TBA: internationalization
+
+We also note that few free security systems uses GSS, perhaps the only
+exception to this are Kerberos 5 implementations.  This suggest that
+the GSS may not be the simplest solution available to solve actual
+problems, since otherwise more projects would have chosen to take
+advantage of the work that went into GSS instead of using another
+framework.
 
 Our conclusion is that any new project that is looking for a security
-framework, that is independent of any particular implementation,
-should look elsewhere.  In particular SASL is recommended.  The most
-compelling argument is that SASL is, as its acronym suggest, Simple,
-whereas GSS is not, in any regard.
+framework should evaluate carefully whether GSS is the best solution.
+In particular it is recommended to compare GSS with the Simple
+Authentication and Security Layer (SASL) framework, which in several
+situations provide the same feature as GSS does.  The most compelling
+argument for SASL over GSS is, as its acronym suggest, Simple, whereas
+GSS is far from it.
 
 @c @node Copying This Manual
 @c @appendix Copying This Manual
