@@ -1,17 +1,22 @@
-GPL GSS-API README -- Important introductory notes.
+GSS README -- Important introductory notes.
 Copyright (C) 2003 Simon Josefsson
 See the end for copying conditions.
 
-This directory holds GPL GSS-API.  See ANNOUNCE for an overview, and
+This directory holds the Generic Security Service (GSS).  See ANNOUNCE
+for an overview, INSTALL for installation instructions, and
 doc/gss.{info,ps,pdf} for the manual.
 
-The GPL GSS-API library, command-line application and test suite
-(lib/, src/, and tests/) are licensed under the GNU Public License
-license (see COPYING), and the documentation (doc/) is licensed under
-the GNU Free Documentation License (see COPYING.DOC).  The other
-sub-directory (argp/) are distributed here for convenience and have
-their own respective licenses, they are not part of GPL GSS-API
-proper.
+You must have libtasn1 <ftp://ftp.gnutls.org/pub/gnutls/libtasn1/>
+installed to use this library.  Unless you want to use this library to
+implement a new GSS mechanism, you will also need Shishi
+<http://josefsson.org/shishi/>, as it is the only supported mechanism.
+
+The GSS library, command-line application and test suite (lib/, src/,
+and tests/) are licensed under the GNU Public License license (see
+COPYING), and the documentation (doc/) is licensed under the GNU Free
+Documentation License (see COPYING.DOC).  The other sub-directory
+(argp/) are distributed here for convenience and have their own
+respective licenses, they are not part of GSS proper.
 
 For updates to the project, see <http://josefsson.org/gss/>.
 
