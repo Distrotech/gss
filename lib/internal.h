@@ -168,4 +168,7 @@ typedef struct _gss_mech_api_struct
 
 _gss_mech_api_t _gss_find_mech (const gss_OID oid);
 
+/* See error.c. */
+extern void gss_warn (const char *format, ...)
+
 #endif /* _INTERNAL_H */
