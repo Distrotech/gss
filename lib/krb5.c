@@ -78,6 +78,25 @@ hexprint (const unsigned char *str, int len)
   printf ("\n");
 }
 
+/* Return number of seconds left of ticket lifetime, or 0 if ticket
+   has expired, or GSS_C_INDEFINITE if ticket is NULL. */
+static OM_uint32
+lifetime (Shishi_tkt * tkt)
+{
+  time_t now, end;
+
+  if (!tkt)
+    return GSS_C_INDEFINITE;
+
+  if (!shishi_tkt_valid_now_p (tkt))
+    return 0;
+
+  now = time (NULL);
+  end = shishi_tkt_endctime (tkt);
+
+  return (OM_uint32) difftime (end, now);
+}
+
 OM_uint32
 gss_krb5_init_sec_context (OM_uint32 * minor_status,
 			   const gss_cred_id_t initiator_cred_handle,
@@ -947,20 +966,7 @@ gss_krb5_inquire_cred (OM_uint32 * minor_status,
     }
 
   if (lifetime)
-    {
-      if (cred_handle->krb5->tkt)
-	{
-	  time_t end = shishi_tkt_endctime (cred_handle->krb5->tkt);
-	  time_t now = time(NULL);
-
-	  if (shishi_tkt_valid_now_p (cred_handle->krb5->tkt))
-	    *lifetime = (OM_uint32) difftime (now, end);
-	  else
-	    *lifetime = 0;
-	}
-      else
-	*lifetime = GSS_C_INDEFINITE;
-    }
+    *lifetime = lifetime (cred_handle->krb5->tkt);
 
   if (cred_usage)
     *cred_usage = GSS_C_BOTH;
@@ -1147,23 +1153,17 @@ gss_krb5_context_time (OM_uint32 * minor_status,
 		       OM_uint32 * time_rec)
 {
   _gss_krb5_ctx_t k5 = context_handle->krb5;
-  time_t now, end;
 
   if (minor_status)
     *minor_status = 0;
 
-  if (!shishi_tkt_valid_now_p (k5->tkt))
-    {
-      if (time_rec)
-	*time_rec = 0;
-      return GSS_S_CONTEXT_EXPIRED;
-    }
-
-  now = time (NULL);
-  end = shishi_tkt_endctime (k5->tkt);
-
   if (time_rec)
-    *time_rec = (OM_uint32) difftime (end, now);
+    {
+      *time_rec = lifetime (k5->tkt);
+
+      if (*time_rec == 0)
+	return GSS_S_CONTEXT_EXPIRED;
+    }
 
   return GSS_S_COMPLETE;
 }
