@@ -37,6 +37,8 @@ TESTS += krb5context
 endif
 check_PROGRAMS = $(TESTS)
 
+EXTRA_DIST = krb5context.tkt
+
 localedir = $(datadir)/locale
 DEFS = -DLOCALEDIR=\"$(localedir)\" @DEFS@
 
