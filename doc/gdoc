@@ -345,7 +345,7 @@ sub output_texinfo {
 	}
     }
     foreach $section (@{$args{'sectionlist'}}) {
-	print "\n\@heading $section\n" if $section ne $section_default;
+	print "\n\@strong{$section:} " if $section ne $section_default;
 	$args{'sections'}{$section} =~ s:([{}]):\@\1:gs;
 	output_highlight($args{'sections'}{$section});
     }
