@@ -23,9 +23,6 @@ noinst_LTLIBRARIES = libgl.la
 libgl_la_SOURCES = gettext.h \
 	xalloc.h xmalloc.c	\
 	xgethostname.h xgethostname.c
-if !READLINE
-libgl_la_SOURCES += readline.c
-endif
 libgl_la_LIBADD = @LTLIBOBJS@
 
 BUILT_SOURCES = $(GETOPT_H)
