@@ -85,7 +85,8 @@ typedef struct gss_ctx_id_struct
 } gss_ctx_id_desc;
 
 typedef struct _gss_mech_api_strict {
-  gss_OID *mech;
+  gss_OID mech;
+  gss_OID_set_desc name_types;
   OM_uint32 (*init_sec_context)
        (OM_uint32 * minor_status,
 	const gss_cred_id_t initiator_cred_handle,
