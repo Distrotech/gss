@@ -61,7 +61,7 @@ main (int argc, char *argv[])
 
   if (!args.major_given)
     {
-      fprintf (stderr, _("%s: missing parameter.\n"), argv[0]);
+      fprintf (stderr, _("%s: missing parameter\n"), argv[0]);
       fprintf (stderr, _("Try `%s --help' for more information.\n"), argv[0]);
       cmdline_parser_print_help ();
       return 1;
