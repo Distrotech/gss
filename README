@@ -6,10 +6,9 @@ This directory holds the Generic Security Service (GSS).  See ANNOUNCE
 for an overview, INSTALL for installation instructions, and
 doc/gss.{info,ps,pdf} for the manual.
 
-You must have libtasn1 <ftp://ftp.gnutls.org/pub/gnutls/libtasn1/>
-installed to use this library.  Unless you want to use this library to
-implement a new GSS mechanism, you will also need Shishi
-<http://josefsson.org/shishi/>, as it is the only supported mechanism.
+Unless you want to use this library to implement a new GSS mechanism,
+you will need to first install Shishi <http://josefsson.org/shishi/>,
+as it currently is the only supported mechanism.
 
 The GSS library, command-line application and test suite (lib/, src/,
 and tests/) are licensed under the GNU Public License license (see
