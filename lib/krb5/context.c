@@ -55,6 +55,7 @@ init_request (OM_uint32 * minor_status,
   gss_buffer_desc tmp;
   Shishi_tkts_hint hint;
 
+  /* Get service ticket. */
   maj_stat = gss_krb5_canonicalize_name (minor_status, target_name,
 					 GSS_C_NO_OID, &k5->peerptr);
   if (GSS_ERROR (maj_stat))
@@ -71,6 +72,7 @@ init_request (OM_uint32 * minor_status,
       return GSS_S_NO_CRED;
     }
 
+  /* Create Authenticator checksum field. */
   maj_stat = _gss_krb5_checksum1964_pack (initiator_cred_handle,
 					  input_chan_bindings,
 					  req_flags,
@@ -78,6 +80,7 @@ init_request (OM_uint32 * minor_status,
   if (GSS_ERROR (maj_stat))
     return maj_stat;
 
+  /* Create AP-REQ in output_token. */
   rc = shishi_ap_tktoptionsraw (k5->sh, &k5->ap, k5->tkt,
 				SHISHI_APOPTIONS_MUTUAL_REQUIRED,
 				0x8003, cksum, cksumlen);
@@ -93,20 +96,8 @@ init_request (OM_uint32 * minor_status,
   if (!rc)
     return GSS_S_FAILURE;
 
-  k5->flags = req_flags & (/* GSS_C_DELEG_FLAG | */
-			   GSS_C_MUTUAL_FLAG |
-			   GSS_C_REPLAY_FLAG | GSS_C_SEQUENCE_FLAG |
-			   GSS_C_CONF_FLAG | GSS_C_INTEG_FLAG);
-
-  k5->key = shishi_ap_key (k5->ap);
-  k5->reqdone = 1;
-
   if (req_flags & GSS_C_MUTUAL_FLAG)
-    {
-      if (ret_flags)
-	*ret_flags |= GSS_C_MUTUAL_FLAG;
-      return GSS_S_CONTINUE_NEEDED;
-    }
+    return GSS_S_CONTINUE_NEEDED;
 
   return GSS_S_COMPLETE;
 }
@@ -130,8 +121,8 @@ init_reply (OM_uint32 * minor_status,
 {
   gss_ctx_id_t ctx = *context_handle;
   _gss_krb5_ctx_t k5 = ctx->krb5;
-  int rc;
   gss_buffer_desc data;
+  int rc;
 
   rc = gss_decapsulate_token_check (input_token, TOK_AP_REP, TOK_LEN,
 				    GSS_KRB5, &data);
@@ -151,8 +142,6 @@ init_reply (OM_uint32 * minor_status,
 					  &k5->acceptseqnr);
   if (rc != SHISHI_OK)
     k5->acceptseqnr = 0;
-
-  k5->repdone = 1;
 
   return GSS_S_COMPLETE;
 }
@@ -176,6 +165,7 @@ gss_krb5_init_sec_context (OM_uint32 * minor_status,
 {
   gss_ctx_id_t ctx = *context_handle;
   _gss_krb5_ctx_t k5 = ctx->krb5;
+  OM_uint32 maj_stat;
   int rc;
 
   if (minor_status)
@@ -207,35 +197,57 @@ gss_krb5_init_sec_context (OM_uint32 * minor_status,
 
   if (ret_flags)
     *ret_flags |= GSS_C_REPLAY_FLAG | GSS_C_SEQUENCE_FLAG |
-      GSS_C_INTEG_FLAG | GSS_C_CONF_FLAG;
+      GSS_C_INTEG_FLAG | GSS_C_CONF_FLAG |
+      GSS_C_PROT_READY_FLAG;
 
   if (!k5->reqdone)
     {
-      return init_request (minor_status,
-			   initiator_cred_handle,
-			   context_handle,
-			   target_name,
-			   mech_type,
-			   req_flags,
-			   time_req,
-			   input_chan_bindings,
-			   input_token,
-			   actual_mech_type,
-			   output_token, ret_flags, time_rec);
+      maj_stat = init_request (minor_status,
+			       initiator_cred_handle,
+			       context_handle,
+			       target_name,
+			       mech_type,
+			       req_flags,
+			       time_req,
+			       input_chan_bindings,
+			       input_token,
+			       actual_mech_type,
+			       output_token, ret_flags, time_rec);
+      if (GSS_ERROR (maj_stat))
+	return maj_stat;
+
+      k5->flags = req_flags & (/* GSS_C_DELEG_FLAG | */
+			       GSS_C_MUTUAL_FLAG |
+			       GSS_C_REPLAY_FLAG | GSS_C_SEQUENCE_FLAG |
+			       GSS_C_CONF_FLAG | GSS_C_INTEG_FLAG);
+
+      k5->key = shishi_ap_key (k5->ap);
+      k5->reqdone = 1;
+
+      return maj_stat;
     }
-  else if (k5->reqdone && k5->flags & GSS_C_MUTUAL_FLAG !k5->repdone)
+  else if (k5->reqdone && k5->flags & GSS_C_MUTUAL_FLAG && !k5->repdone)
     {
-      return init_reply (minor_status,
-			 initiator_cred_handle,
-			 context_handle,
-			 target_name,
-			 mech_type,
-			 req_flags,
-			 time_req,
-			 input_chan_bindings,
-			 input_token,
-			 actual_mech_type,
-			 output_token, ret_flags, time_rec);
+      maj_stat = init_reply (minor_status,
+			     initiator_cred_handle,
+			     context_handle,
+			     target_name,
+			     mech_type,
+			     req_flags,
+			     time_req,
+			     input_chan_bindings,
+			     input_token,
+			     actual_mech_type,
+			     output_token, ret_flags, time_rec);
+      if (GSS_ERROR (maj_stat))
+	return maj_stat;
+
+      if (ret_flags)
+	*ret_flags |= GSS_C_MUTUAL_FLAG;
+
+      k5->repdone = 1;
+
+      return maj_stat;
     }
 
   return GSS_S_FAILURE;
