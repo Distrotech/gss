@@ -46,7 +46,7 @@ AM_MISSING_PROG(TEXI2PDF, texi2pdf, $missing_dir)
 
 # Checks for header files.
 AC_HEADER_STDC
-AC_CHECK_HEADER(locale.h)
+AC_CHECK_HEADERS([locale.h])
 
 # Checks for typedefs, structures, and compiler characteristics.
 
