@@ -4,10 +4,16 @@ See the end for copying conditions.
 
 * Changes in 0.0.2 (unreleased)
 
-** Limited server mode works.
+** Server mode works (a little).
 
-GNU MailUtils can use GSS for its native GSSAPI authentication, and it
-interoperates with the GSASL command line client using GSS.
+GNU MailUtils can use GSS for its native GSSAPI authentication in
+server mode, which then interoperate with (at least) the GNU SASL
+command line client using GSS.
+
+** Memory allocated via xalloc from gnulib.
+
+This takes care of out of memory errors, see the new section in the
+manual named "Out of Memory handling".
 
 * Changes in 0.0.1 (released 2003-06-12)
 
