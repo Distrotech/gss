@@ -9,6 +9,7 @@ error.lo
 gss.h
 krb5.lo
 libgss.la
+meta.lo
 misc.lo
 msg.lo
 name.lo
