@@ -33,12 +33,6 @@
 #include <string.h>
 #include <time.h>
 
-/* Get i18n. */
-#include <gettext.h>
-#define _(String) dgettext (PACKAGE, String)
-#define gettext_noop(String) String
-#define N_(String) gettext_noop (String)
-
 /* Get specification. */
 #include "api.h"
 #include "ext.h"
