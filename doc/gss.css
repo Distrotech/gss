@@ -38,4 +38,15 @@ div.node {
   margin-top: 0.5em;
   margin-bottom: 0.5em;
   font-weight: bold;
+  color: #770000;
+}
+.node a {
+  color: #770000;
+}
+.node a:visited {
+  color: #550000;
+}
+dd, li {
+  padding-top: 0.1em;
+  padding-bottom: 0.1em;
 }
