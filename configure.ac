@@ -20,7 +20,7 @@ dnl Process this file with autoconf to produce a configure script.
 # 02111-1307, USA.
 
 AC_PREREQ(2.50)
-AC_INIT(gss, 0.0.2, bug-gss@josefsson.org)
+AC_INIT(gss, 0.0.3, bug-gss@josefsson.org)
 
 # Interfaces removed:       CURRENT++ AGE=0 REVISION=0
 # Interfaces added:         CURRENT++ AGE++ REVISION=0
@@ -28,7 +28,7 @@ AC_INIT(gss, 0.0.2, bug-gss@josefsson.org)
 # No interfaces changed:                    REVISION++
 LT_CURRENT=0
 LT_AGE=0
-LT_REVISION=2
+LT_REVISION=3
 AC_SUBST(LT_CURRENT)
 AC_SUBST(LT_AGE)
 AC_SUBST(LT_REVISION)
@@ -38,7 +38,7 @@ AM_CONFIG_HEADER(config.h)
 
 # Checks for programs.
 AM_GNU_GETTEXT(external)
-AM_GNU_GETTEXT_VERSION(0.11.5)
+AM_GNU_GETTEXT_VERSION(0.12.1)
 AC_PROG_CC
 AM_MISSING_PROG(HELP2MAN, help2man, $missing_dir)
 AM_MISSING_PROG(TEXI2PDF, texi2pdf, $missing_dir)
