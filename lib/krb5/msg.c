@@ -339,7 +339,7 @@ gss_krb5_unwrap (OM_uint32 * minor_status,
 	  return GSS_S_BAD_MIC;
 
 	seqnr = C2I (seqno);
-	if (seqnr != k5->acceptor ? k5->initseqnr : k5->acceptseqnr)
+	if (seqnr != (k5->acceptor ? k5->initseqnr : k5->acceptseqnr))
 	  return GSS_S_BAD_MIC;
 
 	if (k5->acceptor)
