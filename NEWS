@@ -2,6 +2,10 @@ GSS NEWS -- History of user-visible changes.                    -*- outline -*-
 Copyright (C) 2003 Simon Josefsson
 See the end for copying conditions.
 
+* Changes in 0.0.3 (unreleased)
+
+** Cleanups.
+
 * Changes in 0.0.2 (released 2003-06-28)
 
 ** Server mode works (a little).
