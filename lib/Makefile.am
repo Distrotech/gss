@@ -27,7 +27,8 @@ INCLUDES = -I../intl
 include_HEADERS = gssapi.h gss.h
 
 libgss_la_SOURCES = internal.h version.c error.c \
-	context.c cred.c misc.c msg.c name.c obsolete.c oid.c
+	context.c cred.c misc.c msg.c name.c obsolete.c oid.c \
+	krb5.c
 
 libgss_la_LIBADD = @LTLIBINTL@ @LTLIBOBJS@
 libgss_la_LDFLAGS = -version-info $(LT_CURRENT):$(LT_REVISION):$(LT_AGE)
@@ -35,6 +36,9 @@ libgss_la_LDFLAGS = -version-info $(LT_CURRENT):$(LT_REVISION):$(LT_AGE)
 localedir = $(datadir)/locale
 
 DEFS = -DLOCALEDIR=\"$(localedir)\" @DEFS@
+
+gss_asn1_tab.c: $(srcdir)/gss.asn1
+	-asn1Parser -o $@ $<
 
 indent:
 	indent $(libgss_la_SOURCES) gssapi.h gssapi.h.in
