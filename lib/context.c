@@ -366,8 +366,19 @@ gss_init_sec_context (OM_uint32 * minor_status,
       return GSS_S_FAILURE | GSS_S_CALL_BAD_STRUCTURE;
     }
 
-  mech = (*context_handle == GSS_C_NO_CONTEXT) ?
-    _gss_find_mech (mech_type) : _gss_find_mech ((*context_handle)->mech);
+  if (*context_handle == GSS_C_NO_CONTEXT)
+    mech = _gss_find_mech (mech_type);
+  else
+    mech = _gss_find_mech ((*context_handle)->mech);
+  if (mech == NULL)
+    {
+      if (minor_status)
+	*minor_status = 0;
+      return GSS_S_BAD_MECH;
+    }
+
+  if (actual_mech_type)
+    (*actual_mech_type) = mech->mech;
 
   return mech->init_sec_context (minor_status,
 				 initiator_cred_handle,
