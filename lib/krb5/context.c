@@ -228,6 +228,9 @@ gss_krb5_init_sec_context (OM_uint32 * minor_status,
 	return GSS_S_FAILURE;
     }
 
+  if (ret_flags)
+    *ret_flags |= GSS_C_INTEG_FLAG | GSS_C_CONF_FLAG;
+
   if (!k5->reqdone)
     {
       return init_request (minor_status,
