@@ -26,6 +26,9 @@
 #define TOK_AP_REQ "\x01\x00"
 #define TOK_AP_REP "\x02\x00"
 
+/* Request part of gss_krb5_init_sec_context.  Assumes that
+   context_handle is valid, and has krb5 specific structure, and that
+   output_token is valid. */
 static OM_uint32
 init_request (OM_uint32 * minor_status,
 	      const gss_cred_id_t initiator_cred_handle,
@@ -119,6 +122,9 @@ init_request (OM_uint32 * minor_status,
     return GSS_S_COMPLETE;
 }
 
+/* Reply part of gss_krb5_init_sec_context.  Assumes that
+   context_handle is valid, and has krb5 specific structure, and that
+   output_token is valid. */
 static OM_uint32
 init_reply (OM_uint32 * minor_status,
 	    const gss_cred_id_t initiator_cred_handle,
@@ -168,6 +174,9 @@ init_reply (OM_uint32 * minor_status,
   return GSS_S_COMPLETE;
 }
 
+/* Initiates the establishment of a krb5 security context between the
+   application and a remote peer.  Assumes that context_handle and
+   output_token are valid. */
 OM_uint32
 gss_krb5_init_sec_context (OM_uint32 * minor_status,
 			   const gss_cred_id_t initiator_cred_handle,
@@ -246,6 +255,9 @@ gss_krb5_init_sec_context (OM_uint32 * minor_status,
   return GSS_S_FAILURE;
 }
 
+/* Allows a remotely initiated security context between the
+   application and a remote peer to be established, using krb5.
+   Assumes context_handle is valid. */
 OM_uint32
 gss_krb5_accept_sec_context (OM_uint32 * minor_status,
 			     gss_ctx_id_t * context_handle,
@@ -280,9 +292,6 @@ gss_krb5_accept_sec_context (OM_uint32 * minor_status,
   if (input_chan_bindings != GSS_C_NO_CHANNEL_BINDINGS)
     /* XXX support channel bindings */
     return GSS_S_BAD_BINDINGS;
-
-  if (!context_handle)
-    return GSS_S_NO_CONTEXT;
 
   if (*context_handle)
     return GSS_S_FAILURE;
@@ -396,6 +405,8 @@ gss_krb5_accept_sec_context (OM_uint32 * minor_status,
   return GSS_S_COMPLETE;
 }
 
+/* Delete a krb5 security context.  Should only delete krb5 specific
+   part of context. */
 OM_uint32
 gss_krb5_delete_sec_context (OM_uint32 * minor_status,
 			     gss_ctx_id_t * context_handle,
@@ -404,12 +415,15 @@ gss_krb5_delete_sec_context (OM_uint32 * minor_status,
   _gss_krb5_ctx_t k5 = (*context_handle)->krb5;
 
   shishi_done (k5->sh);
+  free (k5);
 
   if (minor_status)
     *minor_status = 0;
   return GSS_S_COMPLETE;
 }
 
+/* Determines the number of seconds for which the specified krb5
+   context will remain valid.  Assumes context_handle is valid. */
 OM_uint32
 gss_krb5_context_time (OM_uint32 * minor_status,
 		       const gss_ctx_id_t context_handle,
