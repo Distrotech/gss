@@ -2,6 +2,7 @@
 .libs
 Makefile
 Makefile.in
+error.lo
 version.lo
 ggssapi.h
 libggssapi.la
