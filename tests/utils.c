@@ -30,7 +30,11 @@
 #include <ctype.h>
 #endif
 
-#include <gss.h>
+#include "gss/api.h"
+#include "gss/ext.h"
+#ifdef USE_KERBEROS5
+#include "gss/krb5.h"
+#endif
 
 static int verbose = 0;
 static int debug = 0;
