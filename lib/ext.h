@@ -1,5 +1,5 @@
-/* ext.h	Header file for non-standard GSS-API functions.
- * Copyright (C) 2003  Simon Josefsson
+/* ext.h --- Header file for non-standard GSS-API functions.
+ * Copyright (C) 2003, 2004  Simon Josefsson
  *
  * This file is part of the Generic Security Service (GSS).
  *
@@ -22,9 +22,14 @@
 #ifndef GSS_EXT_H_
 #define GSS_EXT_H_
 
-extern const char *gss_check_version (const char *req_version);
+/* Get size_t. */
+#include <stddef.h>
 
-extern int gss_oid_equal (gss_OID first_oid, gss_OID second_oid);
+extern const char *
+gss_check_version (const char *req_version);
+
+extern int
+gss_oid_equal (gss_OID first_oid, gss_OID second_oid);
 
 extern OM_uint32
 gss_copy_oid (OM_uint32 * minor_status,
