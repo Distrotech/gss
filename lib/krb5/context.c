@@ -406,8 +406,8 @@ gss_krb5_accept_sec_context (OM_uint32 * minor_status,
   return GSS_S_COMPLETE;
 }
 
-/* Delete a krb5 security context.  Should only delete krb5 specific
-   part of context. */
+/* Delete a krb5 security context.  Assumes context_handle is valid.
+   Should only delete krb5 specific part of context. */
 OM_uint32
 gss_krb5_delete_sec_context (OM_uint32 * minor_status,
 			     gss_ctx_id_t * context_handle,
