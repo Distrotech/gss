@@ -182,33 +182,23 @@ gss_display_status (OM_uint32 * minor_status,
 		    const gss_OID mech_type,
 		    OM_uint32 * message_context, gss_buffer_t status_string)
 {
+  size_t i;
+
   if (minor_status)
     *minor_status = 0;
+
+  if (message_context)
+    status_value &= ~*message_context;
 
   switch (status_type)
     {
     case GSS_C_GSS_CODE:
-      switch (GSS_CALLING_ERROR (status_value))
+      if (message_context)
 	{
-	case 0:
-	  break;
-
-	case GSS_S_CALL_INACCESSIBLE_READ:
-	case GSS_S_CALL_INACCESSIBLE_WRITE:
-	case GSS_S_CALL_BAD_STRUCTURE:
-	  status_string->value =
-	    xstrdup (_(gss_calling_errors
-		       [(GSS_CALLING_ERROR (status_value) >>
-			 GSS_C_CALLING_ERROR_OFFSET) - 1].text));
-	  status_string->length = strlen (status_string->value);
-	  return GSS_S_COMPLETE;
-	  break;
-
-	default:
-	  status_string->value = xstrdup (_("Unknown calling error"));
-	  status_string->length = strlen (status_string->value);
-	  return GSS_S_COMPLETE;
-	  break;
+	  *message_context |=
+	    GSS_C_ROUTINE_ERROR_MASK << GSS_C_ROUTINE_ERROR_OFFSET;
+	  if ((status_value & ~*message_context) == 0)
+	    *message_context = 0;
 	}
 
       switch (GSS_ROUTINE_ERROR (status_value))
@@ -243,11 +233,58 @@ gss_display_status (OM_uint32 * minor_status,
 	  break;
 
 	default:
-	  status_string->value = xstrdup (_("Unknown routine error"));
+	  return GSS_S_BAD_STATUS;
+	  break;
+	}
+
+      if (message_context)
+	{
+	  *message_context |=
+	    GSS_C_CALLING_ERROR_MASK << GSS_C_CALLING_ERROR_OFFSET;
+	  if ((status_value & ~*message_context) == 0)
+	    *message_context = 0;
+	}
+
+      switch (GSS_CALLING_ERROR (status_value))
+	{
+	case 0:
+	  break;
+
+	case GSS_S_CALL_INACCESSIBLE_READ:
+	case GSS_S_CALL_INACCESSIBLE_WRITE:
+	case GSS_S_CALL_BAD_STRUCTURE:
+	  status_string->value =
+	    xstrdup (_(gss_calling_errors
+		       [(GSS_CALLING_ERROR (status_value) >>
+			 GSS_C_CALLING_ERROR_OFFSET) - 1].text));
 	  status_string->length = strlen (status_string->value);
 	  return GSS_S_COMPLETE;
 	  break;
+
+	default:
+	  return GSS_S_BAD_STATUS;
+	  break;
 	}
+
+      for (i = 0; i < sizeof (gss_supplementary_errors) /
+	     sizeof (gss_supplementary_errors[0]); i++)
+	if (gss_supplementary_errors[i].err &
+	    GSS_SUPPLEMENTARY_INFO (status_value))
+	  {
+	    status_string->value =
+	      xstrdup (_(gss_supplementary_errors[i].text));
+	    status_string->length = strlen (status_string->value);
+	    *message_context |= gss_supplementary_errors[i].err;
+	    if ((status_value & ~*message_context) == 0)
+	      *message_context = 0;
+	    return GSS_S_COMPLETE;
+	  }
+
+      if (GSS_SUPPLEMENTARY_INFO (status_value))
+	return GSS_S_BAD_STATUS;
+
+      if (message_context)
+	*message_context = 0;
       status_string->value = xstrdup (_("No error"));
       status_string->length = strlen (status_string->value);
       break;
