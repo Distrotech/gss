@@ -20,7 +20,7 @@ dnl Process this file with autoconf to produce a configure script.
 # 02111-1307, USA.
 
 AC_PREREQ(2.59)
-AC_INIT([gss],[0.0.7],[bug-gss@josefsson.org])
+AC_INIT([gss], [0.0.7], [bug-gss@gnu.org])
 
 # Library code modified:                              REVISION++
 # Interfaces changed/added/removed:   CURRENT++       REVISION=0
@@ -40,12 +40,10 @@ AC_CONFIG_HEADERS(config.h)
 AM_GNU_GETTEXT(external)
 AM_GNU_GETTEXT_VERSION(0.12.1)
 AC_PROG_CC
+AC_PROG_LIBTOOL
 
 # Checks for header files.
 AC_HEADER_STDC
-
-# We use libtool.
-AC_PROG_LIBTOOL
 
 # For gnulib stuff in gl/.
 gl_ERROR
@@ -56,23 +54,20 @@ gl_XALLOC
 gl_FUNC_GETHOSTNAME
 
 # Test for Shishi.
-AC_CHECK_HEADER(shishi.h,
-	AC_CHECK_LIB(shishi, shishi_check_version,
-		[kerberos5=yes AC_SUBST(SHISHI_LIBS, -lshishi)],
-		kerberos5=no),
-	kerberos5=no)
+sj_CHECK_HEADERLIB(shishi.h, shishi, shishi_check_version,
+	kerberos5=yes, kerberos5=no)
 AC_ARG_ENABLE(kerberos5,
 	AS_HELP_STRING([--disable-kerberos5],
-			[disable Kerberos V5 mechanism unconditionally]),
+		[disable Kerberos V5 mechanism unconditionally]),
 	kerberos5=$enableval)
 if test "$kerberos5" != "no" ; then
 	AC_DEFINE(USE_KERBEROS5, 1, [Define to 1 if you want Kerberos 5 mech.])
-else
-	AC_MSG_WARN([Shishi not found, required for Kerberos 5])
+	GSS_KRB5='#include <gss/krb5.h>'
 fi
 AC_MSG_CHECKING([if the Kerberos V5 mechanism should be supported])
 AC_MSG_RESULT($kerberos5)
 AM_CONDITIONAL(KRB5, test "$kerberos5" = "yes")
+AC_SUBST(GSS_KRB5)
 
 # We are done.
 AC_CONFIG_FILES(Makefile gss.pc lib/gss.h po/Makefile.in m4/Makefile \
