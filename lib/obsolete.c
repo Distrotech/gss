@@ -1,21 +1,21 @@
 /* obsolete.c	Obsolete GSS-API v1 compatibility mappings.
  * Copyright (C) 2003  Simon Josefsson
  *
- * This file is part of GPL GSS-API.
+ * This file is part of the Generic Security Service (GSS).
  *
- * GPL GSS-API is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
+ * GSS is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * GPL GSS-API is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ * GSS is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public
+ * License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with GPL GSS-API; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * along with GSS; if not, write to the Free Software Foundation,
+ * Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  *
  */
 
@@ -56,7 +56,7 @@ gss_seal (OM_uint32 * minor_status,
 	  gss_buffer_t input_message_buffer,
 	  int *conf_state, gss_buffer_t output_message_buffer)
 {
-  WARN ("gss_seal() is obsolete, use gss_wap() instead.");
+  WARN ("gss_seal() is obsolete, use gss_wrap() instead.");
 
   return gss_wrap (minor_status, context_handle, conf_req_flag, qop_req,
 		   input_message_buffer, conf_state, output_message_buffer);
