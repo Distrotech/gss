@@ -40,7 +40,8 @@ gss_krb5_init_sec_context (OM_uint32 * minor_status,
 			   gss_buffer_t output_token,
 			   OM_uint32 * ret_flags, OM_uint32 * time_rec)
 {
-  Shishi *h;
+  gss_ctx_id_t ctx = *context_handle;
+  _gss_krb5_ctx_t k5 = ctx->krb5;
   Shishi_ap *ap;
   Shishi_tkt *tkt;
   char *data;
@@ -48,55 +49,26 @@ gss_krb5_init_sec_context (OM_uint32 * minor_status,
   int rc;
   OM_uint32 maj_stat;
 
-  if (!context_handle)
-    return GSS_S_FAILURE;
-
-  if (!output_token)
-    return GSS_S_FAILURE;
-
   if (initiator_cred_handle)
     /* We only support the default initiator.  See k5internal.h for
        adding a Shishi_tkt to the credential structure.  I'm not sure
        what the use would be -- user-to-user authentication? */
     return GSS_S_NO_CRED;
 
-  if (actual_mech_type)
-    (*actual_mech_type) = GSS_KRB5;
-
-  /* XXX mech_type not tested */
-
-  if ((*context_handle)->krb5 == NULL)
+  if (k5 == NULL)
     {
-      gss_ctx_id_t ctx;
       gss_buffer_desc tmp;
       Shishi_tkts_hint hint;
 
-      ctx = *context_handle;
+      k5 = ctx->krb5 = xcalloc (sizeof (*ctx->krb5), 1);
 
-      ctx->mech = GSS_KRB5;
-      ctx->krb5 = xcalloc (sizeof (*ctx->krb5), 1);
+      rc = shishi_init (&k5->sh);
+      if (rc != SHISHI_OK)
+	return GSS_S_FAILURE;
 
-      if (initiator_cred_handle)
-	h = initiator_cred_handle->krb5->sh;
-      else
-	{
-	  rc = shishi_init (&h);
-	  if (rc != SHISHI_OK)
-	    return GSS_S_FAILURE;
-	}
-      ctx->krb5->sh = h;
-
-      if (gss_oid_equal (target_name->type, GSS_KRB5_NT_PRINCIPAL_NAME))
-	{
-	  maj_stat = gss_duplicate_name (minor_status, target_name,
-					 &ctx->peerptr);
-	}
-      else
-	{
-	  maj_stat = gss_krb5_canonicalize_name (minor_status, target_name,
-						 mech_type, &ctx->peerptr);
-	}
-      if (maj_stat != GSS_S_COMPLETE)
+      maj_stat = gss_krb5_canonicalize_name (minor_status, target_name,
+					     GSS_C_NO_OID, &ctx->peerptr);
+      if (GSS_ERROR (maj_stat))
 	return maj_stat;
 
       memset (&hint, 0, sizeof (hint));
@@ -104,14 +76,14 @@ gss_krb5_init_sec_context (OM_uint32 * minor_status,
       memcpy (hint.server, ctx->peerptr->value, ctx->peerptr->length);
       hint.server[ctx->peerptr->length] = '\0';
 
-      tkt = shishi_tkts_get (shishi_tkts_default (h), &hint);
+      tkt = shishi_tkts_get (shishi_tkts_default (k5->sh), &hint);
       free (hint.server);
       if (!tkt)
 	return GSS_S_FAILURE;
 
       /* XXX */
-      shishi_tkts_to_file (shishi_tkts_default (h),
-			   shishi_tkts_default_file (h));
+      shishi_tkts_to_file (shishi_tkts_default (k5->sh),
+			   shishi_tkts_default_file (k5->sh));
 
       ctx->krb5->tkt = tkt;
 
@@ -125,7 +97,7 @@ gss_krb5_init_sec_context (OM_uint32 * minor_status,
       data[25] = (req_flags >> 24) & 0xFF;
       ctx->krb5->flags = req_flags;
 
-      rc = shishi_ap_tktoptionsdata (h, &ap, tkt,
+      rc = shishi_ap_tktoptionsdata (k5->sh, &ap, tkt,
 				     SHISHI_APOPTIONS_MUTUAL_REQUIRED, "a",
 				     1);
       if (rc != SHISHI_OK)
@@ -138,12 +110,12 @@ gss_krb5_init_sec_context (OM_uint32 * minor_status,
       if (rc != SHISHI_OK)
 	return GSS_S_FAILURE;
 
-      rc = shishi_authenticator_set_cksum (h, shishi_ap_authenticator (ap),
+      rc = shishi_authenticator_set_cksum (k5->sh, shishi_ap_authenticator (ap),
 					   0x8003, data + 2, 24);
       if (rc != SHISHI_OK)
 	return GSS_S_FAILURE;
 
-      rc = shishi_apreq_add_authenticator (h, shishi_ap_req (ap),
+      rc = shishi_apreq_add_authenticator (k5->sh, shishi_ap_req (ap),
 					   shishi_tkt_key (shishi_ap_tkt
 							   (ap)),
 					   SHISHI_KEYUSAGE_APREQ_AUTHENTICATOR,
@@ -153,7 +125,7 @@ gss_krb5_init_sec_context (OM_uint32 * minor_status,
 
       free (data);
 
-      rc = shishi_new_a2d (h, shishi_ap_req (ap), &data, &len);
+      rc = shishi_new_a2d (k5->sh, shishi_ap_req (ap), &data, &len);
       if (rc != SHISHI_OK)
 	return GSS_S_FAILURE;
 
@@ -171,10 +143,9 @@ gss_krb5_init_sec_context (OM_uint32 * minor_status,
       else
 	return GSS_S_COMPLETE;
     }
-  else if (*context_handle && !(*context_handle)->krb5->repdone)
+  else if (!k5->repdone)
     {
       gss_ctx_id_t ctx = *context_handle;
-      _gss_krb5_ctx_t k5 = ctx->krb5;
       gss_OID_desc tokenoid;
       gss_buffer_desc data;
 
