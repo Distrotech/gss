@@ -70,7 +70,6 @@ AM_CONDITIONAL(KRB5, test "$kerberos5" = "yes")
 AC_SUBST(GSS_KRB5)
 
 # We are done.
-AC_CONFIG_FILES(Makefile gss.pc lib/gss.h po/Makefile.in m4/Makefile \
-		doc/Makefile lib/Makefile tests/Makefile \
-		gl/Makefile gl/m4/Makefile)
+AC_CONFIG_FILES(Makefile gss.pc lib/gss.h po/Makefile.in \
+		doc/Makefile gl/Makefile lib/Makefile tests/Makefile)
 AC_OUTPUT
