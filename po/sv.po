@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gss 0.0.1\n"
 "Report-Msgid-Bugs-To: bug-gss@josefsson.org\n"
-"POT-Creation-Date: 2004-01-12 03:15+0100\n"
+"POT-Creation-Date: 2004-01-15 09:22+0100\n"
 "PO-Revision-Date: 2003-06-12 20:05+0200\n"
 "Last-Translator: Simon Josefsson <simon@josefsson.org>\n"
 "Language-Team: Swedish <sv@li.org>\n"
@@ -213,22 +213,22 @@ msgstr "Inget krb5 fel"
 msgid "Unknown krb5 error"
 msgstr "Okänt krb5 fel"
 
-#: lib/obsolete.c:31
+#: lib/obsolete.c:30
 #, c-format
 msgid "warning: gss_sign() is obsolete, use gss_get_mic() instead."
 msgstr "varning: gss_sign() är obsolet, använd gss_get_mic() istället."
 
-#: lib/obsolete.c:46
-#, c-format
-msgid "warning: gss_verify() is obsolete, use gss_verify_mic() instead."
+#: lib/obsolete.c:44
+#, fuzzy, c-format
+msgid "warning: gss_verify() is obsolete,  use gss_verify_mic() instead."
 msgstr "varning: gss_verify() är obsolet, använd gss_verify_mic() istället."
 
-#: lib/obsolete.c:61
+#: lib/obsolete.c:59
 #, c-format
 msgid "warning: gss_seal() is obsolete, use gss_wrap() instead."
 msgstr "varning: gss_seal() är obsolet, använd gss_wrap() istället."
 
-#: lib/obsolete.c:76
+#: lib/obsolete.c:74
 #, c-format
 msgid "warning: gss_unseal() is obsolete, use gss_unwrap() instead."
 msgstr "varning: gss_unseal() är obsolet, använd gss_unwrap() istället."
