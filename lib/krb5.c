@@ -169,7 +169,6 @@ gss_krb5_init_sec_context (OM_uint32 * minor_status,
 			       shishi_tkts_default_file (h));
 	}
       ctx->krb5->tkt = tkt;
-      ctx->krb5->key = shishi_tkt_key(tkt);
 
       data = xmalloc(2 + 24);
       memcpy(&data[0], TOK_AP_REQ, TOK_LEN);
@@ -186,6 +185,8 @@ gss_krb5_init_sec_context (OM_uint32 * minor_status,
       if (rc != SHISHI_OK)
 	return GSS_S_FAILURE;
       (*context_handle)->krb5->ap = ap;
+
+      ctx->krb5->key = shishi_ap_key (ap);
 
       rc = shishi_ap_req_build (ap);
       if (rc != SHISHI_OK)
