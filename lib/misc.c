@@ -239,7 +239,7 @@ gss_add_oid_set_member (OM_uint32 * minor_status,
 
   major_stat = gss_test_oid_set_member (minor_status, member_oid,
 					*oid_set, &present);
-  if (major_stat != GSS_S_COMPLETE)
+  if (GSS_ERROR (major_stat))
     return major_stat;
 
   if (present)
@@ -255,7 +255,7 @@ gss_add_oid_set_member (OM_uint32 * minor_status,
 
   major_stat = gss_copy_oid (minor_status, member_oid,
 			     (*oid_set)->elements + ((*oid_set)->count - 1));
-  if (major_stat != GSS_S_COMPLETE)
+  if (GSS_ERROR (major_stat))
     return major_stat;
 
   return GSS_S_COMPLETE;
