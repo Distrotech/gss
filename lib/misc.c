@@ -421,6 +421,7 @@ gss_release_buffer (OM_uint32 * minor_status, gss_buffer_t buffer)
     {
       if (buffer->value)
 	free (buffer->value);
+      buffer->value = NULL;
       buffer->length = 0;
     }
 
