@@ -5,7 +5,7 @@ Makefile.in
 context.lo
 cred.lo
 error.lo
-ggssapi.h
+gss.h
 libgss.la
 misc.lo
 msg.lo
