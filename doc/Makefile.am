@@ -20,6 +20,8 @@
 
 man_MANS = gss.1
 
+DISTCLEANFILES = $(man_MANS)
+
 gss_texi_auto_deps = gss-api-version.texi \
 	gss-api-context.texi gss-api-cred.texi \
 	gss-api-misc.texi gss-api-msg.texi gss-api-name.texi

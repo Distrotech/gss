@@ -44,27 +44,13 @@ AC_PROG_CC
 AM_MISSING_PROG(PERL, perl, $missing_dir)
 AM_MISSING_PROG(HELP2MAN, help2man, $missing_dir)
 AM_MISSING_PROG(TEXI2PDF, texi2pdf, $missing_dir)
-AM_MISSING_PROG(DOCBOOK2TXT, docbook2txt, $missing_dir)
-AM_MISSING_PROG(DOCBOOK2HTML, docbook2html, $missing_dir)
-AM_MISSING_PROG(DOCBOOK2PS, docbook2ps, $missing_dir)
-AM_MISSING_PROG(DOCBOOK2PDF, docbook2pdf, $missing_dir)
-AM_WITH_DMALLOC
 
 # Checks for header files.
 AC_HEADER_STDC
-AC_CHECK_HEADERS(sys/socket.h unistd.h strings.h netdb.h math.h limits.h)
-AC_CHECK_HEADERS(sys/poll.h sys/time.h sys/types.h sys/select.h sys/socket.h)
-AC_CHECK_HEADERS(netinet/in.h errno.h)
 
 # Checks for typedefs, structures, and compiler characteristics.
-AC_C_CONST
-AC_TYPE_SIZE_T
-AC_TYPE_UID_T
-AC_HEADER_TIME
-AC_CHECK_DECLS(errno)
 
 # Checks for library functions.
-AC_SEARCH_LIBS(gethostbyname, xnet)
 
 # Test if the libc includes a good enough argp.
 AC_ARG_WITH(system-argp,

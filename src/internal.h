@@ -20,8 +20,8 @@
  */
 
 #ifndef _INTERNAL_H
-
 #define _INTERNAL_H
+
 #if HAVE_CONFIG_H
 #include "config.h"
 #endif
@@ -31,24 +31,6 @@
 #include <stdlib.h>
 #include <stdarg.h>
 #include <ctype.h>
-#endif
-
-#if HAVE_INTTYPES_H
-# include <inttypes.h>
-#else
-# if HAVE_STDINT_H
-#  include <stdint.h>
-# endif
-#endif
-
-#if HAVE_STRING_H
-# if !STDC_HEADERS && HAVE_MEMORY_H
-#  include <memory.h>
-# endif
-# include <string.h>
-#endif
-#if HAVE_STRINGS_H
-# include <strings.h>
 #endif
 
 #include <argp.h>
