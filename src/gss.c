@@ -61,23 +61,23 @@ main (int argc, char *argv[])
 
   if (!args.major_given)
     {
-      fprintf (stderr, "%s: missing parameter.\n", argv[0]);
-      fprintf (stderr, "Try `%s --help' for more information.\n", argv[0]);
+      fprintf (stderr, _("%s: missing parameter.\n"), argv[0]);
+      fprintf (stderr, _("Try `%s --help' for more information.\n"), argv[0]);
       cmdline_parser_print_help ();
       return 1;
     }
 
   if (!args.quiet_given)
     {
-      printf ("GSS-API major status code %ld (0x%lx).\n\n",
+      printf (_("GSS-API major status code %ld (0x%lx).\n\n"),
 	      args.major_arg, args.major_arg);
 
-      printf ("   MSB                               "
-	      "                                  LSB\n"
-	      "   +-----------------+---------------"
-	      "--+---------------------------------+\n"
-	      "   |  Calling Error  |  Routine Error"
-	      "  |       Supplementary Info        |\n   | ");
+      printf (_("   MSB                               "
+		"                                  LSB\n"
+		"   +-----------------+---------------"
+		"--+---------------------------------+\n"
+		"   |  Calling Error  |  Routine Error"
+		"  |       Supplementary Info        |\n   | "));
       for (i = 0; i < 8; i++)
 	printf ("%ld ", (args.major_arg >> (31 - i)) & 1);
       printf ("| ");
@@ -86,18 +86,18 @@ main (int argc, char *argv[])
       printf ("| ");
       for (i = 0; i < 16; i++)
 	printf ("%ld ", (args.major_arg >> (15 - i)) & 1);
-      printf ("|\n"
-	      "   +-----------------+---------------"
-	      "--+---------------------------------+\n"
-	      "Bit 31            24  23            1"
-	      "6  15                             0\n\n");
+      printf (_("|\n"
+		"   +-----------------+---------------"
+		"--+---------------------------------+\n"
+		"Bit 31            24  23            1"
+		"6  15                             0\n\n"));
     }
 
   if (GSS_ROUTINE_ERROR (args.major_arg))
     {
       if (!args.quiet_given)
-	printf ("Masked routine error %ld (0x%lx) shifted "
-		"into %ld (0x%lx):\n",
+	printf (_("Masked routine error %ld (0x%lx) shifted "
+		  "into %ld (0x%lx):\n"),
 		GSS_ROUTINE_ERROR (args.major_arg),
 		GSS_ROUTINE_ERROR (args.major_arg),
 		GSS_ROUTINE_ERROR (args.
@@ -113,7 +113,7 @@ main (int argc, char *argv[])
 				    &message_context, &status_string);
 	  if (GSS_ERROR (maj))
 	    {
-	      fprintf (stderr, "%s: displaying status code failed\n",
+	      fprintf (stderr, _("%s: displaying status code failed\n"),
 		       argv[0]);
 	      rc = 1;
 	      break;
@@ -134,7 +134,7 @@ main (int argc, char *argv[])
     {
       if (!args.quiet_given)
 	printf
-	  ("Masked calling error %ld (0x%lx) shifted into %ld (0x%lx):\n",
+	  (_("Masked calling error %ld (0x%lx) shifted into %ld (0x%lx):\n"),
 	   GSS_CALLING_ERROR (args.major_arg),
 	   GSS_CALLING_ERROR (args.major_arg),
 	   GSS_CALLING_ERROR (args.major_arg) >> GSS_C_CALLING_ERROR_OFFSET,
@@ -148,7 +148,7 @@ main (int argc, char *argv[])
 				    &message_context, &status_string);
 	  if (GSS_ERROR (maj))
 	    {
-	      fprintf (stderr, "%s: displaying status code failed\n",
+	      fprintf (stderr, _("%s: displaying status code failed\n"),
 		       argv[0]);
 	      rc = 1;
 	      break;
@@ -168,8 +168,8 @@ main (int argc, char *argv[])
   if (GSS_SUPPLEMENTARY_INFO (args.major_arg))
     {
       if (!args.quiet_given)
-	printf ("Masked supplementary info %ld (0x%lx) shifted "
-		"into %ld (0x%lx):\n",
+	printf (_("Masked supplementary info %ld (0x%lx) shifted "
+		  "into %ld (0x%lx):\n"),
 		GSS_SUPPLEMENTARY_INFO (args.major_arg),
 		GSS_SUPPLEMENTARY_INFO (args.major_arg),
 		GSS_SUPPLEMENTARY_INFO (args.major_arg) >>
@@ -186,7 +186,7 @@ main (int argc, char *argv[])
 				    &message_context, &status_string);
 	  if (GSS_ERROR (maj))
 	    {
-	      fprintf (stderr, "%s: displaying status code failed\n",
+	      fprintf (stderr, _("%s: displaying status code failed\n"),
 		       argv[0]);
 	      rc = 1;
 	      break;
@@ -204,7 +204,7 @@ main (int argc, char *argv[])
     }
 
   if (args.major_arg == GSS_S_COMPLETE)
-    printf ("No error\n");
+    printf (_("No error\n"));
 
   return rc;
 }
