@@ -42,8 +42,6 @@ gss_krb5_init_sec_context (OM_uint32 * minor_status,
 {
   gss_ctx_id_t ctx = *context_handle;
   _gss_krb5_ctx_t k5 = ctx->krb5;
-  Shishi_ap *ap;
-  Shishi_tkt *tkt;
   char *data;
   size_t len;
   int rc;
@@ -60,7 +58,7 @@ gss_krb5_init_sec_context (OM_uint32 * minor_status,
       gss_buffer_desc tmp;
       Shishi_tkts_hint hint;
 
-      k5 = ctx->krb5 = xcalloc (sizeof (*ctx->krb5), 1);
+      k5 = ctx->krb5 = xcalloc (sizeof (*k5), 1);
 
       rc = shishi_init (&k5->sh);
       if (rc != SHISHI_OK)
@@ -76,16 +74,14 @@ gss_krb5_init_sec_context (OM_uint32 * minor_status,
       memcpy (hint.server, ctx->peerptr->value, ctx->peerptr->length);
       hint.server[ctx->peerptr->length] = '\0';
 
-      tkt = shishi_tkts_get (shishi_tkts_default (k5->sh), &hint);
+      k5->tkt = shishi_tkts_get (shishi_tkts_default (k5->sh), &hint);
       free (hint.server);
-      if (!tkt)
+      if (!k5->tkt)
 	return GSS_S_FAILURE;
 
       /* XXX */
       shishi_tkts_to_file (shishi_tkts_default (k5->sh),
 			   shishi_tkts_default_file (k5->sh));
-
-      ctx->krb5->tkt = tkt;
 
       data = xmalloc (2 + 24);
       memcpy (&data[0], TOK_AP_REQ, TOK_LEN);
@@ -95,37 +91,37 @@ gss_krb5_init_sec_context (OM_uint32 * minor_status,
       data[23] = (req_flags >> 8) & 0xFF;
       data[24] = (req_flags >> 16) & 0xFF;
       data[25] = (req_flags >> 24) & 0xFF;
-      ctx->krb5->flags = req_flags;
+      k5->flags = req_flags;
 
-      rc = shishi_ap_tktoptionsdata (k5->sh, &ap, tkt,
+      rc = shishi_ap_tktoptionsdata (k5->sh, &k5->ap, k5->tkt,
 				     SHISHI_APOPTIONS_MUTUAL_REQUIRED, "a",
 				     1);
       if (rc != SHISHI_OK)
 	return GSS_S_FAILURE;
-      (*context_handle)->krb5->ap = ap;
 
-      ctx->krb5->key = shishi_ap_key (ap);
+      k5->key = shishi_ap_key (k5->ap);
 
-      rc = shishi_ap_req_build (ap);
+      rc = shishi_ap_req_build (k5->ap);
       if (rc != SHISHI_OK)
 	return GSS_S_FAILURE;
 
-      rc = shishi_authenticator_set_cksum (k5->sh, shishi_ap_authenticator (ap),
+      rc = shishi_authenticator_set_cksum (k5->sh,
+					   shishi_ap_authenticator (k5->ap),
 					   0x8003, data + 2, 24);
       if (rc != SHISHI_OK)
 	return GSS_S_FAILURE;
 
-      rc = shishi_apreq_add_authenticator (k5->sh, shishi_ap_req (ap),
-					   shishi_tkt_key (shishi_ap_tkt
-							   (ap)),
-					   SHISHI_KEYUSAGE_APREQ_AUTHENTICATOR,
-					   shishi_ap_authenticator (ap));
+      rc = shishi_apreq_add_authenticator
+	(k5->sh, shishi_ap_req (k5->ap),
+	 shishi_tkt_key (shishi_ap_tkt (k5->ap)),
+	 SHISHI_KEYUSAGE_APREQ_AUTHENTICATOR,
+	 shishi_ap_authenticator (k5->ap));
       if (rc != SHISHI_OK)
 	return GSS_S_FAILURE;
 
       free (data);
 
-      rc = shishi_new_a2d (k5->sh, shishi_ap_req (ap), &data, &len);
+      rc = shishi_new_a2d (k5->sh, shishi_ap_req (k5->ap), &data, &len);
       if (rc != SHISHI_OK)
 	return GSS_S_FAILURE;
 
