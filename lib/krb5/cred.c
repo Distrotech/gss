@@ -22,14 +22,14 @@
 /* Get specification. */
 #include "k5internal.h"
 
-OM_uint32
-gss_krb5_acquire_cred1 (OM_uint32 * minor_status,
-			const gss_name_t desired_name,
-			OM_uint32 time_req,
-			const gss_OID_set desired_mechs,
-			gss_cred_usage_t cred_usage,
-			gss_cred_id_t * output_cred_handle,
-			gss_OID_set * actual_mechs, OM_uint32 * time_rec)
+static OM_uint32
+acquire_cred1 (OM_uint32 * minor_status,
+	       const gss_name_t desired_name,
+	       OM_uint32 time_req,
+	       const gss_OID_set desired_mechs,
+	       gss_cred_usage_t cred_usage,
+	       gss_cred_id_t * output_cred_handle,
+	       gss_OID_set * actual_mechs, OM_uint32 * time_rec)
 {
   _gss_krb5_cred_t k5 = (*output_cred_handle)->krb5;
   OM_uint32 maj_stat;
@@ -105,9 +105,9 @@ gss_krb5_acquire_cred (OM_uint32 * minor_status,
 
   p->krb5 = xcalloc (sizeof (*p->krb5), 1);
 
-  maj_stat = gss_krb5_acquire_cred1 (minor_status, desired_name, time_req,
-				     desired_mechs, cred_usage,
-				     &p, actual_mechs, time_rec);
+  maj_stat = acquire_cred1 (minor_status, desired_name, time_req,
+			    desired_mechs, cred_usage,
+			    &p, actual_mechs, time_rec);
   if (GSS_ERROR (maj_stat))
     {
       if (actual_mechs)
