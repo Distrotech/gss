@@ -24,7 +24,7 @@ lib_LTLIBRARIES = libggssapi.la
 
 INCLUDES = -I../intl
 
-include_HEADERS = gssapi.h
+include_HEADERS = gssapi.h ggssapi.h
 
 libggssapi_la_SOURCES = version.c
 
