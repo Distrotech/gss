@@ -1,5 +1,5 @@
 /* krb5.c	Implementation of Kerberos 5 GSS functions.
- * Copyright (C) 2003  Simon Josefsson
+ * Copyright (C) 2003, 2004  Simon Josefsson
  *
  * This file is part of the Generic Security Service (GSS).
  *
@@ -1121,6 +1121,22 @@ gss_krb5_accept_sec_context (OM_uint32 * minor_status,
 	  *src_name = p;
 	}
     }
+
+  return GSS_S_COMPLETE;
+}
+
+OM_uint32
+gss_krb5_delete_sec_context (OM_uint32 * minor_status,
+			     gss_ctx_id_t * context_handle,
+			     gss_buffer_t output_token)
+{
+  _gss_krb5_ctx_t k5 = (*context_handle)->krb5;
+
+  if (minor_status)
+    *minor_status = 0;
+
+  if (k5->key)
+    shishi_key_done (k5->key);
 
   return GSS_S_COMPLETE;
 }

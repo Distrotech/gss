@@ -1,5 +1,5 @@
 /* meta.c	Implementation of function selection depending on mechanism.
- * Copyright (C) 2003  Simon Josefsson
+ * Copyright (C) 2003, 2004  Simon Josefsson
  *
  * This file is part of the Generic Security Service (GSS).
  *
@@ -62,6 +62,7 @@ _gss_mech_api_desc _gss_mech_apis[] = {
     gss_krb5_display_status,
     gss_krb5_acquire_cred,
     gss_krb5_accept_sec_context,
+    gss_krb5_delete_sec_context,
     gss_krb5_inquire_cred
   },
 #endif
@@ -75,6 +76,7 @@ _gss_mech_api_desc _gss_mech_apis[] = {
     _gss_dummy,
     _gss_dummy,
     _gss_dummy_display_status,
+    _gss_dummy,
     _gss_dummy,
     _gss_dummy,
     _gss_dummy
