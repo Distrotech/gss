@@ -192,11 +192,6 @@ gss_krb5_init_sec_context (OM_uint32 * minor_status,
   if (minor_status)
     *minor_status = 0;
 
-  if (ret_flags)
-    *ret_flags = GSS_C_REPLAY_FLAG | GSS_C_SEQUENCE_FLAG |
-      GSS_C_INTEG_FLAG | GSS_C_CONF_FLAG |
-      GSS_C_PROT_READY_FLAG;
-
   if (initiator_cred_handle)
     {
       /* We only support the default initiator.  See k5internal.h for
@@ -237,6 +232,9 @@ gss_krb5_init_sec_context (OM_uint32 * minor_status,
 			       GSS_C_MUTUAL_FLAG |
 			       GSS_C_REPLAY_FLAG | GSS_C_SEQUENCE_FLAG |
 			       GSS_C_CONF_FLAG | GSS_C_INTEG_FLAG);
+      /* PROT_READY is not mentioned in 1964/gssapi-cfx but we support
+	 it anyway. */
+      k5->flags |= GSS_C_PROT_READY_FLAG;
 
       if (ret_flags)
 	*ret_flags = k5->flags;
