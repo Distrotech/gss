@@ -1,5 +1,5 @@
 ## Process this file with automake to produce Makefile.in.
-# Copyright (C) 2003 Simon Josefsson.
+# Copyright (C) 2003, 2004 Simon Josefsson.
 #
 # This file is part of the Generic Security Service (GSS).
 #
@@ -21,6 +21,5 @@
 noinst_LTLIBRARIES = libgl.la
 
 libgl_la_SOURCES = xalloc.h xmalloc.c \
-	xstrdup.h xstrdup.c \
 	xgethostname.h xgethostname.c
 libgl_la_LIBADD = @LTLIBOBJS@
