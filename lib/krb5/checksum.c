@@ -120,7 +120,7 @@ _gss_krb5_checksum1964_pack (const gss_cred_id_t initiator_cred_handle,
   if (req_flags & GSS_C_DELEG_FLAG)
     {
       /* XXX We don't support credential delegation yet.  We should
-	 not fail here. */
+	 not fail here, as GSS_C_DELEG_FLAG is masked out above. */
     }
 
   return GSS_S_COMPLETE;
