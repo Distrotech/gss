@@ -2,7 +2,7 @@ GSS NEWS -- History of user-visible changes.                    -*- outline -*-
 Copyright (C) 2003, 2004 Simon Josefsson
 See the end for copying conditions.
 
-* Version 0.0.14 (unreleased)
+* Version 0.0.14 (released 2004-10-15)
 
 ** gss_import_name and gss_duplicate_name no longer clone the OID.
 Instead, only the pointer to the OID is cloned.  It seem unclear where
