@@ -18,7 +18,7 @@
 # Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 # 02111-1307, USA.
 
-AM_CPPFLAGS = -I$(top_srcdir)/lib
+AM_CPPFLAGS = -I$(top_srcdir)/gl -I$(top_srcdir)/lib
 if KRB5
 AM_CPPFLAGS += -I$(top_srcdir)/lib/krb5
 endif
