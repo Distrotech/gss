@@ -151,7 +151,7 @@ krb5_gss_init_sec_context (OM_uint32 * minor_status,
       ctx->krb5->sh = h;
 
       ctx->peerptr = &ctx->peer;
-      if (_gss_oid_equal (target_name->type, GSS_KRB5_NT_PRINCIPAL_NAME))
+      if (gss_oid_equal (target_name->type, GSS_KRB5_NT_PRINCIPAL_NAME))
 	{
 	  maj_stat = gss_duplicate_name (minor_status, target_name,
 					 &ctx->peerptr);
@@ -250,7 +250,7 @@ krb5_gss_init_sec_context (OM_uint32 * minor_status,
       if (!rc)
 	return GSS_S_BAD_MIC;
 
-      if (!_gss_oid_equal (&tokenoid, GSS_KRB5))
+      if (!gss_oid_equal (&tokenoid, GSS_KRB5))
 	return GSS_S_BAD_MIC;
 
       if (memcmp(data.value, _GSS_KRB5_TOK_AP_REP_DATA,
@@ -285,7 +285,7 @@ krb5_gss_canonicalize_name (OM_uint32 * minor_status,
 			    const gss_OID mech_type,
 			    gss_name_t * output_name)
 {
-  if (_gss_oid_equal (input_name->type, GSS_C_NT_HOSTBASED_SERVICE))
+  if (gss_oid_equal (input_name->type, GSS_C_NT_HOSTBASED_SERVICE))
     {
       char *p;
 
@@ -417,7 +417,7 @@ krb5_gss_unwrap (OM_uint32 * minor_status,
   if (!rc)
     return GSS_S_BAD_MIC;
 
-  if (!_gss_oid_equal (&tokenoid, GSS_KRB5))
+  if (!gss_oid_equal (&tokenoid, GSS_KRB5))
     return GSS_S_BAD_MIC;
 
   if (data.length < 8 + 8 + 20 + 8 + 8)

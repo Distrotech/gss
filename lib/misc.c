@@ -90,8 +90,8 @@ gss_add_oid_set_member (OM_uint32 * minor_status,
 				 (*oid_set)->count *
 				 sizeof(*(*oid_set)->elements));
 
-  major_stat = _gss_duplicate_oid (minor_status, member_oid,
-				   &((*oid_set)->elements));
+  major_stat = gss_duplicate_oid (minor_status, member_oid,
+				  &((*oid_set)->elements));
   if (major_stat != GSS_S_COMPLETE)
     return major_stat;
 
