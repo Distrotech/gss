@@ -378,6 +378,8 @@ main (int argc, char *argv[])
       display_status ("gss_release_name", maj_stat, min_stat);
     }
 
+  shishi_done (handle);
+
   /* We're done. */
 
   if (verbose)
