@@ -420,7 +420,8 @@ gss_krb5_accept_sec_context (OM_uint32 * minor_status,
 
   /* PROT_READY is not mentioned in 1964/gssapi-cfx but we support
      it anyway. */
-  *ret_flags |= GSS_C_PROT_READY_FLAG;
+  if (ret_flags)
+    *ret_flags |= GSS_C_PROT_READY_FLAG;
 
   if (minor_status)
     *minor_status = 0;
