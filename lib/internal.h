@@ -73,7 +73,7 @@ typedef struct gss_ctx_id_struct
 
 #define MAX_NT 5
 
-typedef struct _gss_mech_api_strict
+typedef struct _gss_mech_api_struct
 {
   gss_OID mech;
   gss_OID name_types[MAX_NT];
@@ -129,6 +129,8 @@ typedef struct _gss_mech_api_strict
      gss_cred_usage_t cred_usage,
      gss_cred_id_t * output_cred_handle,
      gss_OID_set * actual_mechs, OM_uint32 * time_rec);
+  OM_uint32 (*release_cred)
+    (OM_uint32 * minor_status, gss_cred_id_t * cred_handle);
     OM_uint32 (*accept_sec_context)
     (OM_uint32 * minor_status,
      gss_ctx_id_t * context_handle,
