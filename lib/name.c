@@ -262,22 +262,52 @@ gss_canonicalize_name (OM_uint32 * minor_status,
 				  mech_type, output_name);
 }
 
+/**
+ * gss_duplicate_name:
+ * @minor_status: (Integer, modify) Mechanism specific status code.
+ * @src_name: (gss_name_t, read) Internal name to be duplicated.
+ * @dest_name: (gss_name_t, modify) The resultant copy of @src_name.
+ *   Storage associated with this name must be freed by the application
+ *   after use with a call to gss_release_name().
+ *
+ * Create an exact duplicate of the existing internal name src_name.
+ * The new dest_name will be independent of src_name (i.e. src_name
+ * and dest_name must both be released, and the release of one shall
+ * not affect the validity of the other).
+ *
+ * Valid return values and their meaning:
+ *
+ * `GSS_S_COMPLETE`: Successful completion.
+ *
+ * `GSS_S_BAD_NAME`: The src_name parameter was ill-formed.
+ **/
 OM_uint32
 gss_duplicate_name (OM_uint32 * minor_status,
 		    const gss_name_t src_name, gss_name_t * dest_name)
 {
   OM_uint32 maj_stat;
+  gss_OID tmp;
 
   if (src_name == GSS_C_NO_NAME)
-    return GSS_S_BAD_NAME;
+    {
+      if (minor_status)
+	*minor_status = 0;
+      return GSS_S_BAD_NAME;
+    }
 
-  if (!dest_name || !*dest_name)
-    return GSS_S_FAILURE;
+  if (!dest_name)
+    {
+      if (minor_status)
+	*minor_status = 0;
+      return GSS_S_CALL_INACCESSIBLE_WRITE;
+    }
 
-  maj_stat = gss_duplicate_oid (minor_status, src_name->type,
-				&((*dest_name)->type));
+  maj_stat = gss_duplicate_oid (minor_status, src_name->type, &tmp);
   if (GSS_ERROR (maj_stat))
     return maj_stat;
+
+  *dest_name = xmalloc (sizeof (**dest_name));
+  (*dest_name)->type = tmp;
   (*dest_name)->length = src_name->length;
   (*dest_name)->value = xmalloc (src_name->length);
   memcpy ((*dest_name)->value, src_name->value, src_name->length);
