@@ -279,6 +279,10 @@ gss_warn (const char *format, ...)
   va_list ap;
 
   va_start (ap, format);
+
+  fprintf (stderr, "%s: ", PACKAGE);
   vfprintf (stderr, format, ap);
+  fprintf (stderr, "\n");
+
   va_end (ap);
 }
