@@ -821,12 +821,6 @@ gss_krb5_acquire_cred1 (OM_uint32 * minor_status,
   OM_uint32 maj_stat;
   int rc;
 
-  // {int i=0; while(i==0);}
-
-  /* XXX */
-  if (time_rec)
-    *time_rec = GSS_C_INDEFINITE;
-
   if (desired_name == GSS_C_NO_NAME)
     {
       gss_buffer_desc buf;
@@ -875,6 +869,8 @@ gss_krb5_acquire_cred1 (OM_uint32 * minor_status,
       return GSS_S_FAILURE;
     }
 
+  if (time_rec)
+    *time_rec = GSS_C_INDEFINITE;
 
   return GSS_S_COMPLETE;
 }
