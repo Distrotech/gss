@@ -1,8 +1,10 @@
 GSS NEWS -- History of user-visible changes.                    -*- outline -*-
-Copyright (C) 2003, 2004 Simon Josefsson
+Copyright (C) 2003, 2004, 2005 Simon Josefsson
 See the end for copying conditions.
 
 * Version 0.0.16 (unreleased)
+
+** Kinyarwanda translation added, by Steve Murphy.
 
 ** API and ABI modifications.
 gss_release_oid: REMOVED.  It seem it was the wrong thing to export
