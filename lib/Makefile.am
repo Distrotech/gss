@@ -22,7 +22,10 @@ lib_LTLIBRARIES = libgss.la
 
 INCLUDES = -I../intl
 
-include_HEADERS = gssapi.h gss.h
+include_HEADERS = gss.h
+
+gssincludedir=$(includedir)/gss
+gssinclude_HEADERS = api.h krb5.h
 
 libgss_la_SOURCES = internal.h version.c error.c \
 	context.c cred.c misc.c msg.c name.c obsolete.c oid.c \
@@ -34,4 +37,4 @@ localedir = $(datadir)/locale
 DEFS = -DLOCALEDIR=\"$(localedir)\" @DEFS@
 
 indent:
-	indent $(libgss_la_SOURCES) gssapi.h gssapi.h.in
+	indent $(libgss_la_SOURCES) $(gssinclude_HEADERS)
