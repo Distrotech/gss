@@ -1,6 +1,6 @@
 dnl Process this file with autoconf to produce a configure script.
 
-# Copyright (C) 2003 Simon Josefsson.
+# Copyright (C) 2003, 2004 Simon Josefsson.
 #
 # This file is part of the Generic Security Service (GSS).
 #
@@ -41,6 +41,7 @@ AM_GNU_GETTEXT(external)
 AM_GNU_GETTEXT_VERSION(0.12.1)
 AC_PROG_CC
 AC_PROG_LIBTOOL
+AM_MISSING_PROG(PERL, perl, $missing_dir)
 
 # Checks for header files.
 AC_HEADER_STDC
