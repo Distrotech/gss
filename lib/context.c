@@ -385,7 +385,7 @@ gss_init_sec_context (OM_uint32 * minor_status,
  *   accept the context as a default principal.  If
  *   GSS_C_NO_CREDENTIAL is specified, but no default acceptor
  *   principal is defined, GSS_S_NO_CRED will be returned.
- * @input_token_buffer: ( buffer, opaque, read) Token obtained from
+ * @input_token_buffer: (buffer, opaque, read) Token obtained from
  *   remote application.
  * @input_chan_bindings: (channel bindings, read, optional)
  *   Application- specified bindings.  Allows application to securely
