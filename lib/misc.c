@@ -152,7 +152,7 @@ gss_display_status (OM_uint32 * minor_status,
 OM_uint32
 gss_indicate_mechs (OM_uint32 * minor_status, gss_OID_set * mech_set)
 {
-  return GSS_S_FAILURE;
+  return _gss_indicate_mechs (minor_status, mech_set);
 }
 
 OM_uint32

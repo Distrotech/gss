@@ -65,3 +65,27 @@ _gss_find_mech (gss_OID oid)
       return &_gss_mech_apis[i];
   return &_gss_mech_apis[i-1];
 }
+
+OM_uint32
+_gss_indicate_mechs (OM_uint32 * minor_status, gss_OID_set * mech_set)
+{
+  OM_uint32 maj_stat;
+  int i;
+
+  maj_stat = gss_create_empty_oid_set (minor_status, mech_set);
+  if (maj_stat != GSS_S_COMPLETE)
+    return maj_stat;
+
+  for (i = 0; i < sizeof(_gss_mech_apis) / sizeof(_gss_mech_apis[0]); i++)
+    {
+      maj_stat = gss_add_oid_set_member (minor_status, *_gss_mech_apis[i].mech,
+					 mech_set);
+      if (maj_stat != GSS_S_COMPLETE)
+	{
+	  gss_release_oid_set (minor_status, mech_set);
+	  return maj_stat;
+	}
+    }
+
+  return GSS_S_COMPLETE;
+}
