@@ -23,6 +23,20 @@
 
 #ifdef USE_KERBEROS5
 
+#include <shishi.h>
+
+typedef struct _gss_krb5_cred_struct
+{
+  Shishi_tkt *tkt;
+} _gss_krb5_cred_desc, *_gss_krb5_cred_t;
+
+typedef struct _gss_krb5_ctx_struct
+{
+  Shishi *sh;
+  Shishi_ap *ap;
+  Shishi_tkt *tkt;
+} _gss_krb5_ctx_desc, *_gss_krb5_ctx_t;
+
 #define _GSS_KRB5_OID "\x2a\x86\x48\x86\xf7\x12\x01\x02\x02"
 #define _GSS_KRB5_OID_STRING "1.2.840.113554.1.2.2"
 
@@ -81,15 +95,18 @@ krb5_gss_init_sec_context (OM_uint32 * minor_status,
     {
       gss_ctx_id_t ctx;
 
-      ctx = malloc(sizeof(*context_handle));
+      ctx = malloc(sizeof(*ctx));
       if (!ctx)
+	return GSS_S_FAILURE;
+      ctx->krb5 = malloc(sizeof(*ctx->krb5));
+      if (!ctx->krb5)
 	return GSS_S_FAILURE;
       *context_handle = ctx;
 
       rc = shishi_init(&h);
       if (rc != SHISHI_OK)
 	return GSS_S_FAILURE;
-      ctx->sh = h;
+      ctx->krb5->sh = h;
 
       ctx->peerptr = &ctx->peer;
       if (_gss_oid_equal (target_name->type, GSS_KRB5_NT_PRINCIPAL_NAME))
@@ -107,7 +124,7 @@ krb5_gss_init_sec_context (OM_uint32 * minor_status,
 
       if (initiator_cred_handle)
 	{
-	  tkt = initiator_cred_handle->tkt;
+	  tkt = initiator_cred_handle->krb5->tkt;
 	  printf("urk\n");
 	  exit(0);
 	}
@@ -126,7 +143,7 @@ krb5_gss_init_sec_context (OM_uint32 * minor_status,
 	  shishi_tkts_to_file (shishi_tkts_default (h),
 			       shishi_tkts_default_file (h));
 	}
-      ctx->tkt = tkt;
+      ctx->krb5->tkt = tkt;
 
       /*
        * The checksum value field's format is as follows:
@@ -164,7 +181,7 @@ krb5_gss_init_sec_context (OM_uint32 * minor_status,
       rc = shishi_ap_tktoptionsdata (h, &ap, tkt, 0, "a", 1);
       if (rc != SHISHI_OK)
 	return GSS_S_FAILURE;
-      (*context_handle)->ap = ap;
+      (*context_handle)->krb5->ap = ap;
 
       rc = shishi_ap_req_build (ap);
       if (rc != SHISHI_OK)
@@ -282,7 +299,7 @@ krb5_gss_wrap (OM_uint32 * minor_status,
   /* filler */
   memcpy (data + 6, "\xFF\xFF", 2);
   /* XXX set 8..15 SND_SEQ random? */
-  shishi_randomize(context_handle->sh, data + 8, 8);
+  shishi_randomize(context_handle->krb5->sh, data + 8, 8);
   memcpy (data + 16, input_message_buffer->value,
 	  input_message_buffer->length);
   memset (data + 16 + input_message_buffer->length, padlength, padlength);
@@ -302,8 +319,8 @@ krb5_gss_wrap (OM_uint32 * minor_status,
     puts("");
   }
 
-  rc = shishi_checksum (context_handle->sh,
-			shishi_tkt_key(context_handle->tkt),
+  rc = shishi_checksum (context_handle->krb5->sh,
+			shishi_tkt_key(context_handle->krb5->tkt),
 			SHISHI_KEYUSAGE_GSS_R2, SHISHI_HMAC_SHA1_DES3_KD,
 			data, 16 + input_message_buffer->length + padlength,
 			tmp, &tmplen);
@@ -345,8 +362,8 @@ krb5_gss_wrap (OM_uint32 * minor_status,
     puts("");
   }
 
-  rc = shishi_encrypt_iv(context_handle->sh,
-			 shishi_tkt_key(context_handle->tkt),
+  rc = shishi_encrypt_iv(context_handle->krb5->sh,
+			 shishi_tkt_key(context_handle->krb5->tkt),
 			 SHISHI_KEYUSAGE_GSS_R3,
 			 data + 16, 8,
 			 tmp, 8, tmp, &tmplen);
@@ -487,8 +504,8 @@ krb5_gss_unwrap (OM_uint32 * minor_status,
 
 	/* Checksum header + confounder + data + pad */
 	tmplen = 20;
-	rc = shishi_checksum (context_handle->sh,
-			      shishi_tkt_key(context_handle->tkt),
+	rc = shishi_checksum (context_handle->krb5->sh,
+			      shishi_tkt_key(context_handle->krb5->tkt),
 			      SHISHI_KEYUSAGE_GSS_R2, SHISHI_HMAC_SHA1_DES3_KD,
 			      data.value + 20 + 8, data.length - 20 - 8,
 			      data.value + 8 + 8, &tmplen);

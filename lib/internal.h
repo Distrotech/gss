@@ -55,9 +55,6 @@
 #include "gss.h"
 #include "gssapi.h"
 
-#ifdef USE_KERBEROS5
-#include <shishi.h>
-#endif
 
 #define _(String) dgettext (PACKAGE, String)
 #define gettext_noop(String) String
@@ -73,7 +70,7 @@ typedef struct gss_name_struct
 typedef struct gss_cred_id_struct
 {
 #ifdef USE_KERBEROS5
-  Shishi_tkt *tkt;
+  struct _gss_krb5_cred_struct *krb5;
 #endif
 } gss_cred_id_desc;
 
@@ -82,9 +79,7 @@ typedef struct gss_ctx_id_struct
   gss_name_desc peer;
   gss_name_t peerptr;
 #ifdef USE_KERBEROS5
-  Shishi *sh;
-  Shishi_ap *ap;
-  Shishi_tkt *tkt;
+  struct _gss_krb5_ctx_struct *krb5;
 #endif
 } gss_ctx_id_desc;
 
