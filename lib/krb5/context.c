@@ -149,20 +149,14 @@ init_reply (OM_uint32 * minor_status,
   gss_ctx_id_t ctx = *context_handle;
   _gss_krb5_ctx_t k5 = ctx->krb5;
   int rc;
-  gss_OID_desc tokenoid;
   gss_buffer_desc data;
 
-  rc = gss_decapsulate_token (input_token, &tokenoid, &data);
+  rc = gss_decapsulate_token_check (input_token, TOK_AP_REP, TOK_LEN,
+				    GSS_KRB5, &data);
   if (!rc)
     return GSS_S_BAD_MIC;
 
-  if (!gss_oid_equal (&tokenoid, GSS_KRB5))
-    return GSS_S_BAD_MIC;
-
-  if (memcmp (data.value, TOK_AP_REP, TOK_LEN) != 0)
-    return GSS_S_BAD_MIC;
-
-  rc = shishi_ap_rep_der_set (k5->ap, data.value + 2, data.length - 2);
+  rc = shishi_ap_rep_der_set (k5->ap, data.value, data.length);
   if (rc != SHISHI_OK)
     return GSS_S_FAILURE;
 
@@ -281,7 +275,6 @@ gss_krb5_accept_sec_context (OM_uint32 * minor_status,
 			     OM_uint32 * time_rec,
 			     gss_cred_id_t * delegated_cred_handle)
 {
-  gss_OID_desc tokenoid;
   gss_buffer_desc data;
   gss_ctx_id_t cx;
   _gss_krb5_ctx_t cxk5;
@@ -323,17 +316,12 @@ gss_krb5_accept_sec_context (OM_uint32 * minor_status,
   if (rc != SHISHI_OK)
     return GSS_S_FAILURE;
 
-  rc = gss_decapsulate_token (input_token_buffer, &tokenoid, &data);
+  rc = gss_decapsulate_token_check (input_token_buffer, TOK_AP_REQ, TOK_LEN,
+				    GSS_KRB5, &data);
   if (!rc)
     return GSS_S_BAD_MIC;
 
-  if (!gss_oid_equal (&tokenoid, GSS_KRB5))
-    return GSS_S_BAD_MIC;
-
-  if (memcmp (data.value, TOK_AP_REQ, TOK_LEN) != 0)
-    return GSS_S_BAD_MIC;
-
-  rc = shishi_ap_req_der_set (cxk5->ap, data.value + 2, data.length - 2);
+  rc = shishi_ap_req_der_set (cxk5->ap, data.value, data.length);
   if (rc != SHISHI_OK)
     return GSS_S_FAILURE;
 
