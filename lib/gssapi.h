@@ -51,12 +51,8 @@
  *   HEREIN WILL NOT INFRINGE ANY RIGHTS OR ANY IMPLIED WARRANTIES OF
  *   MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE.
  *
- * It has been modified as follows:
- *
- * $Log$
- * Revision 1.5  2003-04-30 18:56:08  jas
- * Add CVS log to comment.
- *
+ * The modifications made to this file can be found in the file
+ * ChangeLog, which is part of GPL GSS-API.
  *
  */
 
