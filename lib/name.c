@@ -77,17 +77,7 @@ gss_import_name (OM_uint32 * minor_status,
   (*output_name)->value = xmemdup (input_name_buffer->value,
 				  input_name_buffer->length);
 
-  if (input_name_type)
-    {
-      /* FIXME: perhaps this should only be this:
-	 (*output_name)->type = input_name_type; */
-      major_stat = gss_duplicate_oid (minor_status, input_name_type,
-				      &(*output_name)->type);
-      if (GSS_ERROR (major_stat))
-	return major_stat;
-    }
-  else
-    (*output_name)->type = GSS_C_NO_OID;
+  (*output_name)->type = input_name_type;
 
   if (minor_status)
     *minor_status = 0;
@@ -557,7 +547,6 @@ gss_duplicate_name (OM_uint32 * minor_status,
 		    const gss_name_t src_name, gss_name_t * dest_name)
 {
   OM_uint32 maj_stat;
-  gss_OID tmp;
 
   if (src_name == GSS_C_NO_NAME)
     {
@@ -573,14 +562,8 @@ gss_duplicate_name (OM_uint32 * minor_status,
       return GSS_S_FAILURE | GSS_S_CALL_INACCESSIBLE_WRITE;
     }
 
-  /* FIXME: I'm not sure we should duplicate the OID.  Perhaps just
-     copy the pointer.  Who will deallocate this? */
-  maj_stat = gss_duplicate_oid (minor_status, src_name->type, &tmp);
-  if (GSS_ERROR (maj_stat))
-    return maj_stat;
-
   *dest_name = xmalloc (sizeof (**dest_name));
-  (*dest_name)->type = tmp;
+  (*dest_name)->type = src_name->type;
   (*dest_name)->length = src_name->length;
   (*dest_name)->value = xmalloc (src_name->length + 1);
   memcpy ((*dest_name)->value, src_name->value, src_name->length);
