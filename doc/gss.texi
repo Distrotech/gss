@@ -1644,6 +1644,10 @@ TBA: the API may block, unusable in select() based servers.
 Especially if the servers contacted is decided by the, yet
 unauthenticated, remote client.
 
+TBA: krb5: gssapi-cfx differ from rfc 1964 in the reply token in that
+the latter require presence of sequence numbers whereas the former
+doesn't.
+
 Finally we note that few free security applications uses GSS, perhaps
 the only major exception to this are Kerberos 5 implementations.
 While not substantial evidence, this do suggest that the GSS may not
