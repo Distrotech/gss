@@ -35,8 +35,9 @@ indent:
 
 ChangeLog:
 	test ! -f .cvsusers || \
-	cvs2cl --FSF --usermap .cvsusers \
-		-I "ChangeLog|.cvs|autogen.sh|doc/specification"
+	(cvs2cl --FSF --usermap .cvsusers \
+		-I "ChangeLog|.cvs|autogen.sh|doc/specification" &&
+	cat .cvscopying >> ChangeLog)
 
 tag = $(PACKAGE)-`echo $(VERSION) | sed 's/\./-/g'`
 htmldir = ../www-$(PACKAGE)
