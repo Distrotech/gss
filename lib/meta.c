@@ -1,4 +1,4 @@
-/* meta.c	Implementation of function selection depending on mechanism.
+/* meta.c --- Implementation of function selection depending on mechanism.
  * Copyright (C) 2003, 2004  Simon Josefsson
  *
  * This file is part of the Generic Security Service (GSS).
@@ -20,6 +20,7 @@
  */
 
 #include "internal.h"
+#include "meta.h"
 
 #ifdef USE_KERBEROS5
 # include "krb5/krb5.h"
