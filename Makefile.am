@@ -46,6 +46,7 @@ release:
 	if cvs upd -p -r $(tag) NEWS > /dev/null; then false else true; fi
 	rm -f ChangeLog && cvs upd ChangeLog
 	cvs commit
+	rm -f ChangeLog
 	$(MAKE) ChangeLog distcheck
 	cvs commit -m "" ChangeLog
 	rm -f $(distdir).tar.gz.asc
