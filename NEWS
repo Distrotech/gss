@@ -15,7 +15,7 @@ correctly.  Secondly, gss_unwrap now check the sequence numbers
 correctly.  This was prompted by the addition of randomized sequence
 numbers by default in Shishi 0.0.15.
 
-** Documentation fixes.
+** Various bugfixes and cleanups.
 
 ** Polish translation added, by Jakub Bogusz.
 
