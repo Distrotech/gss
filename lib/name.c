@@ -53,6 +53,8 @@ gss_import_name (OM_uint32 * minor_status,
 		 const gss_buffer_t input_name_buffer,
 		 const gss_OID input_name_type, gss_name_t * output_name)
 {
+  OM_uint32 major_stat;
+
   if (!output_name)
     return GSS_S_FAILURE;
 
@@ -67,6 +69,11 @@ gss_import_name (OM_uint32 * minor_status,
 
   memcpy ((*output_name)->value, input_name_buffer->value,
 	  input_name_buffer->length);
+
+  major_stat = _gss_duplicate_oid (minor_status, input_name_type,
+				   &(*output_name)->type);
+  if (major_stat != GSS_S_COMPLETE)
+    return major_stat;
 
   if (minor_status)
     *minor_status = 0;
@@ -152,7 +159,7 @@ gss_compare_name (OM_uint32 * minor_status,
   if (!name1 || !name2)
     return GSS_S_BAD_NAME;
 
-  if (name1->type != name2->type) /* XXX only compares pointers */
+  if (!_gss_oid_equal (name1->type, name2->type))
     return GSS_S_BAD_NAMETYPE;
 
   name_equal == (name1->length == name2->length) &&
@@ -215,12 +222,45 @@ gss_export_name (OM_uint32 * minor_status,
   return GSS_S_FAILURE;
 }
 
+/**
+ * gss_canonicalize_name:
+ * @minor_status: Mechanism specific status code.
+ * @input_name: The name for which a canonical form is desired.
+ * @mech_type: The authentication mechanism for which the canonical
+ *   form of the name is desired.  The desired mechanism must be
+ *   specified explicitly; no default is provided.
+ * @output_name: The resultant canonical name.  Storage associated
+ *   with this name must be freed by the application after use with a
+ *   call to gss_release_name().
+ *
+ * Generate a canonical mechanism name (MN) from an arbitrary internal
+ * name.  The mechanism name is the name that would be returned to a
+ * context acceptor on successful authentication of a context where
+ * the initiator used the input_name in a successful call to
+ * gss_acquire_cred, specifying an OID set containing <mech_type> as
+ * its only member, followed by a call to gss_init_sec_context,
+ * specifying <mech_type> as the authentication mechanism.
+ *
+ * Return value: Returns
+ *
+ * GSS_S_COMPLETE    Successful completion.
+ *
+ * GSS_S_BAD_MECH    The identified mechanism is not supported.
+ *
+ * GSS_S_BAD_NAMETYPE The provided internal name contains no elements
+ *   that could be processed by the specified
+ *   mechanism.
+ *
+ * GSS_S_BAD_NAME    The provided internal name was ill-formed.
+ *
+ **/
 OM_uint32
 gss_canonicalize_name (OM_uint32 * minor_status,
 		       const gss_name_t input_name,
 		       const gss_OID mech_type, gss_name_t * output_name)
 {
-  return GSS_S_FAILURE;
+  return krb5_gss_canonicalize_name (minor_status, input_name,
+				     mech_type, output_name);
 }
 
 /**
@@ -249,7 +289,7 @@ gss_duplicate_name (OM_uint32 * minor_status,
   if (!dest_name || !*dest_name)
     return GSS_S_FAILURE;
 
-  (*dest_name)->type = src_name->type;
+  (*dest_name)->type = src_name->type; /* XXX duplicate oid? */
   (*dest_name)->length = src_name->length;
   (*dest_name)->value = malloc(src_name->length);
   if (!(*dest_name)->value)
