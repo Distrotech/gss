@@ -195,14 +195,16 @@ gss_krb5_accept_sec_context (OM_uint32 * minor_status,
 			     OM_uint32 * time_rec,
 			     gss_cred_id_t * delegated_cred_handle)
 {
+  gss_OID_desc tokenoid;
+  gss_buffer_desc data;
+  gss_ctx_id_t cx;
+  _gss_krb5_ctx_t cxk5;
+  _gss_krb5_cred_t crk5;
   OM_uint32 maj_stat;
   int rc;
 
   if (minor_status)
     *minor_status = 0;
-
-  if (mech_type)
-    *mech_type = GSS_KRB5;
 
   if (ret_flags)
     *ret_flags = 0;
@@ -219,109 +221,99 @@ gss_krb5_accept_sec_context (OM_uint32 * minor_status,
     return GSS_S_NO_CONTEXT;
 
   if (*context_handle)
+    return GSS_S_FAILURE;
+
+  crk5 = acceptor_cred_handle->krb5;
+
+  cx = xcalloc (sizeof (*cx), 1);
+  cxk5 = xcalloc (sizeof (*cxk5), 1);
+  cx->mech = GSS_KRB5;
+  cx->krb5 = cxk5;
+  /* XXX cx->peer?? */
+  *context_handle = cx;
+
+  cxk5->sh = crk5->sh;
+  cxk5->key = crk5->key;
+  cxk5->acceptor = 1;
+
+  rc = shishi_ap (cxk5->sh, &cxk5->ap);
+  if (rc != SHISHI_OK)
+    return GSS_S_FAILURE;
+
+  rc = gss_decapsulate_token (input_token_buffer, &tokenoid, &data);
+  if (!rc)
+    return GSS_S_BAD_MIC;
+
+  if (!gss_oid_equal (&tokenoid, GSS_KRB5))
+    return GSS_S_BAD_MIC;
+
+  if (memcmp (data.value, TOK_AP_REQ, TOK_LEN) != 0)
+    return GSS_S_BAD_MIC;
+
+  rc = shishi_ap_req_der_set (cxk5->ap, data.value + 2, data.length - 2);
+  if (rc != SHISHI_OK)
+    return GSS_S_FAILURE;
+
+  rc = shishi_ap_req_process (cxk5->ap, crk5->key);
+  if (rc != SHISHI_OK)
+    return GSS_S_FAILURE;
+
+  cxk5->tkt = shishi_ap_tkt (cxk5->ap);
+  cxk5->key = shishi_tkt_key (cxk5->tkt);
+
+  if (shishi_apreq_mutual_required_p (crk5->sh, shishi_ap_req (cxk5->ap)))
     {
-      printf ("bad\n");
+      Shishi_asn1 aprep;
+
+      rc = shishi_ap_rep_asn1 (cxk5->ap, &aprep);
+      if (rc != SHISHI_OK)
+	{
+	  printf ("Error creating AP-REP: %s\n", shishi_strerror (rc));
+	  return GSS_S_FAILURE;
+	}
+
+      rc = shishi_new_a2d (crk5->sh, aprep,
+			   (char **) &data.value, &data.length);
+      if (rc != SHISHI_OK)
+	{
+	  printf ("Error der encoding aprep: %s\n", shishi_strerror (rc));
+	  return GSS_S_FAILURE;
+	}
+
+      rc = gss_encapsulate_token_prefix (&data, TOK_AP_REP, TOK_LEN,
+					 GSS_KRB5, output_token);
+      if (!rc)
+	return GSS_S_FAILURE;
+
+      if (ret_flags)
+	*ret_flags = GSS_C_MUTUAL_FLAG;
     }
   else
     {
-      gss_OID_desc tokenoid;
-      gss_buffer_desc data;
-      gss_ctx_id_t cx;
-      _gss_krb5_ctx_t cxk5;
-      _gss_krb5_cred_t crk5;
+      output_token->value = NULL;
+      output_token->length = 0;
+    }
 
-      crk5 = acceptor_cred_handle->krb5;
+  if (src_name)
+    {
+      gss_name_t p;
 
-      cx = xcalloc (sizeof (*cx), 1);
-      cxk5 = xcalloc (sizeof (*cxk5), 1);
-      cx->mech = GSS_KRB5;
-      cx->krb5 = cxk5;
-      /* XXX cx->peer?? */
-      *context_handle = cx;
+      p = xmalloc (sizeof (*p));
+      p->length = 1024;	/* XXX */
+      p->value = xmalloc (p->length);
 
-      cxk5->sh = crk5->sh;
-      cxk5->key = crk5->key;
-      cxk5->acceptor = 1;
-
-      rc = shishi_ap (cxk5->sh, &cxk5->ap);
+      rc = shishi_encticketpart_cname_get
+	(cxk5->sh, shishi_tkt_encticketpart (cxk5->tkt),
+	 p->value, &p->length);
       if (rc != SHISHI_OK)
 	return GSS_S_FAILURE;
 
-      rc = gss_decapsulate_token (input_token_buffer, &tokenoid, &data);
-      if (!rc)
-	return GSS_S_BAD_MIC;
-
-      if (!gss_oid_equal (&tokenoid, GSS_KRB5))
-	return GSS_S_BAD_MIC;
-
-      if (memcmp (data.value, TOK_AP_REQ, TOK_LEN) != 0)
-	return GSS_S_BAD_MIC;
-
-      rc = shishi_ap_req_der_set (cxk5->ap, data.value + 2, data.length - 2);
-      if (rc != SHISHI_OK)
+      maj_stat = gss_duplicate_oid (minor_status,
+				    GSS_KRB5_NT_PRINCIPAL_NAME, &p->type);
+      if (GSS_ERROR (maj_stat))
 	return GSS_S_FAILURE;
 
-      rc = shishi_ap_req_process (cxk5->ap, crk5->key);
-      if (rc != SHISHI_OK)
-	return GSS_S_FAILURE;
-
-      cxk5->tkt = shishi_ap_tkt (cxk5->ap);
-      cxk5->key = shishi_tkt_key (cxk5->tkt);
-
-      if (shishi_apreq_mutual_required_p (crk5->sh, shishi_ap_req (cxk5->ap)))
-	{
-	  Shishi_asn1 aprep;
-
-	  rc = shishi_ap_rep_asn1 (cxk5->ap, &aprep);
-	  if (rc != SHISHI_OK)
-	    {
-	      printf ("Error creating AP-REP: %s\n", shishi_strerror (rc));
-	      return GSS_S_FAILURE;
-	    }
-
-	  rc = shishi_new_a2d (crk5->sh, aprep,
-			       (char **) &data.value, &data.length);
-	  if (rc != SHISHI_OK)
-	    {
-	      printf ("Error der encoding aprep: %s\n", shishi_strerror (rc));
-	      return GSS_S_FAILURE;
-	    }
-
-	  rc = gss_encapsulate_token_prefix (&data, TOK_AP_REP, TOK_LEN,
-					     GSS_KRB5, output_token);
-	  if (!rc)
-	    return GSS_S_FAILURE;
-
-	  if (ret_flags)
-	    *ret_flags = GSS_C_MUTUAL_FLAG;
-	}
-      else
-	{
-	  output_token->value = NULL;
-	  output_token->length = 0;
-	}
-
-      if (src_name)
-	{
-	  gss_name_t p;
-
-	  p = xmalloc (sizeof (*p));
-	  p->length = 1024;	/* XXX */
-	  p->value = xmalloc (p->length);
-
-	  rc = shishi_encticketpart_cname_get
-	    (cxk5->sh, shishi_tkt_encticketpart (cxk5->tkt),
-	     p->value, &p->length);
-	  if (rc != SHISHI_OK)
-	    return GSS_S_FAILURE;
-
-	  maj_stat = gss_duplicate_oid (minor_status,
-					GSS_KRB5_NT_PRINCIPAL_NAME, &p->type);
-	  if (GSS_ERROR (maj_stat))
-	    return GSS_S_FAILURE;
-
-	  *src_name = p;
-	}
+      *src_name = p;
     }
 
   if (minor_status)
