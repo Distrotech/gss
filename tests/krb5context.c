@@ -418,6 +418,7 @@ main (int argc, char *argv[])
       if (debug)
 	printf ("loop %d ok\n", i);
     }
+
   /* Clean up. */
 
   maj_stat = gss_release_cred (&min_stat, &server_creds);
