@@ -16,7 +16,7 @@
 This manual is last updated @value{UPDATED} for version
 @value{VERSION} of GNU GSS.
 
-Copyright @copyright{} 2003, 2004 Simon Josefsson.
+Copyright @copyright{} 2003, 2004, 2005 Simon Josefsson.
 
 @quotation
 Permission is granted to copy, distribute and/or modify this document
@@ -562,7 +562,7 @@ known as @file{gssapi.h}.  However, to be able to co-exist gracefully
 with other GSS-API implementation, the name @file{gssapi.h} was
 changed.
 
-The header file @file{gss.h} includes @file{gss/api.h}, add a few
+The header file @file{gss.h} includes @file{gss/api.h}, and a few
 non-standard extensions (by including @file{gss/ext.h}), takes care of
 including header files related to all supported mechanisms (e.g.,
 @file{gss/krb5.h}) and finally add C++ namespace protection of all
