@@ -29,8 +29,14 @@ gss_TEXINFOS = gpl.texi fdl.texi $(gdoc_TEXINFOS)
 
 AM_MAKEINFOHTMLFLAGS = --no-split --number-sections --css-include=texinfo.css
 
-dist_man_MANS = $(gdoc_MANS)
+dist_man_MANS = gss.1 $(gdoc_MANS)
 MAINTAINERCLEANFILES = $(dist_man_MANS)
+
+gss.1: $(top_srcdir)/src/gss.c $(top_srcdir)/src/gss.ggo \
+		$(top_srcdir)/configure.ac
+	$(HELP2MAN) \
+		--name="Generic Security Service command line interface" \
+		--output=$@ $(top_builddir)/src/gss
 
 # GDOC
 

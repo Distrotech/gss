@@ -42,6 +42,7 @@ AM_GNU_GETTEXT_VERSION(0.12.1)
 AC_PROG_CC
 AC_PROG_LIBTOOL
 AM_MISSING_PROG(PERL, perl, $missing_dir)
+AM_MISSING_PROG(HELP2MAN, help2man, $missing_dir)
 
 # Checks for header files.
 AC_HEADER_STDC
