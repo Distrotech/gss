@@ -42,6 +42,12 @@ gss_encapsulate_token (gss_buffer_t input_message,
 		       gss_buffer_t output_message);
 
 extern int
+gss_encapsulate_token_prefix (gss_buffer_t input_message,
+			      char *prefix, size_t prefixlen,
+			      gss_OID token_oid,
+			      gss_buffer_t output_message);
+
+extern int
 gss_decapsulate_token (gss_buffer_t input_message,
 		       gss_OID token_oid,
 		       gss_buffer_t output_message);

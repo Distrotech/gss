@@ -131,6 +131,35 @@ gss_encapsulate_token (gss_buffer_t input_message,
 				 &output_message->length);
 }
 
+int
+gss_encapsulate_token_prefix (gss_buffer_t input_message,
+			      char *prefix, size_t prefixlen,
+			      gss_OID token_oid,
+			      gss_buffer_t output_message)
+{
+  char *in;
+  size_t inlen;
+  int rc;
+
+  inlen = prefixlen + input_message->length;
+  in = malloc(inlen);
+  if (!in)
+    return 0;
+  memcpy(in, prefix, prefixlen);
+  memcpy(in + prefixlen, input_message->value, input_message->length);
+
+  rc = _gss_encapsulate_token (token_oid->elements,
+			       token_oid->length,
+			       in,
+			       inlen,
+			       &output_message->value,
+			       &output_message->length);
+
+  free(in);
+
+  return rc;
+}
+
 static int
 _gss_decapsulate_token (char *in, size_t inlen,
 			char **oid, size_t *oidlen,
