@@ -83,7 +83,7 @@ hexprint (const unsigned char *str, int len)
 }
 
 OM_uint32
-krb5_gss_init_sec_context (OM_uint32 * minor_status,
+gss_krb5_init_sec_context (OM_uint32 * minor_status,
 			   const gss_cred_id_t initiator_cred_handle,
 			   gss_ctx_id_t * context_handle,
 			   const gss_name_t target_name,
@@ -104,6 +104,12 @@ krb5_gss_init_sec_context (OM_uint32 * minor_status,
   int rc;
   OM_uint32 maj_stat;
 
+  if (!context_handle)
+    return GSS_S_FAILURE;
+
+  if (!output_token)
+    return GSS_S_FAILURE;
+
   /* XXX mech_type not tested */
 
   if (*context_handle == GSS_C_NO_CONTEXT)
@@ -114,6 +120,8 @@ krb5_gss_init_sec_context (OM_uint32 * minor_status,
       ctx = malloc(sizeof(*ctx));
       if (!ctx)
 	return GSS_S_FAILURE;
+
+      ctx->mech = GSS_KRB5;
 
       ctx->krb5 = malloc(sizeof(*ctx->krb5));
       if (!ctx->krb5)
@@ -135,7 +143,7 @@ krb5_gss_init_sec_context (OM_uint32 * minor_status,
 	}
       else
 	{
-	  maj_stat = krb5_gss_canonicalize_name (minor_status, target_name,
+	  maj_stat = gss_krb5_canonicalize_name (minor_status, target_name,
 						 mech_type, &ctx->peerptr);
 	}
       if (maj_stat != GSS_S_COMPLETE)
@@ -257,7 +265,7 @@ krb5_gss_init_sec_context (OM_uint32 * minor_status,
 }
 
 OM_uint32
-krb5_gss_canonicalize_name (OM_uint32 * minor_status,
+gss_krb5_canonicalize_name (OM_uint32 * minor_status,
 			    const gss_name_t input_name,
 			    const gss_OID mech_type,
 			    gss_name_t * output_name)
@@ -288,7 +296,7 @@ krb5_gss_canonicalize_name (OM_uint32 * minor_status,
 }
 
 OM_uint32
-krb5_gss_wrap (OM_uint32 * minor_status,
+gss_krb5_wrap (OM_uint32 * minor_status,
 	       const gss_ctx_id_t context_handle,
 	       int conf_req_flag,
 	       gss_qop_t qop_req,
@@ -377,7 +385,7 @@ krb5_gss_wrap (OM_uint32 * minor_status,
 }
 
 OM_uint32
-krb5_gss_unwrap (OM_uint32 * minor_status,
+gss_krb5_unwrap (OM_uint32 * minor_status,
 		 const gss_ctx_id_t context_handle,
 		 const gss_buffer_t input_message_buffer,
 		 gss_buffer_t output_message_buffer,
