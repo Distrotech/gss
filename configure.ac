@@ -41,7 +41,6 @@ AM_GNU_GETTEXT(external)
 AM_GNU_GETTEXT_VERSION(0.11.5)
 AC_PROG_LIBTOOL
 AC_PROG_CC
-AM_MISSING_PROG(PERL, perl, $missing_dir)
 AM_MISSING_PROG(HELP2MAN, help2man, $missing_dir)
 AM_MISSING_PROG(TEXI2PDF, texi2pdf, $missing_dir)
 
