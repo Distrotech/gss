@@ -19,14 +19,14 @@ dnl Process this file with autoconf to produce a configure script.
 # Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 # 02111-1307, USA.
 
-AC_INIT([gss], [0.0.12], [bug-gss@gnu.org])
+AC_INIT([gss], [0.0.13], [bug-gss@gnu.org])
 
 # Library code modified:                              REVISION++
 # Interfaces changed/added/removed:   CURRENT++       REVISION=0
 # Interfaces added:                             AGE++
 # Interfaces removed:                           AGE=0
 LT_CURRENT=0
-LT_REVISION=12
+LT_REVISION=13
 LT_AGE=0
 AC_SUBST(LT_CURRENT)
 AC_SUBST(LT_REVISION)
