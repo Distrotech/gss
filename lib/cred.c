@@ -95,6 +95,8 @@ gss_release_cred (OM_uint32 * minor_status, gss_cred_id_t * cred_handle)
   if (cred_handle && *cred_handle)
     free (*cred_handle);
 
+  /* XXX krb5 deallocate */
+
   *cred_handle = GSS_C_NO_CREDENTIAL;
 
   if (minor_status)

@@ -102,6 +102,8 @@ gss_delete_sec_context (OM_uint32 * minor_status,
       output_token->value = NULL;
     }
 
+  /* XXX krb5 deallocate */
+
   free (*context_handle);
   *context_handle = GSS_C_NO_CONTEXT;
 
