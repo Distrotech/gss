@@ -254,31 +254,32 @@ gss_krb5_unwrap (OM_uint32 * minor_status,
 		 int *conf_state, gss_qop_t * qop_state)
 {
   _gss_krb5_ctx_t k5 = context_handle->krb5;
-  gss_buffer_desc data;
+  char *data;
+  size_t datalen;
   OM_uint32 sgn_alg, seal_alg;
   size_t tmplen;
   int rc;
 
-  rc = gss_decapsulate_token (input_message_buffer, GSS_KRB5, &data);
+  rc = gss_decapsulate_token (input_message_buffer, GSS_KRB5, &data, &datalen);
   if (!rc)
     return GSS_S_BAD_MIC;
 
-  if (data.length < 8)
+  if (datalen < 8)
     return GSS_S_BAD_MIC;
 
-  if (memcmp (data.value, TOK_WRAP, TOK_LEN) != 0)
+  if (memcmp (data, TOK_WRAP, TOK_LEN) != 0)
     return GSS_S_BAD_MIC;
 
-  sgn_alg = ((char *) data.value)[2] & 0xFF;
-  sgn_alg |= ((char *) data.value)[3] << 8 & 0xFF00;
+  sgn_alg = ((char *) data)[2] & 0xFF;
+  sgn_alg |= ((char *) data)[3] << 8 & 0xFF00;
 
-  seal_alg = ((char *) data.value)[4] & 0xFF;
-  seal_alg |= ((char *) data.value)[5] << 8 & 0xFF00;
+  seal_alg = ((char *) data)[4] & 0xFF;
+  seal_alg |= ((char *) data)[5] << 8 & 0xFF00;
 
   if (conf_state != NULL)
     *conf_state = seal_alg == 0xFFFF;
 
-  if (memcmp (data.value + 6, "\xFF\xFF", 2) != 0)
+  if (memcmp (data + 6, "\xFF\xFF", 2) != 0)
     return GSS_S_BAD_MIC;
 
   switch (sgn_alg)
@@ -308,14 +309,14 @@ gss_krb5_unwrap (OM_uint32 * minor_status,
 	   ;;   PADDED DATA
 	 */
 
-	if (data.length < 5 * 8)
+	if (datalen < 5 * 8)
 	  return GSS_S_BAD_MIC;
 
-	memcpy (header, data.value, 8);
-	memcpy (encseqno, data.value + 8, 8);
-	memcpy (cksum, data.value + 16, 8);
-	memcpy (confounder, data.value + 24, 8);
-	pt = data.value + 32;
+	memcpy (header, data, 8);
+	memcpy (encseqno, data + 8, 8);
+	memcpy (cksum, data + 16, 8);
+	memcpy (confounder, data + 24, 8);
+	pt = data + 32;
 
 	/* XXX decrypt data iff confidential option chosen */
 
@@ -344,38 +345,38 @@ gss_krb5_unwrap (OM_uint32 * minor_status,
 	  k5->acceptseqnr++;
 
 	/* Check pad */
-	padlen = ((char *) data.value)[data.length - 1];
+	padlen = ((char *) data)[datalen - 1];
 	if (padlen > 8)
 	  return GSS_S_BAD_MIC;
 	for (i = 1; i <= padlen; i++)
-	  if (((char *) data.value)[data.length - i] != padlen)
+	  if (((char *) data)[datalen - i] != padlen)
 	    return GSS_S_BAD_MIC;
 
 	/* Write header and confounder next to data */
-	memcpy (data.value + 16, header, 8);
-	memcpy (data.value + 24, confounder, 8);
+	memcpy (data + 16, header, 8);
+	memcpy (data + 24, confounder, 8);
 
 	/* Checksum header + confounder + data + pad */
 	rc = shishi_checksum (k5->sh,
 			      k5->key,
 			      0, SHISHI_RSA_MD5_DES_GSS,
-			      data.value + 16, data.length - 16,
+			      data + 16, datalen - 16,
 			      &tmp, &tmplen);
 	if (rc != SHISHI_OK || tmplen != 8)
 	  return GSS_S_FAILURE;
 
-	memcpy (data.value + 8, tmp, tmplen);
+	memcpy (data + 8, tmp, tmplen);
 
 	/* Compare checksum */
-	if (tmplen != 8 || memcmp (cksum, data.value + 8, 8) != 0)
+	if (tmplen != 8 || memcmp (cksum, data + 8, 8) != 0)
 	  return GSS_S_BAD_MIC;
 
 	/* Copy output data */
-	output_message_buffer->length = data.length - 8 - 8 - 8 - 8 - padlen;
+	output_message_buffer->length = datalen - 8 - 8 - 8 - 8 - padlen;
 	output_message_buffer->value =
 	  xmalloc (output_message_buffer->length);
 	memcpy (output_message_buffer->value, pt,
-		data.length - 4 * 8 - padlen);
+		datalen - 4 * 8 - padlen);
       }
       break;
 
@@ -387,14 +388,14 @@ gss_krb5_unwrap (OM_uint32 * minor_status,
 	char cksum[20];
 	size_t outlen, i;
 
-	if (data.length < 8 + 8 + 20 + 8 + 8)
+	if (datalen < 8 + 8 + 20 + 8 + 8)
 	  return GSS_S_BAD_MIC;
 
-	memcpy (cksum, data.value + 8 + 8, 20);
+	memcpy (cksum, data + 8 + 8, 20);
 
 	/* XXX decrypt data iff confidential option chosen */
 
-	p = data.value + 8;
+	p = data + 8;
 	rc = shishi_decrypt_iv_etype (k5->sh,
 				      k5->key,
 				      0, SHISHI_DES3_CBC_NONE,
@@ -417,38 +418,38 @@ gss_krb5_unwrap (OM_uint32 * minor_status,
 	  k5->acceptseqnr++;
 
 	/* Check pad */
-	padlen = ((char *) data.value)[data.length - 1];
+	padlen = ((char *) data)[datalen - 1];
 	if (padlen > 8)
 	  return GSS_S_BAD_MIC;
 	for (i = 1; i <= padlen; i++)
-	  if (((char *) data.value)[data.length - i] != padlen)
+	  if (((char *) data)[datalen - i] != padlen)
 	    return GSS_S_BAD_MIC;
 
 	/* Write header next to confounder */
-	memcpy (data.value + 8 + 20, data.value, 8);
+	memcpy (data + 8 + 20, data, 8);
 
 	/* Checksum header + confounder + data + pad */
 	rc = shishi_checksum (k5->sh,
 			      k5->key,
 			      SHISHI_KEYUSAGE_GSS_R2,
-			      SHISHI_HMAC_SHA1_DES3_KD, data.value + 20 + 8,
-			      data.length - 20 - 8, &t, &tmplen);
+			      SHISHI_HMAC_SHA1_DES3_KD, data + 20 + 8,
+			      datalen - 20 - 8, &t, &tmplen);
 	if (rc != SHISHI_OK || tmplen != 20)
 	  return GSS_S_FAILURE;
 
-	memcpy (data.value + 8 + 8, t, tmplen);
+	memcpy (data + 8 + 8, t, tmplen);
 	free (t);
 
 	/* Compare checksum */
-	if (tmplen != 20 || memcmp (cksum, data.value + 8 + 8, 20) != 0)
+	if (tmplen != 20 || memcmp (cksum, data + 8 + 8, 20) != 0)
 	  return GSS_S_BAD_MIC;
 
 	/* Copy output data */
-	output_message_buffer->length = data.length - 8 - 20 - 8 - 8 - padlen;
+	output_message_buffer->length = datalen - 8 - 20 - 8 - 8 - padlen;
 	output_message_buffer->value =
 	  xmalloc (output_message_buffer->length);
-	memcpy (output_message_buffer->value, data.value + 20 + 8 + 8 + 8,
-		data.length - 20 - 8 - 8 - 8 - padlen);
+	memcpy (output_message_buffer->value, data + 20 + 8 + 8 + 8,
+		datalen - 20 - 8 - 8 - 8 - padlen);
       }
       break;
 

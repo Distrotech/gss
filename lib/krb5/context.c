@@ -117,53 +117,6 @@ init_request (OM_uint32 * minor_status,
 
 /* Reply part of gss_krb5_init_sec_context.  Assumes that
    context_handle is valid, and has krb5 specific structure, and that
-   output_token is valid and cleared, and that input_token has been
-   decapsulated. */
-static OM_uint32
-init_reply1 (OM_uint32 * minor_status,
-	     const gss_cred_id_t initiator_cred_handle,
-	     gss_ctx_id_t * context_handle,
-	     const gss_name_t target_name,
-	     const gss_OID mech_type,
-	     OM_uint32 req_flags,
-	     OM_uint32 time_req,
-	     const gss_channel_bindings_t input_chan_bindings,
-	     const gss_buffer_t input_token,
-	     gss_OID * actual_mech_type,
-	     gss_buffer_t output_token,
-	     OM_uint32 * ret_flags,
-	     OM_uint32 * time_rec)
-{
-  gss_ctx_id_t ctx = *context_handle;
-  _gss_krb5_ctx_t k5 = ctx->krb5;
-  int rc;
-
-  if (input_token->length < TOK_LEN)
-    return GSS_S_DEFECTIVE_TOKEN;
-
-  if (memcmp (input_token->value, TOK_AP_REP, TOK_LEN) != 0)
-    return GSS_S_DEFECTIVE_TOKEN;
-
-  rc = shishi_ap_rep_der_set (k5->ap, (char*)input_token->value + TOK_LEN,
-			      input_token->length - TOK_LEN);
-  if (rc != SHISHI_OK)
-    return GSS_S_DEFECTIVE_TOKEN;
-
-  rc = shishi_ap_rep_verify (k5->ap);
-  if (rc != SHISHI_OK)
-    return GSS_S_DEFECTIVE_TOKEN;
-
-  rc = shishi_encapreppart_seqnumber_get (k5->sh,
-					  shishi_ap_encapreppart (k5->ap),
-					  &k5->acceptseqnr);
-  if (rc != SHISHI_OK)
-    return GSS_S_DEFECTIVE_TOKEN;
-
-  return GSS_S_COMPLETE;
-}
-
-/* Reply part of gss_krb5_init_sec_context.  Assumes that
-   context_handle is valid, and has krb5 specific structure, and that
    output_token is valid and cleared. */
 static OM_uint32
 init_reply (OM_uint32 * minor_status,
@@ -180,29 +133,36 @@ init_reply (OM_uint32 * minor_status,
 	    OM_uint32 * ret_flags,
 	    OM_uint32 * time_rec)
 {
-  gss_buffer_desc data;
-  OM_uint32 maj_stat;
+  gss_ctx_id_t ctx = *context_handle;
+  _gss_krb5_ctx_t k5 = ctx->krb5;
+  char *data;
+  size_t datalen;
+  int rc;
 
-  if (!gss_decapsulate_token (input_token, GSS_KRB5, &data))
+  if (!gss_decapsulate_token (input_token, GSS_KRB5, &data, &datalen))
     return GSS_S_DEFECTIVE_TOKEN;
 
-  maj_stat = init_reply1 (minor_status,
-			  initiator_cred_handle,
-			  context_handle,
-			  target_name,
-			  mech_type,
-			  req_flags,
-			  time_req,
-			  input_chan_bindings,
-			  &data,
-			  actual_mech_type,
-			  output_token,
-			  ret_flags,
-			  time_rec);
+  if (datalen < TOK_LEN)
+    return GSS_S_DEFECTIVE_TOKEN;
 
-  gss_release_buffer (NULL, &data);
+  if (memcmp (data, TOK_AP_REP, TOK_LEN) != 0)
+    return GSS_S_DEFECTIVE_TOKEN;
 
-  return maj_stat;
+  rc = shishi_ap_rep_der_set (k5->ap, data + TOK_LEN, datalen - TOK_LEN);
+  if (rc != SHISHI_OK)
+    return GSS_S_DEFECTIVE_TOKEN;
+
+  rc = shishi_ap_rep_verify (k5->ap);
+  if (rc != SHISHI_OK)
+    return GSS_S_DEFECTIVE_TOKEN;
+
+  rc = shishi_encapreppart_seqnumber_get (k5->sh,
+					  shishi_ap_encapreppart (k5->ap),
+					  &k5->acceptseqnr);
+  if (rc != SHISHI_OK)
+    return GSS_S_DEFECTIVE_TOKEN;
+
+  return GSS_S_COMPLETE;
 }
 
 /* Initiates the establishment of a krb5 security context between the
@@ -329,6 +289,8 @@ gss_krb5_accept_sec_context (OM_uint32 * minor_status,
 			     gss_cred_id_t * delegated_cred_handle)
 {
   gss_buffer_desc data;
+  char *in;
+  size_t inlen;
   gss_ctx_id_t cx;
   _gss_krb5_ctx_t cxk5;
   _gss_krb5_cred_t crk5;
@@ -369,18 +331,17 @@ gss_krb5_accept_sec_context (OM_uint32 * minor_status,
   if (rc != SHISHI_OK)
     return GSS_S_FAILURE;
 
-  rc = gss_decapsulate_token (input_token_buffer, GSS_KRB5, &data);
+  rc = gss_decapsulate_token (input_token_buffer, GSS_KRB5, &in, &inlen);
   if (!rc)
     return GSS_S_BAD_MIC;
 
-  if (data.length < TOK_LEN)
+  if (inlen < TOK_LEN)
     return GSS_S_BAD_MIC;
 
-  if (memcmp (data.value, TOK_AP_REQ, TOK_LEN) != 0)
+  if (memcmp (in, TOK_AP_REQ, TOK_LEN) != 0)
     return GSS_S_BAD_MIC;
 
-  rc = shishi_ap_req_der_set (cxk5->ap, (char*) data.value + TOK_LEN,
-			      data.length - TOK_LEN);
+  rc = shishi_ap_req_der_set (cxk5->ap, in + TOK_LEN, inlen - TOK_LEN);
   if (rc != SHISHI_OK)
     return GSS_S_FAILURE;
 

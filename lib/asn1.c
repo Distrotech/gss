@@ -193,15 +193,13 @@ _gss_decapsulate_token (const char *in, size_t inlen,
     return 0;
 
   *oidlen = asn1lenlen;
-  *oid = xmalloc (*oidlen);
-  memcpy (*oid, in, *oidlen);
+  *oid = in;
 
   inlen -= asn1lenlen;
   in += asn1lenlen;
 
   *outlen = inlen;
-  *out = xmalloc (*outlen);
-  memcpy (*out, in, *outlen);
+  *out = in;
 
   return 1;
 }
@@ -209,24 +207,21 @@ _gss_decapsulate_token (const char *in, size_t inlen,
 int
 gss_decapsulate_token (const gss_buffer_t input_message,
 		       const gss_OID token_oid,
-		       gss_buffer_t output_message)
+		       char **dataptr, size_t *datalen)
 {
-  char *oid, *out;
-  size_t oidlen, outlen;
+  char *oid;
+  size_t oidlen;
   int rc;
 
   rc = _gss_decapsulate_token (input_message->value,
 			       input_message->length,
-			       &oid, &oidlen, &out, &outlen);
+			       &oid, &oidlen, dataptr, datalen);
   if (!rc)
     return 0;
 
   if (oidlen != token_oid->length ||
       memcmp (oid, token_oid->elements, oidlen) != 0)
     return 0;
-
-  output_message->length = outlen;
-  output_message->value = (void *) out;
 
   return 1;
 }
