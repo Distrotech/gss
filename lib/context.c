@@ -1,4 +1,4 @@
-/* context.c	Implementation of GSS-API Context functions.
+/* context.c --- Implementation of GSS-API Context functions.
  * Copyright (C) 2003, 2004  Simon Josefsson
  *
  * This file is part of the Generic Security Service (GSS).
@@ -412,7 +412,8 @@ gss_init_sec_context (OM_uint32 * minor_status,
 				     input_token,
 				     actual_mech_type,
 				     output_token, ret_flags, time_rec);
-  if (freecontext && GSS_ERROR (maj_stat))
+
+  if (GSS_ERROR (maj_stat) && freecontext)
     {
       free (*context_handle);
       *context_handle = GSS_C_NO_CONTEXT;
@@ -695,9 +696,16 @@ gss_accept_sec_context (OM_uint32 * minor_status,
       return GSS_S_NO_CONTEXT | GSS_S_CALL_INACCESSIBLE_READ;
     }
 
-  mech = (*context_handle == GSS_C_NO_CONTEXT) ?
-    _gss_find_mech (mech_type ? *mech_type : GSS_C_NO_OID) :
-    _gss_find_mech ((*context_handle)->mech);
+  if (*context_handle == GSS_C_NO_CONTEXT)
+    mech = _gss_find_mech (GSS_C_NO_OID);
+  else
+    mech = _gss_find_mech ((*context_handle)->mech);
+  if (mech == NULL)
+    {
+      if (minor_status)
+	*minor_status = 0;
+      return GSS_S_BAD_MECH;
+    }
 
   if (mech_type)
     *mech_type = mech->mech;
@@ -790,6 +798,12 @@ gss_delete_sec_context (OM_uint32 * minor_status,
     }
 
   mech = _gss_find_mech ((*context_handle)->mech);
+  if (mech == NULL)
+    {
+      if (minor_status)
+	*minor_status = 0;
+      return GSS_S_BAD_MECH;
+    }
 
   ret = mech->delete_sec_context (NULL, context_handle, output_token);
 
@@ -876,6 +890,12 @@ gss_context_time (OM_uint32 * minor_status,
     }
 
   mech = _gss_find_mech (context_handle->mech);
+  if (mech == NULL)
+    {
+      if (minor_status)
+	*minor_status = 0;
+      return GSS_S_BAD_MECH;
+    }
 
   return mech->context_time (minor_status, context_handle, time_rec);
 }
