@@ -359,9 +359,13 @@ sub output_texinfo {
     print ")\n";
     foreach $parameter (@{$args{'parameterlist'}}) {
 	if ($args{'parameters'}{$parameter}) {
-	    print "\@var{".$parameter."}: ";
-	    output_highlight($args{'parameters'}{$parameter});
-	    print "\n";
+	    open FH, ">tmp" or die "cannot open tmp";
+	    print FH "`".$parameter."`: " . $args{'parameters'}{$parameter};
+	    close FH;
+	    $_ = `asciidoc -s -b texinfo -o - tmp 2>/dev/null`;
+	    unlink "tmp";
+	    chop;
+	    print;
 	}
     }
     foreach $section (@{$args{'sectionlist'}}) {
@@ -369,8 +373,10 @@ sub output_texinfo {
 	print FH "$section:\n" if $section ne $section_default;
 	print FH $args{'sections'}{$section};
 	close FH;
-	print `asciidoc -s -b texinfo -o - tmp 2>/dev/null`;
+	$_ = `asciidoc -s -b texinfo -o - tmp 2>/dev/null`;
 	unlink "tmp";
+	chop;
+	print;
     }
     print "\@end deftypefun\n\n";
 }
