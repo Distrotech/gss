@@ -47,18 +47,9 @@ gss_wrap (OM_uint32 * minor_status,
 	  const gss_buffer_t input_message_buffer,
 	  int *conf_state, gss_buffer_t output_message_buffer)
 {
-  puts("wrap:");
-
-  {
-    int i;
-    for (i = 0; i < input_message_buffer->length; i++)
-      {
-	printf("%02x ", ((char*)input_message_buffer->value)[i] & 0xFF);
-	if ((i+1)%16 == 0)
-	  printf("\n");
-      }
-  }
-  return GSS_S_FAILURE;
+  return krb5_gss_wrap (minor_status, context_handle, conf_req_flag, qop_req,
+			input_message_buffer, conf_state,
+			output_message_buffer);
 }
 
 OM_uint32
