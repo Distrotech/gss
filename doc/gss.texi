@@ -2540,6 +2540,12 @@ framework, which in several situations provide the same feature as GSS
 does.  The most compelling argument for SASL over GSS is, as its
 acronym suggest, Simple, whereas GSS is far from it.
 
+However, that said, for free software projects that wants to support
+Kerberos 5, we do acknowledge that no other framework provides a more
+portable and interoperable interface into the Kerberos 5 system.  If
+your project needs to use Kerberos 5 specifically, we do recommend you
+to use GSS instead of the Kerberos 5 implementation specific APIs.
+
 @c @node Copying This Manual
 @c @appendix Copying This Manual
 @c
