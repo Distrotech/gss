@@ -25,10 +25,24 @@
 #include "krb5.h"
 #endif
 
-OM_uint32 _gss_dummy (OM_uint32 minor_status, ...)
+OM_uint32
+_gss_dummy (OM_uint32 minor_status, ...)
 {
   fprintf (stderr, "warning: no suitable mechanism found\n");
   return GSS_S_BAD_MECH;
+}
+
+OM_uint32
+_gss_dummy_display_status (OM_uint32 * minor_status,
+			   OM_uint32 status_value,
+			   int status_type,
+			   const gss_OID mech_type,
+			   OM_uint32 * message_context,
+			   gss_buffer_t status_string)
+{
+  status_string->value = strdup("No suitable mechanism supported");
+  status_string->length = strlen(status_string->value);
+  return GSS_S_COMPLETE;
 }
 
 _gss_mech_api_desc _gss_mech_apis[] = {
@@ -44,7 +58,8 @@ _gss_mech_api_desc _gss_mech_apis[] = {
     gss_krb5_wrap,
     gss_krb5_unwrap,
     _gss_dummy,
-    _gss_dummy
+    _gss_dummy,
+    gss_krb5_display_status
   },
 #endif
   {
@@ -55,7 +70,8 @@ _gss_mech_api_desc _gss_mech_apis[] = {
     _gss_dummy,
     _gss_dummy,
     _gss_dummy,
-    _gss_dummy
+    _gss_dummy,
+    _gss_dummy_display_status
   }
 };
 

@@ -133,6 +133,13 @@ typedef struct _gss_mech_api_strict {
 	const gss_buffer_t message_buffer,
 	const gss_buffer_t token_buffer,
 	gss_qop_t * qop_state);
+  OM_uint32 (*display_status)
+       (OM_uint32 * minor_status,
+	OM_uint32 status_value,
+	int status_type,
+	const gss_OID mech_type,
+	OM_uint32 * message_context,
+	gss_buffer_t status_string);
 } _gss_mech_api_desc, *_gss_mech_api_t;
 
 _gss_mech_api_t _gss_find_mech (gss_OID oid);
