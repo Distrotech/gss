@@ -43,7 +43,6 @@ gss_OID GSS_KRB5_NT_PRINCIPAL_NAME = &GSS_KRB5_NT_PRINCIPAL_NAME_static;
 #define _GSS_KRB5_KRB_ERROR_DATA _GSS_KRB5_OID_DER "\x03\x00"
 #define _GSS_KRB5_KRB_ERROR_LEN  (_GSS_KRB5_OID_LEN+2)
 
-
 OM_uint32
 krb5_gss_init_sec_context (OM_uint32 * minor_status,
 			   const gss_cred_id_t initiator_cred_handle,
@@ -64,37 +63,37 @@ krb5_gss_init_sec_context (OM_uint32 * minor_status,
   char *data;
   size_t len;
   int rc;
-  gss_name_desc sname;
-  gss_name_t snameptr = &sname;
   OM_uint32 maj_stat;
-
-  if (target_name->type != GSS_C_NT_EXPORT_NAME) /* XXX ptr compare? */
-    {
-      maj_stat = gss_canonicalize_name (minor_status, target_name,
-					mech_type, &snameptr);
-    }
-  else
-    {
-      maj_stat = gss_duplicate_name (minor_status, target_name, &snameptr);
-    }
-  if (maj_stat != GSS_S_COMPLETE)
-    return maj_stat;
-
-  /* XXX release_name (sname) */
 
   /* Note: mech_type not tested */
 
   if (*context_handle == GSS_C_NO_CONTEXT)
     {
-      *context_handle = malloc(sizeof(*context_handle));
+      gss_ctx_id_t ctx;
 
-      if (!*context_handle)
+      ctx = malloc(sizeof(*context_handle));
+      if (!ctx)
 	return GSS_S_FAILURE;
+      *context_handle = ctx;
 
       rc = shishi_init(&h);
       if (rc != SHISHI_OK)
 	return GSS_S_FAILURE;
-      (*context_handle)->sh = h;
+      ctx->sh = h;
+
+      ctx->peerptr = &ctx->peer;
+      if (_gss_oid_equal (target_name->type, GSS_KRB5_NT_PRINCIPAL_NAME))
+	{
+	  maj_stat = gss_duplicate_name (minor_status, target_name,
+					 &ctx->peerptr);
+	}
+      else
+	{
+	  maj_stat = krb5_gss_canonicalize_name (minor_status, target_name,
+						 mech_type, &ctx->peerptr);
+	}
+      if (maj_stat != GSS_S_COMPLETE)
+	return maj_stat;
 
       if (initiator_cred_handle)
 	{
@@ -107,7 +106,7 @@ krb5_gss_init_sec_context (OM_uint32 * minor_status,
 	  Shishi_tkts_hint hint;
 
 	  memset(&hint, 0, sizeof(hint));
-	  hint.server = sname.value;
+	  hint.server = ctx->peer.value;
 
 	  tkt = shishi_tkts_get (shishi_tkts_default (h), &hint);
 	  if (!tkt)
@@ -117,7 +116,7 @@ krb5_gss_init_sec_context (OM_uint32 * minor_status,
 	  shishi_tkts_to_file (shishi_tkts_default (h),
 			       shishi_tkts_default_file (h));
 	}
-      (*context_handle)->tkt = tkt;
+      ctx->tkt = tkt;
 
       /*
        * The checksum value field's format is as follows:
@@ -199,23 +198,13 @@ krb5_gss_init_sec_context (OM_uint32 * minor_status,
   return GSS_S_COMPLETE;
 }
 
-static OM_uint32
-_krb5_gss_canonicalize_name_1 (OM_uint32 * minor_status,
-			       const gss_name_t input_name,
-			       const gss_OID mech_type,
-			       gss_name_t * output_name,
-			       gss_OID_set oid_set)
+OM_uint32
+krb5_gss_canonicalize_name (OM_uint32 * minor_status,
+			    const gss_name_t input_name,
+			    const gss_OID mech_type,
+			    gss_name_t * output_name)
 {
-  OM_uint32 major_stat;
-  int present;
-
-  major_stat = gss_test_oid_set_member (minor_status,
-					GSS_C_NT_HOSTBASED_SERVICE,
-					oid_set, &present);
-  if (major_stat != GSS_S_COMPLETE)
-    return major_stat;
-
-  if (present)
+  if (_gss_oid_equal (input_name->type, GSS_C_NT_HOSTBASED_SERVICE))
     {
       char *p;
 
@@ -236,36 +225,6 @@ _krb5_gss_canonicalize_name_1 (OM_uint32 * minor_status,
     }
   else
     return GSS_S_FAILURE;
-
-  return GSS_S_COMPLETE;
-}
-
-OM_uint32
-krb5_gss_canonicalize_name (OM_uint32 * minor_status,
-			    const gss_name_t input_name,
-			    const gss_OID mech_type,
-			    gss_name_t * output_name)
-{
-  OM_uint32 major_stat;
-  gss_OID_set oid_set;
-
-  major_stat = gss_create_empty_oid_set (minor_status, &oid_set);
-  if (major_stat != GSS_S_COMPLETE)
-    return major_stat;
-
-  major_stat = gss_add_oid_set_member (minor_status, input_name->type,
-				       &oid_set);
-  if (major_stat != GSS_S_COMPLETE)
-    return major_stat;
-
-  _krb5_gss_canonicalize_name_1 (minor_status, input_name, mech_type,
-				 output_name, oid_set);
-  if (major_stat != GSS_S_COMPLETE)
-    return major_stat;
-
-  major_stat = gss_release_oid_set (minor_status, &oid_set);
-  if (major_stat != GSS_S_COMPLETE)
-    return major_stat;
 
   return GSS_S_COMPLETE;
 }
