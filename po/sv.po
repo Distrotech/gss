@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gss 0.0.1\n"
 "Report-Msgid-Bugs-To: bug-gss@josefsson.org\n"
-"POT-Creation-Date: 2004-01-15 09:22+0100\n"
+"POT-Creation-Date: 2004-01-16 08:41+0100\n"
 "PO-Revision-Date: 2003-06-12 20:05+0200\n"
 "Last-Translator: Simon Josefsson <simon@josefsson.org>\n"
 "Language-Team: Swedish <sv@li.org>\n"
@@ -125,15 +125,7 @@ msgstr "Senare meddelande redan behandlat"
 msgid "An expected per-message token was not received"
 msgstr "Tidigare meddelande inte mottaget"
 
-#: lib/error.c:208
-msgid "Unknown calling error"
-msgstr "Okänt fel i applikationen"
-
-#: lib/error.c:246
-msgid "Unknown routine error"
-msgstr "Okänt fel i rutin"
-
-#: lib/error.c:251
+#: lib/error.c:288
 msgid "No error"
 msgstr "Inget fel"
 
@@ -232,6 +224,12 @@ msgstr "varning: gss_seal() är obsolet, använd gss_wrap() istället."
 #, c-format
 msgid "warning: gss_unseal() is obsolete, use gss_unwrap() instead."
 msgstr "varning: gss_unseal() är obsolet, använd gss_unwrap() istället."
+
+#~ msgid "Unknown calling error"
+#~ msgstr "Okänt fel i applikationen"
+
+#~ msgid "Unknown routine error"
+#~ msgstr "Okänt fel i rutin"
 
 #~ msgid "warning: no suitable mechanism found\n"
 #~ msgstr "varning: ingen passande mekanism hittad\n"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: bug-gss@josefsson.org\n"
-"POT-Creation-Date: 2004-01-15 09:22+0100\n"
+"POT-Creation-Date: 2004-01-16 08:41+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -124,15 +124,7 @@ msgstr ""
 msgid "An expected per-message token was not received"
 msgstr ""
 
-#: lib/error.c:208
-msgid "Unknown calling error"
-msgstr ""
-
-#: lib/error.c:246
-msgid "Unknown routine error"
-msgstr ""
-
-#: lib/error.c:251
+#: lib/error.c:288
 msgid "No error"
 msgstr ""
 
