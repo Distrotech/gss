@@ -35,7 +35,26 @@ gss_krb5_canonicalize_name (OM_uint32 * minor_status,
   if (minor_status)
     *minor_status = 0;
 
-  if (gss_oid_equal (input_name->type, GSS_C_NT_HOSTBASED_SERVICE))
+  /* We consider GSS_KRB5_NT_PRINCIPAL_NAME the canonical mechanism
+     name type.  Convert everything into it.  */
+
+  if (gss_oid_equal (input_name->type, GSS_C_NT_EXPORT_NAME))
+    {
+      if (input_name->length > 15)
+	{
+	  *output_name = xmalloc (sizeof (**output_name));
+	  (*output_name)->type = GSS_KRB5_NT_PRINCIPAL_NAME;
+	  (*output_name)->length = input_name->length - 15;
+	  (*output_name)->value = xmalloc (input_name->length);
+	  memcpy ((*output_name)->value, input_name->value + 15,
+		  (*output_name)->length);
+	}
+      else
+	{
+	  return GSS_S_BAD_NAME;
+	}
+    }
+  else if (gss_oid_equal (input_name->type, GSS_C_NT_HOSTBASED_SERVICE))
     {
       char *p;
 
