@@ -376,8 +376,8 @@ gss_krb5_accept_sec_context (OM_uint32 * minor_status,
 	  return GSS_S_FAILURE;
 	}
 
-      rc = shishi_new_a2d (crk5->sh, aprep,
-			   (char **) &data.value, &data.length);
+      rc = shishi_asn1_to_der (crk5->sh, aprep,
+			       (char **) &data.value, &data.length);
       if (rc != SHISHI_OK)
 	{
 	  printf ("Error der encoding aprep: %s\n", shishi_strerror (rc));
