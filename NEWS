@@ -12,7 +12,7 @@ dynamically load backends.
 
 ** The gss_duplicate_name function now allocate the output result properly.
 
-** Documentation fixes.  For example, man pages for the API is included.
+** Documentation fixes.  For example, all official APIs are now documented.
 
 * Changes in 0.0.7 (released 2003-11-26)
 
