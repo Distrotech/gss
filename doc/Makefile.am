@@ -28,7 +28,7 @@ EXTRA_DIST = gdoc gdoc-error $(man_MANS) $(ggssapi_texi_auto_deps) \
 info_TEXINFOS = ggssapi.texi
 ps_TEXINFOS = ggssapi.texi
 pdf_TEXINFOS = ggssapi.texi
-ggssapi_TEXINFOS = gpl.texi fdl.texi
+ggssapi_TEXINFOS = gpl.texi fdl.texi $(ggssapi_texi_auto_deps)
 
 ggssapi_api_version_deps = $(top_srcdir)/lib/version.c
 
