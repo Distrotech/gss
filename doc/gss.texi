@@ -5,6 +5,7 @@
 @setfilename gss.info
 @include version.texi
 @settitle GNU Generic Security Service Library
+@finalout
 
 @c Unify some of the indices.
 @syncodeindex tp fn
