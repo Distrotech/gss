@@ -19,7 +19,6 @@ dnl Process this file with autoconf to produce a configure script.
 # Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 # 02111-1307, USA.
 
-AC_PREREQ(2.59)
 AC_INIT([gss], [0.0.8], [bug-gss@gnu.org])
 
 # Library code modified:                              REVISION++
@@ -33,14 +32,14 @@ AC_SUBST(LT_CURRENT)
 AC_SUBST(LT_REVISION)
 AC_SUBST(LT_AGE)
 
-AM_INIT_AUTOMAKE(gnits)
+AC_PREREQ(2.57)
+AM_INIT_AUTOMAKE([1.7 gnits])
 AC_CONFIG_HEADERS(config.h)
 
 # Checks for programs.
 AM_GNU_GETTEXT(external)
 AM_GNU_GETTEXT_VERSION(0.12.1)
 AC_PROG_CC
-AC_LIBTOOL_TAGS
 AC_PROG_LIBTOOL
 
 # Checks for header files.
@@ -53,7 +52,7 @@ gl_FUNC_GETHOSTNAME
 sj_CHECK_HEADERLIB(shishi.h, shishi, shishi_check_version,
 	kerberos5=yes, kerberos5=no)
 AC_ARG_ENABLE(kerberos5,
-	AS_HELP_STRING([--disable-kerberos5],
+	AC_HELP_STRING([--disable-kerberos5],
 		[disable Kerberos V5 mechanism unconditionally]),
 	kerberos5=$enableval)
 if test "$kerberos5" != "no" ; then
