@@ -26,8 +26,8 @@
 prog="`basename \"$0\"`"
 srcdir=`pwd`
 
-scripturl="http://savannah.gnu.org/cgi-bin/viewcvs/texinfo/texinfo/util/gendocs.sh"
-templateurl="http://savannah.gnu.org/cgi-bin/viewcvs/texinfo/texinfo/util/gendocs_template"
+scripturl="http://savannah.gnu.org/cgi-bin/viewcvs/gss/gss/doc/gendocs.sh"
+templateurl="http://savannah.gnu.org/cgi-bin/viewcvs/gss/gss/doc/gendocs_template"
 
 : ${MAKEINFO="makeinfo"}
 : ${TEXI2DVI="texi2dvi"}
