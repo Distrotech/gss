@@ -53,9 +53,9 @@ AC_CHECK_HEADERS(locale.h)
 # For gnulib stuff in gl/.
 gl_SOURCE_BASE(gl)
 gl_M4_BASE(gl/m4)
+gl_LIB(libgl)
 gl_MODULES(getopt xalloc xgethostname)
 gl_INIT
-gl_FUNC_GETHOSTNAME
 
 # Test for Shishi.
 sj_CHECK_HEADERLIB(shishi.h, shishi, shishi_check_version,
