@@ -27,6 +27,11 @@
 #include <stdio.h>
 #include <string.h>
 
+#include <errno.h>
+#ifndef errno
+extern int errno;
+#endif
+
 #ifndef SIZE_MAX
 # define SIZE_MAX ((size_t) -1)
 #endif
@@ -39,7 +44,8 @@ xalloc_die (void)
 {
   if (xalloc_fail_func)
     (*xalloc_fail_func) ();
-  fprintf (stderr, PACKAGE "memory exhausted\n");
+  errno = ENOMEM;
+  perror (PACKAGE);
   /* The `noreturn' cannot be given to error, since it may return if
      its first argument is 0.  To help compilers understand the
      xalloc_die does terminate, call abort.  */
