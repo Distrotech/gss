@@ -178,6 +178,9 @@ gss_krb5_init_sec_context (OM_uint32 * minor_status,
   _gss_krb5_ctx_t k5 = ctx->krb5;
   int rc;
 
+  if (minor_status)
+    *minor_status = 0;
+
   if (ret_flags)
     *ret_flags = 0;
 
@@ -189,8 +192,6 @@ gss_krb5_init_sec_context (OM_uint32 * minor_status,
 	 Later: if you have tickets for foo@BAR and bar@FOO, it may be
 	 useful to call gss_acquire_cred first to chose which one to
 	 initiate the context with.  Not many applications need this. */
-      if (minor_status)
-	*minor_status = 0;
       return GSS_S_NO_CRED;
     }
 
@@ -205,7 +206,8 @@ gss_krb5_init_sec_context (OM_uint32 * minor_status,
     }
 
   if (ret_flags)
-    *ret_flags |= GSS_C_INTEG_FLAG | GSS_C_CONF_FLAG | GSS_C_SEQUENCE_FLAG;
+    *ret_flags |= GSS_C_REPLAY_FLAG | GSS_C_SEQUENCE_FLAG |
+      GSS_C_INTEG_FLAG | GSS_C_CONF_FLAG;
 
   if (!k5->reqdone)
     {
@@ -221,7 +223,7 @@ gss_krb5_init_sec_context (OM_uint32 * minor_status,
 			   actual_mech_type,
 			   output_token, ret_flags, time_rec);
     }
-  else if (!k5->repdone)
+  else if (k5->reqdone && k5->flags & GSS_C_MUTUAL_FLAG !k5->repdone)
     {
       return init_reply (minor_status,
 			 initiator_cred_handle,
@@ -236,8 +238,6 @@ gss_krb5_init_sec_context (OM_uint32 * minor_status,
 			 output_token, ret_flags, time_rec);
     }
 
-  if (minor_status)
-    *minor_status = 0;
   return GSS_S_FAILURE;
 }
 
