@@ -374,12 +374,7 @@ as in the following example.
 #include <gss.h>
 #include <locale.h>
 ...
-int
-main (int argc, char *argv[])
-@{
-  ...
   setlocale (LC_ALL, "");
-  ...
 @end example
 
 @node Version Check
@@ -1802,7 +1797,7 @@ any more threads are created.
 
 @deftypefun int gss_oid_equal (gss_OID @var{first_oid}, gss_OID @var{second_oid})
 
-Compare to OIDs for equality.  Compares actual content, not just
+Compare two OIDs for equality.  Compares actual content, not just
 pointer equality.  Returns a boolean true iff the OIDs are equal.
 
 @end deftypefun
@@ -1875,18 +1870,18 @@ discussed here are relevant for their project, or if the benefit
 outweigh the problems.  GSS can be criticized on several levels.  We
 start with the actual implementation.
 
-GSS do not appear to be designed by experienced C programmers.  While
-generally this may be a good thing (C is not the best language), but
-since they defined the API in C, it is unfortunate.  The primary
+GSS does not appear to be designed by experienced C programmers.
+While generally this may be a good thing (C is not the best language),
+but since they defined the API in C, it is unfortunate.  The primary
 evidence of this is the major_status and minor_status error code
 solution.  It is a complicated way to describe error conditions, but
 what makes matters worse, the error condition is separated; half of
 the error condition is in the function return value and the other half
 is in the first argument to the function, which is always a pointer to
-an integer.  (The pointer is not even allowed to be NULL, if the
-application doesn't care about the minor error code.)  This makes the
-API unreadable, and difficult to use.  A better solutions would be to
-return a struct containing the entire error condition, which can be
+an integer.  (The pointer is not even allowed to be @code{NULL}, if
+the application doesn't care about the minor error code.)  This makes
+the API unreadable, and difficult to use.  A better solutions would be
+to return a struct containing the entire error condition, which can be
 accessed using macros, although we acknowledge that the C language
 used at the time GSS was designed may not have allowed this (this may
 in fact be the reason the awkward solution was chosen).  Instead, the
@@ -1903,10 +1898,10 @@ issues; GSS provides functions to deallocate data stored within, e.g.,
 structure pointed at by the @code{gss_buffer_t} (i.e., the
 @code{gss_buffer_desc}) itself.  Memory management issues are error
 prone, and this division easily leads to memory leaks (or worse).
-Instead, the API should be the sole owner of all gss_ctx_id_t,
-gss_cred_id_t, and gss_buffer_t structures: they should be allocated
-by the library, and deallocated (using the utility functions defined
-for this purpose) by the library.
+Instead, the API should be the sole owner of all @code{gss_ctx_id_t},
+@code{gss_cred_id_t}, and @code{gss_buffer_t} structures: they should
+be allocated by the library, and deallocated (using the utility
+functions defined for this purpose) by the library.
 
 TBA: thread issues
 
@@ -1924,12 +1919,13 @@ TBA: krb5: firewall/pre-IP: iakerb status?
 
 TBA: krb5: single-DES only
 
-We also note that few free security applications uses GSS, perhaps the
-only major exception to this are Kerberos 5 implementations.  This
-suggest that the GSS may not be the simplest solution available to
-solve actual problems, since otherwise more projects would have chosen
-to take advantage of the work that went into GSS instead of using
-another framework, or designing their own solution.
+Finally we note that few free security applications uses GSS, perhaps
+the only major exception to this are Kerberos 5 implementations.
+While not substantial evidence, this do suggest that the GSS may not
+be the simplest solution available to solve actual problems, since
+otherwise more projects would have chosen to take advantage of the
+work that went into GSS instead of using another framework (or
+designing their own solution).
 
 Our conclusion is that free software projects that are looking for a
 security framework should evaluate carefully whether GSS actually is
