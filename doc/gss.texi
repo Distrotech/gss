@@ -106,7 +106,9 @@ This manual documents the GSS programming interface.  All functions
 and data types provided by the library are explained.
 
 The reader is assumed to possess basic familiarity with GSS-API and
-network programming in C or C++.
+network programming in C or C++.  For general GSS-API information, and
+some programming examples, there is a guide available online at
+@url{http://docs.sun.com/db/doc/816-1331}.
 
 This manual can be used in several ways.  If read from the beginning
 to the end, it gives a good introduction into the library and how it
@@ -133,8 +135,8 @@ No global variables are used and multiple library handles and session
 handles may be used in parallell.
 
 @item It's internationalized
-It handles non-ASCII username and passwords and user visible strings
-used in the library (error messages) can be translated into the users'
+It handles non-ASCII names and user visible strings used in the
+library (e.g., error messages) can be translated into the users'
 language.
 
 @item It's portable
@@ -454,55 +456,6 @@ gcc -o foo foo.c `pkg-config gss --cflags --libs`
 @c **********************************************************
 @node Standard GSS API
 @chapter Standard GSS API
-
-As an alternative to the native Shishi programming API, it is possible
-to program Shishi through the Generic Security Services (GSS) API.
-The advantage of using GSS-API in your security application, instead
-of the native Shishi API, is that it will be easier to port your
-application between different Kerberos 5 implementations, and even
-beyond Kerberos 5 to different security systems, that support GSS-API.
-
-In the free software world, however, the only widely used security
-system that supports GSS-API is Kerberos 5, so this advantage is
-somewhat academic.  But if you are porting applications using GSS-API
-for other Kerberos 5 implementations, or want a more mature and stable
-API than the native Shishi API, you may find using Shishi's GSS-API
-interface compelling.  Note that GSS-API only offer basic services,
-for more advanced uses you must use the native API.
-
-The remaining part of this section assume you are familiar with
-GSS-API in general, and only describe how to hook up your application
-written using GSS-API with Shishi.  For general GSS-API information,
-and some programming examples, a good guide is available online at
-@url{http://docs.sun.com/db/doc/816-1331}.
-
-Shishi exposes the GSS-API through the standard @file{gssapi.h} header file
-and the library `libshishi-gss'.  To avoid conflicting with other
-GSS-API implementations on your system, the header file is installed
-in a sub-directory `shishi/' under the header file location specified
-when building Shishi.  You must include this in all programs using the
-library, either directly or through some other header file, like this:
-
-@example
-#include <gss.h>
-@end example
-
-The library `libshishi-gss' is installed in the normal object code
-library location.
-
-To facilitate finding the proper parameters for your compiler, the
-@command{pkg-config} tool can be used.  Compile your application
-@file{foo.c} with the Shishi GSS interface like this:
-
-@example
-gcc -o foo foo.c `pkg-config shishi-gss --cflags --libs`
-@end example
-
-Of course you do not need to use both @option{--cflags} and
-@option{--libs} at the same time, see the full discussion elsewhere in
-this manual (@pxref{Building the source}), but note that you must use
-`shishi-gss' instead of `shishi' as the library parameter to
-@command{pkg-config}.
 
 @menu
 * Error Handling::		How errors in GSS are reported and handled.
