@@ -52,24 +52,37 @@ AC_HEADER_STDC
 
 # Checks for library functions.
 
-# Test for Shishi
-AC_ARG_ENABLE(shishi,
-	AC_HELP_STRING([--disable-shishi],
-                       [disable Shishi support even if available]),
-	shishi=$enableval)
-if test "$shishi" != "no" ; then
-	PKG_CHECK_MODULES(SHISHI, shishi >= 0.0.0, [shishi=yes],
-                                                   [shishi=no])
-	if test "$shishi" != "yes" ; then
-		shishi=no
-		AC_MSG_WARN([shishi not found, disabling Kerberos 5])
+# Test if we can build the Kerberos 5 backend.
+AC_ARG_ENABLE(kerberos5,
+	AC_HELP_STRING([--disable-kerberos5],
+                       [disable Kerberos 5 unconditionally]),
+	kerberos5=$enableval)
+if test "$kerberos5" != "no" ; then
+	AC_CHECK_HEADER(libtasn1.h, [kerberos5=yes], [kerberos5=no])
+	if test "$kerberos5" != "yes" ; then
+		AC_MSG_WARN([libtasn1.h not found, required for Kerberos 5])
+	fi
+fi
+if test "$kerberos5" != "no" ; then
+	AC_CHECK_LIB(tasn1, asn1_read_tag, [kerberos5=yes], [kerberos5=no])
+	if test "$kerberos5" != "yes" ; then
+		AC_MSG_WARN([-ltasn1 not found, required for Kerberos 5])
+	fi
+fi
+if test "$kerberos5" != "no" ; then
+	PKG_CHECK_MODULES(SHISHI, shishi >= 0.0.0,
+				[kerberos5=yes], [kerberos5=no])
+	if test "$kerberos5" != "yes" ; then
+		kerberos5=no
+		AC_MSG_WARN([Shishi not found, required for Kerberos 5])
 	else
-		shishi=yes
-		AC_DEFINE(USE_SHISHI, 1, [Define to 1 if you want Shishi.])
+		kerberos5=yes
+		AC_DEFINE(USE_KERBEROS5, 1,
+			[Define to 1 if you want Kerberos 5 support.])
 	fi
 fi
 AC_MSG_CHECKING([if Kerberos 5 should be supported])
-AC_MSG_RESULT($shishi)
+AC_MSG_RESULT($kerberos5)
 
 # Test if the libc includes a good enough argp.
 AC_ARG_WITH(system-argp,
