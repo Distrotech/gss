@@ -338,7 +338,7 @@ changed.
 The header file @file{gss.h} includes @file{gss/api.h}, add a few
 non-standard extensions (by including @file{gss/ext.h}), takes care of
 including header files related to all supported mechanisms (e.g.,
-gss/krb5.h) and finally add C++ namespace protection of all
+@file{gss/krb5.h}) and finally add C++ namespace protection of all
 definitions.  Therefore, including @file{gss.h} in your project is
 recommended over @file{gss/api.h}.  If using @file{gss.h} instead of
 @file{gss/api.h} causes problems, it should be regarded a bug.
