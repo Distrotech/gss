@@ -69,6 +69,6 @@ release:
 		-o ../$(htmldir)/manual/ $(PACKAGE) \
 		"GNU Generic Security Service Library"
 	cp -v $(distdir).tar.gz{,.sig} $(htmldir)/releases/
-	cp -v doc/reference/*.{html,png} $(htmldir)/reference/
+	cp -v doc/reference/html/*.{html,png,devhelp,css} $(htmldir)/reference/
 	cd $(htmldir) && cvs add -kb releases/$(distdir).tar.gz{,.sig} && \
 		cvs commit -m "Update." manual/ reference/ releases/
