@@ -22,6 +22,7 @@ AM_CPPFLAGS = -I$(top_srcdir)/gl -I$(top_srcdir)/lib
 if KRB5
 AM_CPPFLAGS += -I$(top_srcdir)/lib/krb5
 endif
+AM_LDFLAGS = -no-install
 LDADD = ../lib/libgss.la
 
 TESTS_ENVIRONMENT = SHISHI_TICKETS=krb5context.tkt
