@@ -1,5 +1,5 @@
 /* krb5/utils.c --- Kerberos 5 GSS-API helper functions.
- * Copyright (C) 2003  Simon Josefsson
+ * Copyright (C) 2003, 2004  Simon Josefsson
  *
  * This file is part of the Generic Security Service (GSS).
  *
@@ -38,5 +38,5 @@ gss_krb5_tktlifetime (Shishi_tkt * tkt)
   now = time (NULL);
   end = shishi_tkt_endctime (tkt);
 
-  return (OM_uint32) difftime (end, now);
+  return end - now;
 }
