@@ -1,3 +1,134 @@
+2003-07-02  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS: Version 0.0.3.
+
+2003-07-02  Simon Josefsson <simon@josefsson.org>
+
+	* Makefile.am: Fix typo.
+
+2003-07-02  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS: Add.
+
+2003-07-02  Simon Josefsson <simon@josefsson.org>
+
+	* Makefile.am: Add legal information to ChangeLog.
+
+2003-07-01  Simon Josefsson <simon@josefsson.org>
+
+	* doc/gss.texi: Add.
+
+2003-06-30  Simon Josefsson <simon@josefsson.org>
+
+	* lib/krb5.c: Fixes.
+
+2003-06-29  Simon Josefsson <simon@josefsson.org>
+
+	* lib/krb5.c: Cleanup.
+
+2003-06-29  Simon Josefsson <simon@josefsson.org>
+
+	* lib/cred.c: (gss_release_cred): Fix minor_status.
+
+2003-06-29  Simon Josefsson <simon@josefsson.org>
+
+	* lib/cred.c: Typo.
+
+2003-06-29  Simon Josefsson <simon@josefsson.org>
+
+	* lib/misc.c: (gss_release_oid_set): Handle NULL set.
+
+2003-06-29  Simon Josefsson <simon@josefsson.org>
+
+	* lib/misc.c: (gss_test_oid_set_member): Handle NULL member.
+
+2003-06-29  Simon Josefsson <simon@josefsson.org>
+
+	* lib/cred.c: (gss_acquire_cred): Support desired_mechs.
+
+2003-06-29  Simon Josefsson <simon@josefsson.org>
+
+	* po/gss.pot, po/sv.po: Generated.
+
+2003-06-29  Simon Josefsson <simon@josefsson.org>
+
+	* m4/Makefile.am: Add.
+
+2003-06-29  Simon Josefsson <simon@josefsson.org>
+
+	* gl/Makefile.am: Add m4.
+
+2003-06-29  Simon Josefsson <simon@josefsson.org>
+
+	* m4/pkg.m4, NEWS: Add.
+
+2003-06-29  Simon Josefsson <simon@josefsson.org>
+
+	* m4/gettext.m4, m4/inttypes_h.m4, m4/lib-ld.m4, m4/lib-link.m4,
+	  m4/lib-prefix.m4, m4/nls.m4, m4/po.m4, m4/progtest.m4,
+	  m4/stdint_h.m4, m4/uintmax_t.m4: Generated.
+
+2003-06-29  Simon Josefsson <simon@josefsson.org>
+
+	* po/Makevars: Update to gettext 12.1.
+
+2003-06-29  Simon Josefsson <simon@josefsson.org>
+
+	* configure.ac: Bump versions.
+
+2003-06-29  Simon Josefsson <simon@josefsson.org>
+
+	* Makefile.am, configure.ac, gl/m4/Makefile.am, gl/m4/error.m4,
+	  gl/m4/gethostname.m4, gl/m4/malloc.m4, gl/m4/nls.m4,
+	  gl/m4/onceonly_2_57.m4, gl/m4/po.m4, gl/m4/realloc.m4,
+	  gl/m4/strerror_r.m4, gl/m4/unlocked-io.m4, gl/m4/xalloc.m4,
+	  m4/Makefile.am, m4/error.m4, m4/gethostname.m4, m4/malloc.m4,
+	  m4/nls.m4, m4/onceonly_2_57.m4, m4/po.m4, m4/realloc.m4,
+	  m4/strerror_r.m4, m4/unlocked-io.m4, m4/xalloc.m4: Move gnulib
+	  m4's from m4/ to gl/m4/.
+
+2003-06-29  Simon Josefsson <simon@josefsson.org>
+
+	* COPYING.DOC: Add.
+
+2003-06-29  Simon Josefsson <simon@josefsson.org>
+
+	* README-alpha: Note for binary package builders.
+
+2003-06-29  Simon Josefsson <simon@josefsson.org>
+
+	* lib/internal.h, lib/meta.c, lib/misc.c, lib/name.c: Move meta.c
+	  functions to where they belong.
+
+2003-06-29  Simon Josefsson <simon@josefsson.org>
+
+	* lib/cred.c, lib/context.c: Add comment.
+
+2003-06-29  Simon Josefsson <simon@josefsson.org>
+
+	* doc/gss.texi: Fix.
+
+2003-06-29  Simon Josefsson <simon@josefsson.org>
+
+	* doc/gss.texi: Add.
+
+2003-06-29  Simon Josefsson <simon@josefsson.org>
+
+	* doc/gss.texi: Add.
+
+2003-06-29  Simon Josefsson <simon@josefsson.org>
+
+	* lib/krb5.c, lib/cred.c: Cleanup.
+
+2003-06-29  Simon Josefsson <simon@josefsson.org>
+
+	* configure.ac, gl/gethostname.c, m4/Makefile.am,
+	  m4/gethostname.m4, gl/Makefile.am: Add gethostname() from gnulib.
+
+2003-06-28  Simon Josefsson <simon@josefsson.org>
+
+	* Makefile.am: Fix release scp.
+
 2003-06-28  Simon Josefsson <simon@josefsson.org>
 
 	* NEWS: Version 0.0.2.
@@ -958,3 +1089,8 @@
 	  doc/gpl.texi, lib/Makefile.am, lib/gssapi.h, lib/version.c,
 	  tests/Makefile.am: Initial import, empty dummy project.
 
+----------------------------------------------------------------------
+  Copyright 2003  Simon Josefsson
+ Copying and distribution of this file, with or without modification,
+ are permitted in any medium without royalty provided the copyright
+ notice and this notice are preserved.
