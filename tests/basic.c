@@ -21,6 +21,8 @@
 
 #include "utils.c"
 
+const char *program_name = PACKAGE;
+
 int
 main (int argc, char *argv[])
 {
