@@ -46,15 +46,14 @@ _gss_dummy_display_status (OM_uint32 * minor_status,
   return GSS_S_COMPLETE;
 }
 
-_gss_mech_api_desc _gss_mech_apis[] = {
+static _gss_mech_api_desc _gss_mech_apis[] = {
 #ifdef USE_KERBEROS5
   {
    &GSS_KRB5_static,
    {&GSS_KRB5_NT_USER_NAME_static,
     &GSS_C_NT_HOSTBASED_SERVICE_static,
     &GSS_KRB5_NT_PRINCIPAL_NAME_static,
-    &GSS_KRB5_NT_STRING_UID_NAME_static}
-   ,
+    &GSS_KRB5_NT_STRING_UID_NAME_static},
    gss_krb5_init_sec_context,
    gss_krb5_canonicalize_name,
    gss_krb5_wrap,
@@ -66,13 +65,11 @@ _gss_mech_api_desc _gss_mech_apis[] = {
    gss_krb5_accept_sec_context,
    gss_krb5_delete_sec_context,
    gss_krb5_context_time,
-   gss_krb5_inquire_cred}
-  ,
+   gss_krb5_inquire_cred},
 #endif
   {
    0,
-   {GSS_C_NO_OID}
-   ,
+   {GSS_C_NO_OID},
    _gss_dummy,
    _gss_dummy,
    _gss_dummy,
