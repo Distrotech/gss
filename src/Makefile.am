@@ -22,7 +22,7 @@ INCLUDES = -I../lib -I../intl @ARGP_CFLAGS@
 
 bin_PROGRAMS = gss
 
-gss_SOURCES = gss.c
+gss_SOURCES = internal.h gss.c
 gss_LDADD = ../lib/libgss.la @ARGP_LIBS@
 
 localedir = $(datadir)/locale
