@@ -52,6 +52,11 @@ typedef struct _gss_krb5_ctx_struct
 #define TOK_MIC    "\x01\x01"
 #define TOK_WRAP   "\x02\x01"
 
+#define C2I(buf) ((buf[0] & 0xFF) |		\
+		  ((buf[1] & 0xFF) << 8) |	\
+		  ((buf[2] & 0xFF) << 16) |	\
+		  ((buf[3] & 0xFF) << 24))
+
 static void
 hexprint (const unsigned char *str, int len)
 {
@@ -590,31 +595,24 @@ gss_krb5_unwrap (OM_uint32 * minor_status,
 
 	/* XXX decrypt data iff confidential option chosen */
 
-	/* XXX here we rely on Shishi to decrypt the data into the
-	   output buffer before verifying it.  The verification will
-	   always fail (RFC 1964 do not use real des-cbc-md5) so we
-	   ignore the return code too.  We check the decrypted data
-	   against the sequence number, so this isn't evil.  Correct
-	   solution: add a GSS-DES cipher suite to Shishi.  Or use
-	   libgcrypt here in GSS, there really isn't anything Kerberos
-	   5 related about the encryption operation used by RFC 1964
-	   so it doesn't fit into Shishi. */
 	rc = shishi_decrypt_iv_etype (k5->sh,
 				      k5->key,
-				      0, SHISHI_DES_CBC_MD5,
+				      0, SHISHI_DES_CBC_NONE,
 				      cksum, 8,
 				      encseqno, 8,
 				      &tmp, &i);
-	memcpy(seqno, tmp, 8);
-	free (tmp);
+	if (rc != SHISHI_OK)
+	  return GSS_S_FAILURE;
 	if (i != 8)
 	  return GSS_S_BAD_MIC;
+	memcpy(seqno, tmp, 8);
+	free (tmp);
 
 	if (memcmp(seqno + 4, k5->acceptor ? "\x00\x00\x00\x00" :
 		   "\xFF\xFF\xFF\xFF", 4) != 0)
 	  return GSS_S_BAD_MIC;
 
-	seqnr = (seqno[0]|(seqno[1] << 8)|(seqno[2] << 16)|(seqno[3] << 24));
+	seqnr = C2I(seqno);
 	if (seqnr != k5->acceptseqnr)
 	  return GSS_S_BAD_MIC;
 
@@ -686,7 +684,7 @@ gss_krb5_unwrap (OM_uint32 * minor_status,
 	if (memcmp(p + 4, k5->acceptor ? "\x00\x00\x00\x00" :
 		   "\xFF\xFF\xFF\xFF", 4) != 0)
 	  return GSS_S_BAD_MIC;
-	if ((p[0]|(p[1] << 8)|(p[2] << 16)|(p[3] << 24)) != k5->acceptseqnr)
+	if (C2I(p) != k5->acceptseqnr)
 	  return GSS_S_BAD_MIC;
 
 	k5->acceptseqnr++;
