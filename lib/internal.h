@@ -157,8 +157,16 @@ typedef struct _gss_mech_api_struct
      const gss_cred_id_t cred_handle,
      gss_name_t * name, OM_uint32 * lifetime,
      gss_cred_usage_t * cred_usage, gss_OID_set * mechanisms);
+  OM_uint32 (*inquire_cred_by_mech)
+    (OM_uint32 * minor_status,
+     const gss_cred_id_t cred_handle,
+     const gss_OID mech_type,
+     gss_name_t * name,
+     OM_uint32 * initiator_lifetime,
+     OM_uint32 * acceptor_lifetime,
+     gss_cred_usage_t * cred_usage);
 } _gss_mech_api_desc, *_gss_mech_api_t;
 
-_gss_mech_api_t _gss_find_mech (gss_OID oid);
+_gss_mech_api_t _gss_find_mech (const gss_OID oid);
 
 #endif /* _INTERNAL_H */
