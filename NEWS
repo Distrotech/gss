@@ -8,7 +8,7 @@ See the end for copying conditions.
 
 ** Kerberos 5 gss_inquire_cred support default credentials.
 
-** Kerberos 5 gss_canonicalize_name support GSS_KRB5_NT_PRINCIPAL_NAME.
+** Kerberos 5 gss_canonicalize_name now support all mandatory name types.
 
 ** API documentation in HTML format from GTK-DOC included in doc/reference/.
 

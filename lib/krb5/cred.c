@@ -100,16 +100,13 @@ gss_krb5_acquire_cred (OM_uint32 * minor_status,
   OM_uint32 maj_stat;
   gss_cred_id_t p = *output_cred_handle;
 
-  if (minor_status)
-    *minor_status = 0;
-
   if (actual_mechs)
     {
       maj_stat = gss_create_empty_oid_set (minor_status, actual_mechs);
       if (GSS_ERROR (maj_stat))
 	return maj_stat;
-      maj_stat =
-	gss_add_oid_set_member (minor_status, GSS_KRB5, actual_mechs);
+      maj_stat = gss_add_oid_set_member (minor_status, GSS_KRB5,
+					 actual_mechs);
       if (GSS_ERROR (maj_stat))
 	return maj_stat;
     }
@@ -121,15 +118,15 @@ gss_krb5_acquire_cred (OM_uint32 * minor_status,
 				     &p, actual_mechs, time_rec);
   if (GSS_ERROR (maj_stat))
     {
-      OM_uint32 junk;
-
-      gss_release_oid_set (&junk, actual_mechs);
-
+      if (actual_mechs)
+	gss_release_oid_set (NULL, actual_mechs);
       free (p->krb5);
 
       return maj_stat;
     }
 
+  if (minor_status)
+    *minor_status = 0;
   return GSS_S_COMPLETE;
 }
 
