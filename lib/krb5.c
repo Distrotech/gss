@@ -22,6 +22,7 @@
 #include "internal.h"
 #include "krb5.h"
 
+#include "xgethostname.h"
 #include <shishi.h>
 
 typedef struct _gss_krb5_cred_struct
@@ -261,36 +262,6 @@ gss_krb5_init_sec_context (OM_uint32 * minor_status,
     }
 
   return GSS_S_FAILURE;
-}
-
-/* A gethostname() replacement that always return a zero terminated string. */
-static char *
-xgethostname (void)
-{
-  char *hostname;
-  size_t size;
-
-  size = 42;
-  /* Use size + 1 here rather than size to work around the bug
-     in SunOS5.5's gethostname whereby it NUL-terminates HOSTNAME
-     even when the name is longer than the supplied buffer.  */
-  hostname = xmalloc (size + 1);
-  while (size < 1000)
-    {
-      int k = size - 1;
-      int err;
-
-      hostname[k] = '\0';
-      err = gethostname (hostname, size);
-      if (err >= 0 && hostname[k] == '\0')
-	return hostname;
-      size *= 2;
-      hostname = xrealloc (hostname, size + 1);
-    }
-
-  strcat(hostname, "localhost");
-
-  return hostname;
 }
 
 OM_uint32

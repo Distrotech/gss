@@ -46,11 +46,6 @@ AC_PROG_LIBTOOL
 AC_HEADER_STDC
 
 # For gnulib stuff in gl/.
-gl_ERROR
-jm_FUNC_MALLOC
-jm_FUNC_REALLOC
-jm_FUNC_GLIBC_UNLOCKED_IO
-gl_XALLOC
 gl_FUNC_GETHOSTNAME
 
 # Test for Shishi.

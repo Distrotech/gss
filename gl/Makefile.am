@@ -1,24 +1,26 @@
 ## Process this file with automake to produce Makefile.in.
+# Copyright (C) 2003 Simon Josefsson.
+#
+# This file is part of the Generic Security Service (GSS).
+#
+# GSS is free software; you can redistribute it and/or modify it under
+# the terms of the GNU General Public License as published by the Free
+# Software Foundation; either version 2, or (at your option) any later
+# version.
+#
+# GSS is distributed in the hope that it will be useful, but WITHOUT
+# ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+# or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public
+# License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with GSS; see the file COPYING.  If not, write to the Free
+# Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
+# 02111-1307, USA.
 
-AUTOMAKE_OPTIONS = 1.5 gnits no-dependencies
+noinst_LTLIBRARIES = libgl.la
 
-noinst_LTLIBRARIES = libfoo.la
-
-libfoo_la_SOURCES =
-#libfoo_a_LIBADD = @LIBOBJS@
-libfoo_la_LIBADD = @LTLIBOBJS@
-EXTRA_DIST =
-BUILT_SOURCES =
-SUFFIXES =
-MOSTLYCLEANFILES =
-CLEANFILES =
-DISTCLEANFILES =
-MAINTAINERCLEANFILES =
-
-libfoo_la_SOURCES += gettext.h
-
-
-
-libfoo_la_SOURCES += unlocked-io.h
-
-libfoo_la_SOURCES += xalloc.h xmalloc.c xstrdup.c
+libgl_la_SOURCES = xalloc.h xmalloc.c \
+	xstrdup.h xstrdup.c \
+	xgethostname.h xgethostname.c
+libgl_la_LIBADD = @LTLIBOBJS@

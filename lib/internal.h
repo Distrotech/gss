@@ -1,4 +1,4 @@
-/* internal.h	Internal header file for GSS.
+/* internal.h --- Internal header file for GSS.
  * Copyright (C) 2003  Simon Josefsson
  *
  * This file is part of the Generic Security Service (GSS).
@@ -41,6 +41,7 @@
 #include "ext.h"
 
 #include "xalloc.h"
+#include "xstrdup.h"
 
 typedef struct gss_name_struct
 {
