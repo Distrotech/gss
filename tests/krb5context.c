@@ -267,13 +267,38 @@ main (int argc, char *argv[])
 				     NULL,
 				     NULL,
 				     NULL);
-  if (maj_stat != GSS_S_CONTINUE_NEEDED)
+  if (GSS_ERROR (maj_stat))
     {
       fail ("gss_accept_sec_context failure\n");
       display_status ("accept_sec_context", maj_stat, min_stat);
     }
 
+  maj_stat = gss_init_sec_context (&min_stat,
+				   GSS_C_NO_CREDENTIAL,
+				   &cctx,
+				   servername,
+				   GSS_KRB5,
+				   GSS_C_MUTUAL_FLAG |
+				   GSS_C_REPLAY_FLAG |
+				   GSS_C_SEQUENCE_FLAG,
+				   0,
+				   GSS_C_NO_CHANNEL_BINDINGS,
+				   &bufdesc, NULL,
+				   &bufdesc2, NULL, NULL);
+  if (GSS_ERROR (maj_stat))
+    {
+      fail ("gss_init_sec_context failure (2)\n");
+      display_status ("init_sec_context", maj_stat, min_stat);
+    }
+
   /* Clean up. */
+
+  maj_stat = gss_release_name (&min_stat, &servername);
+  if (GSS_ERROR(maj_stat))
+    {
+      fail ("gss_release_name failure\n");
+      display_status ("gss_release_name", maj_stat, min_stat);
+    }
 
   maj_stat = gss_delete_sec_context (&min_stat, &cctx, GSS_C_NO_BUFFER);
   if (GSS_ERROR(maj_stat))
