@@ -1,30 +1,28 @@
 /* gssapi.h	Header file for GSS-API.
  * Copyright (C) 2003  Simon Josefsson
  *
- * This file is part of GPL GSS-API.
+ * This file is part of the Generic Security Service (GSS).
  *
- * GPL GSS-API is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
+ * GSS is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * GPL GSS-API is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ * GSS is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public
+ * License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with GPL GSS-API; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * along with GSS; if not, write to the Free Software Foundation,
+ * Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  *
  */
 
 /*
- * This file was extracted by Simon Josefsson, for the GPL GSS-API
- * project, from RFC 2744, written by John Wray.  RFC 2744 contain the
- * copyright statement below.  A description of all modifications,
- * compared to RFC 2744, made to this file can be found in the file
- * ChangeLog, which is part of GPL GSS-API.
+ * This file was extracted by Simon Josefsson, for the GSS project,
+ * from RFC 2744, written by John Wray.  RFC 2744 contain the
+ * copyright statement below.
  *
  *   Copyright (C) The Internet Society (2000).  All Rights Reserved.
  *
@@ -68,9 +66,9 @@
 /*
  * Now define the three implementation-dependent types.
  */
-typedef struct gss_ctx_id_t *gss_ctx_id_t;
-typedef struct gss_cred_id_t *gss_cred_id_t;
-typedef struct gss_name_t *gss_name_t;
+typedef struct gss_ctx_id_struct *gss_ctx_id_t;
+typedef struct gss_cred_id_struct *gss_cred_id_t;
+typedef struct gss_name_struct *gss_name_t;
 
 /*
  * The following type must be defined as the smallest natural
