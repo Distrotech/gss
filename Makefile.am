@@ -29,6 +29,7 @@ ACLOCAL_AMFLAGS = -I m4 -I gl/m4
 
 indent:
 	(cd lib && make indent)
+	(cd src && make indent)
 	(cd tests && make indent)
 
 ChangeLog:
