@@ -78,12 +78,35 @@ gss_krb5_canonicalize_name (OM_uint32 * minor_status,
   return GSS_S_COMPLETE;
 }
 
+#define TOK_LEN 2
+#define MECH_OID_LEN_LEN 2
+#define MECH_OID_ASN1_LEN_LEN 2
+#define NAME_LEN_LEN 4
+
+#define C2I(buf) ((buf[0] & 0xFF) | ((buf[1] & 0xFF) << 8))
+
 OM_uint32
 gss_krb5_export_name (OM_uint32 * minor_status,
 		      const gss_name_t input_name, gss_buffer_t exported_name)
 {
-  exported_name->length = input_name->length;
-  exported_name->value = xclone (input_name->value, input_name->length);
+  size_t msglen = input_name->length & 0xFFFFFFFF;
+  size_t len = TOK_LEN +
+    MECH_OID_LEN_LEN + MECH_OID_ASN1_LEN_LEN + GSS_KRB5->length +
+    NAME_LEN_LEN + msglen;
+  char *p;
+
+  exported_name->length = len;
+  p = exported_name->value = xmalloc (len);
+
+  sprintf (p, "\x04\x01\x01\x0B\x06\x09%s", GSS_KRB5->elements);
+  p[2] = '\0';
+  p += 15;
+  *p++ = (msglen >> 24) & 0xFF;
+  *p++ = (msglen >> 16) & 0xFF;
+  *p++ = (msglen >> 8) & 0xFF;
+  *p++ = msglen & 0xFF;
+  memcpy (p, input_name->value, msglen);
+
   if (minor_status)
     *minor_status = 0;
   return GSS_S_COMPLETE;
