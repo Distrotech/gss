@@ -39,6 +39,7 @@ typedef struct _gss_krb5_ctx_struct
   Shishi_ap *ap;
   Shishi_tkt *tkt;
   Shishi_key *key;
+  gss_name_t peerptr;
   int acceptor;
   int acceptseqnr;
   int initseqnr;
