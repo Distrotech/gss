@@ -52,7 +52,7 @@
 #endif
 
 #include "gettext.h"
-#include "ggssapi.h"
+#include "gss.h"
 #include "gssapi.h"
 
 #define _(String) dgettext (PACKAGE, String)

@@ -25,7 +25,7 @@
 #include "internal.h"
 
 static const char *
-_ggssapi_parse_version_number (const char *s, int *number)
+_gss_parse_version_number (const char *s, int *number)
 {
   int val = 0;
 
@@ -42,25 +42,25 @@ _ggssapi_parse_version_number (const char *s, int *number)
 
 
 static const char *
-_ggssapi_parse_version_string (const char *s, int *major, int *minor,
+_gss_parse_version_string (const char *s, int *major, int *minor,
 			     int *micro)
 {
-  s = _ggssapi_parse_version_number (s, major);
+  s = _gss_parse_version_number (s, major);
   if (!s || *s != '.')
     return NULL;
   s++;
-  s = _ggssapi_parse_version_number (s, minor);
+  s = _gss_parse_version_number (s, minor);
   if (!s || *s != '.')
     return NULL;
   s++;
-  s = _ggssapi_parse_version_number (s, micro);
+  s = _gss_parse_version_number (s, micro);
   if (!s)
     return NULL;
   return s;			/* patchlevel */
 }
 
 /**
- * ggssapi_check_version:
+ * gss_check_version:
  * @req_version: version string to compare with, or NULL
  *
  * Check library version.
@@ -75,7 +75,7 @@ _ggssapi_parse_version_string (const char *s, int *major, int *minor,
  * should be called before any more threads are created.
  **/
 const char *
-ggssapi_check_version (const char *req_version)
+gss_check_version (const char *req_version)
 {
   const char *ver = VERSION;
   int my_major, my_minor, my_micro;
@@ -85,11 +85,11 @@ ggssapi_check_version (const char *req_version)
   if (!req_version)
     return ver;
 
-  my_plvl = _ggssapi_parse_version_string (ver,
+  my_plvl = _gss_parse_version_string (ver,
 					 &my_major, &my_minor, &my_micro);
   if (!my_plvl)
     return NULL;		/* very strange our own version is bogus */
-  rq_plvl = _ggssapi_parse_version_string (req_version, &rq_major, &rq_minor,
+  rq_plvl = _gss_parse_version_string (req_version, &rq_major, &rq_minor,
 					 &rq_micro);
   if (!rq_plvl)
     return NULL;		/* req version string is invalid */
