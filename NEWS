@@ -2,6 +2,13 @@ GSS NEWS -- History of user-visible changes.                    -*- outline -*-
 Copyright (C) 2003 Simon Josefsson
 See the end for copying conditions.
 
+* Changes in 0.0.2 (unreleased)
+
+** Limited server mode works.
+
+GNU MailUtils can use GSS for its native GSSAPI authentication, and it
+interoperates with the GSASL command line client using GSS.
+
 * Changes in 0.0.1 (released 2003-06-12)
 
 ** Error handling.
