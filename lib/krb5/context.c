@@ -84,10 +84,9 @@ init_request (OM_uint32 * minor_status,
   rc = shishi_ap_tktoptionsraw (k5->sh, &k5->ap, k5->tkt,
 				SHISHI_APOPTIONS_MUTUAL_REQUIRED,
 				0x8003, cksum, cksumlen);
+  free (cksum);
   if (rc != SHISHI_OK)
     return GSS_S_FAILURE;
-
-  free (cksum);
 
   rc = shishi_authenticator_seqnumber_get (k5->sh,
 					   shishi_ap_authenticator (k5->ap),
@@ -103,10 +102,9 @@ init_request (OM_uint32 * minor_status,
 
   rc = gss_encapsulate_token_prefix (&tmp, TOK_AP_REQ, TOK_LEN,
 				     GSS_KRB5, output_token);
+  free (der);
   if (!rc)
     return GSS_S_FAILURE;
-
-  free (der);
 
   if (req_flags & GSS_C_MUTUAL_FLAG)
     return GSS_S_CONTINUE_NEEDED;
