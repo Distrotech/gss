@@ -50,12 +50,8 @@ gss_encapsulate_token_prefix (const gss_buffer_t input_message,
 			      gss_OID token_oid, gss_buffer_t output_message);
 extern int
 gss_decapsulate_token (const gss_buffer_t input_message,
-		       gss_OID token_oid, gss_buffer_t output_message);
-extern int
-gss_decapsulate_token_check (const gss_buffer_t input_message,
-			     const char *prefix, size_t prefixlen,
-			     gss_OID token_oid,
-			     gss_buffer_t output_message);
+		       const gss_OID token_oid,
+		       gss_buffer_t output_message);
 
 /* Static versions of the public OIDs for use, e.g., in static
    variable initalization.  See oid.c. */

@@ -208,7 +208,8 @@ _gss_decapsulate_token (const char *in, size_t inlen,
 
 int
 gss_decapsulate_token (const gss_buffer_t input_message,
-		       gss_OID token_oid, gss_buffer_t output_message)
+		       const gss_OID token_oid,
+		       gss_buffer_t output_message)
 {
   char *oid, *out;
   size_t oidlen, outlen;
@@ -220,41 +221,12 @@ gss_decapsulate_token (const gss_buffer_t input_message,
   if (!rc)
     return 0;
 
-  token_oid->length = oidlen;
-  token_oid->elements = (void *) oid;
+  if (oidlen != token_oid->length ||
+      memcmp (oid, token_oid->elements, oidlen) != 0)
+    return 0;
 
   output_message->length = outlen;
   output_message->value = (void *) out;
-
-  return 1;
-}
-
-int
-gss_decapsulate_token_check (const gss_buffer_t input_message,
-			     const char *prefix, size_t prefixlen,
-			     gss_OID token_oid, gss_buffer_t output_message)
-{
-  gss_OID_desc tmp;
-  gss_buffer_desc data;
-  int rc;
-
-  rc = gss_decapsulate_token (input_message, &tmp, &data);
-  if (!rc)
-    return 0;
-
-  if (!gss_oid_equal (&tmp, token_oid) ||
-      data.length < prefixlen || memcmp (data.value, prefix, prefixlen) != 0)
-    {
-      free (tmp.elements);
-      gss_release_buffer (NULL, &data);
-      return 0;
-    }
-
-  memmove (data.value, (char *) data.value + prefixlen,
-	   data.length - prefixlen);
-
-  output_message->length = data.length - prefixlen;
-  output_message->value = data.value;
 
   return 1;
 }

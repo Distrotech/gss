@@ -254,17 +254,13 @@ gss_krb5_unwrap (OM_uint32 * minor_status,
 		 int *conf_state, gss_qop_t * qop_state)
 {
   _gss_krb5_ctx_t k5 = context_handle->krb5;
-  gss_OID_desc tokenoid;
   gss_buffer_desc data;
   OM_uint32 sgn_alg, seal_alg;
   size_t tmplen;
   int rc;
 
-  rc = gss_decapsulate_token (input_message_buffer, &tokenoid, &data);
+  rc = gss_decapsulate_token (input_message_buffer, GSS_KRB5, &data);
   if (!rc)
-    return GSS_S_BAD_MIC;
-
-  if (!gss_oid_equal (&tokenoid, GSS_KRB5))
     return GSS_S_BAD_MIC;
 
   if (data.length < 8)

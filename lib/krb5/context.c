@@ -117,33 +117,35 @@ init_request (OM_uint32 * minor_status,
 
 /* Reply part of gss_krb5_init_sec_context.  Assumes that
    context_handle is valid, and has krb5 specific structure, and that
-   output_token is valid and cleared. */
+   output_token is valid and cleared, and that input_token has been
+   decapsulated. */
 static OM_uint32
-init_reply (OM_uint32 * minor_status,
-	    const gss_cred_id_t initiator_cred_handle,
-	    gss_ctx_id_t * context_handle,
-	    const gss_name_t target_name,
-	    const gss_OID mech_type,
-	    OM_uint32 req_flags,
-	    OM_uint32 time_req,
-	    const gss_channel_bindings_t input_chan_bindings,
-	    const gss_buffer_t input_token,
-	    gss_OID * actual_mech_type,
-	    gss_buffer_t output_token,
-	    OM_uint32 * ret_flags, OM_uint32 * time_rec)
+init_reply1 (OM_uint32 * minor_status,
+	     const gss_cred_id_t initiator_cred_handle,
+	     gss_ctx_id_t * context_handle,
+	     const gss_name_t target_name,
+	     const gss_OID mech_type,
+	     OM_uint32 req_flags,
+	     OM_uint32 time_req,
+	     const gss_channel_bindings_t input_chan_bindings,
+	     const gss_buffer_t input_token,
+	     gss_OID * actual_mech_type,
+	     gss_buffer_t output_token,
+	     OM_uint32 * ret_flags,
+	     OM_uint32 * time_rec)
 {
   gss_ctx_id_t ctx = *context_handle;
   _gss_krb5_ctx_t k5 = ctx->krb5;
-  gss_buffer_desc data;
   int rc;
 
-  rc = gss_decapsulate_token_check (input_token, TOK_AP_REP, TOK_LEN,
-				    GSS_KRB5, &data);
-  if (!rc)
+  if (input_token->length < TOK_LEN)
     return GSS_S_DEFECTIVE_TOKEN;
 
-  rc = shishi_ap_rep_der_set (k5->ap, data.value, data.length);
-  gss_release_buffer (NULL, &data);
+  if (memcmp (input_token->value, TOK_AP_REP, TOK_LEN) != 0)
+    return GSS_S_DEFECTIVE_TOKEN;
+
+  rc = shishi_ap_rep_der_set (k5->ap, (char*)input_token->value + TOK_LEN,
+			      input_token->length - TOK_LEN);
   if (rc != SHISHI_OK)
     return GSS_S_DEFECTIVE_TOKEN;
 
@@ -158,6 +160,49 @@ init_reply (OM_uint32 * minor_status,
     return GSS_S_DEFECTIVE_TOKEN;
 
   return GSS_S_COMPLETE;
+}
+
+/* Reply part of gss_krb5_init_sec_context.  Assumes that
+   context_handle is valid, and has krb5 specific structure, and that
+   output_token is valid and cleared. */
+static OM_uint32
+init_reply (OM_uint32 * minor_status,
+	    const gss_cred_id_t initiator_cred_handle,
+	    gss_ctx_id_t * context_handle,
+	    const gss_name_t target_name,
+	    const gss_OID mech_type,
+	    OM_uint32 req_flags,
+	    OM_uint32 time_req,
+	    const gss_channel_bindings_t input_chan_bindings,
+	    const gss_buffer_t input_token,
+	    gss_OID * actual_mech_type,
+	    gss_buffer_t output_token,
+	    OM_uint32 * ret_flags,
+	    OM_uint32 * time_rec)
+{
+  gss_buffer_desc data;
+  OM_uint32 maj_stat;
+
+  if (!gss_decapsulate_token (input_token, GSS_KRB5, &data))
+    return GSS_S_DEFECTIVE_TOKEN;
+
+  maj_stat = init_reply1 (minor_status,
+			  initiator_cred_handle,
+			  context_handle,
+			  target_name,
+			  mech_type,
+			  req_flags,
+			  time_req,
+			  input_chan_bindings,
+			  &data,
+			  actual_mech_type,
+			  output_token,
+			  ret_flags,
+			  time_rec);
+
+  gss_release_buffer (NULL, &data);
+
+  return maj_stat;
 }
 
 /* Initiates the establishment of a krb5 security context between the
@@ -324,12 +369,18 @@ gss_krb5_accept_sec_context (OM_uint32 * minor_status,
   if (rc != SHISHI_OK)
     return GSS_S_FAILURE;
 
-  rc = gss_decapsulate_token_check (input_token_buffer, TOK_AP_REQ, TOK_LEN,
-				    GSS_KRB5, &data);
+  rc = gss_decapsulate_token (input_token_buffer, GSS_KRB5, &data);
   if (!rc)
     return GSS_S_BAD_MIC;
 
-  rc = shishi_ap_req_der_set (cxk5->ap, data.value, data.length);
+  if (data.length < TOK_LEN)
+    return GSS_S_BAD_MIC;
+
+  if (memcmp (data.value, TOK_AP_REQ, TOK_LEN) != 0)
+    return GSS_S_BAD_MIC;
+
+  rc = shishi_ap_req_der_set (cxk5->ap, (char*) data.value + TOK_LEN,
+			      data.length - TOK_LEN);
   if (rc != SHISHI_OK)
     return GSS_S_FAILURE;
 
