@@ -25,29 +25,15 @@
 #include <stdio.h>  /* FILE */
 #include <stddef.h> /* size_t */
 
-#include "gssapi.h"
-
 #ifdef __cplusplus
 extern "C" {
-#if 0 /* keep Emacsens's auto-indent happy */
-}
-#endif
 #endif
 
 #define GSS_VERSION "@PACKAGE_VERSION@"
 
-extern const char *
-gss_check_version (const char *req_version);
-
-extern int
-gss_encapsulate_token (gss_buffer_t input_message,
-		       gss_OID token_oid,
-		       gss_buffer_t output_message);
-
-extern int
-gss_decapsulate_token (gss_buffer_t input_message,
-		       gss_OID token_oid,
-		       gss_buffer_t output_message);
+#include <gss/api.h>
+#include <gss/ext.h>
+#include <gss/krb5.h>
 
 #ifdef __cplusplus
 }
