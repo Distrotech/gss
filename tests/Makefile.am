@@ -24,7 +24,9 @@ AM_CPPFLAGS += -I$(top_srcdir)/lib/krb5
 endif
 LDADD = ../lib/libgss.la
 
-TESTS = basic
+TESTS_ENVIRONMENT = SHISHI_TICKETS=krb5context.tkt
+
+TESTS = basic krb5context
 check_PROGRAMS = $(TESTS)
 
 localedir = $(datadir)/locale
