@@ -92,13 +92,6 @@ _gss_decapsulate_token (char *in, size_t inlen,
 			char **oid, size_t *oidlen,
 			char **out, size_t *outlen);
 
-int
-_gss_oid_equal (gss_OID first_oid, gss_OID second_oid);
-
-OM_uint32
-_gss_duplicate_oid (OM_uint32 * minor_status,
-		    const gss_OID src_oid, gss_OID * dest_oid);
-
 OM_uint32
 krb5_gss_init_sec_context (OM_uint32 * minor_status,
 			   const gss_cred_id_t initiator_cred_handle,
