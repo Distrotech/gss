@@ -354,6 +354,12 @@ gss_init_sec_context (OM_uint32 * minor_status,
   _gss_mech_api_t mech;
   int freecontext = 0;
 
+  if (output_token)
+    {
+      output_token->length = 0;
+      output_token->value = NULL;
+    }
+
   if (!context_handle)
     {
       if (minor_status)
