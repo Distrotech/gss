@@ -18,8 +18,6 @@
 # Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 # 02111-1307, USA.
 
-EXTRA_DIST = utils.c
-
 AM_CPPFLAGS = -I$(top_srcdir)/lib
 if KRB5
 AM_CPPFLAGS += -I$(top_srcdir)/lib/krb5
