@@ -10,6 +10,8 @@ in lib/krb5/.  The backend is built into its own library
 (libgss-shishi.so), to facilitate future possible use of dlopen to
 dynamically load backends.
 
+** The gss_duplicate_name function now allocate the output result properly.
+
 ** Documentation fixes.  For example, man pages for the API is included.
 
 * Changes in 0.0.7 (released 2003-11-26)
