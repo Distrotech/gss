@@ -1,5 +1,5 @@
 /* name.c	Implementation of GSS-API Name Manipulation functions.
- * Copyright (C) 2003  Simon Josefsson
+ * Copyright (C) 2003, 2004  Simon Josefsson
  *
  * This file is part of the Generic Security Service (GSS).
  *
@@ -55,6 +55,51 @@ gss_verify_mic (OM_uint32 * minor_status,
 			   message_buffer, token_buffer, qop_state);
 }
 
+/**
+ * gss_wrap:
+ * @minor_status: (Integer, modify) Mechanism specific status code.
+ * @context_handle: (gss_ctx_id_t, read) Identifies the context on
+ *   which the message will be sent.
+ * @conf_req_flag: (boolean, read) Non-zero - Both confidentiality and
+ *   integrity services are requested. Zero - Only integrity service is
+ *   requested.
+ * @qop_req: (gss_qop_t, read, optional) Specifies required quality of
+ *   protection.  A mechanism-specific default may be requested by
+ *   setting qop_req to GSS_C_QOP_DEFAULT.  If an unsupported
+ *   protection strength is requested, gss_wrap will return a
+ *   major_status of GSS_S_BAD_QOP.
+ * @input_message_buffer: (buffer, opaque, read) Message to be
+ *   protected.
+ * @conf_state: (boolean, modify, optional) Non-zero -
+ *   Confidentiality, data origin authentication and integrity
+ *   services have been applied. Zero - Integrity and data origin
+ *   services only has been applied.  Specify NULL if not required.
+ * @output_message_buffer: (buffer, opaque, modify) Buffer to receive
+ *   protected message.  Storage associated with this message must be
+ *   freed by the application after use with a call to
+ *   gss_release_buffer().
+ *
+ * Attaches a cryptographic MIC and optionally encrypts the specified
+ * input_message.  The output_message contains both the MIC and the
+ * message.  The qop_req parameter allows a choice between several
+ * cryptographic algorithms, if supported by the chosen mechanism.
+ *
+ * Since some application-level protocols may wish to use tokens
+ * emitted by gss_wrap() to provide "secure framing", implementations
+ * must support the wrapping of zero-length messages.
+ *
+ * Valid return values and their meaning:
+ *
+ * `GSS_S_COMPLETE`: Successful completion.
+ *
+ * `GSS_S_CONTEXT_EXPIRED`: The context has already expired.
+ *
+ * `GSS_S_NO_CONTEXT`: The context_handle parameter did not identify a
+ *  valid context.
+ *
+ * `GSS_S_BAD_QOP`: The specified QOP is not supported by the
+ * mechanism.
+ **/
 OM_uint32
 gss_wrap (OM_uint32 * minor_status,
 	  const gss_ctx_id_t context_handle,
@@ -66,7 +111,11 @@ gss_wrap (OM_uint32 * minor_status,
   _gss_mech_api_t mech;
 
   if (!context_handle)
-    return GSS_S_NO_CONTEXT;
+    {
+      if (minor_status)
+	*minor_status = 0;
+      return GSS_S_NO_CONTEXT;
+    }
 
   mech = _gss_find_mech (context_handle->mech);
 
@@ -75,6 +124,59 @@ gss_wrap (OM_uint32 * minor_status,
 		     output_message_buffer);
 }
 
+/**
+ * gss_unwrap:
+ * @minor_status: (Integer, modify) Mechanism specific status code.
+ * @context_handle: (gss_ctx_id_t, read) Identifies the context on
+ *   which the message arrived.
+ * @input_message_buffer: (buffer, opaque, read) Protected message.
+ * @output_message_buffer: (buffer, opaque, modify) Buffer to receive
+ *   unwrapped message.  Storage associated with this buffer must be
+ *   freed by the application after use use with a call to
+ *   gss_release_buffer().
+ * @conf_state: (boolean, modify, optional) Non-zero - Confidentiality
+ *   and integrity protection were used. Zero - Integrity service only
+ *   was used.  Specify NULL if not required.
+ * @qop_state: (gss_qop_t, modify, optional) Quality of protection
+ *   provided.  Specify NULL if not required.
+ *
+ * Converts a message previously protected by gss_wrap back to a
+ * usable form, verifying the embedded MIC.  The conf_state parameter
+ * indicates whether the message was encrypted; the qop_state
+ * parameter indicates the strength of protection that was used to
+ * provide the confidentiality and integrity services.
+ *
+ * Since some application-level protocols may wish to use tokens
+ * emitted by gss_wrap() to provide "secure framing", implementations
+ * must support the wrapping and unwrapping of zero-length messages.
+ *
+ * Valid return values and their meaning:
+ *
+ * `GSS_S_COMPLETE`: Successful completion.
+ *
+ * `GSS_S_DEFECTIVE_TOKEN`: The token failed consistency checks.
+ *
+ * `GSS_S_BAD_SIG`: The MIC was incorrect.
+ *
+ * `GSS_S_DUPLICATE_TOKEN`: The token was valid, and contained a
+ *  correct MIC for the message, but it had already been processed.
+ *
+ * `GSS_S_OLD_TOKEN`: The token was valid, and contained a correct MIC
+ * for the message, but it is too old to check for duplication.
+ *
+ * `GSS_S_UNSEQ_TOKEN`: The token was valid, and contained a correct
+ * MIC for the message, but has been verified out of sequence; a later
+ * token has already been received.
+ *
+ * `GSS_S_GAP_TOKEN`: The token was valid, and contained a correct MIC
+ * for the message, but has been verified out of sequence; an earlier
+ * expected token has not yet been received.
+ *
+ * `GSS_S_CONTEXT_EXPIRED`: The context has already expired.
+ *
+ * `GSS_S_NO_CONTEXT`: The context_handle parameter did not identify a
+ * valid context.
+ **/
 OM_uint32
 gss_unwrap (OM_uint32 * minor_status,
 	    const gss_ctx_id_t context_handle,
@@ -85,7 +187,11 @@ gss_unwrap (OM_uint32 * minor_status,
   _gss_mech_api_t mech;
 
   if (!context_handle)
-    return GSS_S_NO_CONTEXT;
+    {
+      if (minor_status)
+	*minor_status = 0;
+      return GSS_S_NO_CONTEXT;
+    }
 
   mech = _gss_find_mech (context_handle->mech);
 
