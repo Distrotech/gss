@@ -31,14 +31,6 @@ gss_acquire_cred (OM_uint32 * minor_status,
 		  gss_OID_set * actual_mechs,
 		  OM_uint32 * time_rec)
 {
-  *output_cred_handle = xcalloc(sizeof(**output_cred_handle), 1);
-
-  /* XXX */
-  if (actual_mechs)
-    *actual_mechs = GSS_C_NO_OID_SET;
-  if (time_rec)
-    *time_rec = GSS_C_INDEFINITE;
-
   if (desired_mechs == GSS_C_NO_OID_SET)
     {
       _gss_mech_api_t mech;

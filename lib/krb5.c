@@ -246,6 +246,36 @@ gss_krb5_init_sec_context (OM_uint32 * minor_status,
   return GSS_S_FAILURE;
 }
 
+/* A gethostname() replacement that always return a zero terminated string. */
+static char *
+xgethostname (void)
+{
+  char *hostname;
+  size_t size;
+
+  size = 42;
+  /* Use size + 1 here rather than size to work around the bug
+     in SunOS5.5's gethostname whereby it NUL-terminates HOSTNAME
+     even when the name is longer than the supplied buffer.  */
+  hostname = xmalloc (size + 1);
+  while (size < 1000)
+    {
+      int k = size - 1;
+      int err;
+
+      hostname[k] = '\0';
+      err = gethostname (hostname, size);
+      if (err >= 0 && hostname[k] == '\0')
+	return hostname;
+      size *= 2;
+      hostname = xrealloc (hostname, size + 1);
+    }
+
+  strcat(hostname, "localhost");
+
+  return hostname;
+}
+
 OM_uint32
 gss_krb5_canonicalize_name (OM_uint32 * minor_status,
 			    const gss_name_t input_name,
@@ -274,12 +304,18 @@ gss_krb5_canonicalize_name (OM_uint32 * minor_status,
 	}
       else
 	{
-	  /* XXX add "/gethostname()" to outputname->value. good idea? */
+	  char *hostname = xgethostname();
+	  size_t hostlen = strlen(hostname);
+	  size_t oldlen = (*output_name)->length;
+	  size_t newlen = oldlen + 1 + hostlen;
+	  (*output_name)->value = xrealloc((*output_name)->value, newlen);
+	  (*output_name)->value[oldlen] = '/';
+	  memcpy((*output_name)->value + 1 + oldlen, hostname, hostlen);
+	  (*output_name)->length = newlen;
 	}
     }
   else
     {
-      printf("x");
       *output_name = GSS_C_NO_NAME;
       return GSS_S_BAD_NAMETYPE;
     }
@@ -771,6 +807,77 @@ gss_krb5_display_status (OM_uint32 * minor_status,
   return GSS_S_COMPLETE;
 }
 
+OM_uint32
+gss_krb5_acquire_cred1 (OM_uint32 * minor_status,
+			const gss_name_t desired_name,
+			OM_uint32 time_req,
+			const gss_OID_set desired_mechs,
+			gss_cred_usage_t cred_usage,
+			gss_cred_id_t * output_cred_handle,
+			gss_OID_set * actual_mechs,
+			OM_uint32 * time_rec)
+{
+  _gss_krb5_cred_t k5 = (*output_cred_handle)->krb5;
+  OM_uint32 maj_stat;
+  int rc;
+
+  // {int i=0; while(i==0);}
+
+  /* XXX */
+  if (time_rec)
+    *time_rec = GSS_C_INDEFINITE;
+
+  if (desired_name == GSS_C_NO_NAME)
+    {
+      gss_buffer_desc buf;
+
+      buf.value = "host";
+      buf.length = strlen(buf.value);
+      maj_stat = gss_import_name (minor_status, &buf,
+				  GSS_C_NT_HOSTBASED_SERVICE,
+				  &desired_name);
+      if (GSS_ERROR(maj_stat))
+	return maj_stat;
+    }
+
+  if (gss_oid_equal (desired_name->type, GSS_KRB5_NT_PRINCIPAL_NAME))
+    {
+      maj_stat = gss_duplicate_name (minor_status, desired_name,
+				     &k5->peerptr);
+    }
+  else
+    {
+      maj_stat = gss_krb5_canonicalize_name (minor_status, desired_name,
+					     GSS_KRB5, &k5->peerptr);
+    }
+  if (GSS_ERROR(maj_stat))
+    return maj_stat;
+
+  if (shishi_init_server(&k5->sh) != SHISHI_OK)
+    return GSS_S_FAILURE;
+
+  {
+    char *p;
+
+    p = xmalloc(k5->peerptr->length + 1);
+    memcpy(p, k5->peerptr->value, k5->peerptr->length);
+    p[k5->peerptr->length] = 0;
+
+    k5->key = shishi_hostkeys_for_serverrealm (k5->sh, p,
+					       shishi_realm_default(k5->sh));
+    free(p);
+  }
+
+  if (!k5->key)
+    {
+      if (minor_status)
+	*minor_status = GSS_KRB5_S_KG_KEYTAB_NOMATCH;
+      return GSS_S_FAILURE;
+    }
+
+
+  return GSS_S_COMPLETE;
+}
 
 OM_uint32
 gss_krb5_acquire_cred (OM_uint32 * minor_status,
@@ -782,45 +889,45 @@ gss_krb5_acquire_cred (OM_uint32 * minor_status,
 		       gss_OID_set * actual_mechs,
 		       OM_uint32 * time_rec)
 {
-  _gss_krb5_cred_t k5;
   OM_uint32 maj_stat;
-  int rc;
-
-  k5 = xcalloc(sizeof(*k5), 1);
-  (*output_cred_handle)->krb5 = k5;
-
-  if (shishi_init_server(&k5->sh) != SHISHI_OK)
-    {
-      if (minor_status)
-	*minor_status = 0;
-      return GSS_S_FAILURE;
-    }
-
-  k5->peerptr = &k5->peer;
-  if (gss_oid_equal (desired_name->type, GSS_KRB5_NT_PRINCIPAL_NAME))
-    {
-      maj_stat = gss_duplicate_name (minor_status, desired_name,
-				     &k5->peerptr);
-    }
-  else
-    {
-      maj_stat = gss_krb5_canonicalize_name (minor_status, desired_name,
-					     GSS_KRB5, &k5->peerptr);
-    }
-  if (maj_stat != GSS_S_COMPLETE)
-    return maj_stat;
-
-  k5->key = shishi_hostkeys_for_serverrealm (k5->sh, k5->peerptr->value,
-					     shishi_realm_default(k5->sh));
-  if (!k5->key)
-    {
-      if (minor_status)
-	*minor_status = GSS_KRB5_S_KG_KEYTAB_NOMATCH;
-      return GSS_S_FAILURE;
-    }
+  gss_cred_id_t p;
 
   if (minor_status)
     *minor_status = 0;
+
+  if (actual_mechs)
+    {
+      maj_stat = gss_create_empty_oid_set (minor_status, actual_mechs);
+      if (GSS_ERROR(maj_stat))
+	return maj_stat;
+      maj_stat = gss_add_oid_set_member (minor_status, GSS_KRB5, actual_mechs);
+      if (GSS_ERROR(maj_stat))
+	return maj_stat;
+    }
+
+  p = xcalloc(sizeof(*p), 1);
+  p->krb5 = xcalloc(sizeof(*p->krb5), 1);
+  p->krb5->peerptr = &p->krb5->peer;
+
+  maj_stat = gss_krb5_acquire_cred1 (minor_status, desired_name, time_req,
+				     desired_mechs, cred_usage,
+				     &p, actual_mechs,
+				     time_rec);
+  if (GSS_ERROR(maj_stat))
+    {
+      OM_uint32 junk;
+
+      gss_release_oid_set(&junk, actual_mechs);
+
+      free(p->krb5);
+      free(p);
+      *output_cred_handle = NULL;
+
+      return maj_stat;
+    }
+
+  *output_cred_handle = p;
+
   return GSS_S_COMPLETE;
 }
 
