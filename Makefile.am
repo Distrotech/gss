@@ -52,7 +52,7 @@ release:
 	rm -f $(distdir).tar.gz.asc
 	gpg -a --sign --detach $(distdir).tar.gz
 	gpg --verify $(distdir).tar.gz.asc
-	scp $(distdir).tar.gz* josefsson.org:$(PACKAGE)/
+	mkdir -pv /tmp/sv_upload/unstable.pkg/$(VERSION)/ && cp $(distdir).tar.gz* /tmp/sv_upload/unstable.pkg/$(VERSION)/ && scp -vr /tmp/sv_upload/* jas@subversions.gnu.org:/upload/$(PACKAGE)/ && rm -rf /tmp/sv_upload
 	test -d $(htmldir) && cp -v doc/$(PACKAGE).{ps,pdf,html} $(htmldir)/
 	test -d $(htmldir) && cd $(htmldir) && cvs commit -m "Update." \
 		$(PACKAGE).{ps,pdf,html}
