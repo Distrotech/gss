@@ -2,6 +2,7 @@
 .libs
 Makefile
 Makefile.in
+asn1.lo
 context.lo
 cred.lo
 error.lo
