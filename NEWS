@@ -13,6 +13,10 @@ The Kerberos 5 backend also support them.
 
 ** Kerberos 5 gss_accept_sec_context now support sub-session keys in AP-REQ.
 
+** Added new extended function API: gss_userok.
+This is the same as invoking gss_export_name on a name, removing the
+OID, and then comparing the remaining material using memcmp.
+
 ** API documentation in HTML format from GTK-DOC included in doc/reference/.
 
 * Changes in 0.0.8 (released 2004-01-11)
