@@ -54,6 +54,12 @@ gss_krb5_init_sec_context (OM_uint32 * minor_status,
   if (!output_token)
     return GSS_S_FAILURE;
 
+  if (initiator_cred_handle)
+    /* We only support the default initiator.  See k5internal.h for
+       adding a Shishi_tkt to the credential structure.  I'm not sure
+       what the use would be -- user-to-user authentication? */
+    return GSS_S_NO_CRED;
+
   if (actual_mech_type)
     (*actual_mech_type) = GSS_KRB5;
 
@@ -63,6 +69,7 @@ gss_krb5_init_sec_context (OM_uint32 * minor_status,
     {
       gss_ctx_id_t ctx;
       gss_buffer_desc tmp;
+      Shishi_tkts_hint hint;
 
       ctx = xcalloc (sizeof (*ctx), 1);
       ctx->mech = GSS_KRB5;
@@ -93,29 +100,20 @@ gss_krb5_init_sec_context (OM_uint32 * minor_status,
       if (maj_stat != GSS_S_COMPLETE)
 	return maj_stat;
 
-      if (initiator_cred_handle)
-	{
-	  tkt = initiator_cred_handle->krb5->tkt;
-	  /* XXX? */
-	}
-      else
-	{
-	  Shishi_tkts_hint hint;
+      memset (&hint, 0, sizeof (hint));
+      hint.server = malloc (ctx->peerptr->length + 1);
+      memcpy (hint.server, ctx->peerptr->value, ctx->peerptr->length);
+      hint.server[ctx->peerptr->length] = '\0';
 
-	  memset (&hint, 0, sizeof (hint));
-	  hint.server = malloc (ctx->peerptr->length + 1);
-	  memcpy (hint.server, ctx->peerptr->value, ctx->peerptr->length);
-	  hint.server[ctx->peerptr->length] = '\0';
+      tkt = shishi_tkts_get (shishi_tkts_default (h), &hint);
+      free (hint.server);
+      if (!tkt)
+	return GSS_S_FAILURE;
 
-	  tkt = shishi_tkts_get (shishi_tkts_default (h), &hint);
-	  free (hint.server);
-	  if (!tkt)
-	    return GSS_S_FAILURE;
+      /* XXX */
+      shishi_tkts_to_file (shishi_tkts_default (h),
+			   shishi_tkts_default_file (h));
 
-	  /* XXX */
-	  shishi_tkts_to_file (shishi_tkts_default (h),
-			       shishi_tkts_default_file (h));
-	}
       ctx->krb5->tkt = tkt;
 
       data = xmalloc (2 + 24);

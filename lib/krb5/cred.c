@@ -158,7 +158,7 @@ inquire_cred (OM_uint32 * minor_status,
     *cred_usage = GSS_C_BOTH;
 
   if (lifetime)
-    *lifetime = gss_krb5_tktlifetime (cred_handle->krb5->tkt);
+    *lifetime = GSS_C_INDEFINITE;
 
   if (minor_status)
     *minor_status = 0;

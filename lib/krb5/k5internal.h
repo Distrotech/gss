@@ -29,7 +29,7 @@ typedef struct _gss_krb5_cred_struct
 {
   Shishi *sh;
   gss_name_t peerptr;
-  Shishi_tkt *tkt;
+  /* For user-to-user, we could have a Shishi_tkt here too. */
   Shishi_key *key;
 } _gss_krb5_cred_desc, *_gss_krb5_cred_t;
 
