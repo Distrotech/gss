@@ -19,19 +19,20 @@
 # 02111-1307, USA.
 
 lib_LTLIBRARIES = libgss.la
-
-INCLUDES = -I../intl
-
 include_HEADERS = gss.h
 
 gssincludedir=$(includedir)/gss
-gssinclude_HEADERS = api.h ext.h krb5.h
+gssinclude_HEADERS = api.h ext.h
 
 libgss_la_SOURCES = internal.h gettext.h version.c error.c meta.c asn1.c \
-	context.c cred.c misc.c msg.c name.c obsolete.c oid.c \
-	krb5.c
+	context.c cred.c misc.c msg.c name.c obsolete.c oid.c
 libgss_la_LIBADD = @LTLIBINTL@ @SHISHI_LIBS@
 libgss_la_LDFLAGS = -version-info $(LT_CURRENT):$(LT_REVISION):$(LT_AGE)
+
+if KRB5
+gssinclude_HEADERS += krb5.h
+libgss_la_SOURCES += krb5.c
+endif
 
 localedir = $(datadir)/locale
 DEFS = -DLOCALEDIR=\"$(localedir)\" @DEFS@
