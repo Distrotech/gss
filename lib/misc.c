@@ -1,4 +1,4 @@
-/* misc.c	Implementation of GSS-API Miscellaneous functions.
+/* misc.c --- Implementation of GSS-API Miscellaneous functions.
  * Copyright (C) 2003, 2004  Simon Josefsson
  *
  * This file is part of the Generic Security Service (GSS).
@@ -87,11 +87,12 @@ gss_add_oid_set_member (OM_uint32 * minor_status,
   OM_uint32 major_stat;
   int present;
 
-  if (minor_status)
-    *minor_status = 0;
-
   if (!member_oid || member_oid->length == 0 || member_oid->elements == NULL)
-    return GSS_S_FAILURE;
+    {
+      if (minor_status)
+	*minor_status = 0;
+      return GSS_S_FAILURE;
+    }
 
   major_stat = gss_test_oid_set_member (minor_status, member_oid,
 					*oid_set, &present);
@@ -99,10 +100,18 @@ gss_add_oid_set_member (OM_uint32 * minor_status,
     return major_stat;
 
   if (present)
-    return GSS_S_COMPLETE;
+    {
+      if (minor_status)
+	*minor_status = 0;
+      return GSS_S_COMPLETE;
+    }
 
   if ((*oid_set)->count + 1 == 0)	/* integer overflow */
-    return GSS_S_FAILURE;
+    {
+      if (minor_status)
+	*minor_status = 0;
+      return GSS_S_FAILURE;
+    }
 
   (*oid_set)->count++;
   (*oid_set)->elements = xrealloc ((*oid_set)->elements,
