@@ -26,6 +26,156 @@
 #define TOK_AP_REQ "\x01\x00"
 #define TOK_AP_REP "\x02\x00"
 
+static OM_uint32
+init_request (OM_uint32 * minor_status,
+	      const gss_cred_id_t initiator_cred_handle,
+	      gss_ctx_id_t * context_handle,
+	      const gss_name_t target_name,
+	      const gss_OID mech_type,
+	      OM_uint32 req_flags,
+	      OM_uint32 time_req,
+	      const gss_channel_bindings_t input_chan_bindings,
+	      const gss_buffer_t input_token,
+	      gss_OID * actual_mech_type,
+	      gss_buffer_t output_token,
+	      OM_uint32 * ret_flags, OM_uint32 * time_rec)
+{
+  gss_ctx_id_t ctx = *context_handle;
+  _gss_krb5_ctx_t k5 = ctx->krb5;
+  char *data;
+  size_t len;
+  int rc;
+  OM_uint32 maj_stat;
+  gss_buffer_desc tmp;
+  Shishi_tkts_hint hint;
+
+  maj_stat = gss_krb5_canonicalize_name (minor_status, target_name,
+					 GSS_C_NO_OID, &ctx->peerptr);
+  if (GSS_ERROR (maj_stat))
+    return maj_stat;
+
+  memset (&hint, 0, sizeof (hint));
+  hint.server = malloc (ctx->peerptr->length + 1);
+  memcpy (hint.server, ctx->peerptr->value, ctx->peerptr->length);
+  hint.server[ctx->peerptr->length] = '\0';
+
+  k5->tkt = shishi_tkts_get (shishi_tkts_default (k5->sh), &hint);
+  free (hint.server);
+  if (!k5->tkt)
+    return GSS_S_FAILURE;
+
+  /* XXX */
+  shishi_tkts_to_file (shishi_tkts_default (k5->sh),
+		       shishi_tkts_default_file (k5->sh));
+
+  data = xmalloc (2 + 24);
+  memcpy (&data[0], TOK_AP_REQ, TOK_LEN);
+  memcpy (&data[2], "\x10\x00\x00\x00", 4);	/* length of Bnd */
+  memset (&data[6], 0, 16);	/* XXX we only support GSS_C_NO_BINDING */
+  data[22] = req_flags & 0xFF;
+  data[23] = (req_flags >> 8) & 0xFF;
+  data[24] = (req_flags >> 16) & 0xFF;
+  data[25] = (req_flags >> 24) & 0xFF;
+  k5->flags = req_flags;
+
+  rc = shishi_ap_tktoptionsdata (k5->sh, &k5->ap, k5->tkt,
+				 SHISHI_APOPTIONS_MUTUAL_REQUIRED, "a",
+				 1);
+  if (rc != SHISHI_OK)
+    return GSS_S_FAILURE;
+
+  k5->key = shishi_ap_key (k5->ap);
+
+  rc = shishi_ap_req_build (k5->ap);
+  if (rc != SHISHI_OK)
+    return GSS_S_FAILURE;
+
+  rc = shishi_authenticator_set_cksum (k5->sh,
+				       shishi_ap_authenticator (k5->ap),
+				       0x8003, data + 2, 24);
+  if (rc != SHISHI_OK)
+    return GSS_S_FAILURE;
+
+  rc = shishi_apreq_add_authenticator
+    (k5->sh, shishi_ap_req (k5->ap),
+     shishi_tkt_key (shishi_ap_tkt (k5->ap)),
+     SHISHI_KEYUSAGE_APREQ_AUTHENTICATOR,
+     shishi_ap_authenticator (k5->ap));
+  if (rc != SHISHI_OK)
+    return GSS_S_FAILURE;
+
+  free (data);
+
+  rc = shishi_new_a2d (k5->sh, shishi_ap_req (k5->ap), &data, &len);
+  if (rc != SHISHI_OK)
+    return GSS_S_FAILURE;
+
+  tmp.length = len + TOK_LEN;
+  tmp.value = xmalloc (tmp.length);
+  memcpy (tmp.value, TOK_AP_REQ, TOK_LEN);
+  memcpy ((char *) tmp.value + TOK_LEN, data, len);
+
+  rc = gss_encapsulate_token (&tmp, GSS_KRB5, output_token);
+  if (!rc)
+    return GSS_S_FAILURE;
+
+  k5->reqdone = 1;
+
+  if (req_flags & GSS_C_MUTUAL_FLAG)
+    return GSS_S_CONTINUE_NEEDED;
+  else
+    return GSS_S_COMPLETE;
+}
+
+static OM_uint32
+init_reply (OM_uint32 * minor_status,
+	    const gss_cred_id_t initiator_cred_handle,
+	    gss_ctx_id_t * context_handle,
+	    const gss_name_t target_name,
+	    const gss_OID mech_type,
+	    OM_uint32 req_flags,
+	    OM_uint32 time_req,
+	    const gss_channel_bindings_t input_chan_bindings,
+	    const gss_buffer_t input_token,
+	    gss_OID * actual_mech_type,
+	    gss_buffer_t output_token,
+	    OM_uint32 * ret_flags, OM_uint32 * time_rec)
+{
+  gss_ctx_id_t ctx = *context_handle;
+  _gss_krb5_ctx_t k5 = ctx->krb5;
+  int rc;
+  gss_OID_desc tokenoid;
+  gss_buffer_desc data;
+
+  rc = gss_decapsulate_token (input_token, &tokenoid, &data);
+  if (!rc)
+    return GSS_S_BAD_MIC;
+
+  if (!gss_oid_equal (&tokenoid, GSS_KRB5))
+    return GSS_S_BAD_MIC;
+
+  if (memcmp (data.value, TOK_AP_REP, TOK_LEN) != 0)
+    return GSS_S_BAD_MIC;
+
+  rc = shishi_ap_rep_der_set (k5->ap, data.value + 2, data.length - 2);
+  if (rc != SHISHI_OK)
+    return GSS_S_FAILURE;
+
+  rc = shishi_ap_rep_verify (k5->ap);
+  if (rc != SHISHI_OK)
+    return GSS_S_FAILURE;
+
+  rc = shishi_encapreppart_seqnumber_get (k5->sh,
+					  shishi_ap_encapreppart (k5->ap),
+					  &k5->acceptseqnr);
+  if (rc != SHISHI_OK)
+    k5->acceptseqnr = 0;
+
+  k5->repdone = 1;
+
+  return GSS_S_COMPLETE;
+}
+
 OM_uint32
 gss_krb5_init_sec_context (OM_uint32 * minor_status,
 			   const gss_cred_id_t initiator_cred_handle,
@@ -42,19 +192,23 @@ gss_krb5_init_sec_context (OM_uint32 * minor_status,
 {
   gss_ctx_id_t ctx = *context_handle;
   _gss_krb5_ctx_t k5 = ctx->krb5;
-  char *data;
-  size_t len;
   int rc;
-  OM_uint32 maj_stat;
+
+  if (ret_flags)
+    *ret_flags = 0;
 
   if (initiator_cred_handle)
-    /* We only support the default initiator.  See k5internal.h for
-       adding a Shishi_tkt to the credential structure.  I'm not sure
-       what the use would be -- user-to-user authentication perhaps?
-       Later: if you have tickets for foo@BAR and bar@FOO, it may be
-       useful to call gss_acquire_cred first to chose which one to
-       initiate the context with.  Not many applications need this. */
-    return GSS_S_NO_CRED;
+    {
+      /* We only support the default initiator.  See k5internal.h for
+	 adding a Shishi_tkt to the credential structure.  I'm not sure
+	 what the use would be -- user-to-user authentication perhaps?
+	 Later: if you have tickets for foo@BAR and bar@FOO, it may be
+	 useful to call gss_acquire_cred first to chose which one to
+	 initiate the context with.  Not many applications need this. */
+      if (minor_status)
+	*minor_status = 0;
+      return GSS_S_NO_CRED;
+    }
 
   if (k5 == NULL)
     k5 = ctx->krb5 = xcalloc (sizeof (*k5), 1);
@@ -68,118 +222,31 @@ gss_krb5_init_sec_context (OM_uint32 * minor_status,
 
   if (!k5->reqdone)
     {
-      gss_buffer_desc tmp;
-      Shishi_tkts_hint hint;
-
-      maj_stat = gss_krb5_canonicalize_name (minor_status, target_name,
-					     GSS_C_NO_OID, &ctx->peerptr);
-      if (GSS_ERROR (maj_stat))
-	return maj_stat;
-
-      memset (&hint, 0, sizeof (hint));
-      hint.server = malloc (ctx->peerptr->length + 1);
-      memcpy (hint.server, ctx->peerptr->value, ctx->peerptr->length);
-      hint.server[ctx->peerptr->length] = '\0';
-
-      k5->tkt = shishi_tkts_get (shishi_tkts_default (k5->sh), &hint);
-      free (hint.server);
-      if (!k5->tkt)
-	return GSS_S_FAILURE;
-
-      /* XXX */
-      shishi_tkts_to_file (shishi_tkts_default (k5->sh),
-			   shishi_tkts_default_file (k5->sh));
-
-      data = xmalloc (2 + 24);
-      memcpy (&data[0], TOK_AP_REQ, TOK_LEN);
-      memcpy (&data[2], "\x10\x00\x00\x00", 4);	/* length of Bnd */
-      memset (&data[6], 0, 16);	/* XXX we only support GSS_C_NO_BINDING */
-      data[22] = req_flags & 0xFF;
-      data[23] = (req_flags >> 8) & 0xFF;
-      data[24] = (req_flags >> 16) & 0xFF;
-      data[25] = (req_flags >> 24) & 0xFF;
-      k5->flags = req_flags;
-
-      rc = shishi_ap_tktoptionsdata (k5->sh, &k5->ap, k5->tkt,
-				     SHISHI_APOPTIONS_MUTUAL_REQUIRED, "a",
-				     1);
-      if (rc != SHISHI_OK)
-	return GSS_S_FAILURE;
-
-      k5->key = shishi_ap_key (k5->ap);
-
-      rc = shishi_ap_req_build (k5->ap);
-      if (rc != SHISHI_OK)
-	return GSS_S_FAILURE;
-
-      rc = shishi_authenticator_set_cksum (k5->sh,
-					   shishi_ap_authenticator (k5->ap),
-					   0x8003, data + 2, 24);
-      if (rc != SHISHI_OK)
-	return GSS_S_FAILURE;
-
-      rc = shishi_apreq_add_authenticator
-	(k5->sh, shishi_ap_req (k5->ap),
-	 shishi_tkt_key (shishi_ap_tkt (k5->ap)),
-	 SHISHI_KEYUSAGE_APREQ_AUTHENTICATOR,
-	 shishi_ap_authenticator (k5->ap));
-      if (rc != SHISHI_OK)
-	return GSS_S_FAILURE;
-
-      free (data);
-
-      rc = shishi_new_a2d (k5->sh, shishi_ap_req (k5->ap), &data, &len);
-      if (rc != SHISHI_OK)
-	return GSS_S_FAILURE;
-
-      tmp.length = len + TOK_LEN;
-      tmp.value = xmalloc (tmp.length);
-      memcpy (tmp.value, TOK_AP_REQ, TOK_LEN);
-      memcpy ((char *) tmp.value + TOK_LEN, data, len);
-
-      rc = gss_encapsulate_token (&tmp, GSS_KRB5, output_token);
-      if (!rc)
-	return GSS_S_FAILURE;
-
-      k5->reqdone = 1;
-
-      if (req_flags & GSS_C_MUTUAL_FLAG)
-	return GSS_S_CONTINUE_NEEDED;
-      else
-	return GSS_S_COMPLETE;
+      return init_request (minor_status,
+			   initiator_cred_handle,
+			   context_handle,
+			   target_name,
+			   mech_type,
+			   req_flags,
+			   time_req,
+			   input_chan_bindings,
+			   input_token,
+			   actual_mech_type,
+			   output_token, ret_flags, time_rec);
     }
   else if (!k5->repdone)
     {
-      gss_OID_desc tokenoid;
-      gss_buffer_desc data;
-
-      rc = gss_decapsulate_token (input_token, &tokenoid, &data);
-      if (!rc)
-	return GSS_S_BAD_MIC;
-
-      if (!gss_oid_equal (&tokenoid, GSS_KRB5))
-	return GSS_S_BAD_MIC;
-
-      if (memcmp (data.value, TOK_AP_REP, TOK_LEN) != 0)
-	return GSS_S_BAD_MIC;
-
-      rc = shishi_ap_rep_der_set (k5->ap, data.value + 2, data.length - 2);
-      if (rc != SHISHI_OK)
-	return GSS_S_FAILURE;
-
-      rc = shishi_ap_rep_verify (k5->ap);
-      if (rc != SHISHI_OK)
-	return GSS_S_FAILURE;
-
-      rc = shishi_encapreppart_seqnumber_get (k5->sh,
-					      shishi_ap_encapreppart (k5->ap),
-					      &k5->acceptseqnr);
-      if (rc != SHISHI_OK)
-	k5->acceptseqnr = 0;
-
-      k5->repdone = 1;
-
-      return GSS_S_COMPLETE;
+      return init_reply (minor_status,
+			 initiator_cred_handle,
+			 context_handle,
+			 target_name,
+			 mech_type,
+			 req_flags,
+			 time_req,
+			 input_chan_bindings,
+			 input_token,
+			 actual_mech_type,
+			 output_token, ret_flags, time_rec);
     }
 
   if (minor_status)
