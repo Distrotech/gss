@@ -51,10 +51,10 @@ main (int argc, char *argv[])
       return 1;
     }
 
-  printf ("GSS-API major status %d (0x%x).\n\n"
-	  "Masked routine error %d (0x%x) shifted into %d (0x%x).\n"
-	  "Masked calling error %d (0x%x) shifted into %d (0x%x).\n"
-	  "Masked supplementary info %d (0x%x) shifted into %d (0x%x).\n\n",
+  printf ("GSS-API major status %ld (0x%lx).\n\n"
+	  "Masked routine error %ld (0x%lx) shifted into %ld (0x%lx).\n"
+	  "Masked calling error %ld (0x%lx) shifted into %ld (0x%lx).\n"
+	  "Masked supplementary info %ld (0x%lx) shifted into %ld (0x%lx).\n\n",
 	  args.major_arg, args.major_arg,
 	  GSS_ROUTINE_ERROR (args.major_arg),
 	  GSS_ROUTINE_ERROR (args.major_arg),
@@ -78,13 +78,13 @@ main (int argc, char *argv[])
 	  "   |  Calling Error  |  Routine Error"
 	  "  |       Supplementary Info        |\n   | ");
   for (i = 0; i < 8; i++)
-    printf ("%d ", (args.major_arg >> (31 - i)) & 1);
+    printf ("%ld ", (args.major_arg >> (31 - i)) & 1);
   printf ("| ");
   for (i = 0; i < 8; i++)
-    printf ("%d ", (args.major_arg >> (23 - i)) & 1);
+    printf ("%ld ", (args.major_arg >> (23 - i)) & 1);
   printf ("| ");
   for (i = 0; i < 16; i++)
-    printf ("%d ", (args.major_arg >> (15 - i)) & 1);
+    printf ("%ld ", (args.major_arg >> (15 - i)) & 1);
   printf ("|\n"
 	  "   +-----------------+---------------"
 	  "--+---------------------------------+\n"
