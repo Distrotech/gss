@@ -28,7 +28,7 @@ AC_INIT(gss, 0.0.2, bug-gss@josefsson.org)
 # No interfaces changed:                    REVISION++
 LT_CURRENT=0
 LT_AGE=0
-LT_REVISION=1
+LT_REVISION=2
 AC_SUBST(LT_CURRENT)
 AC_SUBST(LT_AGE)
 AC_SUBST(LT_REVISION)
