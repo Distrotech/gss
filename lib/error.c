@@ -32,7 +32,7 @@ struct gss_status_codes gss_calling_errors[] = {
   {GSS_S_CALL_INACCESSIBLE_READ, "GSS_S_CALL_INACCESSIBLE_READ",
    "A required input parameter could not be read"},
   {GSS_S_CALL_INACCESSIBLE_WRITE, "GSS_S_CALL_INACCESSIBLE_WRITE",
-   "A required output parameter could not be written."},
+   "A required output parameter could not be written"},
   {GSS_S_CALL_BAD_STRUCTURE, "GSS_S_CALL_BAD_STRUCTURE",
    "A parameter was malformed"}
 };
@@ -52,7 +52,7 @@ struct gss_status_codes gss_routine_errors[] = {
    "A token had an invalid MIC"},
   {GSS_S_NO_CRED, "GSS_S_NO_CRED",
    "No credentials were supplied, or the credentials were unavailable "
-   "or inaccessible."},
+   "or inaccessible"},
   {GSS_S_NO_CONTEXT, "GSS_S_NO_CONTEXT",
    "No context has been established"},
   {GSS_S_DEFECTIVE_TOKEN, "GSS_S_DEFECTIVE_TOKEN",
@@ -80,7 +80,7 @@ struct gss_status_codes gss_routine_errors[] = {
 struct gss_status_codes gss_supplementary_errors[] = {
   {GSS_S_CONTINUE_NEEDED, "GSS_S_CONTINUE_NEEDED",
    "The gss_init_sec_context() or gss_accept_sec_context() function "
-   "must be called again to complete its function."},
+   "must be called again to complete its function"},
   {GSS_S_DUPLICATE_TOKEN, "GSS_S_DUPLICATE_TOKEN",
    "The token was a duplicate of an earlier token"},
   {GSS_S_OLD_TOKEN, "GSS_S_OLD_TOKEN",
@@ -114,18 +114,15 @@ gss_display_status (OM_uint32 * minor_status,
 	case GSS_S_CALL_INACCESSIBLE_WRITE:
 	case GSS_S_CALL_BAD_STRUCTURE:
 	  status_string->value =
-	    strdup(gss_calling_errors
-		   [(GSS_CALLING_ERROR(status_value) >>
-		     GSS_C_CALLING_ERROR_OFFSET)-1].text);
-	  status_string->length =
-	    strlen(gss_calling_errors
-		   [(GSS_CALLING_ERROR(status_value) >>
-		     GSS_C_CALLING_ERROR_OFFSET)-1].text);
+	    strdup(_(gss_calling_errors
+		     [(GSS_CALLING_ERROR(status_value) >>
+		       GSS_C_CALLING_ERROR_OFFSET)-1].text));
+	  status_string->length = strlen(status_string->value);
 	  return GSS_S_COMPLETE;
 	  break;
 
 	default:
-	  status_string->value = strdup("Unknown calling error");
+	  status_string->value = strdup(_("Unknown calling error"));
 	  status_string->length = strlen(status_string->value);
 	  return GSS_S_COMPLETE;
 	  break;
@@ -155,23 +152,20 @@ gss_display_status (OM_uint32 * minor_status,
 	case GSS_S_DUPLICATE_ELEMENT:
 	case GSS_S_NAME_NOT_MN:
 	  status_string->value =
-	    strdup(gss_routine_errors
-		   [(GSS_ROUTINE_ERROR(status_value) >>
-		     GSS_C_ROUTINE_ERROR_OFFSET)-1].text);
-	  status_string->length =
-	    strlen(gss_routine_errors
-		   [(GSS_ROUTINE_ERROR(status_value) >>
-		     GSS_C_ROUTINE_ERROR_OFFSET)-1].text);
+	    strdup(_(gss_routine_errors
+		     [(GSS_ROUTINE_ERROR(status_value) >>
+		       GSS_C_ROUTINE_ERROR_OFFSET)-1].text));
+	  status_string->length = strlen(status_string->value);
 	  return GSS_S_COMPLETE;
 	  break;
 
 	default:
-	  status_string->value = strdup("Unknown routine error");
+	  status_string->value = strdup(_("Unknown routine error"));
 	  status_string->length = strlen(status_string->value);
 	  return GSS_S_COMPLETE;
 	  break;
 	}
-      status_string->value = strdup("No error");
+      status_string->value = strdup(_("No error"));
       status_string->length = strlen(status_string->value);
       break;
 
