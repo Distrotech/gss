@@ -50,7 +50,10 @@ gss_krb5_init_sec_context (OM_uint32 * minor_status,
   if (initiator_cred_handle)
     /* We only support the default initiator.  See k5internal.h for
        adding a Shishi_tkt to the credential structure.  I'm not sure
-       what the use would be -- user-to-user authentication? */
+       what the use would be -- user-to-user authentication perhaps?
+       Later: if you have tickets for foo@BAR and bar@FOO, it may be
+       useful to call gss_acquire_cred first to chose which one to
+       initiate the context with.  Not many applications need this. */
     return GSS_S_NO_CRED;
 
   if (k5 == NULL)
@@ -352,7 +355,6 @@ gss_krb5_context_time (OM_uint32 * minor_status,
 		       OM_uint32 * time_rec)
 {
   _gss_krb5_ctx_t k5 = context_handle->krb5;
-
 
   if (time_rec)
     {
