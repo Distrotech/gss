@@ -710,7 +710,7 @@ gss_delete_sec_context (OM_uint32 * minor_status,
     {
       if (minor_status)
 	*minor_status = 0;
-      return GSS_S_NO_CONTEXT;
+      return GSS_S_NO_CONTEXT | GSS_S_CALL_BAD_STRUCTURE;
     }
 
   if (output_token != GSS_C_NO_BUFFER)
@@ -808,12 +808,11 @@ gss_context_time (OM_uint32 * minor_status,
 {
   _gss_mech_api_t mech;
 
-  if (context_handle == GSS_C_NO_CONTEXT ||
-      context_handle->mech == GSS_C_NO_OID)
+  if (context_handle == GSS_C_NO_CONTEXT)
     {
       if (minor_status)
 	*minor_status = 0;
-      return GSS_S_NO_CONTEXT;
+      return GSS_S_NO_CONTEXT | GSS_S_CALL_BAD_STRUCTURE;
     }
 
   mech = _gss_find_mech (context_handle->mech);
