@@ -30,7 +30,7 @@ MAINTAINERCLEANFILES = $(dist_man_MANS)
 
 # GDOC
 
-GDOC_SRC = $(top_srcdir)/lib/context.c
+GDOC_SRC = $(top_srcdir)/lib/*.c
 GDOC_TEXI_PREFIX = texi/
 GDOC_MAN_PREFIX = man/
 GDOC_MAN_EXTRA_ARGS = -module $(PACKAGE) -sourceversion $(VERSION) \
