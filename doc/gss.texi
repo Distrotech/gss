@@ -5,7 +5,7 @@
 
 @setfilename gss.info
 @include version.texi
-@settitle The Generic Security Service Manual.
+@settitle The Generic Security Service Manual
 
 @c Unify some of the indices.
 @syncodeindex tp fn
@@ -55,7 +55,7 @@ developing GNU and protecting and promoting software freedom.''
 
 @ifnottex
 @node Top
-@top The Generic Security Service Manual.
+@top The Generic Security Service Manual
 
 @insertcopying
 @end ifnottex
