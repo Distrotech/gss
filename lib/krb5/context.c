@@ -22,6 +22,9 @@
 /* Get specification. */
 #include "k5internal.h"
 
+/* Get checksum (un)packers. */
+#include "checksum.h"
+
 #define TOK_LEN 2
 #define TOK_AP_REQ "\x01\x00"
 #define TOK_AP_REP "\x02\x00"
@@ -53,17 +56,15 @@ init_request (OM_uint32 * minor_status,
   Shishi_tkts_hint hint;
 
   maj_stat = gss_krb5_canonicalize_name (minor_status, target_name,
-					 GSS_C_NO_OID, &ctx->peerptr);
+					 GSS_C_NO_OID, &k5->peerptr);
   if (GSS_ERROR (maj_stat))
     return maj_stat;
 
   memset (&hint, 0, sizeof (hint));
-  hint.server = malloc (ctx->peerptr->length + 1);
-  memcpy (hint.server, ctx->peerptr->value, ctx->peerptr->length);
-  hint.server[ctx->peerptr->length] = '\0';
+  hint.server = k5->peerptr->value;
 
   k5->tkt = shishi_tkts_get (shishi_tkts_default (k5->sh), &hint);
-  free (hint.server);
+
   if (!k5->tkt)
     return GSS_S_FAILURE;
 
@@ -413,6 +414,9 @@ gss_krb5_delete_sec_context (OM_uint32 * minor_status,
 			     gss_buffer_t output_token)
 {
   _gss_krb5_ctx_t k5 = (*context_handle)->krb5;
+
+  if (k5->peerptr != GSS_C_NO_NAME)
+    gss_release_name (NULL, &k5->peerptr);
 
   shishi_done (k5->sh);
   free (k5);
