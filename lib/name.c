@@ -495,7 +495,7 @@ gss_duplicate_name (OM_uint32 * minor_status,
     {
       if (minor_status)
 	*minor_status = 0;
-      return GSS_S_CALL_INACCESSIBLE_WRITE;
+      return GSS_S_FAILURE | GSS_S_CALL_INACCESSIBLE_WRITE;
     }
 
   maj_stat = gss_duplicate_oid (minor_status, src_name->type, &tmp);
