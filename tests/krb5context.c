@@ -1,0 +1,299 @@
+/* krb5context.c --- Kerberos 5 security context self tests.
+ * Copyright (C) 2003, 2004  Simon Josefsson
+ *
+ * This file is part of the Generic Security Service (GSS).
+ *
+ * GSS is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * GSS is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with GSS; if not, write to the Free Software Foundation,
+ * Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ *
+ */
+
+#if HAVE_CONFIG_H
+# include "config.h"
+#endif
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdarg.h>
+#include <ctype.h>
+#include <string.h>
+
+/* Get GSS prototypes. */
+#include "api.h"
+#include "ext.h"
+#include "krb5.h"
+
+/* Get Shishi prototypes. */
+#include <shishi.h>
+
+static int verbose = 0;
+static int debug = 0;
+static int error_count = 0;
+static int break_on_error = 0;
+
+static void
+fail (const char *format, ...)
+{
+  va_list arg_ptr;
+
+  va_start (arg_ptr, format);
+  vfprintf (stderr, format, arg_ptr);
+  va_end (arg_ptr);
+  error_count++;
+  if (break_on_error)
+    exit (1);
+}
+
+static void
+success (const char *format, ...)
+{
+  va_list arg_ptr;
+
+  va_start (arg_ptr, format);
+  if (verbose)
+    vfprintf (stdout, format, arg_ptr);
+  va_end (arg_ptr);
+}
+
+static void
+escapeprint (const unsigned char *str, int len)
+{
+  int i;
+
+  if (!str || !len)
+    return;
+
+  printf ("\t ;; `");
+  for (i = 0; i < len; i++)
+    if ((str[i] >= 'A' && str[i] <= 'Z') ||
+	(str[i] >= 'a' && str[i] <= 'z') ||
+	(str[i] >= '0' && str[i] <= '9') || str[i] == '.')
+      printf ("%c", str[i]);
+    else
+      printf ("\\x%02x", str[i]);
+  printf ("' (length %d bytes)\n", len);
+}
+
+static void
+hexprint (const unsigned char *str, int len)
+{
+  int i;
+
+  if (!str || !len)
+    return;
+
+  printf ("\t ;; ");
+  for (i = 0; i < len; i++)
+    {
+      printf ("%02x ", str[i]);
+      if ((i + 1) % 8 == 0)
+	printf (" ");
+      if ((i + 1) % 16 == 0 && i + 1 < len)
+	printf ("\n\t ;; ");
+    }
+}
+
+static void
+binprint (const unsigned char *str, int len)
+{
+  int i;
+
+  if (!str || !len)
+    return;
+
+  printf ("\t ;; ");
+  for (i = 0; i < len; i++)
+    {
+      printf ("%d%d%d%d%d%d%d%d ",
+	      str[i] & 0x80 ? 1 : 0,
+	      str[i] & 0x40 ? 1 : 0,
+	      str[i] & 0x20 ? 1 : 0,
+	      str[i] & 0x10 ? 1 : 0,
+	      str[i] & 0x08 ? 1 : 0,
+	      str[i] & 0x04 ? 1 : 0,
+	      str[i] & 0x02 ? 1 : 0, str[i] & 0x01 ? 1 : 0);
+      if ((i + 1) % 3 == 0)
+	printf (" ");
+      if ((i + 1) % 6 == 0 && i + 1 < len)
+	printf ("\n\t ;; ");
+    }
+}
+
+static void
+display_status_1 (char *m, OM_uint32 code, int type)
+{
+  OM_uint32 maj_stat, min_stat;
+  gss_buffer_desc msg;
+  OM_uint32 msg_ctx;
+
+  msg_ctx = 0;
+  do
+    {
+      maj_stat = gss_display_status (&min_stat, code,
+				     type, GSS_C_NO_OID, &msg_ctx, &msg);
+      if (GSS_ERROR (maj_stat))
+	{
+	  asprintf ((char**)&msg.value, "code %d", code);
+	  msg.length = strlen (msg.value);
+	}
+
+      printf ("GSS-API error %s (%s): %.*s\n",
+	      m, type == GSS_C_GSS_CODE ? "major" : "minor",
+	      (int) msg.length, (char *) msg.value);
+
+      if (GSS_ERROR (maj_stat))
+	free (msg.value);
+      else
+	gss_release_buffer (&min_stat, &msg);
+    }
+  while (!GSS_ERROR (maj_stat) && msg_ctx);
+}
+
+static void
+display_status (char *msg, OM_uint32 maj_stat, OM_uint32 min_stat)
+{
+  display_status_1 (msg, maj_stat, GSS_C_GSS_CODE);
+  display_status_1 (msg, min_stat, GSS_C_MECH_CODE);
+}
+
+int
+main (int argc, char *argv[])
+{
+  gss_uint32 maj_stat, min_stat, msgctx;
+  gss_buffer_desc bufdesc, bufdesc2;
+  gss_name_t servername = GSS_C_NO_NAME, name;
+  gss_OID_set oids;
+  gss_ctx_id_t cctx = GSS_C_NO_CONTEXT;
+  gss_ctx_id_t sctx = GSS_C_NO_CONTEXT;
+  gss_cred_id_t cred_handle, server_creds;
+  int n;
+  Shishi_asn1 apreq;
+  Shishi * handle;
+
+  do
+    if (strcmp (argv[argc - 1], "-v") == 0 ||
+	strcmp (argv[argc - 1], "--verbose") == 0)
+      verbose = 1;
+    else if (strcmp (argv[argc - 1], "-d") == 0 ||
+	     strcmp (argv[argc - 1], "--debug") == 0)
+      debug = 1;
+    else if (strcmp (argv[argc - 1], "-b") == 0 ||
+	     strcmp (argv[argc - 1], "--break-on-error") == 0)
+      break_on_error = 1;
+    else if (strcmp (argv[argc - 1], "-h") == 0 ||
+	     strcmp (argv[argc - 1], "-?") == 0 ||
+	     strcmp (argv[argc - 1], "--help") == 0)
+      {
+	printf ("Usage: %s [-vdbh?] [--verbose] [--debug] "
+		"[--break-on-error] [--help]\n", argv[0]);
+	return 1;
+      }
+  while (argc-- > 1);
+
+  escapeprint (NULL, 0);
+  hexprint (NULL, 0);
+  binprint (NULL, 0);
+
+  handle = shishi ();
+
+  /* Name of service. */
+
+  bufdesc.value = "host@latte.josefsson.org";
+  bufdesc.length = strlen (bufdesc.value);
+
+  maj_stat = gss_import_name (&min_stat, &bufdesc,
+			      GSS_C_NT_HOSTBASED_SERVICE,
+			      &servername);
+  if (GSS_ERROR (maj_stat))
+    fail ("gss_import_name (host/server)\n");
+
+  /* Get credential, for server. */
+
+  maj_stat = gss_acquire_cred (&min_stat, servername, 0,
+			       GSS_C_NULL_OID_SET, GSS_C_ACCEPT,
+			       &server_creds, NULL, NULL);
+  if (GSS_ERROR (maj_stat))
+    {
+      fail ("gss_acquire_cred");
+      display_status ("acquire credentials", maj_stat, min_stat);
+    }
+
+  /* Start client. */
+
+  maj_stat = gss_init_sec_context (&min_stat,
+				   GSS_C_NO_CREDENTIAL,
+				   &cctx,
+				   servername,
+				   GSS_KRB5,
+				   GSS_C_MUTUAL_FLAG |
+				   GSS_C_REPLAY_FLAG |
+				   GSS_C_SEQUENCE_FLAG,
+				   0,
+				   GSS_C_NO_CHANNEL_BINDINGS,
+				   GSS_C_NO_BUFFER, NULL,
+				   &bufdesc2, NULL, NULL);
+  if (maj_stat != GSS_S_CONTINUE_NEEDED)
+    {
+      fail ("gss_init_sec_context failure\n");
+      display_status ("init_sec_context", maj_stat, min_stat);
+    }
+
+  apreq = shishi_der2asn1_apreq (handle, bufdesc2.value + 17,
+				 bufdesc2.length - 17);
+  if (debug)
+    shishi_apreq_print (handle, stdout, apreq);
+
+  /* Start server. */
+
+  maj_stat = gss_accept_sec_context (&min_stat,
+				     &sctx,
+				     server_creds,
+				     &bufdesc2,
+				     GSS_C_NO_CHANNEL_BINDINGS,
+				     &name,
+				     NULL,
+				     &bufdesc,
+				     NULL,
+				     NULL,
+				     NULL);
+  if (maj_stat != GSS_S_CONTINUE_NEEDED)
+    {
+      fail ("gss_accept_sec_context failure\n");
+      display_status ("accept_sec_context", maj_stat, min_stat);
+    }
+
+  /* Clean up. */
+
+  maj_stat = gss_delete_sec_context (&min_stat, &cctx, GSS_C_NO_BUFFER);
+  if (GSS_ERROR(maj_stat))
+    {
+      fail ("client gss_delete_sec_context failure\n");
+      display_status ("client delete_sec_context", maj_stat, min_stat);
+    }
+
+  maj_stat = gss_delete_sec_context (&min_stat, &sctx, GSS_C_NO_BUFFER);
+  if (GSS_ERROR(maj_stat))
+    {
+      fail ("server gss_delete_sec_context failure\n");
+      display_status ("server delete_sec_context", maj_stat, min_stat);
+    }
+
+  /* We're done. */
+
+  if (verbose)
+    printf ("Kerberos 5 security context self tests done with %d errors\n",
+	    error_count);
+
+  return error_count ? 1 : 0;
+}
