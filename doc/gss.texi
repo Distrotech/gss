@@ -1604,6 +1604,24 @@ Instead, the API should be the sole owner of all @code{gss_ctx_id_t},
 be allocated by the library, and deallocated (using the utility
 functions defined for this purpose) by the library.
 
+Another illustrating example is the sample GSS header file given in
+the RFC, which contains:
+
+@example
+/*
+ * We have included the xom.h header file.  Verify that OM_uint32
+ * is defined correctly.
+ */
+#if sizeof(gss_uint32) != sizeof(OM_uint32)
+#error Incompatible definition of OM_uint32 from xom.h
+#endif
+@end example
+
+The C pre-processor does not know about the @code{sizeof} function, so
+it is treated as an identifier, which maps to 0.  Thus, the expression
+does not check that the size of @code{OM_uint32} is correct.  It
+checks whether the expression @code{0 != 0} holds.
+
 TBA: thread issues
 
 TBA: multiple mechanisms in a GSS library
