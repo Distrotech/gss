@@ -1,3 +1,131 @@
+2004-11-22  Simon Josefsson <simon@josefsson.org>
+
+	* Makefile.am: Fix make distcheck.
+
+2004-11-22  Simon Josefsson <simon@josefsson.org>
+
+	* po/fr.po, po/pl.po, po/ro.po, po/sv.po: Generated.
+
+2004-11-22  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS: Version 0.0.15.
+
+2004-11-22  Simon Josefsson <simon@josefsson.org>
+
+	* po/LINGUAS: Sync with TP.
+
+2004-11-22  Simon Josefsson <simon@josefsson.org>
+
+	* tests/krb5context.c: Don't use asprintf.
+
+2004-11-21  Simon Josefsson <simon@josefsson.org>
+
+	* po/LINGUAS: Sync with TP.
+
+2004-11-21  Simon Josefsson <simon@josefsson.org>
+
+	* tests/Makefile.am, src/Makefile.am: Need libgl.la.
+
+2004-11-21  Simon Josefsson <simon@josefsson.org>
+
+	* doc/gdoc: Sync some fixes from libidn.
+
+2004-11-21  Simon Josefsson <simon@josefsson.org>
+
+	* gl/getopt_.h: Update.
+
+2004-11-19  Simon Josefsson <simon@josefsson.org>
+
+	* gl/getopt.c, gl/getopt1.c, gl/getopt_.h, gl/getopt_int.h,
+	gl/m4/getopt.m4: Update.
+
+2004-11-19  Simon Josefsson <simon@josefsson.org>
+
+	* doc/gss.texi: Fix.
+
+2004-11-08  Simon Josefsson <simon@josefsson.org>
+
+	* doc/specification/ietf61-kitten.pdf: Add.
+
+2004-11-07  Simon Josefsson <simon@josefsson.org>
+
+	* doc/gendocs_template, doc/gendocs.sh: Update.
+
+2004-11-07  Simon Josefsson <simon@josefsson.org>
+
+	* po/LINGUAS, po/fr.po, po/pl.po, po/ro.po, po/sv.po: Sync with TP.
+
+2004-11-07  Simon Josefsson <simon@josefsson.org>
+
+	* lib/Makefile.am: Typo.
+
+2004-11-07  Simon Josefsson <simon@josefsson.org>
+
+	* Makefile.am: Update update-po target.
+
+2004-11-07  Simon Josefsson <simon@josefsson.org>
+
+	* Makefile.am: Fix release target.
+
+2004-11-07  Simon Josefsson <simon@josefsson.org>
+
+	* doc/reference/.cvsignore: Rewrite.
+
+2004-11-07  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS: Add.
+
+2004-11-07  Simon Josefsson <simon@josefsson.org>
+
+	* lib/Makefile.am: Use Libtool -export-symbols-regex.
+
+2004-11-07  Simon Josefsson <simon@josefsson.org>
+
+	* doc/reference/Makefile.am: Disable SGML mode, for now.
+
+2004-11-07  Simon Josefsson <simon@josefsson.org>
+
+	* doc/reference/Makefile.am: Rewrite, use official GTK-DOC
+	Makefile.am template.
+
+2004-11-07  Simon Josefsson <simon@josefsson.org>
+
+	* autogen.sh: Use gtkdocize.
+
+2004-11-07  Simon Josefsson <simon@josefsson.org>
+
+	* AUTHORS: Add PGP key URL.
+
+2004-10-26  Simon Josefsson <simon@josefsson.org>
+
+	* doc/specification/draft-hartman-gss-naming-01.txt: Add.
+
+2004-10-24  Simon Josefsson <simon@josefsson.org>
+
+	*
+	doc/specification/draft-williams-gssapi-domain-based-names-00.txt,
+	doc/specification/draft-williams-gssapi-prf-00.txt,
+	doc/specification/draft-williams-gssapi-v3-guide-to-00.txt,
+	doc/specification/draft-williams-krb5-gssapi-domain-based-names-00.txt,
+	doc/specification/draft-williams-krb5-gssapi-prf-00.txt,
+	doc/specification/draft-zhu-spnego-2478bis-00.txt: Add.
+
+2004-10-16  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS, configure.ac: Bump versions.
+
+2004-10-16  Simon Josefsson <simon@josefsson.org>
+
+	* gl/Makefile.am, gl/m4/getopt.m4: Update.
+
+2004-10-15  Simon Josefsson <simon@josefsson.org>
+
+	* gss.fms: Add.
+
+2004-10-15  Simon Josefsson <simon@josefsson.org>
+
+	* ChangeLog: [no log message]
+
 2004-10-15  Simon Josefsson <simon@josefsson.org>
 
 	* po/fr.po, po/pl.po, po/ro.po, po/sv.po: Generated.
