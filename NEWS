@@ -11,6 +11,8 @@ to print text describing the error condition.
 
 ** gss_display_status can return multiple description texts (using context).
 
+** The Swedish translation has been updated.
+
 * Changes in 0.0.9 (released 2004-01-15)
 
 ** Implemented gss_export_name and gss_krb5_inquire_cred_by_mech.
