@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: bug-gss@josefsson.org\n"
-"POT-Creation-Date: 2004-01-11 08:00+0100\n"
+"POT-Creation-Date: 2004-01-12 03:15+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -230,13 +230,4 @@ msgstr ""
 #: lib/obsolete.c:76
 #, c-format
 msgid "warning: gss_unseal() is obsolete, use gss_unwrap() instead."
-msgstr ""
-
-#: lib/meta.c:32
-#, c-format
-msgid "warning: no suitable mechanism found\n"
-msgstr ""
-
-#: lib/meta.c:44
-msgid "No suitable mechanism supported"
 msgstr ""

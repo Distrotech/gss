@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gss 0.0.1\n"
 "Report-Msgid-Bugs-To: bug-gss@josefsson.org\n"
-"POT-Creation-Date: 2004-01-11 08:00+0100\n"
+"POT-Creation-Date: 2004-01-12 03:15+0100\n"
 "PO-Revision-Date: 2003-06-12 20:05+0200\n"
 "Last-Translator: Simon Josefsson <simon@josefsson.org>\n"
 "Language-Team: Swedish <sv@li.org>\n"
@@ -233,11 +233,8 @@ msgstr "varning: gss_seal() är obsolet, använd gss_wrap() istället."
 msgid "warning: gss_unseal() is obsolete, use gss_unwrap() instead."
 msgstr "varning: gss_unseal() är obsolet, använd gss_unwrap() istället."
 
-#: lib/meta.c:32
-#, c-format
-msgid "warning: no suitable mechanism found\n"
-msgstr "varning: ingen passande mekanism hittad\n"
+#~ msgid "warning: no suitable mechanism found\n"
+#~ msgstr "varning: ingen passande mekanism hittad\n"
 
-#: lib/meta.c:44
-msgid "No suitable mechanism supported"
-msgstr "Ingen passande mekanism hittad"
+#~ msgid "No suitable mechanism supported"
+#~ msgstr "Ingen passande mekanism hittad"
