@@ -30,7 +30,11 @@ gss_get_mic (OM_uint32 * minor_status,
   _gss_mech_api_t mech;
 
   if (!context_handle)
-    return GSS_S_NO_CONTEXT;
+    {
+      if (minor_status)
+	*minor_status = 0;
+      return GSS_S_NO_CONTEXT;
+    }
 
   mech = _gss_find_mech (context_handle->mech);
 
@@ -47,7 +51,11 @@ gss_verify_mic (OM_uint32 * minor_status,
   _gss_mech_api_t mech;
 
   if (!context_handle)
-    return GSS_S_NO_CONTEXT;
+    {
+      if (minor_status)
+	*minor_status = 0;
+      return GSS_S_NO_CONTEXT;
+    }
 
   mech = _gss_find_mech (context_handle->mech);
 
