@@ -62,12 +62,12 @@ AC_ARG_ENABLE(kerberos5,
 	kerberos5=$enableval)
 if test "$kerberos5" != "no" ; then
 	AC_DEFINE(USE_KERBEROS5, 1, [Define to 1 if you want Kerberos 5 mech.])
-	GSS_KRB5='#include <gss/krb5.h>'
+	INCLUDE_GSS_KRB5='#include <gss/krb5.h>'
 fi
 AC_MSG_CHECKING([if the Kerberos V5 mechanism should be supported])
 AC_MSG_RESULT($kerberos5)
 AM_CONDITIONAL(KRB5, test "$kerberos5" = "yes")
-AC_SUBST(GSS_KRB5)
+AC_SUBST(INCLUDE_GSS_KRB5)
 
 # We are done.
 AC_CONFIG_FILES(Makefile gss.pc lib/gss.h po/Makefile.in \

@@ -33,7 +33,7 @@ extern "C" {
 
 #include <gss/api.h>
 #include <gss/ext.h>
-@GSS_KRB5@
+@INCLUDE_GSS_KRB5@
 
 #ifdef __cplusplus
 }
