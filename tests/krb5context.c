@@ -85,19 +85,16 @@ display_status_1 (char *m, OM_uint32 code, int type)
       maj_stat = gss_display_status (&min_stat, code,
 				     type, GSS_C_NO_OID, &msg_ctx, &msg);
       if (GSS_ERROR (maj_stat))
-	{
-	  asprintf ((char **) &msg.value, "code %d", code);
-	  msg.length = strlen (msg.value);
-	}
-
-      printf ("GSS-API error %s (%s): %.*s\n",
-	      m, type == GSS_C_GSS_CODE ? "major" : "minor",
-	      (int) msg.length, (char *) msg.value);
-
-      if (GSS_ERROR (maj_stat))
-	free (msg.value);
+	printf ("GSS-API display_status failed on code %d type %d\n",
+		code, type);
       else
-	gss_release_buffer (&min_stat, &msg);
+	{
+	  printf ("GSS-API error %s (%s): %.*s\n",
+		  m, type == GSS_C_GSS_CODE ? "major" : "minor",
+		  (int) msg.length, (char *) msg.value);
+
+	  gss_release_buffer (&min_stat, &msg);
+	}
     }
   while (!GSS_ERROR (maj_stat) && msg_ctx);
 }
