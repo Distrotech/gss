@@ -6,7 +6,7 @@ context.lo
 cred.lo
 error.lo
 ggssapi.h
-libggssapi.la
+libgss.la
 misc.lo
 msg.lo
 name.lo
