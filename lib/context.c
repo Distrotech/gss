@@ -146,7 +146,7 @@
  * GSS_S_CONTINUE_NEEDED, the context is not fully established and the
  * following restrictions apply to the output parameters:
  *
- * - The value returned via the time_rec parameter is undefined Unless
+ * - The value returned via the time_rec parameter is undefined unless
  * the accompanying ret_flags parameter contains the bit
  * GSS_C_PROT_READY_FLAG, indicating that per-message services may be
  * applied in advance of a successful completion status, the value
