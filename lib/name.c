@@ -21,6 +21,40 @@
 
 #include "internal.h"
 
+/**
+ * gss_import_name:
+ * @minor_status: (Integer, modify) Mechanism specific status code.
+ * @input_name_buffer: (buffer, octet-string, read) Buffer containing
+ *   contiguous string name to convert.
+ * @input_name_type: (Object ID, read, optional) Object ID specifying
+ *   type of printable name.  Applications may specify either
+ *   GSS_C_NO_OID to use a mechanism-specific default printable
+ *   syntax, or an OID recognized by the GSS-API implementation to
+ *   name a specific namespace.
+ * @output_name: (gss_name_t, modify) Returned name in internal form.
+ *   Storage associated with this name must be freed by the
+ *   application after use with a call to gss_release_name().
+ *
+ * Convert a contiguous string name to internal form.  In general, the
+ * internal name returned (via the @output_name parameter) will not
+ * be an MN; the exception to this is if the @input_name_type
+ * indicates that the contiguous string provided via the
+ * @input_name_buffer parameter is of type GSS_C_NT_EXPORT_NAME, in
+ * which case the returned internal name will be an MN for the
+ * mechanism that exported the name.
+ *
+ * Valid return values and their meaning:
+ *
+ * `GSS_S_COMPLETE`: Successful completion.
+ *
+ * `GSS_S_BAD_NAMETYPE`: The input_name_type was unrecognized.
+ *
+ * `GSS_S_BAD_NAME`: The input_name parameter could not be interpreted
+ * as a name of the specified type.
+ *
+ * `GSS_S_BAD_MECH`: The input name-type was GSS_C_NT_EXPORT_NAME, but
+ * the mechanism contained within the input-name is not supported.
+ **/
 OM_uint32
 gss_import_name (OM_uint32 * minor_status,
 		 const gss_buffer_t input_name_buffer,
@@ -29,7 +63,7 @@ gss_import_name (OM_uint32 * minor_status,
   OM_uint32 major_stat;
 
   if (!output_name)
-    return GSS_S_FAILURE;
+    return GSS_S_BAD_NAME | GSS_S_CALL_INACCESSIBLE_WRITE;
 
   *output_name = xmalloc (sizeof (**output_name));
   (*output_name)->length = input_name_buffer->length;
@@ -41,8 +75,8 @@ gss_import_name (OM_uint32 * minor_status,
     {
       major_stat = gss_duplicate_oid (minor_status, input_name_type,
 				      &(*output_name)->type);
-      if (major_stat != GSS_S_COMPLETE)
-	return major_stat;
+      if (GSS_ERROR (major_stat)
+	  return major_stat;
     }
   else
     (*output_name)->type = GSS_C_NO_OID;
