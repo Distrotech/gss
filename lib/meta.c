@@ -51,8 +51,9 @@ static _gss_mech_api_desc _gss_mech_apis[] = {
     gss_krb5_context_time,
     gss_krb5_inquire_cred,
     gss_krb5_inquire_cred_by_mech
-  }
+  },
 #endif
+  { NULL }
 };
 
 _gss_mech_api_t
@@ -60,7 +61,7 @@ _gss_find_mech (const gss_OID oid)
 {
   size_t i;
 
-  for (i = 0; i < sizeof (_gss_mech_apis) / sizeof (_gss_mech_apis[0]); i++)
+  for (i = 0; i < _gss_mech_apis[i].mech; i++)
     if (gss_oid_equal (oid, _gss_mech_apis[i].mech))
       return &_gss_mech_apis[i];
 
@@ -78,7 +79,7 @@ _gss_indicate_mechs1 (OM_uint32 * minor_status, gss_OID_set *mech_set)
   OM_uint32 maj_stat;
   int i;
 
-  for (i = 0; i < sizeof (_gss_mech_apis) / sizeof (_gss_mech_apis[0]); i++)
+  for (i = 0; i < _gss_mech_apis[i].mech; i++)
     {
       maj_stat = gss_add_oid_set_member (minor_status,
 					 _gss_mech_apis[i].mech,
