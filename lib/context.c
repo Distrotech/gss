@@ -352,6 +352,13 @@ gss_init_sec_context (OM_uint32 * minor_status,
 {
   _gss_mech_api_t mech;
 
+  if (!context_handle)
+    {
+      if (minor_status)
+	*minor_status = 0;
+      return GSS_S_NO_CONTEXT | GSS_S_CALL_INACCESSIBLE_READ;
+    }
+
   mech = (*context_handle == GSS_C_NO_CONTEXT) ?
     _gss_find_mech (mech_type) : _gss_find_mech ((*context_handle)->mech);
 
@@ -635,6 +642,13 @@ gss_accept_sec_context (OM_uint32 * minor_status,
 {
   _gss_mech_api_t mech;
 
+  if (!context_handle)
+    {
+      if (minor_status)
+	*minor_status = 0;
+      return GSS_S_NO_CONTEXT | GSS_S_CALL_INACCESSIBLE_READ;
+    }
+
   mech = (*context_handle == GSS_C_NO_CONTEXT) ?
     _gss_find_mech (mech_type ? *mech_type : GSS_C_NO_OID) :
     _gss_find_mech ((*context_handle)->mech);
@@ -706,7 +720,14 @@ gss_delete_sec_context (OM_uint32 * minor_status,
   _gss_mech_api_t mech;
   OM_uint32 ret;
 
-  if (!context_handle || *context_handle == GSS_C_NO_CONTEXT)
+  if (!context_handle)
+    {
+      if (minor_status)
+	*minor_status = 0;
+      return GSS_S_NO_CONTEXT | GSS_S_CALL_INACCESSIBLE_READ;
+    }
+
+  if (*context_handle == GSS_C_NO_CONTEXT)
     {
       if (minor_status)
 	*minor_status = 0;
@@ -721,12 +742,12 @@ gss_delete_sec_context (OM_uint32 * minor_status,
 
   mech = _gss_find_mech ((*context_handle)->mech);
 
-  ret = mech->delete_sec_context (minor_status, context_handle, output_token);
+  ret = mech->delete_sec_context (NULL, context_handle, output_token);
   if (GSS_ERROR (ret))
     /* XXX? Ignore error. */ ;
 
   (*context_handle)->peerptr = &(*context_handle)->peer;
-  ret = gss_release_name (minor_status, &(*context_handle)->peerptr);
+  ret = gss_release_name (NULL, &(*context_handle)->peerptr);
   if (GSS_ERROR (ret))
     /* XXX? Ignore error. */ ;
 
@@ -735,7 +756,6 @@ gss_delete_sec_context (OM_uint32 * minor_status,
 
   if (minor_status)
     *minor_status = 0;
-
   return GSS_S_COMPLETE;
 }
 
