@@ -23,6 +23,9 @@ EXTRA_DIST = utils.c
 TESTS = basic
 
 AM_CPPFLAGS = -I$(top_srcdir)/lib
+if KRB5
+AM_CPPFLAGS += -I$(top_srcdir)/lib/krb5
+endif
 LDADD = ../lib/libgss.la
 
 noinst_PROGRAMS = $(TESTS)
