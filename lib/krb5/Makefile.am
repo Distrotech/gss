@@ -25,7 +25,6 @@ noinst_LTLIBRARIES = libgss-shishi.la
 libgss_shishi_la_SOURCES = k5internal.h krb5.h protos.h \
 	context.c error.c name.c cred.c msg.c oid.c utils.c
 libgss_shishi_la_LIBADD = @LTLIBINTL@
-libgss_shishi_la_LDFLAGS = -version-info $(LT_CURRENT):$(LT_REVISION):$(LT_AGE)
 
 localedir = $(datadir)/locale
 DEFS = -DLOCALEDIR=\"$(localedir)\" @DEFS@
