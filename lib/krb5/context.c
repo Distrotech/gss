@@ -263,7 +263,7 @@ gss_krb5_accept_sec_context (OM_uint32 * minor_status,
     }
 
   cxk5->tkt = shishi_ap_tkt (cxk5->ap);
-  cxk5->key = shishi_tkt_key (cxk5->tkt);
+  cxk5->key = shishi_ap_key (cxk5->ap);
 
   if (shishi_apreq_mutual_required_p (crk5->sh, shishi_ap_req (cxk5->ap)))
     {
