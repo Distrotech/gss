@@ -5,7 +5,7 @@
 
 @setfilename gss.info
 @include version.texi
-@settitle Generic Security Service
+@settitle GNU Generic Security Service Library
 
 @c Unify some of the indices.
 @syncodeindex tp fn
@@ -13,8 +13,8 @@
 @syncodeindex vr fn
 
 @copying
-This manual is for @cite{Generic Security Service}, last updated
-@value{UPDATED}, for Version @value{VERSION}.
+This manual is last updated @value{UPDATED} for version
+@value{VERSION} of GNU GSS.
 
 Copyright @copyright{} 2003 Simon Josefsson.
 
@@ -22,26 +22,24 @@ Copyright @copyright{} 2003 Simon Josefsson.
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.1 or
 any later version published by the Free Software Foundation; with the
-Invariant Sections including ``Criticism of GSS'', with the
-Front-Cover Texts being ``A GNU Manual,'' and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled ``GNU Free Documentation License.''
-
-(a) The FSF's Back-Cover Text is: ``You have freedom to copy and modify
-this GNU Manual, like GNU software.  Copies published by the Free
-Software Foundation raise funds for GNU development.''
+Invariant Sections being ``Commercial Support'' and ``Criticism of
+GSS'', the Front-Cover texts being ``A GNU Manual'', and with the
+Back-Cover Texts being ``You have freedom to copy and modify this GNU
+Manual, like GNU software''.  A copy of the license is included in the
+section entitled ``GNU Free Documentation License''.
 @end quotation
 @end copying
 
-@dircategory Libraries
+@dircategory GNU Libraries
 @direntry
 * gss: (gss).			Generic Security Service API Library
 @end direntry
 
 @titlepage
 @title Generic Security Service
+@subtitle GSS-API Library for the GNU system
 @subtitle for version @value{VERSION}, @value{UPDATED}
-@author Simon Josefsson (@email{bug-gss@@josefsson.org})
+@author Simon Josefsson
 @page
 @vskip 0pt plus 1filll
 @insertcopying
@@ -51,7 +49,7 @@ Software Foundation raise funds for GNU development.''
 
 @ifnottex
 @node Top
-@top Generic Security Service
+@top GNU Generic Security Service
 
 @insertcopying
 @end ifnottex
@@ -82,22 +80,26 @@ Indices
 @chapter Introduction
 
 GSS is an implementation of the Generic Security Service Application
-Program Interface (GSS-API).  GSS-API is used by network servers
-(e.g., IMAP, SMTP) to provide security security services, e.g.,
-authenticate clients against servers.  GSS consists of a library and a
-manual.
+Program Interface (GSS-API).  GSS-API is used by network servers to
+provide security services, e.g., to authenticate SMTP/IMAP clients
+against SMTP/IMAP servers.  GSS consists of a library and a manual.
 
 GSS is developed for the GNU/Linux system, but runs on over 20
 platforms including most major Unix platforms and Windows, and many
 kind of devices including iPAQ handhelds and S/390 mainframes.
 
-GSS is licensed under the GNU Public License.
+GSS is a GNU project, and is licensed under the GNU General Public
+License.
 
 @menu
 * Getting Started::
 * Features::
+* GSS-API Overview::
 * Supported Platforms::
+* Commercial Support::
+* Downloading and Installing::
 * Bug Reports::
+* Contributing::
 @end menu
 
 @node Getting Started
@@ -144,6 +146,75 @@ language.
 It should work on all Unix like operating systems, including Windows.
 
 @end table
+
+@node GSS-API Overview
+@section GSS-API Overview
+
+This section describes GSS-API from a protocol point of view.
+
+The Generic Security Service Application Programming Interface
+provides security services to calling applications.  It allows a
+communicating application to authenticate the user associated with
+another application, to delegate rights to another application, and to
+apply security services such as confidentiality and integrity on a
+per-message basis.
+
+There are four stages to using the GSS-API:
+
+@enumerate
+@item
+The application acquires a set of credentials with which it may prove
+its identity to other processes. The application's credentials vouch
+for its global identity, which may or may not be related to any local
+username under which it may be running.
+
+@item
+A pair of communicating applications establish a joint security
+context using their credentials.  The security context is a pair of
+GSS-API data structures that contain shared state information, which
+is required in order that per-message security services may be
+provided.  Examples of state that might be shared between applications
+as part of a security context are cryptographic keys, and message
+sequence numbers.  As part of the establishment of a security context,
+the context initiator is authenticated to the responder, and may
+require that the responder is authenticated in turn.  The initiator
+may optionally give the responder the right to initiate further
+security contexts, acting as an agent or delegate of the initiator.
+This transfer of rights is termed delegation, and is achieved by
+creating a set of credentials, similar to those used by the initiating
+application, but which may be used by the responder.
+
+To establish and maintain the shared information that makes up the
+security context, certain GSS-API calls will return a token data
+structure, which is an opaque data type that may contain
+cryptographically protected data.  The caller of such a GSS-API
+routine is responsible for transferring the token to the peer
+application, encapsulated if necessary in an application- application
+protocol.  On receipt of such a token, the peer application should
+pass it to a corresponding GSS-API routine which will decode the token
+and extract the information, updating the security context state
+information accordingly.
+
+@item
+Per-message services are invoked to apply either: integrity and data
+origin authentication, or confidentiality, integrity and data origin
+authentication to application data, which are treated by GSS-API as
+arbitrary octet-strings.  An application transmitting a message that
+it wishes to protect will call the appropriate GSS-API routine
+(gss_get_mic or gss_wrap) to apply protection, specifying the
+appropriate security context, and send the resulting token to the
+receiving application.  The receiver will pass the received token
+(and, in the case of data protected by gss_get_mic, the accompanying
+message-data) to the corresponding decoding routine (gss_verify_mic or
+gss_unwrap) to remove the protection and validate the data.
+
+@item
+At the completion of a communications session (which may extend across
+several transport connections), each application calls a GSS-API
+routine to delete the security context.  Multiple contexts may also be
+used (either successively or simultaneously) within a single
+communications association, at the option of the applications.
+@end enumerate
 
 @node Supported Platforms
 @section Supported Platforms
@@ -261,6 +332,74 @@ GCC 2.95.4 and GNU Make. @code{alpha-unknown-freebsd4.7},
 If you use GSS on, or port GSS to, a new platform please report it to
 the author.
 
+@node Commercial Support
+@section Commercial Support
+
+Commercial support is available for users of GNU GSS.  The kind of
+support that can be purchased may include:
+
+@itemize
+
+@item Implement new features.
+Such as a new GSS-API mechanism.
+
+@item Port GSS to new platforms.
+This could include porting to an embedded platforms that may need
+memory or size optimization.
+
+@item Integrating GSS as a security environment in your existing project.
+
+@item System design of components related to GSS-API.
+
+@end itemize
+
+If you are interested, please write to:
+
+@verbatim
+Simon Josefsson Datakonsult
+Drottningholmsv. 70
+112 42 Stockholm
+Sweden
+
+E-mail: simon@josefsson.org
+@end verbatim
+
+If your company provide support related to GNU GSS and would like to
+be mentioned here, contact the author (@pxref{Bug Reports}).
+
+@node Downloading and Installing
+@section Downloading and Installing
+@cindex Installation
+@cindex Download
+
+The package can be downloaded from several places, including
+@url{http://josefsson.org/gss/releases/}.  The latest version is
+stored in a file, e.g., @samp{gss-@value{VERSION}.tar.gz} where the
+@samp{@value{VERSION}} indicate the highest version number.
+
+The package is then extracted, configured and built like many other
+packages that use Autoconf.  For detailed information on configuring
+and building it, refer to the @file{INSTALL} file that is part of the
+distribution archive.
+
+Here is an example terminal session that download, configure, build
+and install the package.  You will need a few basic tools, such as
+@samp{sh}, @samp{make} and @samp{cc}.
+
+@example
+$ wget -q http://josefsson.org/gss/releases/gss-@value{VERSION}.tar.gz
+$ tar xfz gss-@value{VERSION}.tar.gz
+$ cd gss-@value{VERSION}/
+$ ./configure
+...
+$ make
+...
+$ make install
+...
+@end example
+
+After that GSS should be properly installed and ready for use.
+
 @node Bug Reports
 @section Bug Reports
 @cindex Reporting Bugs
@@ -301,6 +440,62 @@ note.
 Send your bug report to:
 
 @center @samp{bug-gss@@josefsson.org}
+
+@node Contributing
+@section Contributing
+@cindex Contributing
+@cindex Hacking
+
+If you want to submit a patch for inclusion -- from solve a typo you
+discovered, up to adding support for a new feature -- you should
+submit it as a bug report (@pxref{Bug Reports}).  There are some
+things that you can do to increase the chances for it to be included
+in the official package.
+
+Unless your patch is very small (say, under 10 lines) we require that
+you assign the copyright of your work to the Free Software Foundation.
+This is to protect the freedom of the project.  If you have not
+already signed papers, we will send you the necessary information when
+you submit your contribution.
+
+For contributions that doesn't consist of actual programming code, the
+only guidelines are common sense.  Use it.
+
+For code contributions, a number of style guides will help you:
+
+@itemize @bullet
+
+@item Coding Style.
+Follow the GNU Standards document (@pxref{top, GNU Coding Standards,,
+standards}).
+
+If you normally code using another coding standard, there is no
+problem, but you should use @samp{indent} to reformat the code
+(@pxref{top, GNU Indent,, indent}) before submitting your work.
+
+@item Use the unified diff format @samp{diff -u}.
+
+@item Return errors.
+No reason whatsoever should abort the execution of the library.  Even
+memory allocation errors, e.g. when malloc return NULL, should work
+although result in an error code.
+
+@item Design with thread safety in mind.
+Don't use global variables.  Don't even write to per-handle global
+variables unless the documented behaviour of the function you write is
+to write to the per-handle global variable.
+
+@item Avoid using the C math library.
+It causes problems for embedded implementations, and in most
+situations it is very easy to avoid using it.
+
+@item Document your functions.
+Use comments before each function headers, that, if properly
+formatted, are extracted into Texinfo manuals and GTK-DOC web pages.
+
+@item Supply a ChangeLog and NEWS entries, where appropriate.
+
+@end itemize
 
 
 @c **********************************************************
