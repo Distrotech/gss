@@ -115,7 +115,11 @@ init_request (OM_uint32 * minor_status,
   if (!rc)
     return GSS_S_FAILURE;
 
-  k5->flags = req_flags;
+  k5->flags = req_flags & (/* GSS_C_DELEG_FLAG | */
+			   GSS_C_MUTUAL_FLAG |
+			   GSS_C_REPLAY_FLAG | GSS_C_SEQUENCE_FLAG |
+			   GSS_C_CONF_FLAG | GSS_C_INTEG_FLAG);
+
   k5->key = shishi_ap_key (k5->ap);
   k5->reqdone = 1;
 
