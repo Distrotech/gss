@@ -30,6 +30,8 @@ gss_acquire_cred (OM_uint32 * minor_status,
 		  gss_cred_id_t * output_cred_handle,
 		  gss_OID_set * actual_mechs, OM_uint32 * time_rec)
 {
+  if (minor_status)
+    *minor_status = 0;
   return GSS_S_FAILURE;
 }
 
