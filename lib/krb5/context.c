@@ -71,17 +71,6 @@ init_request (OM_uint32 * minor_status,
       return GSS_S_NO_CRED;
     }
 
-  /* This should be simplified.  Fix Shishi. */
-  rc = shishi_ap_tktoptionsdata (k5->sh, &k5->ap, k5->tkt,
-				 SHISHI_APOPTIONS_MUTUAL_REQUIRED, "a",
-				 1);
-  if (rc != SHISHI_OK)
-    return GSS_S_FAILURE;
-
-  rc = shishi_ap_req_build (k5->ap);
-  if (rc != SHISHI_OK)
-    return GSS_S_FAILURE;
-
   maj_stat = _gss_krb5_checksum1964_pack (initiator_cred_handle,
 					  input_chan_bindings,
 					  req_flags,
@@ -89,24 +78,15 @@ init_request (OM_uint32 * minor_status,
   if (GSS_ERROR (maj_stat))
     return maj_stat;
 
-  rc = shishi_authenticator_set_cksum (k5->sh,
-				       shishi_ap_authenticator (k5->ap),
-				       0x8003, cksum, cksumlen);
-
-  free (cksum);
+  rc = shishi_ap_tktoptionsraw (k5->sh, &k5->ap, k5->tkt,
+				SHISHI_APOPTIONS_MUTUAL_REQUIRED,
+				cksum, cksumlen);
   if (rc != SHISHI_OK)
     return GSS_S_FAILURE;
 
-  rc = shishi_apreq_add_authenticator
-    (k5->sh, shishi_ap_req (k5->ap),
-     shishi_tkt_key (shishi_ap_tkt (k5->ap)),
-     SHISHI_KEYUSAGE_APREQ_AUTHENTICATOR,
-     shishi_ap_authenticator (k5->ap));
-  if (rc != SHISHI_OK)
-    return GSS_S_FAILURE;
+  shishi_ap_authenticator_cksumtype_set (k5->ap, 0x8003);
 
-  rc = shishi_new_a2d (k5->sh, shishi_ap_req (k5->ap),
-		       &tmp.value, &tmp.length);
+  rc = shishi_ap_req_der (k5->ap, &tmp.value, &tmp.length);
   if (rc != SHISHI_OK)
     return GSS_S_FAILURE;
 
