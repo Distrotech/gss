@@ -57,28 +57,6 @@
 
 #ifdef USE_KERBEROS5
 #include <shishi.h>
-
-/*
- * From RFC 1964:
- *
- * To support ongoing experimentation, testing, and evolution of the
- * specification, the Kerberos V5 GSS-API mechanism as defined in this
- * and any successor memos will be identified with the following
- * Object Identifier, as defined in RFC-1510, until the specification
- * is advanced to the level of Proposed Standard RFC:
- *
- * {iso(1), org(3), dod(5), internet(1), security(5), kerberosv5(2)}
- *
- * Upon advancement to the level of Proposed Standard RFC, the
- * Kerberos V5 GSS-API mechanism will be identified by an Object
- * Identifier having the value:
- *
- * {iso(1) member-body(2) United States(840) mit(113554) infosys(1)
- * gssapi(2) krb5(2)}
- *
- */
-
-#define GSS_KRB5_OID "1.2.840.113554.1.2.2"
 #endif
 
 #define _(String) dgettext (PACKAGE, String)
@@ -109,7 +87,7 @@ struct gss_name_t
 };
 
 int
-_gss_wrap_token (char *oid,
+_gss_wrap_token (char *oid, size_t oidlen,
 		 char *in, size_t inlen,
 		 char **out, size_t *outlen);
 
