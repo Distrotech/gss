@@ -255,6 +255,10 @@ gss_krb5_init_sec_context (OM_uint32 * minor_status,
   if (time_rec)
     *time_rec = gss_krb5_tktlifetime (k5->tkt);
 
+  /* XXX Remove these once msg.c support sequence numbers properly. */
+  k5->initseqnr = 0;
+  k5->acceptseqnr = 0;
+
   return maj_stat;
 }
 
