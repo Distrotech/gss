@@ -22,5 +22,4 @@
 OM_uint32
 _gss_krb5_checksum_pack (const gss_cred_id_t initiator_cred_handle,
 			 const gss_channel_bindings_t input_chan_bindings,
-			 OM_uint32 req_flags,
-			 char **data, size_t *datalen);
+			 OM_uint32 req_flags, char **data, size_t * datalen);

@@ -75,7 +75,7 @@ gss_import_name (OM_uint32 * minor_status,
   *output_name = xmalloc (sizeof (**output_name));
   (*output_name)->length = input_name_buffer->length;
   (*output_name)->value = xmemdup (input_name_buffer->value,
-				  input_name_buffer->length);
+				   input_name_buffer->length);
 
   (*output_name)->type = input_name_type;
 

@@ -207,7 +207,7 @@ _gss_decapsulate_token (const char *in, size_t inlen,
 int
 gss_decapsulate_token (const gss_buffer_t input_message,
 		       const gss_OID token_oid,
-		       char **dataptr, size_t *datalen)
+		       char **dataptr, size_t * datalen)
 {
   char *oid;
   size_t oidlen;

@@ -39,8 +39,7 @@ gss_copy_oid (OM_uint32 * minor_status,
 extern OM_uint32
 gss_duplicate_oid (OM_uint32 * minor_status,
 		   const gss_OID src_oid, gss_OID * dest_oid);
-extern OM_uint32
-gss_release_oid (OM_uint32 * minor_status, gss_OID * oid);
+extern OM_uint32 gss_release_oid (OM_uint32 * minor_status, gss_OID * oid);
 extern int gss_userok (const gss_name_t name, const char *username);
 
 /* See asn1.c. */
@@ -54,7 +53,7 @@ gss_encapsulate_token_prefix (const gss_buffer_t input_message,
 extern int
 gss_decapsulate_token (const gss_buffer_t input_message,
 		       const gss_OID token_oid,
-		       char **dataptr, size_t *datalen);
+		       char **dataptr, size_t * datalen);
 
 /* Static versions of the public OIDs for use, e.g., in static
    variable initalization.  See oid.c. */

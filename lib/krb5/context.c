@@ -127,8 +127,7 @@ init_reply (OM_uint32 * minor_status,
 	    const gss_buffer_t input_token,
 	    gss_OID * actual_mech_type,
 	    gss_buffer_t output_token,
-	    OM_uint32 * ret_flags,
-	    OM_uint32 * time_rec)
+	    OM_uint32 * ret_flags, OM_uint32 * time_rec)
 {
   gss_ctx_id_t ctx = *context_handle;
   _gss_krb5_ctx_t k5 = ctx->krb5;
@@ -159,8 +158,8 @@ init_reply (OM_uint32 * minor_status,
   if (rc != SHISHI_OK)
     {
       /* A strict 1964 implementation would return
-	 GSS_S_DEFECTIVE_TOKEN here.  gssapi-cfx permit absent
-	 sequence number, though. */
+         GSS_S_DEFECTIVE_TOKEN here.  gssapi-cfx permit absent
+         sequence number, though. */
       k5->acceptseqnr = 0;
     }
 
@@ -195,11 +194,11 @@ gss_krb5_init_sec_context (OM_uint32 * minor_status,
   if (initiator_cred_handle)
     {
       /* We only support the default initiator.  See k5internal.h for
-	 adding a Shishi_tkt to the credential structure.  I'm not sure
-	 what the use would be -- user-to-user authentication perhaps?
-	 Later: if you have tickets for foo@BAR and bar@FOO, it may be
-	 useful to call gss_acquire_cred first to chose which one to
-	 initiate the context with.  Not many applications need this. */
+         adding a Shishi_tkt to the credential structure.  I'm not sure
+         what the use would be -- user-to-user authentication perhaps?
+         Later: if you have tickets for foo@BAR and bar@FOO, it may be
+         useful to call gss_acquire_cred first to chose which one to
+         initiate the context with.  Not many applications need this. */
       return GSS_S_NO_CRED;
     }
 
@@ -228,12 +227,12 @@ gss_krb5_init_sec_context (OM_uint32 * minor_status,
       if (GSS_ERROR (maj_stat))
 	return maj_stat;
 
-      k5->flags = req_flags & (/* GSS_C_DELEG_FLAG | */
-			       GSS_C_MUTUAL_FLAG |
-			       GSS_C_REPLAY_FLAG | GSS_C_SEQUENCE_FLAG |
-			       GSS_C_CONF_FLAG | GSS_C_INTEG_FLAG);
+      k5->flags = req_flags & (	/* GSS_C_DELEG_FLAG | */
+				GSS_C_MUTUAL_FLAG |
+				GSS_C_REPLAY_FLAG | GSS_C_SEQUENCE_FLAG |
+				GSS_C_CONF_FLAG | GSS_C_INTEG_FLAG);
       /* PROT_READY is not mentioned in 1964/gssapi-cfx but we support
-	 it anyway. */
+         it anyway. */
       k5->flags |= GSS_C_PROT_READY_FLAG;
 
       if (ret_flags)
@@ -383,7 +382,8 @@ gss_krb5_accept_sec_context (OM_uint32 * minor_status,
 	}
 
       rc = shishi_encapreppart_seqnumber_get (cxk5->sh,
-					      shishi_ap_encapreppart (cxk5->ap),
+					      shishi_ap_encapreppart (cxk5->
+								      ap),
 					      &cxk5->acceptseqnr);
       if (rc != SHISHI_OK)
 	{

@@ -260,7 +260,8 @@ gss_krb5_unwrap (OM_uint32 * minor_status,
   size_t tmplen;
   int rc;
 
-  rc = gss_decapsulate_token (input_message_buffer, GSS_KRB5, &data, &datalen);
+  rc = gss_decapsulate_token (input_message_buffer, GSS_KRB5,
+			      &data, &datalen);
   if (!rc)
     return GSS_S_BAD_MIC;
 
@@ -360,8 +361,7 @@ gss_krb5_unwrap (OM_uint32 * minor_status,
 	rc = shishi_checksum (k5->sh,
 			      k5->key,
 			      0, SHISHI_RSA_MD5_DES_GSS,
-			      data + 16, datalen - 16,
-			      &tmp, &tmplen);
+			      data + 16, datalen - 16, &tmp, &tmplen);
 	if (rc != SHISHI_OK || tmplen != 8)
 	  return GSS_S_FAILURE;
 
@@ -375,8 +375,7 @@ gss_krb5_unwrap (OM_uint32 * minor_status,
 	output_message_buffer->length = datalen - 8 - 8 - 8 - 8 - padlen;
 	output_message_buffer->value =
 	  xmalloc (output_message_buffer->length);
-	memcpy (output_message_buffer->value, pt,
-		datalen - 4 * 8 - padlen);
+	memcpy (output_message_buffer->value, pt, datalen - 4 * 8 - padlen);
       }
       break;
 

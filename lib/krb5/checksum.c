@@ -29,8 +29,7 @@
 OM_uint32
 _gss_krb5_checksum_pack (const gss_cred_id_t initiator_cred_handle,
 			 const gss_channel_bindings_t input_chan_bindings,
-			 OM_uint32 req_flags,
-			 char **data, size_t *datalen)
+			 OM_uint32 req_flags, char **data, size_t * datalen)
 {
   char *p;
 
@@ -100,7 +99,7 @@ _gss_krb5_checksum_pack (const gss_cred_id_t initiator_cred_handle,
    *                 in little-endian form.
    */
 
-  req_flags &= /* GSS_C_DELEG_FLAG | */
+  req_flags &=			/* GSS_C_DELEG_FLAG | */
     GSS_C_MUTUAL_FLAG |
     GSS_C_REPLAY_FLAG | GSS_C_SEQUENCE_FLAG |
     GSS_C_CONF_FLAG | GSS_C_INTEG_FLAG;
@@ -127,8 +126,8 @@ _gss_krb5_checksum_pack (const gss_cred_id_t initiator_cred_handle,
   if (req_flags & GSS_C_DELEG_FLAG)
     {
       /* XXX We don't support credential delegation yet.  We should
-	 not fail here, as GSS_C_DELEG_FLAG is masked out above, and
-	 in context.c. */
+         not fail here, as GSS_C_DELEG_FLAG is masked out above, and
+         in context.c. */
     }
 
   return GSS_S_COMPLETE;

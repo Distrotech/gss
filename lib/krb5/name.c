@@ -76,7 +76,8 @@ gss_krb5_canonicalize_name (OM_uint32 * minor_status,
 	  size_t hostlen = strlen (hostname);
 	  size_t oldlen = (*output_name)->length;
 	  size_t newlen = oldlen + 1 + hostlen;
-	  (*output_name)->value = xrealloc ((*output_name)->value, newlen + 1);
+	  (*output_name)->value =
+	    xrealloc ((*output_name)->value, newlen + 1);
 	  (*output_name)->value[oldlen] = '/';
 	  memcpy ((*output_name)->value + 1 + oldlen, hostname, hostlen);
 	  (*output_name)->length = newlen;
