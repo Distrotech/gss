@@ -1641,6 +1641,8 @@ TBA: no credential forwarding.
 
 TBA: internationalization
 
+TBA: dynamically generated OIDs and memory deallocation issue
+
 TBA: krb5: no way to access authorization-data
 
 TBA: krb5: firewall/pre-IP: iakerb status?
