@@ -4,11 +4,11 @@ SUBDIRS = m4
 
 AUTOMAKE_OPTIONS = 1.5 gnits no-dependencies
 
-noinst_LIBRARIES = libfoo.a
+noinst_LTLIBRARIES = libfoo.la
 
-libfoo_a_SOURCES =
-libfoo_a_LIBADD = @LIBOBJS@
-#libfoo_la_LIBADD = @LTLIBOBJS@
+libfoo_la_SOURCES =
+#libfoo_a_LIBADD = @LIBOBJS@
+libfoo_la_LIBADD = @LTLIBOBJS@
 EXTRA_DIST =
 BUILT_SOURCES =
 SUFFIXES =
@@ -17,10 +17,10 @@ CLEANFILES =
 DISTCLEANFILES =
 MAINTAINERCLEANFILES =
 
-libfoo_a_SOURCES += gettext.h
+libfoo_la_SOURCES += gettext.h
 
 
 
-libfoo_a_SOURCES += unlocked-io.h
+libfoo_la_SOURCES += unlocked-io.h
 
-libfoo_a_SOURCES += xalloc.h xmalloc.c xstrdup.c
+libfoo_la_SOURCES += xalloc.h xmalloc.c xstrdup.c
