@@ -40,8 +40,6 @@ AM_CONFIG_HEADER(config.h)
 AM_GNU_GETTEXT(external)
 AM_GNU_GETTEXT_VERSION(0.12.1)
 AC_PROG_CC
-AM_MISSING_PROG(HELP2MAN, help2man, $missing_dir)
-AM_MISSING_PROG(TEXI2PDF, texi2pdf, $missing_dir)
 
 # Checks for header files.
 AC_GNU_SOURCE
@@ -63,23 +61,23 @@ AC_ARG_ENABLE(kerberos5,
 	AC_HELP_STRING([--disable-kerberos5],
                        [disable Kerberos V5 mechanism unconditionally]),
 	kerberos5=$enableval)
+if test "$kerberos5" != "no"; then
+	AC_RUN_IFELSE(AC_LANG_PROGRAM([[#include <shishi.h>]],
+			[[return shishi_check_version ("0.0.1");]]),
+		[kerberos5=no],
+		[kerberos5=yes AC_SUBST(SHISHI_LIBS, -lshishi)],
+		[-lshishi])
+fi
 if test "$kerberos5" != "no" ; then
-	PKG_CHECK_MODULES(SHISHI, shishi >= 0.0.0,
-				[kerberos5=yes], [kerberos5=no])
-	if test "$kerberos5" != "yes" ; then
-		AC_MSG_WARN([Shishi not found, required for Kerberos 5])
-	else
-		AC_DEFINE(USE_KERBEROS5, 1,
-			[Define to 1 if you want the Kerberos 5 mechanism.])
-	fi
+	AC_DEFINE(USE_KERBEROS5, 1, [Define to 1 if you want Kerberos 5 mech.])
+else
+	AC_MSG_WARN([Shishi not found, required for Kerberos 5])
 fi
 AC_MSG_CHECKING([if the Kerberos V5 mechanism should be supported])
 AC_MSG_RESULT($kerberos5)
 AM_CONDITIONAL(KRB5, test "$kerberos5" = "yes")
 
-# We are done
 AC_CONFIG_FILES(Makefile gss.pc lib/gss.h po/Makefile.in m4/Makefile \
 		doc/Makefile lib/Makefile tests/Makefile \
 		gl/Makefile gl/m4/Makefile)
-
 AC_OUTPUT
