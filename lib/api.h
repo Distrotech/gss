@@ -1,4 +1,4 @@
-/* api.h	Header file for GSS-API.
+/* api.h --- Header file for GSS-API.
  * Copyright (C) 2003, 2004  Simon Josefsson
  *
  * This file is part of the Generic Security Service (GSS).
@@ -55,21 +55,10 @@
 #ifndef GSSAPI_H_
 #define GSSAPI_H_
 
-
-
 /*
  * First, include stddef.h to get size_t defined.
  */
 #include <stddef.h>
-
-
-#ifdef GSS_SHOULD_INCLUDE_XOM
-/*
- * If the platform supports the xom.h header file, it should be
- * included here.
- */
-#include <xom.h>
-#endif
 
 /*
  * Now define the three implementation-dependent types.
@@ -92,21 +81,8 @@ typedef unsigned int gss_uint32;
 typedef unsigned long gss_uint32;
 #endif
 
-#ifdef OM_STRING
 /*
- * We have included the xom.h header file.  Verify that OM_uint32
- * is defined correctly.
- */
-
-#if sizeof(gss_uint32) != sizeof(OM_uint32)
-#error Incompatible definition of OM_uint32 from xom.h
-#endif
-
-typedef OM_object_identifier gss_OID_desc, *gss_OID;
-
-#else
-/*
- * We can't use X/Open definitions, so roll our own.
+ * We don't use X/Open definitions, so roll our own.
  */
 
 typedef gss_uint32 OM_uint32;
@@ -116,8 +92,6 @@ typedef struct gss_OID_desc_struct
   OM_uint32 length;
   void *elements;
 } gss_OID_desc, *gss_OID;
-
-#endif
 
 typedef struct gss_OID_set_desc_struct
 {
@@ -150,11 +124,6 @@ typedef int gss_cred_usage_t;
 /*
  * Flag bits for context-level services.
  */
-
-
-
-
-
 #define GSS_C_DELEG_FLAG      1
 #define GSS_C_MUTUAL_FLAG     2
 #define GSS_C_REPLAY_FLAG     4
