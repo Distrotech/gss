@@ -139,6 +139,9 @@ gss_test_oid_set_member (OM_uint32 * minor_status,
 
   *present = 0;
 
+  if (member == GSS_C_NO_OID)
+    return GSS_S_COMPLETE;
+
   for (i = 0, cur = set->elements; i < set->count; i++, cur++)
     {
       if (cur->length == member->length &&
