@@ -28,7 +28,7 @@ include_HEADERS = gssapi.h gss.h
 
 libgss_la_SOURCES = internal.h version.c error.c \
 	context.c cred.c misc.c msg.c name.c obsolete.c oid.c \
-	asn1.c krb5.c
+	asn1.c krb5.c gss_asn1_tab.c
 
 libgss_la_LIBADD = @LTLIBINTL@ @SHISHI_LIBS@
 libgss_la_LDFLAGS = -version-info $(LT_CURRENT):$(LT_REVISION):$(LT_AGE)
