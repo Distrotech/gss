@@ -1,0 +1,84 @@
+
+GSSAPI/Kerberos/SASL service names
+----------------------------------
+
+(last updated 2003-10-29)
+
+A service is a resource provided to network clients; often provided by
+more than one server and potentially by more than one protocol.
+Service names are short alphanumeric textual strings.  Service names
+are used in the GSSAPI [RFC2078] host-service name form, are specified
+as part of a SASL profile [RFC2222] and are used by Kerberos
+service-based tickets [RFC1510].
+
+Service Name   Usage					Reference
+------------   -----					---------
+rcmd           remote command/rlogin/telnet		[RFC1411]
+imap           mailstore access/IMAP4			[RFC1731]
+pop            maildrop access/POP3			[RFC1734]
+acap           remote configuration access/ACAP		[RFC2244]
+nfs            distributed file system protocol         [RFC1813,RFC1094]
+ftp	       file transfer/FTP/TFTP			[RFC2228]
+ldap	       Lightweight Directory Access		[RFC2251,RFC2829]
+               Protocol (LDAP)
+smtp           message transfer/SMTP                    [RFC2554]
+beep           Blocks Extensible Exchange Protocol      [RFC3080]
+mupdate        Mailbox Update (MUPDATE) Protocol        [RFC-draft-siemborski-mupdate-04.txt] 
+
+References
+----------
+
+[RFC1094] "NFS: Network File System Protocol specification", RFC 1094,
+	  Sun Microsystems Inc., March 1989.
+
+[RFC1411] Borman, D., "Telnet Authentication: Kerberos Version 4.",
+          RFC 1411, Cray Research, Inc., January 1993.
+
+[RFC1510] Kohl, J., Neuman, C., "The Kerberos Network Authentication
+          Service (V5).", RFC 1510, Digital Equipment Corporation,
+          September 1993.
+
+[RFC1731] Myers, J., "IMAP4 Authentication Mechanism", RFC 1731,
+          Carnegie-Mellon University, December 1994.
+
+[RFC1734] Myers, J. "POP3 AUTHentication command", RFC 1734,
+          Carnegie-Mellon University, December 1994.
+
+[RFC1813] Callaghan, B., B. Pawlowski & P. Staubach, "NFS Version 3
+	  Protocol Specification", RFC 1813, June 1995.
+
+[RFC2078] Linn, J., "Generic Security Service Application Program
+          Interface, Version 2", RFC 2078, OpenVision Technologies,
+          January 1997.
+
+[RFC2222] Myers, J., "Simple Authentication and Security Layer
+          (SASL)", RFC 2222, Netscape Communications, October 1997.
+
+[RFC2228] Horowitz, M., Lunt, S., "FTP Security Extensions", RFC 2228,
+          Cygnus Solutions, Bellcore, October 1997, Appendix I.
+
+[RFC2244] Newman, C., Myers, J., "ACAP -- Application Configuration
+	  Access Protocol", RFC 2244, Innosoft, Netscape, November
+	  1997.
+
+[RFC2251] Wahl, M., T. Howes & S. Kille. "Lightweight Directory Access
+	  Protocol (v3)", RFC2251, December 1997.
+
+[RFC2554] J. Myers, "SMTP Service Extension for Authentication",
+          RFC 2554, March 1999.
+
+[RFC2829] Wahl, M., H. Alvestrand, J. Hodges, and R. Morgan, 
+          "Authentication Methods for LDAP", RFC 2829, May 2000
+
+[RFC3080] Rose, M. "The Blocks Extensible Exchange Protocol Core",
+          RFC 3080, February 2001.
+
+[RFC-draft-siemborski-mupdate-04.txt]
+          R. Siemborski, "The MUPDATE Distributed Mailbox Database Protocol",
+          RFC XXXX, Month Year.
+
+[]
+
+
+
+
