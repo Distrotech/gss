@@ -1386,13 +1386,20 @@ pointer equality.  Returns a boolean true iff the OIDs are equal.
 
 @end deftypefun
 
+@deftypefun OM_uint32 gss_copy_oid (OM_uint32 * @var{minor_status},
+	      const gss_OID @var{src_oid}, gss_OID @var{dest_oid});
+
+Make an exact copy of the given OID, that shares no memory areas with
+the original.  The contents of the copied OID must be deallocated by
+the caller.  Returns GSS_S_COMPLETE on success.
+@end deftypefun
+
 @deftypefun OM_uint32 gss_duplicate_oid (OM_uint32 * @var{minor_status},
 		   const gss_OID @var{src_oid}, gss_OID * @var{dest_oid})
 
 Allocate an exact copy of the given OID, that shares no memory areas
-with the original.  The newly created OID must be deallocated by the
-caller using @code{gss_release_oid()}.  Returns GSS_S_COMPLETE on
-success.
+with the original.  The newly created OID, and its contents, must be
+deallocated by the caller.  Returns GSS_S_COMPLETE on success.
 
 @end deftypefun
 
