@@ -180,16 +180,7 @@ gss_release_oid_set (OM_uint32 * minor_status, gss_OID_set * set)
   return GSS_S_COMPLETE;
 }
 
-OM_uint32
-gss_display_status (OM_uint32 * minor_status,
-		    OM_uint32 status_value,
-		    int status_type,
-		    const gss_OID mech_type,
-		    OM_uint32 * message_context, gss_buffer_t status_string)
-{
-  /* XXX */
-  return GSS_S_FAILURE;
-}
+/* See error.c for gss_display_status() */
 
 /* See meta.c for gss_indicate_mechs() */
 
