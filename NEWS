@@ -4,6 +4,12 @@ See the end for copying conditions.
 
 * Changes in 0.0.7 (unreleased)
 
+** Improvements to build environment.
+The gss.h header file no longer include gss/krb5.h when the Kerberos 5
+mechanism is disabled.
+
+** Autoconf 2.59, Automake 1.8 beta, Libtool CVS used.
+
 * Changes in 0.0.6 (released 2003-09-22)
 
 ** Update for Shishi 0.0.7 API.
