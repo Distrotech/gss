@@ -20,7 +20,7 @@
 
 EXTRA_DIST = utils.c
 
-TESTS = name
+TESTS = basic krb5
 
 INCLUDES = -I$(top_srcdir)/lib
 LDADD = ../lib/libgss.la
