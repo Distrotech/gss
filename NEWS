@@ -2,7 +2,7 @@ GSS NEWS -- History of user-visible changes.                    -*- outline -*-
 Copyright (C) 2003, 2004 Simon Josefsson
 See the end for copying conditions.
 
-* Changes in 0.0.12 (unreleased)
+* Changes in 0.0.12 (released 2004-08-01)
 
 ** Added rudimentary self tests of Kerberos 5 context init/accept.
 Tests client and server authentication, with and without mutual
