@@ -20,7 +20,7 @@ dnl Process this file with autoconf to produce a configure script.
 # 02111-1307, USA.
 
 AC_PREREQ(2.50)
-AC_INIT(gss, 0.0.1, bug-gss@josefsson.org)
+AC_INIT(gss, 0.0.2, bug-gss@josefsson.org)
 
 # Interfaces removed:       CURRENT++ AGE=0 REVISION=0
 # Interfaces added:         CURRENT++ AGE++ REVISION=0
