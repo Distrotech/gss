@@ -20,10 +20,10 @@
 
 INCLUDES = -I../lib -I../intl @ARGP_CFLAGS@
 
-bin_PROGRAMS = ggssapi
+bin_PROGRAMS = gss
 
-ggssapi_SOURCES = ggssapi.c
-ggssapi_LDADD = ../lib/libggssapi.la @ARGP_LIBS@
+gss_SOURCES = gss.c
+gss_LDADD = ../lib/libgss.la @ARGP_LIBS@
 
 localedir = $(datadir)/locale
 
