@@ -69,7 +69,23 @@ gss_accept_sec_context (OM_uint32 * minor_status,
 			OM_uint32 * time_rec,
 			gss_cred_id_t * delegated_cred_handle)
 {
-  return GSS_S_FAILURE;
+  _gss_mech_api_t mech;
+
+  mech = (*context_handle == GSS_C_NO_CONTEXT) ?
+    _gss_find_mech (mech_type ? *mech_type : GSS_C_NO_OID) :
+    _gss_find_mech ((*context_handle)->mech);
+
+  return mech->accept_sec_context (minor_status,
+				   context_handle,
+				   acceptor_cred_handle,
+				   input_token_buffer,
+				   input_chan_bindings,
+				   src_name,
+				   mech_type,
+				   output_token,
+				   ret_flags,
+				   time_rec,
+				   delegated_cred_handle);
 }
 
 OM_uint32
