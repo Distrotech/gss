@@ -44,10 +44,7 @@ gss_copy_oid (OM_uint32 * minor_status,
     return GSS_S_FAILURE;
 
   dest_oid->length = src_oid->length;
-  dest_oid->elements = malloc(src_oid->length);
-  if (!dest_oid->elements)
-    return GSS_S_FAILURE;
-
+  dest_oid->elements = xmalloc(src_oid->length);
   memcpy(dest_oid->elements, src_oid->elements, src_oid->length);
 
   return GSS_S_COMPLETE;
@@ -65,9 +62,7 @@ gss_duplicate_oid (OM_uint32 * minor_status,
   if (!src_oid || src_oid->length == 0 || src_oid->elements == NULL)
     return GSS_S_FAILURE;
 
-  *dest_oid = malloc(sizeof(**dest_oid));
-  if (!*dest_oid)
-    return GSS_S_FAILURE;
+  *dest_oid = xmalloc(sizeof(**dest_oid));
 
   maj_stat = gss_copy_oid (minor_status, src_oid, *dest_oid);
   if (maj_stat != GSS_S_COMPLETE)
@@ -85,10 +80,7 @@ gss_create_empty_oid_set (OM_uint32 * minor_status, gss_OID_set * oid_set)
   if (minor_status)
     *minor_status = 0;
 
-  *oid_set = malloc(sizeof(**oid_set));
-  if (!*oid_set)
-    return GSS_S_FAILURE;
-
+  *oid_set = xmalloc(sizeof(**oid_set));
   (*oid_set)->count = 0;
   (*oid_set)->elements = NULL;
 
@@ -122,11 +114,9 @@ gss_add_oid_set_member (OM_uint32 * minor_status,
     return GSS_S_FAILURE;
 
   (*oid_set)->count++;
-  (*oid_set)->elements = realloc((*oid_set)->elements,
-				 (*oid_set)->count *
-				 sizeof(*(*oid_set)->elements));
-  if (!(*oid_set)->elements)
-    return GSS_S_FAILURE;
+  (*oid_set)->elements = xrealloc((*oid_set)->elements,
+				  (*oid_set)->count *
+				  sizeof(*(*oid_set)->elements));
 
   major_stat = gss_copy_oid (minor_status, member_oid,
 			     (*oid_set)->elements + ((*oid_set)->count - 1));

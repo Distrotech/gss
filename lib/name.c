@@ -31,15 +31,9 @@ gss_import_name (OM_uint32 * minor_status,
   if (!output_name)
     return GSS_S_FAILURE;
 
-  *output_name = malloc (sizeof (**output_name));
-  if (!*output_name)
-    return GSS_S_FAILURE;
-
+  *output_name = xmalloc (sizeof (**output_name));
   (*output_name)->length = input_name_buffer->length;
-  (*output_name)->value = malloc (input_name_buffer->length);
-  if (!(*output_name)->value)
-    return GSS_S_FAILURE;
-
+  (*output_name)->value = xmalloc (input_name_buffer->length);
   memcpy ((*output_name)->value, input_name_buffer->value,
 	  input_name_buffer->length);
 
@@ -67,9 +61,7 @@ gss_display_name (OM_uint32 * minor_status,
     return GSS_S_BAD_NAME;
 
   output_name_buffer->length = input_name->length;
-  output_name_buffer->value = malloc (input_name->length+1);
-  if (!output_name_buffer->value)
-    return GSS_S_FAILURE;
+  output_name_buffer->value = xmalloc (input_name->length+1);
   if (input_name->value)
     memcpy (output_name_buffer->value, input_name->value, input_name->length);
 
@@ -160,10 +152,7 @@ gss_duplicate_name (OM_uint32 * minor_status,
   if (GSS_ERROR(maj_stat))
     return maj_stat;
   (*dest_name)->length = src_name->length;
-  (*dest_name)->value = malloc(src_name->length);
-
-  if (!(*dest_name)->value)
-    return GSS_S_FAILURE;
+  (*dest_name)->value = xmalloc(src_name->length);
   memcpy((*dest_name)->value, src_name->value, src_name->length);
 
   if (minor_status)

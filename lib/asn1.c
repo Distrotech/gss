@@ -99,10 +99,7 @@ _gss_encapsulate_token (char *oid, size_t oidlen,
   _gss_asn1_length_der(asn1len, NULL, &asn1lenlen);
 
   *outlen = 1 + asn1lenlen + asn1len;
-  p = malloc(*outlen);
-  if (!p)
-    return 0;
-
+  p = xmalloc(*outlen);
   *out = p;
 
   *p++ = '\x60';
@@ -142,9 +139,7 @@ gss_encapsulate_token_prefix (gss_buffer_t input_message,
   int rc;
 
   inlen = prefixlen + input_message->length;
-  in = malloc(inlen);
-  if (!in)
-    return 0;
+  in = xmalloc(inlen);
   memcpy(in, prefix, prefixlen);
   memcpy(in + prefixlen, input_message->value, input_message->length);
 
@@ -201,18 +196,14 @@ _gss_decapsulate_token (char *in, size_t inlen,
     return 0;
 
   *oidlen = asn1lenlen;
-  *oid = malloc(*oidlen);
-  if (!*oid)
-    return 0;
+  *oid = xmalloc(*oidlen);
   memcpy(*oid, in, *oidlen);
 
   inlen -= asn1lenlen;
   in += asn1lenlen;
 
   *outlen = inlen;
-  *out = malloc(*outlen);
-  if (!*out)
-    return 0;
+  *out = xmalloc(*outlen);
   memcpy(*out, in, *outlen);
 
   return 1;

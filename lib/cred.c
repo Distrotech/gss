@@ -31,13 +31,7 @@ gss_acquire_cred (OM_uint32 * minor_status,
 		  gss_OID_set * actual_mechs,
 		  OM_uint32 * time_rec)
 {
-  gss_cred_id_desc *p;
-
-  p = malloc(sizeof(*p));
-  if (!p)
-    return GSS_S_FAILURE;
-  memset(p, 0, sizeof(*p));
-  *output_cred_handle = p;
+  *output_cred_handle = xcalloc(sizeof(**output_cred_handle), 1);
 
   /* XXX */
   if (actual_mechs)

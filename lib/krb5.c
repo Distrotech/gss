@@ -107,16 +107,9 @@ gss_krb5_init_sec_context (OM_uint32 * minor_status,
       gss_ctx_id_t ctx;
       gss_buffer_desc tmp;
 
-      ctx = malloc(sizeof(*ctx));
-      if (!ctx)
-	return GSS_S_FAILURE;
-
+      ctx = xcalloc(sizeof(*ctx), 1);
       ctx->mech = GSS_KRB5;
-
-      ctx->krb5 = malloc(sizeof(*ctx->krb5));
-      if (!ctx->krb5)
-	return GSS_S_FAILURE;
-      memset(ctx->krb5, 0, sizeof(*ctx->krb5));
+      ctx->krb5 = xcalloc(sizeof(*ctx->krb5), 1);
 
       *context_handle = ctx;
 
@@ -162,7 +155,7 @@ gss_krb5_init_sec_context (OM_uint32 * minor_status,
       ctx->krb5->tkt = tkt;
       ctx->krb5->key = shishi_tkt_key(tkt);
 
-      data = malloc(2 + 24);
+      data = xmalloc(2 + 24);
       memcpy(&data[0], TOK_AP_REQ, TOK_LEN);
       memcpy(&data[2], "\x10\x00\x00\x00", 4); /* length of Bnd */
       memset(&data[6], 0, 16); /* XXX we only support GSS_C_NO_BINDING */
@@ -201,9 +194,7 @@ gss_krb5_init_sec_context (OM_uint32 * minor_status,
 	return GSS_S_FAILURE;
 
       tmp.length = len + TOK_LEN;
-      tmp.value = malloc(tmp.length);
-      if (!tmp.value)
-	return GSS_S_FAILURE;
+      tmp.value = xmalloc(tmp.length);
       memcpy(tmp.value, TOK_AP_REQ, TOK_LEN);
       memcpy((char*)tmp.value + TOK_LEN, data, len);
 
@@ -336,9 +327,7 @@ gss_krb5_wrap (OM_uint32 * minor_status,
 	*/
 	padlength = 8 - input_message_buffer->length % 8;
 	data.length = 4*8 + input_message_buffer->length + padlength;
-	data.value = malloc(data.length);
-	if (!data.value)
-	  return GSS_S_FAILURE;
+	data.value = xmalloc(data.length);
 
 	/* XXX encrypt data iff confidential option chosen */
 
@@ -407,9 +396,7 @@ gss_krb5_wrap (OM_uint32 * minor_status,
 
       padlength = 8 - input_message_buffer->length % 8;
       data.length = 8 + 8 + 20 + 8 + input_message_buffer->length + padlength;
-      data.value = malloc(data.length);
-      if (!data.value)
-	return GSS_S_FAILURE;
+      data.value = xmalloc(data.length);
 
       /* XXX encrypt data iff confidential option chosen */
 
@@ -609,7 +596,7 @@ gss_krb5_unwrap (OM_uint32 * minor_status,
 
 	/* Copy output data */
 	output_message_buffer->length = data.length - 8 - 8 - 8 - 8 - padlen;
-	output_message_buffer->value = malloc(output_message_buffer->length);
+	output_message_buffer->value = xmalloc(output_message_buffer->length);
 	memcpy(output_message_buffer->value, pt, data.length - 4*8 - padlen);
       }
       break;
@@ -675,7 +662,7 @@ gss_krb5_unwrap (OM_uint32 * minor_status,
 
 	/* Copy output data */
 	output_message_buffer->length = data.length - 8 - 20 - 8 - 8 - padlen;
-	output_message_buffer->value = malloc(output_message_buffer->length);
+	output_message_buffer->value = xmalloc(output_message_buffer->length);
 	memcpy(output_message_buffer->value, data.value + 20 + 8 + 8 + 8,
 	       data.length - 20 - 8 - 8 - 8 - padlen);
       }
@@ -799,14 +786,7 @@ gss_krb5_acquire_cred (OM_uint32 * minor_status,
   OM_uint32 maj_stat;
   int rc;
 
-  k5 = malloc(sizeof(*k5));
-  if (!k5)
-    {
-      if (minor_status)
-	*minor_status = 0;
-      return GSS_S_FAILURE;
-    }
-  memset(k5, 0, sizeof(*k5));
+  k5 = xcalloc(sizeof(*k5), 1);
   (*output_cred_handle)->krb5 = k5;
 
   if (shishi_init_server(&k5->sh) != SHISHI_OK)
@@ -892,12 +872,8 @@ gss_krb5_accept_sec_context (OM_uint32 * minor_status,
 
       crk5 = acceptor_cred_handle->krb5;
 
-      cx = malloc(sizeof(*cx));
-      if (!cx)
-	return GSS_S_FAILURE;
-      cxk5 = malloc(sizeof(*cxk5));
-      if (!cxk5)
-	return GSS_S_FAILURE;
+      cx = xcalloc(sizeof(*cx), 1);
+      cxk5 = xcalloc(sizeof(*cxk5), 1);
       cx->mech = GSS_KRB5;
       cx->krb5 = cxk5;
       /* XXX cx->peer?? */
@@ -966,14 +942,9 @@ gss_krb5_accept_sec_context (OM_uint32 * minor_status,
 	{
 	  gss_name_t p;
 
-	  p = malloc(sizeof(*p));
-	  if (!p)
-	    return GSS_S_FAILURE;
-
+	  p = xmalloc(sizeof(*p));
 	  p->length = 1024; /* XXX */
-	  p->value = malloc(p->length);
-	  if (!p->value)
-	    return GSS_S_FAILURE;
+	  p->value = xmalloc(p->length);
 
 	  rc = shishi_encticketpart_cname_get
 	    (cxk5->sh, shishi_tkt_encticketpart(cxk5->tkt),
