@@ -21,6 +21,44 @@
 
 #include "internal.h"
 
+/**
+ * gss_get_mic:
+ * @minor_status: (Integer, modify) Mechanism specific status code.
+ * @context_handle: (gss_ctx_id_t, read) Identifies the context on
+ *   which the message will be sent.
+ * @qop_req: (gss_qop_t, read, optional) Specifies requested quality
+ *   of protection.  Callers are encouraged, on portability grounds,
+ *   to accept the default quality of protection offered by the chosen
+ *   mechanism, which may be requested by specifying GSS_C_QOP_DEFAULT
+ *   for this parameter.  If an unsupported protection strength is
+ *   requested, gss_get_mic will return a major_status of
+ *   GSS_S_BAD_QOP.
+ * @message_buffer: (buffer, opaque, read) Message to be protected.
+ * @msg_token: (buffer, opaque, modify) Buffer to receive token.  The
+ *   application must free storage associated with this buffer after
+ *   use with a call to gss_release_buffer().
+ *
+ * Generates a cryptographic MIC for the supplied message, and places
+ * the MIC in a token for transfer to the peer application. The
+ * qop_req parameter allows a choice between several cryptographic
+ * algorithms, if supported by the chosen mechanism.
+ *
+ * Since some application-level protocols may wish to use tokens
+ * emitted by gss_wrap() to provide "secure framing", implementations
+ * must support derivation of MICs from zero-length messages.
+ *
+ * Valid return values and their meaning:
+ *
+ * `GSS_S_COMPLETE`: Successful completion.
+ *
+ * `GSS_S_CONTEXT_EXPIRED`: The context has already expired.
+ *
+ * `GSS_S_NO_CONTEXT`: The context_handle parameter did not identify a
+ * valid context.
+ *
+ * `GSS_S_BAD_QOP`: The specified QOP is not supported by the
+ * mechanism.
+ **/
 OM_uint32
 gss_get_mic (OM_uint32 * minor_status,
 	     const gss_ctx_id_t context_handle,
@@ -42,6 +80,54 @@ gss_get_mic (OM_uint32 * minor_status,
 			message_buffer, message_token);
 }
 
+/**
+ * gss_verify_mic:
+ * @minor_status: (Integer, modify) Mechanism specific status code.
+ * @context_handle: (gss_ctx_id_t, read) Identifies the context on
+ *   which the message arrived.
+ * @message_buffer: (buffer, opaque, read) Message to be verified.
+ * @token_buffer: (buffer, opaque, read) Token associated with
+ *   message.
+ * @qop_state: (gss_qop_t, modify, optional) Quality of protection
+ *   gained from MIC Specify NULL if not required.
+ *
+ * Verifies that a cryptographic MIC, contained in the token
+ * parameter, fits the supplied message.  The qop_state parameter
+ * allows a message recipient to determine the strength of protection
+ * that was applied to the message.
+ *
+ * Since some application-level protocols may wish to use tokens
+ * emitted by gss_wrap() to provide "secure framing", implementations
+ * must support the calculation and verification of MICs over
+ * zero-length messages.
+ *
+ * Valid return values and their meaning:
+ *
+ * `GSS_S_COMPLETE`: Successful completion.
+ *
+ * `GSS_S_DEFECTIVE_TOKEN`: The token failed consistency checks.
+ *
+ * `GSS_S_BAD_SIG`: The MIC was incorrect.
+ *
+ * `GSS_S_DUPLICATE_TOKEN`: The token was valid, and contained a
+ * correct MIC for the message, but it had already been processed.
+ *
+ * `GSS_S_OLD_TOKEN`: The token was valid, and contained a correct MIC
+ * for the message, but it is too old to check for duplication.
+ *
+ * `GSS_S_UNSEQ_TOKEN`: The token was valid, and contained a correct
+ * MIC for the message, but has been verified out of sequence; a later
+ * token has already been received.
+ *
+ * `GSS_S_GAP_TOKEN`: The token was valid, and contained a correct MIC
+ * for the message, but has been verified out of sequence; an earlier
+ * expected token has not yet been received.
+ *
+ * `GSS_S_CONTEXT_EXPIRED`: The context has already expired.
+ *
+ * `GSS_S_NO_CONTEXT`: The context_handle parameter did not identify a
+ * valid context.
+ **/
 OM_uint32
 gss_verify_mic (OM_uint32 * minor_status,
 		const gss_ctx_id_t context_handle,
