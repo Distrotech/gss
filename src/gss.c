@@ -27,8 +27,19 @@
 #include <stdlib.h>
 #include <string.h>
 
+/* For gettext. */
+#ifdef HAVE_LOCALE_H
+# include <locale.h>
+#else
+# define setlocale(Category, Locale)	/* empty */
+#endif
+#include <gettext.h>
+#define _(String) gettext (String)
+
+/* Get GSS header. */
 #include <gss.h>
 
+/* Command line parameter parser via gengetopt. */
 #include "gss_cmd.h"
 
 int
@@ -40,6 +51,10 @@ main (int argc, char *argv[])
   OM_uint32 maj = 0, min;
   int rc = 0;
   size_t i;
+
+  setlocale (LC_ALL, "");
+  bindtextdomain (PACKAGE, LOCALEDIR);
+  textdomain (PACKAGE);
 
   if (cmdline_parser (argc, argv, &args) != 0)
     return 1;
@@ -81,12 +96,14 @@ main (int argc, char *argv[])
   if (GSS_ROUTINE_ERROR (args.major_arg))
     {
       if (!args.quiet_given)
-	printf
-	  ("Masked routine error %ld (0x%lx) shifted into %ld (0x%lx):\n",
-	   GSS_ROUTINE_ERROR (args.major_arg),
-	   GSS_ROUTINE_ERROR (args.major_arg),
-	   GSS_ROUTINE_ERROR (args.major_arg) >> GSS_C_ROUTINE_ERROR_OFFSET,
-	   GSS_ROUTINE_ERROR (args.major_arg) >> GSS_C_ROUTINE_ERROR_OFFSET);
+	printf ("Masked routine error %ld (0x%lx) shifted "
+		"into %ld (0x%lx):\n",
+		GSS_ROUTINE_ERROR (args.major_arg),
+		GSS_ROUTINE_ERROR (args.major_arg),
+		GSS_ROUTINE_ERROR (args.
+				   major_arg) >> GSS_C_ROUTINE_ERROR_OFFSET,
+		GSS_ROUTINE_ERROR (args.
+				   major_arg) >> GSS_C_ROUTINE_ERROR_OFFSET);
 
       message_context = 0;
       do
