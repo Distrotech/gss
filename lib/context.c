@@ -697,7 +697,11 @@ gss_accept_sec_context (OM_uint32 * minor_status,
     }
 
   if (*context_handle == GSS_C_NO_CONTEXT)
-    mech = _gss_find_mech (GSS_C_NO_OID);
+    {
+      /* FIXME: We should extract GSS-API mechanism OID from token
+	 here, and use it to find the proper mechanism. */
+      mech = _gss_find_mech (GSS_C_NO_OID);
+    }
   else
     mech = _gss_find_mech ((*context_handle)->mech);
   if (mech == NULL)
