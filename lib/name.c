@@ -571,8 +571,9 @@ gss_duplicate_name (OM_uint32 * minor_status,
   *dest_name = xmalloc (sizeof (**dest_name));
   (*dest_name)->type = tmp;
   (*dest_name)->length = src_name->length;
-  (*dest_name)->value = xmalloc (src_name->length);
+  (*dest_name)->value = xmalloc (src_name->length + 1);
   memcpy ((*dest_name)->value, src_name->value, src_name->length);
+  (*dest_name)->value[src_name->length] = '\0';
 
   if (minor_status)
     *minor_status = 0;
