@@ -22,7 +22,8 @@ if ENABLE_GTK_DOC
 SUBDIRS = reference
 endif
 
-EXTRA_DIST = gss.html gss.ps gss.pdf texinfo.css
+EXTRA_DIST = gss.html gss.ps gss.pdf \
+	gdoc asiidoc asciidoc.conf texinfo.conf texinfo.css
 
 info_TEXINFOS = gss.texi
 gss_TEXINFOS = gpl.texi fdl.texi $(gdoc_TEXINFOS)
