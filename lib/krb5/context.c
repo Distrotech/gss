@@ -63,6 +63,7 @@ init_request (OM_uint32 * minor_status,
 
   memset (&hint, 0, sizeof (hint));
   hint.server = k5->peerptr->value;
+  hint.endtime = time_req;
 
   k5->tkt = shishi_tkts_get (shishi_tkts_default (k5->sh), &hint);
   if (!k5->tkt)
@@ -172,7 +173,9 @@ gss_krb5_init_sec_context (OM_uint32 * minor_status,
     *minor_status = 0;
 
   if (ret_flags)
-    *ret_flags = 0;
+    *ret_flags = GSS_C_REPLAY_FLAG | GSS_C_SEQUENCE_FLAG |
+      GSS_C_INTEG_FLAG | GSS_C_CONF_FLAG |
+      GSS_C_PROT_READY_FLAG;
 
   if (initiator_cred_handle)
     {
@@ -186,19 +189,13 @@ gss_krb5_init_sec_context (OM_uint32 * minor_status,
     }
 
   if (k5 == NULL)
-    k5 = ctx->krb5 = xcalloc (sizeof (*k5), 1);
-
-  if (k5->sh == NULL)
     {
+      k5 = ctx->krb5 = xcalloc (sizeof (*k5), 1);
+
       rc = shishi_init (&k5->sh);
       if (rc != SHISHI_OK)
 	return GSS_S_FAILURE;
     }
-
-  if (ret_flags)
-    *ret_flags |= GSS_C_REPLAY_FLAG | GSS_C_SEQUENCE_FLAG |
-      GSS_C_INTEG_FLAG | GSS_C_CONF_FLAG |
-      GSS_C_PROT_READY_FLAG;
 
   if (!k5->reqdone)
     {
@@ -223,8 +220,6 @@ gss_krb5_init_sec_context (OM_uint32 * minor_status,
 
       k5->key = shishi_ap_key (k5->ap);
       k5->reqdone = 1;
-
-      return maj_stat;
     }
   else if (k5->reqdone && k5->flags & GSS_C_MUTUAL_FLAG && !k5->repdone)
     {
@@ -246,11 +241,14 @@ gss_krb5_init_sec_context (OM_uint32 * minor_status,
 	*ret_flags |= GSS_C_MUTUAL_FLAG;
 
       k5->repdone = 1;
-
-      return maj_stat;
     }
+  else
+    maj_stat = GSS_S_FAILURE;
 
-  return GSS_S_FAILURE;
+  if (time_rec)
+    *time_rec = gss_krb5_tktlifetime (k5->tkt);
+
+  return maj_stat;
 }
 
 /* Allows a remotely initiated security context between the
