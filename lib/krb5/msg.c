@@ -300,7 +300,7 @@ gss_krb5_unwrap (OM_uint32 * minor_status,
 	char confounder[8];
 	char *tmp;
 	int seqnr;
-	int i;
+	size_t outlen, i;
 
 	/* Typical data:
 	   ;; 02 01 00 00 ff ff ff ff  0c 22 1f 79 59 3d 00 cb
@@ -326,10 +326,10 @@ gss_krb5_unwrap (OM_uint32 * minor_status,
 	rc = shishi_decrypt_iv_etype (k5->sh,
 				      k5->key,
 				      0, SHISHI_DES_CBC_NONE,
-				      cksum, 8, encseqno, 8, &tmp, &i);
+				      cksum, 8, encseqno, 8, &tmp, &outlen);
 	if (rc != SHISHI_OK)
 	  return GSS_S_FAILURE;
-	if (i != 8)
+	if (outlen != 8)
 	  return GSS_S_BAD_MIC;
 	memcpy (seqno, tmp, 8);
 	free (tmp);
@@ -386,10 +386,10 @@ gss_krb5_unwrap (OM_uint32 * minor_status,
     case 4:			/* 3DES */
       {
 	size_t padlen;
-	unsigned char *p;
+	char *p;
 	char *t;
 	char cksum[20];
-	int i;
+	size_t outlen, i;
 
 	if (data.length < 8 + 8 + 20 + 8 + 8)
 	  return GSS_S_BAD_MIC;
@@ -402,11 +402,11 @@ gss_krb5_unwrap (OM_uint32 * minor_status,
 	rc = shishi_decrypt_iv_etype (k5->sh,
 				      k5->key,
 				      0, SHISHI_DES3_CBC_NONE,
-				      cksum, 8, p, 8, &t, &i);
-	if (rc != SHISHI_OK || i != 8)
+				      cksum, 8, p, 8, &t, &outlen);
+	if (rc != SHISHI_OK || outlen != 8)
 	  return GSS_S_FAILURE;
 
-	memcpy (p, t, i);
+	memcpy (p, t, 8);
 	free (t);
 
 	if (memcmp (p + 4, k5->acceptor ? "\x00\x00\x00\x00" :

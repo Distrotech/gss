@@ -24,8 +24,8 @@
 struct gss_status_codes
 {
   gss_uint32 err;
-  char *name;
-  char *text;
+  const char *name;
+  const char *text;
 };
 
 struct gss_status_codes gss_krb5_errors[] = {
