@@ -23,7 +23,7 @@ EXTRA_DIST = gss.html gss.ps gss.pdf
 info_TEXINFOS = gss.texi
 gss_TEXINFOS = gpl.texi fdl.texi $(gdoc_TEXINFOS)
 
-AM_MAKEINFOHTMLFLAGS = --no-split --number-sections
+AM_MAKEINFOHTMLFLAGS = --no-split --number-sections --css-include=gss.css
 
 dist_man_MANS = $(gdoc_MANS)
 MAINTAINERCLEANFILES = $(dist_man_MANS)
