@@ -71,8 +71,8 @@ Software Foundation raise funds for GNU development.''
 Appendices
 
 * Criticism of GSS::            Why you maybe shouldn't use GSS.
-* Copying::                     How you can copy and share GPL GSS-API.
-* Copying This Manual::         How you can copy and share this manual.
+@c * Copying::                     How you can copy and share GPL GSS-API.
+@c * Copying This Manual::         How you can copy and share this manual.
 
 Indices
 
@@ -1465,6 +1465,14 @@ TBA: multiple mechanisms in a GSS library
 
 TBA: high-level criticism.
 
+TBA: no credential forwarding.
+
+TBA: krb5: no way to access authorization-data
+
+TBA: krb5: firewall/pre-IP: iakerb status?
+
+TBA: krb5: single-DES only
+
 We also note that very few free security systems uses GSS, perhaps the
 only exception to this are Kerberos 5 implementations.  This suggest
 that the GSS may not have been so ``generic'' as it was thought to be.
@@ -1475,16 +1483,16 @@ should look elsewhere.  In particular SASL is recommended.  The most
 compelling argument is that SASL is, as its acronym suggest, Simple,
 whereas GSS is not, in any regard.
 
-@node Copying This Manual
-@appendix Copying This Manual
+@c @node Copying This Manual
+@c @appendix Copying This Manual
+@c
+@c @menu
+@c * GNU Free Documentation License::  License for copying this manual.
+@c @end menu
 
-@menu
-* GNU Free Documentation License::  License for copying this manual.
-@end menu
+@c @include fdl.texi
 
-@include fdl.texi
-
-@include gpl.texi
+@c @include gpl.texi
 
 @node Concept Index
 @unnumbered Concept Index
