@@ -452,7 +452,35 @@ OM_uint32
 gss_export_name (OM_uint32 * minor_status,
 		 const gss_name_t input_name, gss_buffer_t exported_name)
 {
-  return GSS_S_FAILURE;
+  OM_uint32 maj_stat;
+  gss_OID_set mechs;
+  _gss_mech_api_t mech;
+
+  maj_stat = gss_inquire_mechs_for_name (minor_status, input_name, &mechs);
+  if (GSS_ERROR (maj_stat))
+    return maj_stat;
+
+  if (mechs->count == 0)
+    {
+      if (minor_status)
+	*minor_status = 0;
+      return GSS_S_BAD_NAMETYPE;
+    }
+
+  /* We just select a random mechanism that support this name-type.
+     I'm not sure how we can be more predicatable, given the
+     definition of this function. */
+
+  mech = _gss_find_mech (mechs->elements);
+  if (mech == NULL)
+    {
+      gss_warn ("gss_export_name bug, please report to %s", PACKAGE_BUGREPORT);
+      if (minor_status)
+	*minor_status = 0;
+      return GSS_S_BAD_MECH;
+    }
+
+  return mech->export_name (minor_status, input_name, exported_name);
 }
 
 /**
@@ -487,6 +515,12 @@ gss_canonicalize_name (OM_uint32 * minor_status,
   _gss_mech_api_t mech;
 
   mech = _gss_find_mech (mech_type);
+  if (mech == NULL)
+    {
+      if (minor_status)
+	*minor_status = 0;
+      return GSS_S_BAD_MECH;
+    }
 
   return mech->canonicalize_name (minor_status, input_name,
 				  mech_type, output_name);
