@@ -25,36 +25,34 @@
 /* Get size_t. */
 #include <stddef.h>
 
+/* See version.c. */
 extern const char *
 gss_check_version (const char *req_version);
 
+/* See ext.c. */
 extern int
 gss_oid_equal (gss_OID first_oid, gss_OID second_oid);
-
 extern OM_uint32
 gss_copy_oid (OM_uint32 * minor_status,
 	      const gss_OID src_oid, gss_OID dest_oid);
-
 extern OM_uint32
 gss_duplicate_oid (OM_uint32 * minor_status,
 		   const gss_OID src_oid, gss_OID * dest_oid);
 
+/* See asn1.c. */
 extern int
 gss_encapsulate_token (gss_buffer_t input_message,
 		       gss_OID token_oid, gss_buffer_t output_message);
-
 extern int
 gss_encapsulate_token_prefix (gss_buffer_t input_message,
 			      char *prefix, size_t prefixlen,
 			      gss_OID token_oid, gss_buffer_t output_message);
-
 extern int
 gss_decapsulate_token (gss_buffer_t input_message,
 		       gss_OID token_oid, gss_buffer_t output_message);
 
-extern void
-gss_warn (const char *format, ...);
-
+/* Static versions of the public OIDs for use, e.g., in static
+   variable initalization.  See oid.c. */
 extern gss_OID_desc GSS_C_NT_USER_NAME_static;
 extern gss_OID_desc GSS_C_NT_MACHINE_UID_NAME_static;
 extern gss_OID_desc GSS_C_NT_STRING_UID_NAME_static;
