@@ -97,7 +97,7 @@ main (int argc, char *argv[])
 				    &message_context, &status_string);
 	  if (GSS_ERROR (maj))
 	    {
-	      fprintf (stderr, "%s: unknown status code\n", argv[0]);
+	      fprintf (stderr, "%s: displaying status code failed\n", argv[0]);
 	      rc = 1;
 	      break;
 	    }
@@ -132,7 +132,7 @@ main (int argc, char *argv[])
 				    &message_context, &status_string);
 	  if (GSS_ERROR (maj))
 	    {
-	      fprintf (stderr, "%s: unknown status code\n", argv[0]);
+	      fprintf (stderr, "%s: displaying status code failed\n", argv[0]);
 	      rc = 1;
 	      break;
 	    }
@@ -169,7 +169,7 @@ main (int argc, char *argv[])
 				    &message_context, &status_string);
 	  if (GSS_ERROR (maj))
 	    {
-	      fprintf (stderr, "%s: unknown status code\n", argv[0]);
+	      fprintf (stderr, "%s: displaying status code failed\n", argv[0]);
 	      rc = 1;
 	      break;
 	    }
