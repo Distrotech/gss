@@ -349,8 +349,9 @@ gss_release_oid_set (OM_uint32 * minor_status, gss_OID_set * set)
   return GSS_S_COMPLETE;
 }
 
+/* See meta.c. */
 OM_uint32
-gss_indicate_mechs1 (OM_uint32 * minor_status, gss_OID_set *mech_set);
+_gss_indicate_mechs1 (OM_uint32 * minor_status, gss_OID_set *mech_set);
 
 /**
  * gss_indicate_mechs:
@@ -377,7 +378,7 @@ gss_indicate_mechs (OM_uint32 * minor_status, gss_OID_set * mech_set)
   if (GSS_ERROR (maj_stat))
     return maj_stat;
 
-  maj_stat = gss_indicate_mechs1 (minor_status, mech_set);
+  maj_stat = _gss_indicate_mechs1 (minor_status, mech_set);
   if (GSS_ERROR (maj_stat))
     {
       OM_uint32 tmp_minor_status;
