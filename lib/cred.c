@@ -31,23 +31,44 @@ gss_acquire_cred (OM_uint32 * minor_status,
 		  gss_OID_set * actual_mechs,
 		  OM_uint32 * time_rec)
 {
-  if (desired_mechs == GSS_C_NO_OID_SET)
+  OM_uint32 maj_stat;
+  _gss_mech_api_t mech = NULL;
+
+  if (desired_mechs != GSS_C_NO_OID_SET)
     {
-      _gss_mech_api_t mech;
+      int i;
+      int present;
 
-      mech = _gss_find_mech (GSS_C_NO_OID);
+      /* XXX this assumes GSS credentials are mutually exclusive.
+	 I.e., a credential for one mechanism cannot be used with
+	 another mechanism.  If at some point in time this GSS library
+	 support two different mechanisms that can use the same kind
+	 of credential, this logic has to be improved somehow. */
 
-      return mech->acquire_cred (minor_status,
-				 desired_name,
-				 time_req,
-				 desired_mechs,
-				 cred_usage,
-				 output_cred_handle,
-				 actual_mechs,
-				 time_rec);
+      for (i = 0; _gss_mech_apis[i].mech; i++)
+	{
+	  maj_stat = gss_test_oid_set_member (minor_status,
+					      _gss_mech_apis[i].mech,
+					      desired_mechs, &present);
+	  if (!GSS_ERROR(maj_stat) && present)
+	    {
+	      mech = &_gss_mech_apis[i];
+	      break;
+	    }
+	}
     }
-  else
-    /* XXX iterate through desired_mechs */;
+
+  if (!mech)
+    mech = _gss_find_mech (GSS_C_NO_OID);
+
+  return mech->acquire_cred (minor_status,
+			     desired_name,
+			     time_req,
+			     desired_mechs,
+			     cred_usage,
+			     output_cred_handle,
+			     actual_mechs,
+			     time_rec);
 
   return GSS_S_FAILURE;
 }
