@@ -25,7 +25,7 @@ INCLUDES = -I../intl
 include_HEADERS = gss.h
 
 gssincludedir=$(includedir)/gss
-gssinclude_HEADERS = api.h krb5.h
+gssinclude_HEADERS = api.h ext.h krb5.h
 
 libgss_la_SOURCES = internal.h version.c error.c \
 	context.c cred.c misc.c msg.c name.c obsolete.c oid.c \
