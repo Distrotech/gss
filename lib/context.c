@@ -722,12 +722,12 @@ gss_delete_sec_context (OM_uint32 * minor_status,
   mech = _gss_find_mech ((*context_handle)->mech);
 
   ret = mech->delete_sec_context (minor_status, context_handle, output_token);
-  if (GSS_S_ERROR (ret))
+  if (GSS_ERROR (ret))
     /* XXX? Ignore error. */;
 
   (*context_handle)->peerptr = &(*context_handle)->peer;
   ret = gss_release_name (minor_status, &(*context_handle)->peerptr);
-  if (GSS_S_ERROR (ret))
+  if (GSS_ERROR (ret))
     /* XXX? Ignore error. */;
 
   free (*context_handle);
