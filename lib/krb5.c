@@ -402,7 +402,7 @@ gss_krb5_wrap (OM_uint32 * minor_status,
 
 	rc = shishi_checksum (k5->sh,
 			      k5->key,
-			      0, 42,
+			      0, SHISHI_RSA_MD5_DES_GSS,
 			      data.value,
 			      16 + input_message_buffer->length + padlength,
 			      &cksum, &tmplen);
@@ -633,7 +633,7 @@ gss_krb5_unwrap (OM_uint32 * minor_status,
 	/* Checksum header + confounder + data + pad */
 	rc = shishi_checksum (k5->sh,
 			      k5->key,
-			      0, 42,
+			      0, SHISHI_RSA_MD5_DES_GSS,
 			      data.value + 16, data.length - 16,
 			      &tmp, &tmplen);
 	if (rc != SHISHI_OK || tmplen != 8)
