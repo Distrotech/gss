@@ -359,6 +359,13 @@ gss_init_sec_context (OM_uint32 * minor_status,
       return GSS_S_NO_CONTEXT | GSS_S_CALL_INACCESSIBLE_READ;
     }
 
+  if (output_token == GSS_C_NO_BUFFER)
+    {
+      if (minor_status)
+	*minor_status = 0;
+      return GSS_S_FAILURE | GSS_S_CALL_BAD_STRUCTURE;
+    }
+
   mech = (*context_handle == GSS_C_NO_CONTEXT) ?
     _gss_find_mech (mech_type) : _gss_find_mech ((*context_handle)->mech);
 
