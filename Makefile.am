@@ -54,9 +54,12 @@ release:
 	gpg --verify $(distdir).tar.gz.sig
 	echo "directory: $(PACKAGE)" > $(distdir).tar.gz.directive
 	gpg --clearsign $(distdir).tar.gz.directive
-	cd doc && ./gendocs.sh --html "--css-include=texinfo.css" \
-		 -o ../$(htmldir)/manual/ $(PACKAGE) \
-		"GNU Generic Security Service Library"
-	cd $(htmldir) && cvs commit -m "Update." manual/
 	ncftpput ftp-upload.gnu.org /incoming/alpha \
 		$(distdir).tar.gz{,.sig,.directive.asc}
+	cd doc && ./gendocs.sh --html "--css-include=texinfo.css" \
+		-o ../$(htmldir)/manual/ $(PACKAGE) \
+		"GNU Generic Security Service Library"
+	cp -v $(distdir).tar.gz{,.sig} $(htmldir)/releases/
+	cp -v doc/reference/*.{html,png} $(htmldir)/reference/
+	cd $(htmldir) && cvs add -kb releases/$(distdir).tar.gz{,.sig} && \
+		cvs commit -m "Update." manual/ reference/ releases/
