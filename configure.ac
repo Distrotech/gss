@@ -50,7 +50,7 @@ AC_CHECK_HEADERS(locale.h)
 
 # For gnulib stuff in gl/.
 gl_FUNC_GETHOSTNAME
-AC_CHECK_FUNCS(getopt_long,, [AC_LIBOBJ(getopt) AC_LIBOBJ(getopt1)])
+gl_GETOPT
 
 # Test for Shishi.
 sj_CHECK_HEADERLIB(shishi.h, shishi, shishi_check_version,

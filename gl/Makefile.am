@@ -21,7 +21,18 @@
 noinst_LTLIBRARIES = libgl.la
 
 libgl_la_SOURCES = gettext.h \
-	getopt.h getopt_int.h \
 	xalloc.h xmalloc.c	\
 	xgethostname.h xgethostname.c
+if !READLINE
+libgl_la_SOURCES += readline.c
+endif
 libgl_la_LIBADD = @LTLIBOBJS@
+
+BUILT_SOURCES = $(GETOPT_H)
+EXTRA_DIST = getopt_.h getopt_int.h
+
+all-local $(libgl_la_OBJECTS): $(GETOPT_H)
+getopt.h: getopt_.h
+	cp $(srcdir)/getopt_.h $@-t
+	mv $@-t $@
+MOSTLYCLEANFILES = getopt.h getopt.h-t
