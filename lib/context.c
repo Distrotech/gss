@@ -360,6 +360,9 @@ gss_init_sec_context (OM_uint32 * minor_status,
       output_token->value = NULL;
     }
 
+  if (ret_flags)
+    *ret_flags = 0;
+
   if (!context_handle)
     {
       if (minor_status)
