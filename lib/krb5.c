@@ -298,7 +298,7 @@ gss_krb5_canonicalize_name (OM_uint32 * minor_status,
 	return maj_stat;
       (*output_name)->type = GSS_KRB5_NT_PRINCIPAL_NAME;
 
-      if ((p = strchr((*output_name)->value, '@')))
+      if ((p = memchr((*output_name)->value, '@', (*output_name)->length)))
 	{
 	  *p = '/';
 	}
@@ -949,8 +949,11 @@ gss_krb5_accept_sec_context (OM_uint32 * minor_status,
   if (mech_type)
     *mech_type = GSS_KRB5;
 
+  if (ret_flags)
+    *ret_flags = 0;
+
   if (!acceptor_cred_handle)
-    /* XXX support GSS_C_NO_CREDENTIAL: init_sec_context() default server */
+    /* XXX support GSS_C_NO_CREDENTIAL: acquire_cred() default server */
     return GSS_S_NO_CRED;
 
   if (input_chan_bindings != GSS_C_NO_CHANNEL_BINDINGS)
@@ -1034,6 +1037,9 @@ gss_krb5_accept_sec_context (OM_uint32 * minor_status,
 					    GSS_KRB5, output_token);
 	  if (!rc)
 	    return GSS_S_FAILURE;
+
+	  if (ret_flags)
+	    *ret_flags = GSS_C_MUTUAL_FLAG;
 	}
       else
 	{
