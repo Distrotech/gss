@@ -1,3 +1,23 @@
+2003-09-22  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS: Version 0.0.6.
+
+2003-09-22  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS: Add.
+
+2003-09-20  Simon Josefsson <simon@josefsson.org>
+
+	* lib/krb5.c: Fix API.
+
+2003-08-31  Simon Josefsson <simon@josefsson.org>
+
+	* README-alpha: Fix.
+
+2003-08-31  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS, configure.ac: Bump versions.
+
 2003-08-31  Simon Josefsson <simon@josefsson.org>
 
 	* NEWS: Version 0.0.5.
