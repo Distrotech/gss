@@ -65,17 +65,16 @@ gss_krb5_init_sec_context (OM_uint32 * minor_status,
 
   /* XXX mech_type not tested */
 
-  if (*context_handle == GSS_C_NO_CONTEXT)
+  if ((*context_handle)->krb5 == NULL)
     {
       gss_ctx_id_t ctx;
       gss_buffer_desc tmp;
       Shishi_tkts_hint hint;
 
-      ctx = xcalloc (sizeof (*ctx), 1);
+      ctx = *context_handle;
+
       ctx->mech = GSS_KRB5;
       ctx->krb5 = xcalloc (sizeof (*ctx->krb5), 1);
-
-      *context_handle = ctx;
 
       if (initiator_cred_handle)
 	h = initiator_cred_handle->krb5->sh;
