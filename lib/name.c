@@ -21,6 +21,9 @@
 
 #include "internal.h"
 
+/* _gss_find_mech */
+#include "meta.h"
+
 /**
  * gss_import_name:
  * @minor_status: (Integer, modify) Mechanism specific status code.
@@ -471,8 +474,6 @@ gss_export_name (OM_uint32 * minor_status,
   mech = _gss_find_mech (mechs->elements);
   if (mech == NULL)
     {
-      gss_warn ("gss_export_name bug, please report to %s",
-		PACKAGE_BUGREPORT);
       if (minor_status)
 	*minor_status = 0;
       return GSS_S_BAD_MECH;

@@ -21,6 +21,9 @@
 
 #include "internal.h"
 
+/* _gss_find_mech */
+#include "meta.h"
+
 /**
  * gss_init_sec_context:
  * @minor_status: (integer, modify) Mechanism specific status code.

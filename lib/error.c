@@ -21,6 +21,9 @@
 
 #include "internal.h"
 
+/* _gss_find_mech */
+#include "meta.h"
+
 struct gss_status_codes
 {
   gss_uint32 err;
@@ -305,21 +308,4 @@ gss_display_status (OM_uint32 * minor_status,
     }
 
   return GSS_S_COMPLETE;
-}
-
-/* For va_list, va_start, va_end. */
-#include <stdarg.h>
-
-void
-gss_warn (const char *format, ...)
-{
-  va_list ap;
-
-  va_start (ap, format);
-
-  fprintf (stderr, "%s: ", PACKAGE);
-  vfprintf (stderr, format, ap);
-  fprintf (stderr, "\n");
-
-  va_end (ap);
 }

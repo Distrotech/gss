@@ -91,7 +91,6 @@ gss_krb5_canonicalize_name (OM_uint32 * minor_status,
     }
   else
     {
-      gss_warn ("Unsupported gss_krb5_canonicalize_name name-type");
       *output_name = GSS_C_NO_NAME;
       return GSS_S_BAD_NAMETYPE;
     }

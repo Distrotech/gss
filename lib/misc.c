@@ -21,6 +21,9 @@
 
 #include "internal.h"
 
+/* _gss_indicate_mechs1 */
+#include "meta.h"
+
 /**
  * gss_create_empty_oid_set:
  * @minor_status: (integer, modify) Mechanism specific status code.

@@ -21,6 +21,9 @@
 
 #include "internal.h"
 
+/* _gss_find_mech */
+#include "meta.h"
+
 /**
  * gss_acquire_cred:
  * @minor_status: (integer, modify) Mechanism specific status code.
@@ -404,7 +407,6 @@ gss_inquire_cred (OM_uint32 * minor_status,
 
       if (mech == NULL)
 	{
-	  gss_warn ("gss_inquire_cred bug, report to %s", PACKAGE_BUGREPORT);
 	  if (minor_status)
 	    *minor_status = 0;
 	  return GSS_S_DEFECTIVE_CREDENTIAL;
@@ -568,7 +570,6 @@ gss_release_cred (OM_uint32 * minor_status, gss_cred_id_t * cred_handle)
   mech = _gss_find_mech ((*cred_handle)->mech);
   if (mech == NULL)
     {
-      gss_warn ("gss_release_cred bug, report to %s", PACKAGE_BUGREPORT);
       if (minor_status)
 	*minor_status = 0;
       return GSS_S_DEFECTIVE_CREDENTIAL;
