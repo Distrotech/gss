@@ -5,11 +5,6 @@ See the end for copying conditions.
 If you like to start working on anything, please let me know so work
 duplication can be avoided.
 
-* Remove dependency on libtasn1.
-The amount of ASN.1 used is minimal, it can be replaced by hard coded
-fields.  However, there is little practical gain from doing this until
-more mechanisms are implemented, since Shishi requires libtasn1.
-
 ----------------------------------------------------------------------
 Copying and distribution of this file, with or without modification,
 are permitted in any medium without royalty provided the copyright
