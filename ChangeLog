@@ -1,3 +1,161 @@
+2003-06-12  Simon Josefsson <simon@josefsson.org>
+
+	* Makefile.am: Fix release target.
+
+2003-06-12  Simon Josefsson <simon@josefsson.org>
+
+	* lib/error.c, lib/krb5.c, lib/meta.c, lib/obsolete.c,
+	po/POTFILES.in, po/gss.pot, po/sv.po: Translation fixes.
+
+2003-06-12  Simon Josefsson <simon@josefsson.org>
+
+	* po/sv.po: Add.
+
+2003-06-12  Simon Josefsson <simon@josefsson.org>
+
+	* README-alpha: TeX required.
+
+2003-06-12  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS: Version 0.0.1.
+
+2003-06-12  Simon Josefsson <simon@josefsson.org>
+
+	* doc/gss.texi: Fix.
+
+2003-06-12  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS: Fix.
+
+2003-06-12  Simon Josefsson <simon@josefsson.org>
+
+	* doc/gss.texi: Fix.
+
+2003-06-12  Simon Josefsson <simon@josefsson.org>
+
+	* doc/gss.texi: Fix.
+
+2003-06-12  Simon Josefsson <simon@josefsson.org>
+
+	* doc/gss.texi: Fix.
+
+2003-06-12  Simon Josefsson <simon@josefsson.org>
+
+	* doc/gss.texi: Fix.
+
+2003-06-12  Simon Josefsson <simon@josefsson.org>
+
+	* doc/gss.texi: Fix.
+
+2003-06-10  Simon Josefsson <simon@josefsson.org>
+
+	* tests/utils.c: Fix.
+
+2003-06-10  Simon Josefsson <simon@josefsson.org>
+
+	* tests/gettext.h, NEWS: Add.
+
+2003-06-10  Simon Josefsson <simon@josefsson.org>
+
+	* tests/utils.c, tests/basic.c: Translation stuff.
+
+2003-06-10  Simon Josefsson <simon@josefsson.org>
+
+	* configure.ac: Fix.
+
+2003-06-10  Simon Josefsson <simon@josefsson.org>
+
+	* lib/error.c: String checks.
+
+2003-06-10  Simon Josefsson <simon@josefsson.org>
+
+	* configure.ac: Check for locale.h.
+
+2003-06-10  Simon Josefsson <simon@josefsson.org>
+
+	* tests/basic.c: Setup translation (should be done in ../lib/?).
+
+2003-06-10  Simon Josefsson <simon@josefsson.org>
+
+	* tests/Makefile.am: Define LOCALEDIR.
+
+2003-06-10  Simon Josefsson <simon@josefsson.org>
+
+	* po/sv.po: Add.
+
+2003-06-10  Simon Josefsson <simon@josefsson.org>
+
+	* po/gss.pot: Fix.
+
+2003-06-10  Simon Josefsson <simon@josefsson.org>
+
+	* po/LINGUAS: Add sv.
+
+2003-06-10  Simon Josefsson <simon@josefsson.org>
+
+	* po/ggssapi.pot: Removed. (See gss.pot.)
+
+2003-06-10  Simon Josefsson <simon@josefsson.org>
+
+	* po/POTFILES.in: Fix.
+
+2003-06-10  Simon Josefsson <simon@josefsson.org>
+
+	* po/gss.pot: Add.
+
+2003-06-09  Simon Josefsson <simon@josefsson.org>
+
+	* configure.ac: Bump versions.
+
+2003-06-09  Simon Josefsson <simon@josefsson.org>
+
+	* Makefile.am: Fix.
+
+2003-06-09  Simon Josefsson <simon@josefsson.org>
+
+	* Makefile.am: Only generate ChangeLog for releases.  (Allows make
+	dist to work when savannah is down.)
+
+2003-06-09  Simon Josefsson <simon@josefsson.org>
+
+	* lib/krb5.c: Add oids.  Add display_status.  Fixes.
+
+2003-06-09  Simon Josefsson <simon@josefsson.org>
+
+	* lib/krb5.h, lib/error.c: Add.
+
+2003-06-09  Simon Josefsson <simon@josefsson.org>
+
+	* lib/misc.c: Move display_status to error.c.
+
+2003-06-09  Simon Josefsson <simon@josefsson.org>
+
+	* lib/meta.c, lib/internal.h: Add display_status.
+
+2003-06-09  Simon Josefsson <simon@josefsson.org>
+
+	* lib/name.c, lib/cred.c: Fix.
+
+2003-06-09  Simon Josefsson <simon@josefsson.org>
+
+	* lib/oid.c: Move krb5 oids to krb5.c.
+
+2003-06-09  Simon Josefsson <simon@josefsson.org>
+
+	* lib/Makefile.am: Make krb5 conditional.  Remove old -I../intl.
+
+2003-06-09  Simon Josefsson <simon@josefsson.org>
+
+	* configure.ac: Add krb5 conditional.
+
+2003-06-05  Simon Josefsson <simon@josefsson.org>
+
+	* lib/misc.c, lib/meta.c: Clear minor_status.
+
+2003-06-02  Simon Josefsson <simon@josefsson.org>
+
+	* Makefile.am: Fix release target.
+
 2003-06-02  Simon Josefsson <simon@josefsson.org>
 
 	* NEWS: Version 0.0.0.
