@@ -38,11 +38,15 @@ _gss_mech_api_desc _gss_mech_apis[] = {
     gss_krb5_init_sec_context,
     gss_krb5_canonicalize_name,
     gss_krb5_wrap,
-    gss_krb5_unwrap
+    gss_krb5_unwrap,
+    _gss_dummy,
+    _gss_dummy
   },
 #endif
   {
     0,
+    _gss_dummy,
+    _gss_dummy,
     _gss_dummy,
     _gss_dummy,
     _gss_dummy,
