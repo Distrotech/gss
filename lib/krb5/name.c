@@ -62,8 +62,15 @@ gss_krb5_canonicalize_name (OM_uint32 * minor_status,
 	  (*output_name)->length = newlen;
 	}
     }
+  else if (gss_oid_equal (input_name->type, GSS_KRB5_NT_PRINCIPAL_NAME))
+    {
+      maj_stat = gss_duplicate_name (minor_status, input_name, output_name);
+      if (GSS_ERROR (maj_stat))
+	return maj_stat;
+    }
   else
     {
+      gss_warn ("Unsupported gss_krb5_canonicalize_name name-type");
       *output_name = GSS_C_NO_NAME;
       return GSS_S_BAD_NAMETYPE;
     }
