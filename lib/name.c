@@ -66,16 +66,21 @@ gss_import_name (OM_uint32 * minor_status,
   OM_uint32 major_stat;
 
   if (!output_name)
-    return GSS_S_BAD_NAME | GSS_S_CALL_INACCESSIBLE_WRITE;
+    {
+      if (minor_status)
+	*minor_status = 0;
+      return GSS_S_BAD_NAME | GSS_S_CALL_INACCESSIBLE_WRITE;
+    }
 
   *output_name = xmalloc (sizeof (**output_name));
   (*output_name)->length = input_name_buffer->length;
-  (*output_name)->value = xmalloc (input_name_buffer->length);
-  memcpy ((*output_name)->value, input_name_buffer->value,
-	  input_name_buffer->length);
+  (*output_name)->value = xclone (input_name_buffer->value,
+				  input_name_buffer->length);
 
   if (input_name_type)
     {
+      /* FIXME: perhaps this should only be this:
+	 (*output_name)->type = input_name_type; */
       major_stat = gss_duplicate_oid (minor_status, input_name_type,
 				      &(*output_name)->type);
       if (GSS_ERROR (major_stat))
@@ -129,7 +134,11 @@ gss_display_name (OM_uint32 * minor_status,
 		  gss_buffer_t output_name_buffer, gss_OID * output_name_type)
 {
   if (!input_name)
-    return GSS_S_BAD_NAME;
+    {
+      if (minor_status)
+	*minor_status = 0;
+      return GSS_S_BAD_NAME;
+    }
 
   output_name_buffer->length = input_name->length;
   output_name_buffer->value = xmalloc (input_name->length + 1);
@@ -137,12 +146,7 @@ gss_display_name (OM_uint32 * minor_status,
     memcpy (output_name_buffer->value, input_name->value, input_name->length);
 
   if (output_name_type)
-    {
-      if (input_name->type)
-	*output_name_type = input_name->type;
-      else
-	*output_name_type = GSS_C_NO_OID;
-    }
+    *output_name_type = input_name->type;
 
   if (minor_status)
     *minor_status = 0;
@@ -401,7 +405,11 @@ gss_inquire_mechs_for_name (OM_uint32 * minor_status,
   OM_uint32 maj_stat;
 
   if (input_name == GSS_C_NO_NAME)
-    return GSS_S_BAD_NAME | GSS_S_CALL_INACCESSIBLE_READ;
+    {
+      if (minor_status)
+	*minor_status = 0;
+      return GSS_S_BAD_NAME | GSS_S_CALL_INACCESSIBLE_READ;
+    }
 
   maj_stat = gss_create_empty_oid_set (minor_status, mech_types);
   if (GSS_ERROR (maj_stat))
@@ -533,9 +541,9 @@ gss_canonicalize_name (OM_uint32 * minor_status,
  *   Storage associated with this name must be freed by the application
  *   after use with a call to gss_release_name().
  *
- * Create an exact duplicate of the existing internal name src_name.
- * The new dest_name will be independent of src_name (i.e. src_name
- * and dest_name must both be released, and the release of one shall
+ * Create an exact duplicate of the existing internal name @src_name.
+ * The new @dest_name will be independent of src_name (i.e. @src_name
+ * and @dest_name must both be released, and the release of one shall
  * not affect the validity of the other).
  *
  * Return value:
