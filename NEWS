@@ -4,6 +4,13 @@ See the end for copying conditions.
 
 * Changes in 0.0.12 (unreleased)
 
+** Added rudimentary self tests of Kerberos 5 context init/accept.
+Tests client and server authentication, with and without mutual
+authentication, and that various aspects of the API like ret_flags
+work.
+
+** Various fixes, discovered while writing the self test.
+
 ** Cross compile builds should work.
 It should work for any sane cross compile target, but the only tested
 platform is uClibc/uClinux on Motorola Coldfire.

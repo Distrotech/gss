@@ -28,7 +28,8 @@ LDADD = ../lib/libgss.la
 TESTS_ENVIRONMENT = SHISHI_KEYS=krb5context.key \
 	SHISHI_TICKETS=krb5context.tkt \
 	SHISHI_CONFIG=ignore-this-warning \
-	SHISHI_HOME=ignore-this-warning
+	SHISHI_HOME=ignore-this-warning \
+	SHISHI_USER=ignore-this-warning
 
 TESTS = basic krb5context
 check_PROGRAMS = $(TESTS)
