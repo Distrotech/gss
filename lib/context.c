@@ -97,7 +97,10 @@ gss_delete_sec_context (OM_uint32 * minor_status,
     return GSS_S_NO_CONTEXT;
 
   if (output_token != GSS_C_NO_BUFFER)
-    output_token->length = 0;
+    {
+      output_token->length = 0;
+      output_token->value = NULL;
+    }
 
   free (*context_handle);
   *context_handle = GSS_C_NO_CONTEXT;
