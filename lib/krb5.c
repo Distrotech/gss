@@ -82,29 +82,6 @@ hexprint (const unsigned char *str, int len)
   printf ("\n");
 }
 
-int
-_gss_encapsulate_token_krb5 (char *oid, size_t oidlen,
-			     char *type, size_t typelen,
-			     char *in, size_t inlen,
-			     char **out, size_t *outlen)
-{
-  char *p;
-  int rc;
-
-  p = malloc(typelen + inlen);
-  if (!p)
-    return 0;
-
-  memcpy(p, type, typelen);
-  memcpy(p + typelen, in, inlen);
-
-  rc = _gss_encapsulate_token(oid, oidlen, p, typelen + inlen, out, outlen);
-
-  free(p);
-
-  return 1;
-}
-
 OM_uint32
 krb5_gss_init_sec_context (OM_uint32 * minor_status,
 			   const gss_cred_id_t initiator_cred_handle,
