@@ -30,10 +30,12 @@ static _gss_mech_api_desc _gss_mech_apis[] = {
 #ifdef USE_KERBEROS5
   {
    &GSS_KRB5_static,
-   {&GSS_KRB5_NT_USER_NAME_static,
-    &GSS_C_NT_HOSTBASED_SERVICE_static,
-    &GSS_KRB5_NT_PRINCIPAL_NAME_static,
-    &GSS_KRB5_NT_STRING_UID_NAME_static},
+   {
+     /* Mandatory name-types. */
+     &GSS_KRB5_NT_PRINCIPAL_NAME_static,
+     &GSS_C_NT_HOSTBASED_SERVICE_static,
+     &GSS_C_NT_EXPORT_NAME_static
+   },
    gss_krb5_init_sec_context,
    gss_krb5_canonicalize_name,
    gss_krb5_export_name,
