@@ -4,6 +4,11 @@ See the end for copying conditions.
 
 * Changes in 0.0.10 (unreleased)
 
+** A command line tool "gss" added in src/.
+The tool can be used to split up an GSS-API error code into the
+calling error, the routine error and the supplementary info bits, and
+to print text describing the error condition.
+
 ** gss_display_status can return multiple description texts (using context).
 
 * Changes in 0.0.9 (released 2004-01-15)
