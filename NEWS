@@ -10,6 +10,12 @@ a cloned OID would be deallocated.
 
 ** Fixed handling of sequence numbers in gss_accept_sec_context, for servers.
 
+** Fix crash in gss_accept_sec_context for NULL values of ret_flags.
+
+** Fix memory leaks.
+
+** Sync with new Shishi 0.0.18 API.
+
 * Changes in 0.0.13 (released 2004-08-08)
 
 ** Revamp of gnulib compatibility files.
