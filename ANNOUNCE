@@ -1,20 +1,20 @@
-GPL GSS-API ANNOUNCE -- Overview to attract interest.
+GSS ANNOUNCE -- Overview to attract interest.
 Copyright (C) 2003 Simon Josefsson
 See the end for copying conditions.
 
-GPL GSS-API is an implementation of the Generic Security Service
-Application Program Interface (GSS-API).  GSS-API is used by network
-servers (e.g., IMAP, SMTP) to provide security security services,
-e.g., authenticate clients against servers.
+GSS is an implementation of the Generic Security Service Application
+Program Interface (GSS-API).  GSS-API is used by network servers
+(e.g., IMAP, SMTP) to provide security security services, e.g.,
+authenticate clients against servers.
 
-GPL GSS-API contains a library (`libgss'), a command line utility
-(`gss') to access the library from the shell, and a manual.
+GSS contains a library (`libgss'), a command line utility (`gss') to
+access the library from the shell, and a manual.
 
-GPL GSS-API is developed for the GNU/Linux system, but runs on over 20
+GSS is developed for the GNU/Linux system, but runs on over 20
 platforms including most major Unix platforms and Windows, and many
 kind of devices including iPAQ handhelds and S/390 mainframes.
 
-GPL GSS-API is licensed under the GNU Public License.
+GSS is licensed under the GNU Public License.
 
 The project web page:
 http://josefsson.org/gss/
