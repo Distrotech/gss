@@ -1,0 +1,16 @@
+# Swedish translations for GNU ggssapi package.
+# Copyright (C) 2003 THE GNU ggssapi'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the GNU ggssapi package.
+# Simon Josefsson <simon@josefsson.org>, 2003.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: GNU ggssapi 0.0.0\n"
+"POT-Creation-Date: 2003-04-30 19:54+0200\n"
+"PO-Revision-Date: 2003-04-30 20:01+0200\n"
+"Last-Translator: Simon Josefsson <simon@josefsson.org>\n"
+"Language-Team: Swedish <sv@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=ASCII\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"

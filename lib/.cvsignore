@@ -3,3 +3,5 @@
 Makefile
 Makefile.in
 version.lo
+ggssapi.h
+libggssapi.la
