@@ -5,8 +5,8 @@ See the end for copying conditions.
 GSS is an implementation of the Generic Security Service Application
 Program Interface (GSS-API).  GSS-API is used by network servers
 (e.g., IMAP, SMTP) to provide security security services, e.g.,
-authenticate clients against servers.  GSS contains a library
-(`libgss') and a manual.
+authenticate clients against servers.  GSS consists of a library and a
+manual.
 
 GSS is developed for the GNU/Linux system, but runs on over 20
 platforms including most major Unix platforms and Windows, and many
