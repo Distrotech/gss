@@ -5,7 +5,6 @@ See the end for copying conditions.
 * Version 0.0.16 (unreleased)
 
 ** API and ABI modifications.
-
 gss_release_oid: REMOVED.  It seem it was the wrong thing to export
    this API, although the underlaying question (who is responsible for
    managing dynamically allocated OIDs?  How?) is still unanswered.
