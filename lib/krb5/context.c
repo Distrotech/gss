@@ -64,19 +64,19 @@ init_request (OM_uint32 * minor_status,
   hint.server = k5->peerptr->value;
 
   k5->tkt = shishi_tkts_get (shishi_tkts_default (k5->sh), &hint);
-
   if (!k5->tkt)
-    return GSS_S_FAILURE;
+    {
+      if (minor_status)
+	*minor_status = GSS_KRB5_S_KG_CCACHE_NOMATCH;
+      return GSS_S_NO_CRED;
+    }
 
-  k5->flags = req_flags;
-
+  /* This should be simplified.  Fix Shishi. */
   rc = shishi_ap_tktoptionsdata (k5->sh, &k5->ap, k5->tkt,
 				 SHISHI_APOPTIONS_MUTUAL_REQUIRED, "a",
 				 1);
   if (rc != SHISHI_OK)
     return GSS_S_FAILURE;
-
-  k5->key = shishi_ap_key (k5->ap);
 
   rc = shishi_ap_req_build (k5->ap);
   if (rc != SHISHI_OK)
@@ -115,12 +115,18 @@ init_request (OM_uint32 * minor_status,
   if (!rc)
     return GSS_S_FAILURE;
 
+  k5->flags = req_flags;
+  k5->key = shishi_ap_key (k5->ap);
   k5->reqdone = 1;
 
   if (req_flags & GSS_C_MUTUAL_FLAG)
-    return GSS_S_CONTINUE_NEEDED;
-  else
-    return GSS_S_COMPLETE;
+    {
+      if (ret_flags)
+	*ret_flags |= GSS_C_MUTUAL_FLAG;
+      return GSS_S_CONTINUE_NEEDED;
+    }
+
+  return GSS_S_COMPLETE;
 }
 
 /* Reply part of gss_krb5_init_sec_context.  Assumes that
