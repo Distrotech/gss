@@ -36,7 +36,10 @@ typedef struct _gss_krb5_ctx_struct
   Shishi_ap *ap;
   Shishi_tkt *tkt;
   int acceptor;
-  int seqnr;
+  int acceptseqnr;
+  int initseqnr;
+  OM_uint32 flags;
+  int repdone;
 } _gss_krb5_ctx_desc, *_gss_krb5_ctx_t;
 
 #define _GSS_KRB5_OID "\x2a\x86\x48\x86\xf7\x12\x01\x02\x02"
@@ -64,10 +67,36 @@ gss_OID GSS_KRB5_NT_PRINCIPAL_NAME = &GSS_KRB5_MECH_OID_static;
 #define _GSS_KRB5_WRAP_DATA _GSS_KRB5_OID_DER "\x02\x01"
 #define _GSS_KRB5_WRAP_LEN  (_GSS_KRB5_OID_LEN+2)
 
+#define _GSS_KRB5_TOK_AP_REQ_DATA "\x01\x00"
+#define _GSS_KRB5_TOK_AP_REQ_LEN  strlen(_GSS_KRB5_TOK_AP_REQ_DATA)
+#define _GSS_KRB5_TOK_AP_REP_DATA "\x02\x00"
+#define _GSS_KRB5_TOK_AP_REP_LEN  strlen(_GSS_KRB5_TOK_AP_REP_DATA)
+
 #define _GSS_KRB5_TOK_MIC_DATA  "\x01\x01"
 #define _GSS_KRB5_TOK_MIC_LEN   strlen(_GSS_KRB5_TOK_MIC_DATA)
 #define _GSS_KRB5_TOK_WRAP_DATA "\x02\x01"
 #define _GSS_KRB5_TOK_WRAP_LEN  strlen(_GSS_KRB5_TOK_WRAP_DATA)
+
+
+static void
+hexprint (const unsigned char *str, int len)
+{
+  int i;
+
+  if (!str || !len)
+    return;
+
+  printf ("\t ;; ");
+  for (i = 0; i < len; i++)
+    {
+      printf ("%02x ", str[i]);
+      if ((i + 1) % 8 == 0)
+	printf (" ");
+      if ((i + 1) % 16 == 0 && i + 1 < len)
+	printf ("\n\t ;; ");
+    }
+  printf ("\n");
+}
 
 OM_uint32
 krb5_gss_init_sec_context (OM_uint32 * minor_status,
@@ -130,8 +159,7 @@ krb5_gss_init_sec_context (OM_uint32 * minor_status,
       if (initiator_cred_handle)
 	{
 	  tkt = initiator_cred_handle->krb5->tkt;
-	  printf("urk\n");
-	  exit(0);
+	  /* XXX? */
 	}
       else
 	{
@@ -150,38 +178,14 @@ krb5_gss_init_sec_context (OM_uint32 * minor_status,
 	}
       ctx->krb5->tkt = tkt;
 
-      /*
-       * The checksum value field's format is as follows:
-       *
-       * Byte    Name    Description
-       * 0..3    Lgth    Number of bytes in Bnd field;
-       *                 Currently contains hex 10 00 00 00
-       *                 (16, represented in little-endian form)
-       * 4..19   Bnd     MD5 hash of channel bindings, taken over all non-null
-       *                 components of bindings, in order of declaration.
-       *                 Integer fields within channel bindings are represented
-       *                 in little-endian order for the purposes of the MD5
-       *                 calculation.
-       * 20..23  Flags   Bit vector of context-establishment flags,
-       *                 with values consistent with RFC-1509, p. 41:
-       *                         GSS_C_DELEG_FLAG:       1
-       *                         GSS_C_MUTUAL_FLAG:      2
-       *                         GSS_C_REPLAY_FLAG:      4
-       *                         GSS_C_SEQUENCE_FLAG:    8
-       *                         GSS_C_CONF_FLAG:        16
-       *                         GSS_C_INTEG_FLAG:       32
-       *                 The resulting bit vector is encoded into bytes 20..23
-       *                 in little-endian form.
-       * 24..25  DlgOpt  The Delegation Option identifier (=1) [optional]
-       * 26..27  Dlgth   The length of the Deleg field. [optional]
-       * 28..n   Deleg   A KRB_CRED message (n = Dlgth + 29) [optional]
-       */
-
       data = malloc(24);
-      memcpy(&data[0], "\x10\x00\x00\x00", 4);
-      /* XXX we only support GSS_C_NO_BINDING for now */
-      memset(&data[4], 0, 16);
-      memset(&data[20], 0, 4);
+      memcpy(&data[0], "\x10\x00\x00\x00", 4); /* length of Bnd */
+      memset(&data[4], 0, 16); /* XXX we only support GSS_C_NO_BINDING */
+      data[20] = req_flags & 0xFF;
+      data[21] = (req_flags >> 8) & 0xFF;
+      data[22] = (req_flags >> 16) & 0xFF;
+      data[23] = (req_flags >> 24) & 0xFF;
+      ctx->krb5->flags = req_flags;
 
       rc = shishi_ap_tktoptionsdata (h, &ap, tkt, 0, "a", 1);
       if (rc != SHISHI_OK)
@@ -215,19 +219,49 @@ krb5_gss_init_sec_context (OM_uint32 * minor_status,
       if (!rc)
 	return GSS_S_FAILURE;
 
-      {
-	int i;
-	for (i = 0; i < output_token->length; i++)
-	  {
-	    printf("%02x ", ((char*)output_token->value)[i] & 0xFF);
-	    if ((i+1)%16 == 0)
-	      printf("\n");
-	  }
-      }
+      if (req_flags & GSS_C_MUTUAL_FLAG)
+	return GSS_S_CONTINUE_NEEDED;
+      else
+	return GSS_S_COMPLETE;
+    }
+  else if (*context_handle && !(*context_handle)->krb5->repdone)
+    {
+      gss_ctx_id_t ctx = *context_handle;
+      _gss_krb5_ctx_t k5 = ctx->krb5;
+      gss_OID_desc tokenoid;
+      gss_buffer_desc data;
 
+      rc = _gss_decapsulate_token (input_token, &tokenoid, &data);
+      if (!rc)
+	return GSS_S_BAD_MIC;
+
+      if (!_gss_oid_equal (&tokenoid, GSS_KRB5_MECH_OID))
+	return GSS_S_BAD_MIC;
+
+      if (memcmp(data.value, _GSS_KRB5_TOK_AP_REP_DATA,
+		 _GSS_KRB5_TOK_AP_REP_LEN) != 0)
+	return GSS_S_BAD_MIC;
+
+      rc = shishi_ap_rep_der_set (k5->ap, data.value + 2, data.length - 2);
+      if (rc != SHISHI_OK)
+	return GSS_S_FAILURE;
+
+      rc = shishi_ap_rep_verify (k5->ap);
+      if (rc != SHISHI_OK)
+	return GSS_S_FAILURE;
+
+      rc = shishi_encapreppart_seqnumber_get (k5->sh,
+					      shishi_ap_encapreppart (k5->ap),
+					      &k5->acceptseqnr);
+      if (rc != SHISHI_OK)
+	k5->acceptseqnr = 0;
+
+      k5->repdone = 1;
+
+      return GSS_S_COMPLETE;
     }
 
-  return GSS_S_COMPLETE;
+  return GSS_S_FAILURE;
 }
 
 OM_uint32
@@ -314,12 +348,11 @@ krb5_gss_wrap (OM_uint32 * minor_status,
       memcpy (data + 36, data + 8, 8);
 
       /* seq_nr */
-      ((char*)data + 8)[0] = context_handle->krb5->seqnr & 0xFF;
-      ((char*)data + 8)[1] = context_handle->krb5->seqnr >> 8 & 0xFF;
-      ((char*)data + 8)[2] = context_handle->krb5->seqnr >> 16 & 0xFF;
-      ((char*)data + 8)[3] = context_handle->krb5->seqnr >> 24 & 0xFF;
+      ((char*)data + 8)[0] = context_handle->krb5->initseqnr & 0xFF;
+      ((char*)data + 8)[1] = context_handle->krb5->initseqnr >> 8 & 0xFF;
+      ((char*)data + 8)[2] = context_handle->krb5->initseqnr >> 16 & 0xFF;
+      ((char*)data + 8)[3] = context_handle->krb5->initseqnr >> 24 & 0xFF;
       memset(data + 8 + 4, context_handle->krb5->acceptor ? 0xFF : 0, 4);
-
       tmplen = 8;
       rc = shishi_encrypt_iv_etype(context_handle->krb5->sh,
 				   shishi_tkt_key(context_handle->krb5->tkt),
@@ -341,6 +374,7 @@ krb5_gss_wrap (OM_uint32 * minor_status,
 				  &output_message_buffer->length);
       if (!rc)
 	return GSS_S_FAILURE;
+      context_handle->krb5->initseqnr++;
       break;
 
     default:
@@ -396,7 +430,7 @@ krb5_gss_unwrap (OM_uint32 * minor_status,
     case 4: /* 3DES */
       {
 	size_t padlen;
-	char *p;
+	unsigned char *p;
 	char cksum[20];
 	size_t cksumlen = 20;
 	int i;
@@ -419,10 +453,10 @@ krb5_gss_unwrap (OM_uint32 * minor_status,
 	if (memcmp(p + 4, k5->acceptor ? "\x00\x00\x00\x00" :
 		   "\xFF\xFF\xFF\xFF", 4) != 0)
 	  return GSS_S_BAD_MIC;
-	if ((p[0] << 24 | p[1] << 16 | p[2] << 8 | p[3]) != k5->seqnr)
+	if ((p[0]|(p[1] << 8)|(p[2] << 16)|(p[3] << 24)) != k5->acceptseqnr)
 	  return GSS_S_BAD_MIC;
 
-	k5->seqnr++;
+	k5->acceptseqnr++;
 
 	/* Check pad */
 	padlen = ((char*)data.value)[data.length - 1];
