@@ -36,7 +36,7 @@ section entitled ``GNU Free Documentation License''.
 @end direntry
 
 @titlepage
-@title Generic Security Service
+@title GNU Generic Security Service Library
 @subtitle GSS-API Library for the GNU system
 @subtitle for version @value{VERSION}, @value{UPDATED}
 @author Simon Josefsson
@@ -49,8 +49,7 @@ section entitled ``GNU Free Documentation License''.
 
 @ifnottex
 @node Top
-@top GNU Generic Security Service
-
+@top GNU Generic Security Service Library
 @insertcopying
 @end ifnottex
 
