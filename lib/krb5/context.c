@@ -334,6 +334,13 @@ gss_krb5_accept_sec_context (OM_uint32 * minor_status,
       return GSS_S_FAILURE;
     }
 
+  if (shishi_ap_authenticator_cksumtype (cxk5->ap) != 0x8003)
+    {
+      if (minor_status)
+	*minor_status = GSS_KRB5_S_G_VALIDATE_FAILED;
+      return GSS_S_FAILURE;
+    }
+
   /* XXX Parse authenticator.checksum data. */
 
   cxk5->tkt = shishi_ap_tkt (cxk5->ap);
@@ -377,12 +384,10 @@ gss_krb5_accept_sec_context (OM_uint32 * minor_status,
       gss_name_t p;
 
       p = xmalloc (sizeof (*p));
-      p->length = 1024;		/* XXX */
-      p->value = xmalloc (p->length);
 
-      rc = shishi_encticketpart_cname_get
-	(cxk5->sh, shishi_tkt_encticketpart (cxk5->tkt),
-	 p->value, &p->length);
+      rc = shishi_encticketpart_client (cxk5->sh,
+					shishi_tkt_encticketpart (cxk5->tkt),
+					&p->value, &p->length);
       if (rc != SHISHI_OK)
 	return GSS_S_FAILURE;
 
