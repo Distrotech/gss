@@ -2,17 +2,18 @@ GSS NEWS -- History of user-visible changes.                    -*- outline -*-
 Copyright (C) 2003 Simon Josefsson
 See the end for copying conditions.
 
-* Changes in 0.0.0 (released 2003-06-02)
+* Changes in 0.0.0 (unreleased)
 
 ** Initial release.
 
 The source code framework is in place, an outline of the documentation
 is ready, and there are some simple self tests.  The Kerberos 5
-mechanism supports mutual authentication and the standard DES cipher
-and non-standard 3DES cipher.  GNU SASL can use this version to
-connect to GNU Mailutils and Cyrus IMAP servers, where the latter two
-servers uses the GSS implementations in MIT Kerberos or Heimdal.
-Server mode is not supported yet.
+mechanism (RFC 1964) supports mutual authentication and the standard
+DES cipher.  The non-standard 3DES cipher is also implemented, but
+unfortunately there are no specifications for AES.  GNU SASL can use
+this version to connect to GNU Mailutils and Cyrus IMAP servers that
+use the GSS implementations from MIT Kerberos or Heimdal.  Server mode
+is not supported yet.
 
 ----------------------------------------------------------------------
 Copying and distribution of this file, with or without modification,
