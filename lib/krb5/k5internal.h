@@ -27,7 +27,6 @@
 typedef struct _gss_krb5_cred_struct
 {
   Shishi *sh;
-  gss_name_desc peer;
   gss_name_t peerptr;
   Shishi_tkt *tkt;
   Shishi_key *key;

@@ -118,7 +118,6 @@ gss_krb5_acquire_cred (OM_uint32 * minor_status,
   p = xcalloc (sizeof (*p), 1);
   p->mech = GSS_KRB5;
   p->krb5 = xcalloc (sizeof (*p->krb5), 1);
-  p->krb5->peerptr = &p->krb5->peer;
 
   maj_stat = gss_krb5_acquire_cred1 (minor_status, desired_name, time_req,
 				     desired_mechs, cred_usage,

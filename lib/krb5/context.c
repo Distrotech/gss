@@ -80,7 +80,6 @@ gss_krb5_init_sec_context (OM_uint32 * minor_status,
 	}
       ctx->krb5->sh = h;
 
-      ctx->peerptr = &ctx->peer;
       if (gss_oid_equal (target_name->type, GSS_KRB5_NT_PRINCIPAL_NAME))
 	{
 	  maj_stat = gss_duplicate_name (minor_status, target_name,
@@ -104,9 +103,9 @@ gss_krb5_init_sec_context (OM_uint32 * minor_status,
 	  Shishi_tkts_hint hint;
 
 	  memset (&hint, 0, sizeof (hint));
-	  hint.server = malloc (ctx->peer.length + 1);
-	  memcpy (hint.server, ctx->peer.value, ctx->peer.length);
-	  hint.server[ctx->peer.length] = '\0';
+	  hint.server = malloc (ctx->peerptr->length + 1);
+	  memcpy (hint.server, ctx->peerptr->value, ctx->peerptr->length);
+	  hint.server[ctx->peerptr->length] = '\0';
 
 	  tkt = shishi_tkts_get (shishi_tkts_default (h), &hint);
 	  free (hint.server);
