@@ -1,4 +1,4 @@
-/* error.c	Error handling functionality.
+/* error.c --- Error handling functionality.
  * Copyright (C) 2003, 2004  Simon Josefsson
  *
  * This file is part of the Generic Security Service (GSS).
@@ -25,7 +25,11 @@
 #define gettext_noop(String) String
 #define N_(String) gettext_noop (String)
 
-#include "internal.h"
+/* Get strlen. */
+#include <string.h>
+
+/* Get xmalloc etc. */
+#include "xalloc.h"
 
 /* _gss_find_mech */
 #include "meta.h"
