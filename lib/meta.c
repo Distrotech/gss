@@ -35,10 +35,10 @@ _gss_mech_api_desc _gss_mech_apis[] = {
 #ifdef USE_KERBEROS5
   {
     &GSS_KRB5_static,
-    { 4, { &GSS_KRB5_NT_USER_NAME_static,
-	   &GSS_C_NT_HOSTBASED_SERVICE_static,
-	   &GSS_KRB5_NT_PRINCIPAL_NAME_static,
-	   &GSS_KRB5_NT_STRING_UID_NAME_static } },
+    { &GSS_KRB5_NT_USER_NAME_static,
+      &GSS_C_NT_HOSTBASED_SERVICE_static,
+      &GSS_KRB5_NT_PRINCIPAL_NAME_static,
+      &GSS_KRB5_NT_STRING_UID_NAME_static },
     gss_krb5_init_sec_context,
     gss_krb5_canonicalize_name,
     gss_krb5_wrap,
@@ -49,6 +49,7 @@ _gss_mech_api_desc _gss_mech_apis[] = {
 #endif
   {
     0,
+    { },
     _gss_dummy,
     _gss_dummy,
     _gss_dummy,
@@ -74,13 +75,14 @@ OM_uint32
 gss_indicate_mechs (OM_uint32 * minor_status, gss_OID_set * mech_set)
 {
   OM_uint32 maj_stat;
+  gss_OID_set oids;
   int i;
 
   maj_stat = gss_create_empty_oid_set (minor_status, mech_set);
   if (maj_stat != GSS_S_COMPLETE)
     return maj_stat;
 
-  for (i = 0; i < sizeof(_gss_mech_apis) / sizeof(_gss_mech_apis[0]); i++)
+  for (i = 0; i < sizeof(_gss_mech_apis) / sizeof(_gss_mech_apis[0]) - 1; i++)
     {
       maj_stat = gss_add_oid_set_member (minor_status, _gss_mech_apis[i].mech,
 					 mech_set);
@@ -89,6 +91,117 @@ gss_indicate_mechs (OM_uint32 * minor_status, gss_OID_set * mech_set)
 	  gss_release_oid_set (minor_status, mech_set);
 	  return maj_stat;
 	}
+    }
+
+  return GSS_S_COMPLETE;
+}
+
+OM_uint32
+gss_inquire_names_for_mech (OM_uint32 * minor_status,
+			    const gss_OID mechanism, gss_OID_set * name_types)
+{
+  OM_uint32 maj_stat;
+  _gss_mech_api_t mech;
+  int i;
+
+  mech = _gss_find_mech (mechanism);
+
+  maj_stat = gss_create_empty_oid_set (minor_status, name_types);
+  if (maj_stat != GSS_S_COMPLETE)
+    return maj_stat;
+
+  for (i = 0; mech->name_types[i]; i++)
+    {
+      maj_stat = gss_add_oid_set_member (minor_status, mech->name_types[i],
+					 name_types);
+      if (maj_stat != GSS_S_COMPLETE)
+	{
+	  gss_release_oid_set (minor_status, name_types);
+	  return maj_stat;
+	}
+    }
+
+  return GSS_S_COMPLETE;
+}
+
+OM_uint32
+_gss_inquire_mechs_for_name2 (OM_uint32 * minor_status,
+			      _gss_mech_api_t mech,
+			      gss_OID name_type,
+			      gss_OID_set *mech_types)
+{
+  gss_OID_set oids;
+  int supported;
+  OM_uint32 maj_stat;
+
+  maj_stat = gss_inquire_names_for_mech (minor_status, mech->mech, &oids);
+  if (maj_stat != GSS_S_COMPLETE)
+    return maj_stat;
+
+  maj_stat = gss_test_oid_set_member (minor_status, name_type,
+				      oids, &supported);
+  if (maj_stat != GSS_S_COMPLETE)
+    {
+      gss_release_oid_set (minor_status, &oids);
+      return maj_stat;
+    }
+
+  if (supported)
+    {
+      maj_stat = gss_add_oid_set_member (minor_status,
+					 mech->mech,
+					 mech_types);
+      if (maj_stat != GSS_S_COMPLETE)
+	{
+	  gss_release_oid_set (minor_status, &oids);
+	  return maj_stat;
+	}
+    }
+  gss_release_oid_set (minor_status, &oids);
+
+  return GSS_S_COMPLETE;
+}
+
+OM_uint32
+_gss_inquire_mechs_for_name1 (OM_uint32 * minor_status,
+			      gss_OID name_type,
+			      gss_OID_set *mech_types)
+{
+  OM_uint32 maj_stat;
+  int i;
+
+  for (i = 0; i < sizeof(_gss_mech_apis) / sizeof(_gss_mech_apis[0]) - 1; i++)
+    {
+      maj_stat = _gss_inquire_mechs_for_name2 (minor_status,
+					       &_gss_mech_apis[i],
+					       name_type,
+					       mech_types);
+      if (maj_stat != GSS_S_COMPLETE)
+	return maj_stat;
+    }
+
+  return GSS_S_COMPLETE;
+}
+
+OM_uint32
+gss_inquire_mechs_for_name (OM_uint32 * minor_status,
+			    const gss_name_t input_name,
+			    gss_OID_set * mech_types)
+{
+  int i;
+  OM_uint32 maj_stat;
+
+  maj_stat = gss_create_empty_oid_set (minor_status, mech_types);
+  if (maj_stat != GSS_S_COMPLETE)
+    return maj_stat;
+
+  /* XXX we only care about type of input name.  care about content too? */
+  maj_stat = _gss_inquire_mechs_for_name1 (minor_status, input_name->type,
+					   mech_types);
+  if (maj_stat != GSS_S_COMPLETE)
+    {
+      gss_release_oid_set (minor_status, mech_types);
+      return maj_stat;
     }
 
   return GSS_S_COMPLETE;
