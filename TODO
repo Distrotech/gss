@@ -8,7 +8,7 @@ duplication can be avoided.
 * Support non-blocking mode.
 This would be an API extension.  It could work by forking a process
 and interface to it, or by using a user-specific daemon.  E.g., h =
-START(accept_sec_context(...)), FINISHED(h), FINISH(h), ABORT(h).
+START(accept_sec_context(...)), FINISHED(h), ret = FINISH(h), ABORT(h).
 
 * Support loadable modules via ldopen, a'la Solaris GSS.
 
