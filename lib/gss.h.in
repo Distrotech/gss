@@ -1,5 +1,5 @@
-/* gss.h	Header file for GSS.                                  -*- c -*-
- * Copyright (C) 2003  Simon Josefsson
+/* gss.h --- Header file for GSSLib.                                  -*- c -*-
+ * Copyright (C) 2003, 2004  Simon Josefsson
  *
  * This file is part of the Generic Security Service (GSS).
  *
@@ -22,14 +22,11 @@
 #ifndef _GSS_H
 #define _GSS_H
 
-#include <stdio.h>  /* FILE */
-#include <stddef.h> /* size_t */
-
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-#define GSS_VERSION "@PACKAGE_VERSION@"
+#define GSS_VERSION "@VERSION@"
 
 #include <gss/api.h>
 #include <gss/ext.h>
