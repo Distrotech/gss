@@ -34,7 +34,11 @@ OM_uint32 _gss_dummy (OM_uint32 minor_status, ...)
 _gss_mech_api_desc _gss_mech_apis[] = {
 #ifdef USE_KERBEROS5
   {
-    &GSS_KRB5,
+    &GSS_KRB5_static,
+    { 4, { &GSS_KRB5_NT_USER_NAME_static,
+	   &GSS_C_NT_HOSTBASED_SERVICE_static,
+	   &GSS_KRB5_NT_PRINCIPAL_NAME_static,
+	   &GSS_KRB5_NT_STRING_UID_NAME_static } },
     gss_krb5_init_sec_context,
     gss_krb5_canonicalize_name,
     gss_krb5_wrap,
@@ -61,13 +65,13 @@ _gss_find_mech (gss_OID oid)
   if (oid == GSS_C_NO_OID)
     return &_gss_mech_apis[0];
   for (i = 0; i < sizeof(_gss_mech_apis) / sizeof(_gss_mech_apis[0]); i++)
-    if (_gss_mech_apis[i].mech && gss_oid_equal (oid, *_gss_mech_apis[i].mech))
+    if (gss_oid_equal (oid, _gss_mech_apis[i].mech))
       return &_gss_mech_apis[i];
   return &_gss_mech_apis[i-1];
 }
 
 OM_uint32
-_gss_indicate_mechs (OM_uint32 * minor_status, gss_OID_set * mech_set)
+gss_indicate_mechs (OM_uint32 * minor_status, gss_OID_set * mech_set)
 {
   OM_uint32 maj_stat;
   int i;
@@ -78,7 +82,7 @@ _gss_indicate_mechs (OM_uint32 * minor_status, gss_OID_set * mech_set)
 
   for (i = 0; i < sizeof(_gss_mech_apis) / sizeof(_gss_mech_apis[0]); i++)
     {
-      maj_stat = gss_add_oid_set_member (minor_status, *_gss_mech_apis[i].mech,
+      maj_stat = gss_add_oid_set_member (minor_status, _gss_mech_apis[i].mech,
 					 mech_set);
       if (maj_stat != GSS_S_COMPLETE)
 	{

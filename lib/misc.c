@@ -146,14 +146,11 @@ gss_display_status (OM_uint32 * minor_status,
 		    const gss_OID mech_type,
 		    OM_uint32 * message_context, gss_buffer_t status_string)
 {
+  /* XXX */
   return GSS_S_FAILURE;
 }
 
-OM_uint32
-gss_indicate_mechs (OM_uint32 * minor_status, gss_OID_set * mech_set)
-{
-  return _gss_indicate_mechs (minor_status, mech_set);
-}
+/* See meta.c for gss_indicate_mechs() */
 
 OM_uint32
 gss_release_buffer (OM_uint32 * minor_status, gss_buffer_t buffer)
