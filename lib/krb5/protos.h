@@ -71,6 +71,14 @@ gss_krb5_inquire_cred (OM_uint32 * minor_status,
 		       gss_cred_usage_t * cred_usage,
 		       gss_OID_set * mechanisms);
 extern OM_uint32
+gss_krb5_inquire_cred_by_mech (OM_uint32 * minor_status,
+			       const gss_cred_id_t cred_handle,
+			       const gss_OID mech_type,
+			       gss_name_t * name,
+			       OM_uint32 * initiator_lifetime,
+			       OM_uint32 * acceptor_lifetime,
+			       gss_cred_usage_t * cred_usage);
+extern OM_uint32
 gss_krb5_release_cred (OM_uint32 * minor_status,
 		       gss_cred_id_t * cred_handle);
 
