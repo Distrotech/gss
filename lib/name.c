@@ -339,7 +339,6 @@ _gss_inquire_mechs_for_name1 (OM_uint32 * minor_status,
 {
   OM_uint32 maj_stat;
   gss_OID_set supported_mech_types;
-  size_t i;
 
   maj_stat = gss_indicate_mechs (minor_status, &supported_mech_types);
   if (GSS_ERROR (maj_stat))
