@@ -45,6 +45,9 @@ gss_OID GSS_KRB5_NT_PRINCIPAL_NAME = &GSS_KRB5_MECH_OID_static;
 #define _GSS_KRB5_KRB_ERROR_DATA _GSS_KRB5_OID_DER "\x03\x00"
 #define _GSS_KRB5_KRB_ERROR_LEN  (_GSS_KRB5_OID_LEN+2)
 
+#define _GSS_KRB5_WRAP_DATA _GSS_KRB5_OID_DER "\x02\x01"
+#define _GSS_KRB5_WRAP_LEN  (_GSS_KRB5_OID_LEN+2)
+
 #define _GSS_KRB5_TOK_MIC_DATA  "\x01\x01"
 #define _GSS_KRB5_TOK_MIC_LEN   strlen(_GSS_KRB5_TOK_MIC_DATA)
 #define _GSS_KRB5_TOK_WRAP_DATA "\x02\x01"
@@ -244,8 +247,14 @@ krb5_gss_wrap (OM_uint32 * minor_status,
 	       const gss_buffer_t input_message_buffer,
 	       int *conf_state, gss_buffer_t output_message_buffer)
 {
-  puts("wrap:");
+  size_t padlength;
+  char *data, *tmp;
+  size_t len, tmplen;
+  int rc;
 
+  padlength = 8 - input_message_buffer->length % 8;
+
+  puts("wrap:");
   {
     int i;
     for (i = 0; i < input_message_buffer->length; i++)
@@ -254,8 +263,146 @@ krb5_gss_wrap (OM_uint32 * minor_status,
 	if ((i+1)%16 == 0)
 	  printf("\n");
       }
+    puts("");
   }
-  return GSS_S_FAILURE;
+
+  len = 8 + 8 + 20 + 8 + input_message_buffer->length + padlength;
+  data = malloc(len);
+  if (!data)
+    return GSS_S_FAILURE;
+
+  /* Compute checksum over header, random data, input string, and pad */
+
+  /* TOK_ID: Wrap */
+  memcpy (data, "\x02\x01", 2);
+  /* SGN_ALG: 3DES */
+  memcpy (data + 2, "\x04\x00", 2);
+  /* SEAL_ALG: none */
+  memcpy (data + 4, "\xFF\xFF", 2);
+  /* filler */
+  memcpy (data + 6, "\xFF\xFF", 2);
+  /* XXX set 8..15 SND_SEQ random? */
+  shishi_randomize(context_handle->sh, data + 8, 8);
+  memcpy (data + 16, input_message_buffer->value,
+	  input_message_buffer->length);
+  memset (data + 16 + input_message_buffer->length, padlength, padlength);
+
+  tmplen=1000;
+  tmp = malloc(tmplen);
+
+  puts("cksum:");
+  {
+    int i;
+    for (i = 0; i < 16 + input_message_buffer->length + padlength; i++)
+      {
+	printf("%02x ", ((char*)data)[i] & 0xFF);
+	if ((i+1)%16 == 0)
+	  printf("\n");
+      }
+    puts("");
+  }
+
+  rc = shishi_checksum (context_handle->sh,
+			shishi_tkt_key(context_handle->tkt),
+			SHISHI_KEYUSAGE_GSS_R2, SHISHI_HMAC_SHA1_DES3_KD,
+			data, 16 + input_message_buffer->length + padlength,
+			tmp, &tmplen);
+  if (rc != SHISHI_OK)
+    return GSS_S_FAILURE;
+
+  puts("cksumed:");
+  {
+    int i;
+    for (i = 0; i < tmplen; i++)
+      {
+	printf("%02x ", ((char*)tmp)[i] & 0xFF);
+	if ((i+1)%16 == 0)
+	  printf("\n");
+      }
+    puts("");
+  }
+
+  memcpy(data + 16, tmp, tmplen);
+
+  /* seq_nr */
+  tmp[0] = 0;
+  tmp[1] = 0;
+  tmp[2] = 0;
+  tmp[3] = 1;
+  memset(tmp + 4, 0 /* XXX 0xFF? */, 4);
+
+  tmplen = 1000;
+
+  puts("encrypt:");
+  {
+    int i;
+    for (i = 0; i < 8; i++)
+      {
+	printf("%02x ", ((char*)tmp)[i] & 0xFF);
+	if ((i+1)%16 == 0)
+	  printf("\n");
+      }
+    puts("");
+  }
+
+  rc = shishi_encrypt_iv(context_handle->sh,
+			 shishi_tkt_key(context_handle->tkt),
+			 SHISHI_KEYUSAGE_GSS_R3,
+			 data + 16, 8,
+			 tmp, 8, tmp, &tmplen);
+  if (rc != SHISHI_OK)
+    return GSS_S_FAILURE;
+
+  puts("encrypted:");
+  {
+    int i;
+    for (i = 0; i < tmplen; i++)
+      {
+	printf("%02x ", ((char*)tmp)[i] & 0xFF);
+	if ((i+1)%16 == 0)
+	  printf("\n");
+      }
+    puts("");
+  }
+
+  memcpy (data + 36, data + 8, 8);
+  memcpy (data + 36 + 8, input_message_buffer->value,
+	  input_message_buffer->length);
+  memset (data + 36 + 8 + input_message_buffer->length, padlength, padlength);
+  memcpy(data + 8, tmp + 8, 8);
+
+  puts("data:");
+  {
+    int i;
+    for (i = 0; i < len; i++)
+      {
+	printf("%02x ", ((char*)data)[i] & 0xFF);
+	if ((i+1)%16 == 0)
+	  printf("\n");
+      }
+    puts("");
+  }
+
+  rc = _gss_encapsulate_token(_GSS_KRB5_OID_DER, _GSS_KRB5_OID_LEN,
+			      data, len,
+			      (void**)&(output_message_buffer->value),
+			      &output_message_buffer->length);
+  if (!rc)
+    return GSS_S_FAILURE;
+
+  puts("wrapped:");
+  {
+    int i;
+    for (i = 0; i < output_message_buffer->length; i++)
+      {
+	printf("%02x ", ((char*)output_message_buffer->value)[i] & 0xFF);
+	if ((i+1)%16 == 0)
+	  printf("\n");
+      }
+    puts("");
+  }
+
+  return GSS_S_COMPLETE;
 }
 
 OM_uint32
@@ -268,16 +415,29 @@ krb5_gss_unwrap (OM_uint32 * minor_status,
   gss_OID_desc tokenoid;
   gss_buffer_desc data;
   OM_uint32 sgn_alg, seal_alg;
+  size_t tmplen;
   int rc;
 
   rc = _gss_decapsulate_token (input_message_buffer, &tokenoid, &data);
   if (!rc)
     return GSS_S_BAD_MIC;
 
+  puts("data:");
+  {
+    int i;
+    for (i = 0; i < data.length; i++)
+      {
+	printf("%02x ", ((char*)data.value)[i] & 0xFF);
+	if ((i+1)%16 == 0)
+	  printf("\n");
+      }
+    puts("");
+  }
+
   if (!_gss_oid_equal (&tokenoid, GSS_KRB5_MECH_OID))
     return GSS_S_BAD_MIC;
 
-  if (data.length < 24)
+  if (data.length < 8 + 8 + 20 + 8 + 8)
     return GSS_S_BAD_MIC;
 
   if (memcmp(data.value, _GSS_KRB5_TOK_WRAP_DATA, _GSS_KRB5_TOK_WRAP_LEN) != 0)
@@ -289,6 +449,9 @@ krb5_gss_unwrap (OM_uint32 * minor_status,
   seal_alg = ((char*)data.value)[4] & 0xFF;
   seal_alg |= ((char*)data.value)[5] << 8 & 0xFF00;
 
+  if(conf_state != NULL)
+    *conf_state = seal_alg == 0xFFFF;
+
   if (memcmp(data.value + 6, "\xFF\xFF", 2) != 0)
     return GSS_S_BAD_MIC;
 
@@ -298,29 +461,68 @@ krb5_gss_unwrap (OM_uint32 * minor_status,
 
     case 4: /* 3DES */
       {
-	size_t padlength;
+	size_t padlen;
 	char *pad;
+	char cksum[20]; /* HMAC-SHA1 checksum */
+	size_t cksumlen = 20;
+	int i;
 
-	/* XXX verify checksum */
+	/* XXX decrypt data iff confidential option chosen */
 
-	pad = data.value + data.length - 1;
-	padlength = *pad;
-	/* XXX check pad chars */
+	/* XXX verify seqnr */
 
-	if (data.length < 44 + padlength)
+	/* Check pad */
+	padlen = ((char*)data.value)[data.length - 1];
+	if (padlen > 8)
+	  return GSS_S_BAD_MIC;
+	for (i = 1; i <= padlen; i++)
+	  if (((char*)data.value)[data.length - i] != padlen)
+	    return GSS_S_BAD_MIC;
+
+	/* Save a copy of incoming HMAC-SHA1 */
+	memcpy(cksum, data.value + 8 + 8, 20);
+
+	/* Write header next to confounder */
+	memcpy(data.value + 8 + 20, data.value, 8);
+
+	/* Checksum header + confounder + data + pad */
+	tmplen = 20;
+	rc = shishi_checksum (context_handle->sh,
+			      shishi_tkt_key(context_handle->tkt),
+			      SHISHI_KEYUSAGE_GSS_R2, SHISHI_HMAC_SHA1_DES3_KD,
+			      data.value + 20 + 8, data.length - 20 - 8,
+			      data.value + 8 + 8, &tmplen);
+	if (rc != SHISHI_OK)
+	  return GSS_S_FAILURE;
+
+	/* Compare checksum */
+	if (tmplen != 20 || memcmp (cksum, data.value + 8 + 8, 20) != 0)
 	  return GSS_S_BAD_MIC;
 
-	output_message_buffer->length = data.length - 44 - padlength;
+	/* Copy output data */
+	output_message_buffer->length = data.length - 8 - 20 - 8 - 8 - padlen;
 	output_message_buffer->value = malloc(output_message_buffer->length);
-	memcpy(output_message_buffer->value,
-	       data.value + 44,
-	       data.length - 44 - padlength);
+	memcpy(output_message_buffer->value, data.value + 20 + 8 + 8 + 8,
+	       data.length - 20 - 8 - 8 - 8 - padlen);
 	break;
       }
 
     default:
       return GSS_S_FAILURE;
     }
+
+
+  puts("unwrapped:");
+  {
+    int i;
+    for (i = 0; i < output_message_buffer->length; i++)
+      {
+	printf("%02x ", ((char*)output_message_buffer->value)[i] & 0xFF);
+	if ((i+1)%16 == 0)
+	  printf("\n");
+      }
+    puts("");
+  }
 
   return GSS_S_COMPLETE;
 }
