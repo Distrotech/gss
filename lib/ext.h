@@ -42,18 +42,18 @@ extern int gss_userok (const gss_name_t name, const char *username);
 
 /* See asn1.c. */
 extern int
-gss_encapsulate_token (gss_buffer_t input_message,
+gss_encapsulate_token (const gss_buffer_t input_message,
 		       gss_OID token_oid, gss_buffer_t output_message);
 extern int
-gss_encapsulate_token_prefix (gss_buffer_t input_message,
-			      char *prefix, size_t prefixlen,
+gss_encapsulate_token_prefix (const gss_buffer_t input_message,
+			      const char *prefix, size_t prefixlen,
 			      gss_OID token_oid, gss_buffer_t output_message);
 extern int
-gss_decapsulate_token (gss_buffer_t input_message,
+gss_decapsulate_token (const gss_buffer_t input_message,
 		       gss_OID token_oid, gss_buffer_t output_message);
 extern int
-gss_decapsulate_token_check (gss_buffer_t input_message,
-			     char *prefix, size_t prefixlen,
+gss_decapsulate_token_check (const gss_buffer_t input_message,
+			     const char *prefix, size_t prefixlen,
 			     gss_OID token_oid,
 			     gss_buffer_t output_message);
 
