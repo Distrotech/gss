@@ -1,4 +1,4 @@
-## Process this file with automake to produce Makefile.in.
+# gss.ggo --- Process this file with gengetop to produce gss_cmd.*.
 # Copyright (C) 2003, 2004 Simon Josefsson.
 #
 # This file is part of the Generic Security Service (GSS).
@@ -18,8 +18,7 @@
 # Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 # 02111-1307, USA.
 
-noinst_LTLIBRARIES = libgl.la
+purpose "Command line interface to GSS."
 
-libgl_la_SOURCES = getopt.h gettext.h xalloc.h xmalloc.c	\
-	xgethostname.h xgethostname.c
-libgl_la_LIBADD = @LTLIBOBJS@
+option "major" m "Describe a `major status' error code vaue in plain text." int no
+option "quiet" - "Silent operation" flag off

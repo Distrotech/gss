@@ -21,7 +21,7 @@
 pkgconfigdir = $(libdir)/pkgconfig
 pkgconfig_DATA = gss.pc
 
-SUBDIRS = po gl lib tests doc
+SUBDIRS = po gl lib src tests doc
 
 ACLOCAL_AMFLAGS = -I m4 -I gl/m4
 
