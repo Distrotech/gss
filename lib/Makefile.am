@@ -26,7 +26,8 @@ INCLUDES = -I../intl
 
 include_HEADERS = gssapi.h ggssapi.h
 
-libggssapi_la_SOURCES = version.c error.c
+libggssapi_la_SOURCES = internal.h version.c error.c \
+	context.c cred.c misc.c msg.c name.c obsolete.c oid.c
 
 libggssapi_la_LIBADD = @LTLIBINTL@ @LTLIBOBJS@
 libggssapi_la_LDFLAGS = -version-info $(LT_CURRENT):$(LT_REVISION):$(LT_AGE)
@@ -36,4 +37,4 @@ localedir = $(datadir)/locale
 DEFS = -DLOCALEDIR=\"$(localedir)\" @DEFS@
 
 indent:
-	indent $(libggssapi_la_SOURCES)
+	indent $(libggssapi_la_SOURCES) gssapi.h gssapi.h.in
