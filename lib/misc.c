@@ -204,7 +204,7 @@ gss_release_oid_set (OM_uint32 * minor_status, gss_OID_set * set)
 
 /* See meta.c. */
 OM_uint32
-_gss_indicate_mechs1 (OM_uint32 * minor_status, gss_OID_set *mech_set);
+_gss_indicate_mechs1 (OM_uint32 * minor_status, gss_OID_set * mech_set);
 
 /**
  * gss_indicate_mechs:

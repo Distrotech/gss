@@ -302,7 +302,7 @@ gss_krb5_accept_sec_context (OM_uint32 * minor_status,
       gss_name_t p;
 
       p = xmalloc (sizeof (*p));
-      p->length = 1024;	/* XXX */
+      p->length = 1024;		/* XXX */
       p->value = xmalloc (p->length);
 
       rc = shishi_encticketpart_cname_get

@@ -66,42 +66,46 @@ main (int argc, char *argv[])
 	  GSS_CALLING_ERROR (args.major_arg) >> GSS_C_CALLING_ERROR_OFFSET,
 	  GSS_SUPPLEMENTARY_INFO (args.major_arg),
 	  GSS_SUPPLEMENTARY_INFO (args.major_arg),
-	  GSS_SUPPLEMENTARY_INFO (args.major_arg) >> GSS_C_SUPPLEMENTARY_OFFSET,
-	  GSS_SUPPLEMENTARY_INFO (args.major_arg) >> GSS_C_SUPPLEMENTARY_OFFSET);
+	  GSS_SUPPLEMENTARY_INFO (args.major_arg)
+	  >> GSS_C_SUPPLEMENTARY_OFFSET,
+	  GSS_SUPPLEMENTARY_INFO (args.major_arg)
+	  >> GSS_C_SUPPLEMENTARY_OFFSET);
 
-  printf("   MSB                                                                 LSB\n"
-	 "   +-----------------+-----------------+---------------------------------+\n"
-	 "   |  Calling Error  |  Routine Error  |       Supplementary Info        |\n");
-  printf ("   | ");
+  printf ("   MSB                               "
+	  "                                  LSB\n"
+	  "   +-----------------+---------------"
+	  "--+---------------------------------+\n"
+	  "   |  Calling Error  |  Routine Error"
+	  "  |       Supplementary Info        |\n   | ");
   for (i = 0; i < 8; i++)
-    printf ("%d ", (args.major_arg >> (31-i)) & 1);
+    printf ("%d ", (args.major_arg >> (31 - i)) & 1);
   printf ("| ");
   for (i = 0; i < 8; i++)
-    printf ("%d ", (args.major_arg >> (23-i)) & 1);
+    printf ("%d ", (args.major_arg >> (23 - i)) & 1);
   printf ("| ");
   for (i = 0; i < 16; i++)
-    printf ("%d ", (args.major_arg >> (15-i)) & 1);
-  printf ("|\n");
-  printf ("   +-----------------+-----------------+---------------------------------+\n"
-	  "Bit 31            24  23            16  15                             0\n\n");
+    printf ("%d ", (args.major_arg >> (15 - i)) & 1);
+  printf ("|\n"
+	  "   +-----------------+---------------"
+	  "--+---------------------------------+\n"
+	  "Bit 31            24  23            1"
+	  "6  15                             0\n\n");
 
-  printf ("Description:\n");
   do
     {
       maj = gss_display_status (&min, args.major_arg,
 				GSS_C_GSS_CODE, GSS_C_NO_OID,
-				&message_context,
-				&status_string);
+				&message_context, &status_string);
       if (GSS_ERROR (maj))
 	{
-	  fprintf (stderr, "%s: error printing error code\n", argv[0]);
+	  fprintf (stderr, "%s: unknown status code\n", argv[0]);
 	  return 1;
 	}
 
-      printf("%.*s\n", (int)status_string.length,
-	     (char *)status_string.value);
-      
-      gss_release_buffer(&min, &status_string);
+      printf ("%.*s\n", (int) status_string.length,
+	      (char *) status_string.value);
+
+      gss_release_buffer (&min, &status_string);
     }
   while (message_context);
 

@@ -26,20 +26,17 @@
 #include <stddef.h>
 
 /* See version.c. */
-extern const char *
-gss_check_version (const char *req_version);
+extern const char *gss_check_version (const char *req_version);
 
 /* See ext.c. */
-extern int
-gss_oid_equal (gss_OID first_oid, gss_OID second_oid);
+extern int gss_oid_equal (gss_OID first_oid, gss_OID second_oid);
 extern OM_uint32
 gss_copy_oid (OM_uint32 * minor_status,
 	      const gss_OID src_oid, gss_OID dest_oid);
 extern OM_uint32
 gss_duplicate_oid (OM_uint32 * minor_status,
 		   const gss_OID src_oid, gss_OID * dest_oid);
-extern int
-gss_userok (const gss_name_t name, const char *username);
+extern int gss_userok (const gss_name_t name, const char *username);
 
 /* See asn1.c. */
 extern int

@@ -388,7 +388,7 @@ main (int argc, char *argv[])
 
   if (debug)
     printf ("    display_name() => %d: %s\n", bufdesc2.length,
-	    (char*) bufdesc2.value);
+	    (char *) bufdesc2.value);
 
 #ifdef USE_KERBEROS5
   /* NB: "service" resused from previous test */
@@ -448,7 +448,7 @@ main (int argc, char *argv[])
 
   if (debug)
     printf ("    Display status for GSS_S_COMPLETE => %*s\n",
-	    bufdesc.length, (char*)bufdesc.value);
+	    bufdesc.length, (char *) bufdesc.value);
 
   if (verbose)
     printf ("Name self tests done with %d errors\n", error_count);

@@ -149,7 +149,7 @@ gss_duplicate_oid (OM_uint32 * minor_status,
  * `GSS_S_COMPLETE`: Successful completion.
  **/
 OM_uint32
-gss_release_oid (OM_uint32 * minor_status, gss_OID *oid)
+gss_release_oid (OM_uint32 * minor_status, gss_OID * oid)
 {
   if (minor_status)
     *minor_status = 0;

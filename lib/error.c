@@ -267,7 +267,7 @@ gss_display_status (OM_uint32 * minor_status,
 	}
 
       for (i = 0; i < sizeof (gss_supplementary_errors) /
-	     sizeof (gss_supplementary_errors[0]); i++)
+	   sizeof (gss_supplementary_errors[0]); i++)
 	if (gss_supplementary_errors[i].err &
 	    GSS_SUPPLEMENTARY_INFO (status_value))
 	  {

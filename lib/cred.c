@@ -132,11 +132,11 @@ gss_acquire_cred (OM_uint32 * minor_status,
       size_t i;
 
       /* Is the desired_mechs an OR or AND list?  I.e., if the OID set
-	 contain several OIDs, MUST the credential work with all of
-	 them?  Or just any of them?  The specification isn't entirely
-	 clear on this, to me.  This implement an OR list, chosing the
-	 first mechanism in the OID set we support.  We need more
-	 information in meta.c to implement AND lists. */
+         contain several OIDs, MUST the credential work with all of
+         them?  Or just any of them?  The specification isn't entirely
+         clear on this, to me.  This implement an OR list, chosing the
+         first mechanism in the OID set we support.  We need more
+         information in meta.c to implement AND lists. */
 
       for (i = 0; mech == NULL && i < desired_mechs->count; i++)
 	mech = _gss_find_mech ((&desired_mechs->elements)[i]);
@@ -159,8 +159,7 @@ gss_acquire_cred (OM_uint32 * minor_status,
 				 time_req,
 				 desired_mechs,
 				 cred_usage,
-				 output_cred_handle,
-				 actual_mechs, time_rec);
+				 output_cred_handle, actual_mechs, time_rec);
   if (GSS_ERROR (maj_stat))
     {
       free (*output_cred_handle);
@@ -382,14 +381,12 @@ gss_inquire_cred (OM_uint32 * minor_status,
 				   GSS_C_INDEFINITE,
 				   GSS_C_NO_OID_SET,
 				   GSS_C_INITIATE,
-				   &local_cred_handle,
-				   &mechs,
-				   NULL);
+				   &local_cred_handle, &mechs, NULL);
       if (GSS_ERROR (maj_stat))
 	return maj_stat;
 
       /* We assume all mechanisms the credential claim to support can
-	 handle the inquire_cred call. */
+         handle the inquire_cred call. */
       mech = _gss_find_mech (mechs->elements);
 
       gss_release_oid_set (NULL, &mechs);
@@ -503,17 +500,14 @@ gss_inquire_cred_by_mech (OM_uint32 * minor_status,
   if (cred_handle == GSS_C_NO_CREDENTIAL)
     {
       maj_stat = gss_acquire_cred (minor_status,
-				   GSS_C_NO_NAME,
-				   GSS_C_INDEFINITE,
+				   GSS_C_NO_NAME, GSS_C_INDEFINITE,
 				   /* FIXME: We should create an OID
 				      set with mech_type and pass it
 				      as desired_mechs.  Maybe even
 				      check actual_mechs too. */
 				   GSS_C_NO_OID_SET,
 				   GSS_C_INITIATE,
-				   &local_cred_handle,
-				   NULL,
-				   NULL);
+				   &local_cred_handle, NULL, NULL);
       if (GSS_ERROR (maj_stat))
 	return maj_stat;
     }

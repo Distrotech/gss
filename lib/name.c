@@ -76,7 +76,7 @@ gss_import_name (OM_uint32 * minor_status,
       major_stat = gss_duplicate_oid (minor_status, input_name_type,
 				      &(*output_name)->type);
       if (GSS_ERROR (major_stat))
-	  return major_stat;
+	return major_stat;
     }
   else
     (*output_name)->type = GSS_C_NO_OID;
@@ -276,8 +276,7 @@ gss_inquire_names_for_mech (OM_uint32 * minor_status,
 static OM_uint32
 _gss_inquire_mechs_for_name3 (OM_uint32 * minor_status,
 			      gss_OID mech,
-			      gss_OID name_type,
-			      gss_OID_set * mech_types)
+			      gss_OID name_type, gss_OID_set * mech_types)
 {
   gss_OID_set oids;
   int supported;
@@ -322,7 +321,7 @@ _gss_inquire_mechs_for_name2 (OM_uint32 * minor_status,
       maj_stat = _gss_inquire_mechs_for_name3
 	(minor_status, &(supported_mech_types->elements)[i],
 	 name_type, out_mech_types);
-      if (GSS_ERROR(maj_stat))
+      if (GSS_ERROR (maj_stat))
 	return maj_stat;
     }
 
@@ -407,8 +406,7 @@ gss_inquire_mechs_for_name (OM_uint32 * minor_status,
     return maj_stat;
 
   maj_stat = _gss_inquire_mechs_for_name1 (minor_status,
-					   input_name->type,
-					   mech_types);
+					   input_name->type, mech_types);
   if (GSS_ERROR (maj_stat))
     {
       gss_release_oid_set (minor_status, mech_types);
@@ -474,7 +472,8 @@ gss_export_name (OM_uint32 * minor_status,
   mech = _gss_find_mech (mechs->elements);
   if (mech == NULL)
     {
-      gss_warn ("gss_export_name bug, please report to %s", PACKAGE_BUGREPORT);
+      gss_warn ("gss_export_name bug, please report to %s",
+		PACKAGE_BUGREPORT);
       if (minor_status)
 	*minor_status = 0;
       return GSS_S_BAD_MECH;

@@ -93,7 +93,7 @@ typedef struct _gss_mech_api_struct
     (OM_uint32 * minor_status,
      const gss_name_t input_name,
      const gss_OID mech_type, gss_name_t * output_name);
-  OM_uint32 (*export_name)
+    OM_uint32 (*export_name)
     (OM_uint32 * minor_status,
      const gss_name_t input_name, gss_buffer_t exported_name);
     OM_uint32 (*wrap)
@@ -131,7 +131,7 @@ typedef struct _gss_mech_api_struct
      gss_cred_usage_t cred_usage,
      gss_cred_id_t * output_cred_handle,
      gss_OID_set * actual_mechs, OM_uint32 * time_rec);
-  OM_uint32 (*release_cred)
+    OM_uint32 (*release_cred)
     (OM_uint32 * minor_status, gss_cred_id_t * cred_handle);
     OM_uint32 (*accept_sec_context)
     (OM_uint32 * minor_status,
@@ -156,14 +156,13 @@ typedef struct _gss_mech_api_struct
      const gss_cred_id_t cred_handle,
      gss_name_t * name, OM_uint32 * lifetime,
      gss_cred_usage_t * cred_usage, gss_OID_set * mechanisms);
-  OM_uint32 (*inquire_cred_by_mech)
+    OM_uint32 (*inquire_cred_by_mech)
     (OM_uint32 * minor_status,
      const gss_cred_id_t cred_handle,
      const gss_OID mech_type,
      gss_name_t * name,
      OM_uint32 * initiator_lifetime,
-     OM_uint32 * acceptor_lifetime,
-     gss_cred_usage_t * cred_usage);
+     OM_uint32 * acceptor_lifetime, gss_cred_usage_t * cred_usage);
 } _gss_mech_api_desc, *_gss_mech_api_t;
 
 _gss_mech_api_t _gss_find_mech (const gss_OID oid);

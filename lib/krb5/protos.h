@@ -79,8 +79,7 @@ gss_krb5_inquire_cred_by_mech (OM_uint32 * minor_status,
 			       OM_uint32 * acceptor_lifetime,
 			       gss_cred_usage_t * cred_usage);
 extern OM_uint32
-gss_krb5_release_cred (OM_uint32 * minor_status,
-		       gss_cred_id_t * cred_handle);
+gss_krb5_release_cred (OM_uint32 * minor_status, gss_cred_id_t * cred_handle);
 
 /* See error.c. */
 extern OM_uint32
@@ -102,8 +101,7 @@ extern OM_uint32
 gss_krb5_verify_mic (OM_uint32 * minor_status,
 		     const gss_ctx_id_t context_handle,
 		     const gss_buffer_t message_buffer,
-		     const gss_buffer_t token_buffer,
-		     gss_qop_t * qop_state);
+		     const gss_buffer_t token_buffer, gss_qop_t * qop_state);
 extern OM_uint32
 gss_krb5_unwrap (OM_uint32 * minor_status,
 		 const gss_ctx_id_t context_handle,
@@ -126,4 +124,5 @@ gss_krb5_canonicalize_name (OM_uint32 * minor_status,
 			    gss_name_t * output_name);
 extern OM_uint32
 gss_krb5_export_name (OM_uint32 * minor_status,
-		      const gss_name_t input_name, gss_buffer_t exported_name);
+		      const gss_name_t input_name,
+		      gss_buffer_t exported_name);
