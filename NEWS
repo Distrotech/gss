@@ -4,6 +4,10 @@ See the end for copying conditions.
 
 * Changes in 0.0.14 (unreleased)
 
+** gss_import_name and gss_duplicate_name no longer clone the OID.
+Instead, only the pointer to the OID is cloned.  It seem unclear where
+a cloned OID would be deallocated.
+
 ** Fixed handling of sequence numbers in gss_accept_sec_context, for servers.
 
 * Changes in 0.0.13 (released 2004-08-08)

@@ -1662,7 +1662,11 @@ TBA: no credential forwarding.
 
 TBA: internationalization
 
-TBA: dynamically generated OIDs and memory deallocation issue
+TBA: dynamically generated OIDs and memory deallocation issue.  I.e.,
+should gss_import_name or gss_duplicate_name allocate memory and copy
+the OID provided, or simply copy the pointer?  If the former, who
+would deallocate that memory?  If the latter, the application may
+deallocate or modify the OID, which seem unwanted.
 
 TBA: krb5: no way to access authorization-data
 
