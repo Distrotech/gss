@@ -21,4 +21,4 @@
 purpose "Command line interface to GSS, used to explain error codes."
 
 option "major" m "Describe a `major status' error code vaue in plain text." long no
-option "quiet" - "Silent operation" flag off
+option "quiet" q "Silent operation" flag off
