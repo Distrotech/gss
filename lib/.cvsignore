@@ -2,7 +2,14 @@
 .libs
 Makefile
 Makefile.in
+context.lo
+cred.lo
 error.lo
-version.lo
 ggssapi.h
 libggssapi.la
+misc.lo
+msg.lo
+name.lo
+obsolete.lo
+oid.lo
+version.lo

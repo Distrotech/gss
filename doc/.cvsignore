@@ -1,5 +1,10 @@
 Makefile
 Makefile.in
+ggssapi-api-context.texi
+ggssapi-api-cred.texi
+ggssapi-api-misc.texi
+ggssapi-api-msg.texi
+ggssapi-api-name.texi
 ggssapi-api-version.texi
 ggssapi.1
 ggssapi.aux
