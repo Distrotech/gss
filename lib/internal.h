@@ -165,6 +165,8 @@ typedef struct _gss_mech_api_strict {
 	gss_cred_id_t * delegated_cred_handle);
 } _gss_mech_api_desc, *_gss_mech_api_t;
 
+extern _gss_mech_api_desc _gss_mech_apis[];
+
 _gss_mech_api_t _gss_find_mech (gss_OID oid);
 
 #endif /* _INTERNAL_H */
