@@ -35,6 +35,7 @@
 #else
 # define setlocale(Category, Locale)	/* empty */
 #endif
+#include <gettext.h>
 
 /* Get GSS prototypes. */
 #include "api.h"
