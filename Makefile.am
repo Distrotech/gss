@@ -18,7 +18,7 @@
 # Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 # 02111-1307, USA.
 
-EXTRA_DIST = ANNOUNCE TODO config.h.in config.rpath mkinstalldirs gss.pc.in
+EXTRA_DIST = ANNOUNCE TODO gss.pc.in
 
 pkgconfigdir = $(libdir)/pkgconfig
 pkgconfig_DATA = gss.pc
