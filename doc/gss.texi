@@ -987,9 +987,10 @@ Valid return values and their meaning:
 
 @code{GSS_S_DEFECTIVE_CREDENTIAL}: The referenced credentials were invalid.
 
-@code{GSS_S_CREDENTIALS_EXPIRED}: The referenced credentials have expired.
-                     If the lifetime parameter was not passed as NULL,
-                     it will be set to 0.
+@code{GSS_S_CREDENTIALS_EXPIRED}: The referenced credentials have
+expired.  If the lifetime parameter was not passed as NULL, it will be
+set to 0.
+
 @end deftypefun
 
 @deftypefun OM_uint32 gss_inquire_cred_by_mech (OM_uint32 *minor_status, const gss_cred_id_t cred_handle, const gss_OID mech_type, gss_name_t *name, OM_uint32 *initiator_lifetime, OM_uint32 *acceptor_lifetime, gss_cred_usage_t *cred_usage)
