@@ -40,7 +40,7 @@ _gss_dummy_display_status (OM_uint32 * minor_status,
 			   OM_uint32 * message_context,
 			   gss_buffer_t status_string)
 {
-  status_string->value = strdup(_("No suitable mechanism supported"));
+  status_string->value = xstrdup(_("No suitable mechanism supported"));
   status_string->length = strlen(status_string->value);
   return GSS_S_COMPLETE;
 }

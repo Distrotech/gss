@@ -763,7 +763,7 @@ gss_krb5_display_status (OM_uint32 * minor_status,
   switch (status_value)
     {
     case 0:
-      status_string->value = strdup(_("No krb5 error"));
+      status_string->value = xstrdup(_("No krb5 error"));
       status_string->length = strlen(status_string->value);
       break;
 
@@ -786,12 +786,12 @@ gss_krb5_display_status (OM_uint32 * minor_status,
     case GSS_KRB5_S_KG_BAD_SIGN_TYPE:
     case GSS_KRB5_S_KG_BAD_LENGTH:
     case GSS_KRB5_S_KG_CTX_INCOMPLETE:
-      status_string->value = strdup(_(gss_krb5_errors[status_value-1].text));
+      status_string->value = xstrdup(_(gss_krb5_errors[status_value-1].text));
       status_string->length = strlen(status_string->value);
       break;
 
     default:
-      status_string->value = strdup(_("Unknown krb5 error"));
+      status_string->value = xstrdup(_("Unknown krb5 error"));
       status_string->length = strlen(status_string->value);
       break;
     }

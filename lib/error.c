@@ -114,7 +114,7 @@ gss_display_status (OM_uint32 * minor_status,
 	case GSS_S_CALL_INACCESSIBLE_WRITE:
 	case GSS_S_CALL_BAD_STRUCTURE:
 	  status_string->value =
-	    strdup(_(gss_calling_errors
+	    xstrdup(_(gss_calling_errors
 		     [(GSS_CALLING_ERROR(status_value) >>
 		       GSS_C_CALLING_ERROR_OFFSET)-1].text));
 	  status_string->length = strlen(status_string->value);
@@ -122,7 +122,7 @@ gss_display_status (OM_uint32 * minor_status,
 	  break;
 
 	default:
-	  status_string->value = strdup(_("Unknown calling error"));
+	  status_string->value = xstrdup(_("Unknown calling error"));
 	  status_string->length = strlen(status_string->value);
 	  return GSS_S_COMPLETE;
 	  break;
@@ -152,7 +152,7 @@ gss_display_status (OM_uint32 * minor_status,
 	case GSS_S_DUPLICATE_ELEMENT:
 	case GSS_S_NAME_NOT_MN:
 	  status_string->value =
-	    strdup(_(gss_routine_errors
+	    xstrdup(_(gss_routine_errors
 		     [(GSS_ROUTINE_ERROR(status_value) >>
 		       GSS_C_ROUTINE_ERROR_OFFSET)-1].text));
 	  status_string->length = strlen(status_string->value);
@@ -160,12 +160,12 @@ gss_display_status (OM_uint32 * minor_status,
 	  break;
 
 	default:
-	  status_string->value = strdup(_("Unknown routine error"));
+	  status_string->value = xstrdup(_("Unknown routine error"));
 	  status_string->length = strlen(status_string->value);
 	  return GSS_S_COMPLETE;
 	  break;
 	}
-      status_string->value = strdup(_("No error"));
+      status_string->value = xstrdup(_("No error"));
       status_string->length = strlen(status_string->value);
       break;
 
