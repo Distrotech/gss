@@ -1,5 +1,17 @@
 2003-06-12  Simon Josefsson <simon@josefsson.org>
 
+	* lib/krb5.c: Translate errors.
+
+2003-06-12  Simon Josefsson <simon@josefsson.org>
+
+	* lib/error.c, lib/krb5.c, po/gss.pot, po/sv.po: Translation fixes.
+
+2003-06-12  Simon Josefsson <simon@josefsson.org>
+
+	* po/gss.pot: Fix.
+
+2003-06-12  Simon Josefsson <simon@josefsson.org>
+
 	* Makefile.am: Fix release target.
 
 2003-06-12  Simon Josefsson <simon@josefsson.org>
