@@ -47,16 +47,8 @@ gss_krb5_acquire_cred1 (OM_uint32 * minor_status,
 	return maj_stat;
     }
 
-  if (gss_oid_equal (desired_name->type, GSS_KRB5_NT_PRINCIPAL_NAME))
-    {
-      maj_stat = gss_duplicate_name (minor_status, desired_name,
-				     &k5->peerptr);
-    }
-  else
-    {
-      maj_stat = gss_krb5_canonicalize_name (minor_status, desired_name,
-					     GSS_KRB5, &k5->peerptr);
-    }
+  maj_stat = gss_krb5_canonicalize_name (minor_status, desired_name,
+					 GSS_KRB5, &k5->peerptr);
   if (GSS_ERROR (maj_stat))
     return maj_stat;
 
@@ -79,7 +71,7 @@ gss_krb5_acquire_cred1 (OM_uint32 * minor_status,
     {
       if (minor_status)
 	*minor_status = GSS_KRB5_S_KG_KEYTAB_NOMATCH;
-      return GSS_S_FAILURE;
+      return GSS_S_NO_CRED;
     }
 
   if (time_rec)
