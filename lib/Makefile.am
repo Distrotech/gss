@@ -31,7 +31,8 @@ libgss_la_SOURCES = internal.h \
 	context.c cred.c error.c misc.c msg.c name.c obsolete.c oid.c \
 	asn1.c ext.c version.c
 libgss_la_LIBADD = @LTLIBINTL@ $(top_builddir)/gl/libgl.la
-libgss_la_LDFLAGS = -version-info $(LT_CURRENT):$(LT_REVISION):$(LT_AGE)
+libgss_la_LDFLAGS = -version-info $(LT_CURRENT):$(LT_REVISION):$(LT_AGE) \
+	-export-symbols-regex '^gss.*' 
 
 if KRB5
 SUBDIRS = krb5
