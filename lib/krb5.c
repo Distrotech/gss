@@ -113,9 +113,14 @@ gss_krb5_init_sec_context (OM_uint32 * minor_status,
 
       *context_handle = ctx;
 
-      rc = shishi_init(&h);
-      if (rc != SHISHI_OK)
-	return GSS_S_FAILURE;
+      if (initiator_cred_handle)
+	h = initiator_cred_handle->krb5->sh;
+      else
+	{
+	  rc = shishi_init_server(&h);
+	  if (rc != SHISHI_OK)
+	    return GSS_S_FAILURE;
+	}
       ctx->krb5->sh = h;
 
       ctx->peerptr = &ctx->peer;
