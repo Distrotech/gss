@@ -45,8 +45,7 @@
 /* Get Shishi prototypes. */
 #include <shishi.h>
 
-static int verbose = 0;
-static int debug = 0;
+static int debug = 1;
 static int error_count = 0;
 static int break_on_error = 0;
 
@@ -69,8 +68,7 @@ success (const char *format, ...)
   va_list arg_ptr;
 
   va_start (arg_ptr, format);
-  if (verbose)
-    vfprintf (stdout, format, arg_ptr);
+  vfprintf (stdout, format, arg_ptr);
   va_end (arg_ptr);
 }
 
@@ -88,7 +86,7 @@ display_status_1 (char *m, OM_uint32 code, int type)
 				     type, GSS_C_NO_OID, &msg_ctx, &msg);
       if (GSS_ERROR (maj_stat))
 	{
-	  asprintf ((char**)&msg.value, "code %d", code);
+	  asprintf ((char **) &msg.value, "code %d", code);
 	  msg.length = strlen (msg.value);
 	}
 
@@ -121,18 +119,15 @@ main (int argc, char *argv[])
   gss_ctx_id_t cctx = GSS_C_NO_CONTEXT;
   gss_ctx_id_t sctx = GSS_C_NO_CONTEXT;
   gss_cred_id_t cred_handle, server_creds;
-  Shishi * handle;
+  Shishi *handle;
   size_t i;
 
   setlocale (LC_ALL, "");
   bindtextdomain (PACKAGE, LOCALEDIR);
 
   do
-    if (strcmp (argv[argc - 1], "-v") == 0 ||
-	strcmp (argv[argc - 1], "--verbose") == 0)
-      verbose = 1;
-    else if (strcmp (argv[argc - 1], "-d") == 0 ||
-	     strcmp (argv[argc - 1], "--debug") == 0)
+    if (strcmp (argv[argc - 1], "-d") == 0 ||
+	strcmp (argv[argc - 1], "--debug") == 0)
       debug = 1;
     else if (strcmp (argv[argc - 1], "-b") == 0 ||
 	     strcmp (argv[argc - 1], "--break-on-error") == 0)
@@ -141,7 +136,7 @@ main (int argc, char *argv[])
 	     strcmp (argv[argc - 1], "-?") == 0 ||
 	     strcmp (argv[argc - 1], "--help") == 0)
       {
-	printf ("Usage: %s [-vdbh?] [--verbose] [--debug] "
+	printf ("Usage: %s [-vdbh?] [--debug] "
 		"[--break-on-error] [--help]\n", argv[0]);
 	return 1;
       }
@@ -155,8 +150,7 @@ main (int argc, char *argv[])
   bufdesc.length = strlen (bufdesc.value);
 
   maj_stat = gss_import_name (&min_stat, &bufdesc,
-			      GSS_C_NT_HOSTBASED_SERVICE,
-			      &servername);
+			      GSS_C_NT_HOSTBASED_SERVICE, &servername);
   if (GSS_ERROR (maj_stat))
     fail ("gss_import_name (host/server)\n");
 
@@ -227,9 +221,8 @@ main (int argc, char *argv[])
 					   GSS_C_NO_BUFFER, NULL,
 					   &bufdesc2, &ret_flags, NULL);
 	  if (ret_flags != (GSS_C_REPLAY_FLAG |
-			    GSS_C_CONF_FLAG|
-			    GSS_C_SEQUENCE_FLAG|
-			    GSS_C_PROT_READY_FLAG))
+			    GSS_C_CONF_FLAG |
+			    GSS_C_SEQUENCE_FLAG | GSS_C_PROT_READY_FLAG))
 	    fail ("loop 2 ret_flags failure (%d)\n", ret_flags);
 	  if (maj_stat != GSS_S_COMPLETE)
 	    fail ("loop 1 init failure\n");
@@ -243,7 +236,8 @@ main (int argc, char *argv[])
 
       if (debug)
 	{
-	  Shishi_asn1 apreq = shishi_der2asn1_apreq (handle, bufdesc2.value + 17,
+	  Shishi_asn1 apreq = shishi_der2asn1_apreq (handle,
+						     bufdesc2.value + 17,
 						     bufdesc2.length - 17);
 	  printf ("\nClient AP-REQ:\n\n");
 	  shishi_apreq_print (handle, stdout, apreq);
@@ -262,9 +256,7 @@ main (int argc, char *argv[])
 					     &name,
 					     NULL,
 					     &bufdesc,
-					     &ret_flags,
-					     &time_rec,
-					     NULL);
+					     &ret_flags, &time_rec, NULL);
 	  if (ret_flags != (GSS_C_MUTUAL_FLAG |
 			    /* XXX GSS_C_REPLAY_FLAG |
 			       GSS_C_SEQUENCE_FLAG | */
@@ -281,9 +273,7 @@ main (int argc, char *argv[])
 					     &name,
 					     NULL,
 					     &bufdesc,
-					     &ret_flags,
-					     &time_rec,
-					     NULL);
+					     &ret_flags, &time_rec, NULL);
 	  break;
 	}
       if (GSS_ERROR (maj_stat))
@@ -294,8 +284,9 @@ main (int argc, char *argv[])
 
       if (debug)
 	{
-	  Shishi_asn1 aprep = shishi_der2asn1_aprep (handle, bufdesc.value + 15,
-						     bufdesc.length - 15);
+	  Shishi_asn1 aprep =
+	    shishi_der2asn1_aprep (handle, bufdesc.value + 15,
+				   bufdesc.length - 15);
 	  printf ("\nServer AP-REP:\n\n");
 	  shishi_aprep_print (handle, stdout, aprep);
 	}
@@ -333,8 +324,7 @@ main (int argc, char *argv[])
 					   &bufdesc2, &ret_flags, &time_rec);
 	  if (ret_flags != (GSS_C_MUTUAL_FLAG |
 			    GSS_C_REPLAY_FLAG |
-			    GSS_C_SEQUENCE_FLAG|
-			    GSS_C_PROT_READY_FLAG))
+			    GSS_C_SEQUENCE_FLAG | GSS_C_PROT_READY_FLAG))
 	    fail ("loop 1 ret_flags failure (%d)\n", ret_flags);
 	  break;
 
@@ -347,14 +337,14 @@ main (int argc, char *argv[])
 	}
 
       maj_stat = gss_delete_sec_context (&min_stat, &cctx, GSS_C_NO_BUFFER);
-      if (GSS_ERROR(maj_stat))
+      if (GSS_ERROR (maj_stat))
 	{
 	  fail ("client gss_delete_sec_context failure\n");
 	  display_status ("client delete_sec_context", maj_stat, min_stat);
 	}
 
       maj_stat = gss_delete_sec_context (&min_stat, &sctx, GSS_C_NO_BUFFER);
-      if (GSS_ERROR(maj_stat))
+      if (GSS_ERROR (maj_stat))
 	{
 	  fail ("server gss_delete_sec_context failure\n");
 	  display_status ("server delete_sec_context", maj_stat, min_stat);
@@ -373,7 +363,7 @@ main (int argc, char *argv[])
     }
 
   maj_stat = gss_release_name (&min_stat, &servername);
-  if (GSS_ERROR(maj_stat))
+  if (GSS_ERROR (maj_stat))
     {
       fail ("gss_release_name failure\n");
       display_status ("gss_release_name", maj_stat, min_stat);
@@ -383,7 +373,7 @@ main (int argc, char *argv[])
 
   /* We're done. */
 
-  if (verbose)
+  if (debug)
     printf ("Kerberos 5 security context self tests done with %d errors\n",
 	    error_count);
 
