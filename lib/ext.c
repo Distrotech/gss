@@ -23,6 +23,10 @@
 
 #include <stdio.h>
 
+/* Get i18n. */
+#include <gettext.h>
+#define _(String) dgettext (PACKAGE, String)
+
 /* If non-NULL, call this function when memory is exhausted. */
 void (*gss_alloc_fail_function) (void) = 0;
 
