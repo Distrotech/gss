@@ -54,7 +54,7 @@ acquire_cred1 (OM_uint32 * minor_status,
 
   if (desired_name == GSS_C_NO_NAME)
     {
-      maj_stat = gss_release_name (minor_status, name);
+      maj_stat = gss_release_name (minor_status, &name);
       if (GSS_ERROR (maj_stat))
 	return maj_stat;
     }
