@@ -198,4 +198,9 @@ gss_krb5_delete_sec_context (OM_uint32 * minor_status,
 			     gss_ctx_id_t * context_handle,
 			     gss_buffer_t output_token);
 
+extern OM_uint32
+gss_krb5_context_time (OM_uint32 * minor_status,
+		       const gss_ctx_id_t context_handle,
+		       OM_uint32 * time_rec);
+
 #endif /* GSS_KRB5_H_ */

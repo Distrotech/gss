@@ -1141,6 +1141,33 @@ gss_krb5_delete_sec_context (OM_uint32 * minor_status,
   return GSS_S_COMPLETE;
 }
 
+OM_uint32
+gss_krb5_context_time (OM_uint32 * minor_status,
+		       const gss_ctx_id_t context_handle,
+		       OM_uint32 * time_rec)
+{
+  _gss_krb5_ctx_t k5 = context_handle->krb5;
+  time_t now, end;
+
+  if (minor_status)
+    *minor_status = 0;
+
+  if (!shishi_tkt_valid_now_p (k5->tkt))
+    {
+      if (time_rec)
+	*time_rec = 0;
+      return GSS_S_CONTEXT_EXPIRED;
+    }
+
+  now = time (NULL);
+  end = shishi_tkt_endctime (k5->tkt);
+
+  if (time_rec)
+    *time_rec = (OM_uint32) difftime (end, now);
+
+  return GSS_S_COMPLETE;
+}
+
 /*
  * To support ongoing experimentation, testing, and evolution of the
  * specification, the Kerberos V5 GSS-API mechanism as defined in this

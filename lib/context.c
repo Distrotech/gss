@@ -711,7 +711,11 @@ gss_delete_sec_context (OM_uint32 * minor_status,
   OM_uint32 ret;
 
   if (!context_handle || *context_handle == GSS_C_NO_CONTEXT)
-    return GSS_S_NO_CONTEXT;
+    {
+      if (minor_status)
+	*minor_status = 0;
+      return GSS_S_NO_CONTEXT;
+    }
 
   if (output_token != GSS_C_NO_BUFFER)
     {
@@ -732,6 +736,9 @@ gss_delete_sec_context (OM_uint32 * minor_status,
 
   free (*context_handle);
   *context_handle = GSS_C_NO_CONTEXT;
+
+  if (minor_status)
+    *minor_status = 0;
 
   return GSS_S_COMPLETE;
 }
@@ -801,9 +808,22 @@ gss_process_context_token (OM_uint32 * minor_status,
  **/
 OM_uint32
 gss_context_time (OM_uint32 * minor_status,
-		  const gss_ctx_id_t context_handle, OM_uint32 * time_rec)
+		  const gss_ctx_id_t context_handle,
+		  OM_uint32 * time_rec)
 {
-  return GSS_S_FAILURE;
+  _gss_mech_api_t mech;
+
+  if (context_handle == GSS_C_NO_CONTEXT ||
+      context_handle->mech == GSS_C_NO_OID)
+    {
+      if (minor_status)
+	*minor_status = 0;
+      return GSS_S_NO_CONTEXT;
+    }
+
+  mech = _gss_find_mech (context_handle->mech);
+
+  return mech->context_time (minor_status, context_handle, time_rec);
 }
 
 /**

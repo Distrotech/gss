@@ -31,6 +31,7 @@
 #include <stdarg.h>
 #include <ctype.h>
 #include <string.h>
+#include <time.h>
 
 /* Get i18n. */
 #include <gettext.h>
@@ -143,6 +144,9 @@ typedef struct _gss_mech_api_strict
     OM_uint32 (*delete_sec_context)
     (OM_uint32 * minor_status,
      gss_ctx_id_t * context_handle, gss_buffer_t output_token);
+    OM_uint32 (*context_time)
+    (OM_uint32 * minor_status,
+     const gss_ctx_id_t context_handle, OM_uint32 * time_rec);
     OM_uint32 (*inquire_cred)
     (OM_uint32 * minor_status,
      const gss_cred_id_t cred_handle,
