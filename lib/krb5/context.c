@@ -369,6 +369,11 @@ gss_krb5_delete_sec_context (OM_uint32 * minor_status,
   if (k5->key)
     shishi_key_done (k5->key);
 
+  if (k5->tkt)
+    shishi_tkt_done (k5->tkt);
+
+  shishi_done (k5->sh);
+
   return GSS_S_COMPLETE;
 }
 
