@@ -93,7 +93,18 @@ gss_inquire_cred (OM_uint32 * minor_status,
 		  OM_uint32 * lifetime,
 		  gss_cred_usage_t * cred_usage, gss_OID_set * mechanisms)
 {
-  return GSS_S_FAILURE;
+  _gss_mech_api_t mech;
+
+  mech = cred_handle == GSS_C_NO_CREDENTIAL ?
+    _gss_find_mech (GSS_C_NO_OID) :
+    _gss_find_mech (cred_handle->mech);
+
+  return mech->inquire_cred (minor_status,
+			     cred_handle,
+			     name,
+			     lifetime,
+			     cred_usage,
+			     mechanisms);
 }
 
 OM_uint32
