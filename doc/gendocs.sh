@@ -135,8 +135,6 @@ if test ! -r $GENDOCS_TEMPLATE_DIR/gendocs_template; then
 fi
 
 echo Generating output formats for $srcfile
-# remove any old junk
-rm -rf $outdir/
 
 echo Generating info files...
 ${MAKEINFO} -o $PACKAGE.info $srcfile
@@ -192,10 +190,13 @@ else
 fi
 (
   cd ${split_html_dir} || exit 1
-  tar -czf ../$outdir/$PACKAGE_html_node.tar.gz -- *.html
+  tar -czf ../$outdir/${PACKAGE}_html_node.tar.gz -- *.html
 )
-html_node_tgz_size="`calcsize $outdir/$PACKAGE_html_node.tar.gz`"
-mv ${split_html_dir} $outdir/html_node
+html_node_tgz_size="`calcsize $outdir/${PACKAGE}_html_node.tar.gz`"
+rm -f $outdir/html_node/*.html
+mkdir -p $outdir/html_node/
+mv ${split_html_dir}/*.html $outdir/html_node/
+rmdir ${split_html_dir}
 
 echo Making .tar.gz for sources...
 srcfiles=`ls *.texinfo *.texi *.txi 2>/dev/null`
