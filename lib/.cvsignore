@@ -7,7 +7,6 @@ context.lo
 cred.lo
 error.lo
 gss.h
-gss_asn1_tab.c
 krb5.lo
 libgss.la
 misc.lo
