@@ -31,7 +31,10 @@ TESTS_ENVIRONMENT = SHISHI_KEYS=krb5context.key \
 	SHISHI_HOME=ignore-this-warning \
 	SHISHI_USER=ignore-this-warning
 
-TESTS = basic krb5context
+TESTS = basic
+if KRB5
+TESTS += krb5context
+endif
 check_PROGRAMS = $(TESTS)
 
 localedir = $(datadir)/locale

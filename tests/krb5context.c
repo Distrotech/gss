@@ -29,6 +29,13 @@
 #include <ctype.h>
 #include <string.h>
 
+/* i18n. */
+#ifdef HAVE_LOCALE_H
+# include <locale.h>
+#else
+# define setlocale(Category, Locale)	/* empty */
+#endif
+
 /* Get GSS prototypes. */
 #include "api.h"
 #include "ext.h"
@@ -179,6 +186,9 @@ main (int argc, char *argv[])
   gss_cred_id_t cred_handle, server_creds;
   Shishi * handle;
   size_t i;
+
+  setlocale (LC_ALL, "");
+  bindtextdomain (PACKAGE, LOCALEDIR);
 
   do
     if (strcmp (argv[argc - 1], "-v") == 0 ||
@@ -394,6 +404,8 @@ main (int argc, char *argv[])
 			    GSS_C_PROT_READY_FLAG))
 	    fail ("loop 1 ret_flags failure (%d)\n", ret_flags);
 	  break;
+
+	  /* No case 2. */
 	}
       if (GSS_ERROR (maj_stat))
 	{
