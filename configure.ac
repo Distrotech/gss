@@ -19,8 +19,8 @@ dnl Process this file with autoconf to produce a configure script.
 # Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 # 02111-1307, USA.
 
-AC_PREREQ(2.50)
-AC_INIT(gss, 0.0.7, bug-gss@josefsson.org)
+AC_PREREQ(2.59)
+AC_INIT([gss],[0.0.7],[bug-gss@josefsson.org])
 
 # Library code modified:                              REVISION++
 # Interfaces changed/added/removed:   CURRENT++       REVISION=0
@@ -35,7 +35,6 @@ AC_SUBST(LT_AGE)
 
 AM_INIT_AUTOMAKE(gnits)
 AM_CONFIG_HEADER(config.h)
-AC_CONFIG_AUX_DIR(.)
 
 # Checks for programs.
 AM_GNU_GETTEXT(external)
@@ -64,8 +63,8 @@ AC_CHECK_HEADER(shishi.h,
 		kerberos5=no),
 	kerberos5=no)
 AC_ARG_ENABLE(kerberos5,
-	AC_HELP_STRING([--disable-kerberos5],
-                       [disable Kerberos V5 mechanism unconditionally]),
+	AS_HELP_STRING([--disable-kerberos5],
+			[disable Kerberos V5 mechanism unconditionally]),
 	kerberos5=$enableval)
 if test "$kerberos5" != "no" ; then
 	AC_DEFINE(USE_KERBEROS5, 1, [Define to 1 if you want Kerberos 5 mech.])
