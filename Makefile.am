@@ -53,7 +53,7 @@ release:
 	rm -f $(distdir).tar.gz.asc
 	gpg -a --sign --detach $(distdir).tar.gz
 	gpg --verify $(distdir).tar.gz.asc
-	scp $(distdir).tar.gz* josefsson.org:/$(shortname)/
+	scp $(distdir).tar.gz* josefsson.org:$(shortname)/
 	test -d $(htmldir) && cp -v doc/$(shortname).{ps,pdf,html} $(htmldir)/
 	test -d $(htmldir) && cd $(htmldir) && cvs commit -m "Update." \
 		$(shortname).{ps,pdf,html}
