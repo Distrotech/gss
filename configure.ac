@@ -20,7 +20,7 @@ dnl Process this file with autoconf to produce a configure script.
 # Boston, MA 02111-1307, USA.
 
 AC_PREREQ(2.50)
-AC_INIT(ggssapi, 0.0.0, bug-ggssapi@josefsson.org)
+AC_INIT(gss, 0.0.0, bug-gss@josefsson.org)
 
 # Interfaces removed:       CURRENT++ AGE=0 REVISION=0
 # Interfaces added:         CURRENT++ AGE++ REVISION=0
@@ -83,7 +83,7 @@ AC_SUBST(ARGP_CFLAGS)
 AC_CONFIG_SUBDIRS(argp)
 
 # We are done
-AC_CONFIG_FILES(Makefile ggssapi.pc lib/ggssapi.h po/Makefile.in m4/Makefile \
+AC_CONFIG_FILES(Makefile gss.pc lib/ggssapi.h po/Makefile.in m4/Makefile \
 		doc/Makefile lib/Makefile src/Makefile tests/Makefile)
 
 AC_OUTPUT

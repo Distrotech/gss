@@ -18,46 +18,46 @@
 # the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 # Boston, MA 02111-1307, USA.
 
-man_MANS = ggssapi.1
+man_MANS = gss.1
 
-ggssapi_texi_auto_deps = ggssapi-api-version.texi \
-	ggssapi-api-context.texi ggssapi-api-cred.texi \
-	ggssapi-api-misc.texi ggssapi-api-msg.texi ggssapi-api-name.texi
+gss_texi_auto_deps = gss-api-version.texi \
+	gss-api-context.texi gss-api-cred.texi \
+	gss-api-misc.texi gss-api-msg.texi gss-api-name.texi
 
-EXTRA_DIST = gdoc gdoc-error $(man_MANS) $(ggssapi_texi_auto_deps) \
-	ggssapi.html ggssapi.ps ggssapi.pdf
+EXTRA_DIST = gdoc gdoc-error $(man_MANS) $(gss_texi_auto_deps) \
+	gss.html gss.ps gss.pdf
 
-info_TEXINFOS = ggssapi.texi
-ps_TEXINFOS = ggssapi.texi
-pdf_TEXINFOS = ggssapi.texi
-ggssapi_TEXINFOS = gpl.texi fdl.texi $(ggssapi_texi_auto_deps)
+info_TEXINFOS = gss.texi
+ps_TEXINFOS = gss.texi
+pdf_TEXINFOS = gss.texi
+gss_TEXINFOS = gpl.texi fdl.texi $(gss_texi_auto_deps)
 
-ggssapi_api_version_deps = $(top_srcdir)/lib/version.c
+gss_api_version_deps = $(top_srcdir)/lib/version.c
 
-ggssapi-api-version.texi: $(ggssapi_api_version_deps)
+gss-api-version.texi: $(gss_api_version_deps)
 	$(PERL) $(srcdir)/gdoc -texinfo $^ > $@
 
-ggssapi-api-cred.texi: $(top_srcdir)/lib/cred.c
+gss-api-cred.texi: $(top_srcdir)/lib/cred.c
 	$(PERL) $(srcdir)/gdoc -texinfo $^ > $@
 
-ggssapi-api-context.texi: $(top_srcdir)/lib/context.c
+gss-api-context.texi: $(top_srcdir)/lib/context.c
 	$(PERL) $(srcdir)/gdoc -texinfo $^ > $@
 
-ggssapi-api-msg.texi: $(top_srcdir)/lib/msg.c
+gss-api-msg.texi: $(top_srcdir)/lib/msg.c
 	$(PERL) $(srcdir)/gdoc -texinfo $^ > $@
 
-ggssapi-api-name.texi: $(top_srcdir)/lib/name.c
+gss-api-name.texi: $(top_srcdir)/lib/name.c
 	$(PERL) $(srcdir)/gdoc -texinfo $^ > $@
 
-ggssapi-api-misc.texi: $(top_srcdir)/lib/misc.c
+gss-api-misc.texi: $(top_srcdir)/lib/misc.c
 	$(PERL) $(srcdir)/gdoc -texinfo $^ > $@
 
 # Man page:
 
-ggssapi.1: $(top_srcdir)/src/ggssapi.c $(top_builddir)/src/ggssapi
+gss.1: $(top_srcdir)/src/gss.c $(top_builddir)/src/gss
 	$(HELP2MAN) \
 		--name="GPL GSS-API library command line interface" \
-		--output=$@ $(top_builddir)/src/ggssapi
+		--output=$@ $(top_builddir)/src/gss
 
-ggssapi.html: ggssapi.texi
+gss.html: gss.texi
 	$(MAKEINFO) --html --no-split --number-sections $<

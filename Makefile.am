@@ -18,10 +18,10 @@
 # the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 # Boston, MA 02111-1307, USA.
 
-EXTRA_DIST = ANNOUNCE config.h.in config.rpath mkinstalldirs ggssapi.pc.in
+EXTRA_DIST = ANNOUNCE config.h.in config.rpath mkinstalldirs gss.pc.in
 
 pkgconfigdir = $(libdir)/pkgconfig
-pkgconfig_DATA = ggssapi.pc
+pkgconfig_DATA = gss.pc
 
 SUBDIRS = m4 po argp lib src tests doc
 
@@ -41,7 +41,7 @@ indent:
 	(cd tests && make indent)
 
 tag = $(PACKAGE)-`echo $(VERSION) | sed 's/\./-/g'`
-shortname = ggssapi
+shortname = gss
 htmldir = ../www-$(shortname)
 
 release:

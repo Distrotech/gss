@@ -34,18 +34,18 @@ developing GNU and protecting and promoting software freedom.''
 
 @dircategory Libraries
 @direntry
-* ggssapi: (ggssapi).	Generic Security Service API Library
+* gss: (gss).			Generic Security Service API Library
 @end direntry
 
 @dircategory Utilities
 @direntry
-* ggssapi: (ggssapi)Invoking ggssapi.	Command line interface to GSS Library.
+* gss: (gss)Invoking gss.	Command line interface to GSS Library.
 @end direntry
 
 @titlepage
 @title The Generic Security Service Manual.
 @subtitle for version @value{VERSION}, @value{UPDATED}
-@author Simon Josefsson (@email{bug-ggssapi@@gnu.org})
+@author Simon Josefsson (@email{bug-gss.org})
 @page
 @vskip 0pt plus 1filll
 @insertcopying
@@ -64,7 +64,7 @@ developing GNU and protecting and promoting software freedom.''
 * Introduction::                How to use this manual.
 * Preparation::                 What you should do before using the library.
 * Standard GSS Functions::      Reference documentation for the Standard API.
-* Invoking ggssapi::            Command line interface to the library.
+* Invoking gss::                Command line interface to the library.
 * Acknowledgements::            Whom to blame.
 
 Appendices
@@ -89,8 +89,8 @@ Application Program Interface (GSS-API).  GSS-API is used by network
 servers (e.g., IMAP, SMTP) to provide security security services,
 e.g., authenticate clients against servers.
 
-GPL GSS-API contains a library (`libggssapi'), a command line utility
-(`ggssapi') to access the library from the shell, and a manual.
+GPL GSS-API contains a library (`libgss), a command line utility
+(`gss) to access the library from the shell, and a manual.
 
 GPL GSS-API is developed for the GNU/Linux system, but runs on over 20
 platforms including most major Unix platforms and Windows, and many
@@ -108,8 +108,8 @@ GPL GSS-API is licensed under the GNU Public License.
 @node Getting Started
 @section Getting Started
 
-This manual documents the `Libggssapi' library programming interface.
-All functions and data types provided by the library are explained.
+This manual documents the GSS programming interface.  All functions
+and data types provided by the library are explained.
 
 The reader is assumed to possess basic familiarity with GSS-API and
 network programming in C or C++.
@@ -126,8 +126,8 @@ of the interface which are unclear.
 @node Features
 @section Features
 
-`Libggssapi' might have a couple of advantages over other libraries doing
-a similar job.
+GSS might have a couple of advantages over other libraries doing a
+similar job.
 
 @table @asis
 @item It's Free Software
@@ -155,8 +155,7 @@ it uses callbacks back into the application to answer these questions.
 @node Supported Platforms
 @section Supported Platforms
 
-Libggssapi has at some point in time been tested on the following
-platforms.
+GSS has at some point in time been tested on the following platforms.
 
 @enumerate
 
@@ -266,19 +265,19 @@ GCC 2.95.4 and GNU Make. @code{alpha-unknown-freebsd4.7},
 
 @end enumerate
 
-If you use Libggssapi on, or port Libggssapi to, a new platform please
-report it to the author.
+If you use GSS on, or port GSS to, a new platform please report it to
+the author.
 
 @node Bug Reports
 @section Bug Reports
 @cindex Reporting Bugs
 
-If you think you have found a bug in Libggssapi, please investigate it
-and report it.
+If you think you have found a bug in GSS, please investigate it and
+report it.
 
 @itemize @bullet
 
-@item Please make sure that the bug is really in Libggssapi, and
+@item Please make sure that the bug is really in GSS, and
 preferably also check that it hasn't already been fixed in the latest
 version.
 
@@ -308,7 +307,7 @@ note.
 
 Send your bug report to:
 
-@center @samp{bug-ggssapi@@josefsson.org}
+@center @samp{bug-gss@@josefsson.org}
 
 
 @c **********************************************************
@@ -317,14 +316,14 @@ Send your bug report to:
 @node Preparation
 @chapter Preparation
 
-To use `Libggssapi', you have to perform some changes to your sources and
-the build system.  The necessary changes are small and explained in the
-following sections.  At the end of this chapter, it is described how the
-library is initialized, and how the requirements of the library are
-verified.
+To use GSS, you have to perform some changes to your sources and the
+build system.  The necessary changes are small and explained in the
+following sections.  At the end of this chapter, it is described how
+the library is initialized, and how the requirements of the library
+are verified.
 
 A faster way to find out how to adapt your application for use with
-`Libggssapi' may be to look at the examples at the end of this manual.
+GSS may be to look at the examples at the end of this manual.
 
 @menu
 * Header::
@@ -408,7 +407,7 @@ new features may have been introduced but due to problem with the
 dynamic linker an old version is actually used.  So you may want to
 check that the version is okay right after program startup.
 
-@include ggssapi-api-version.texi
+@include gss-api-version.texi
 
 The normal way to use the function is to put something similar to the
 following early in your @code{main()}:
@@ -552,7 +551,7 @@ this manual (@pxref{Building the source}), but note that you must use
    gss_release_cred           5.27 Discard a credential handle.
 @end verbatim
 
-@include ggssapi-api-cred.texi
+@include gss-api-cred.texi
 
 @node Context-Level Routines
 @section Context-Level Routines
@@ -581,7 +580,7 @@ this manual (@pxref{Building the source}), but note that you must use
    gss_import_sec_context     5.17 Import a transferred context
 @end verbatim
 
-@include ggssapi-api-context.texi
+@include gss-api-context.texi
 
 @node Per-Message Routines
 @section Per-Message Routines
@@ -606,7 +605,7 @@ this manual (@pxref{Building the source}), but note that you must use
                                    if necessary.
 @end verbatim
 
-@include ggssapi-api-msg.texi
+@include gss-api-msg.texi
 
 @node Name Manipulation
 @section Name Manipulation
@@ -632,7 +631,7 @@ this manual (@pxref{Building the source}), but note that you must use
    gss_duplicate_name         5.12 Create a copy of an internal name
 @end verbatim
 
-@include ggssapi-api-name.texi
+@include gss-api-name.texi
 
 @node Miscellaneous Routines
 @section Miscellaneous Routines
@@ -657,24 +656,24 @@ this manual (@pxref{Building the source}), but note that you must use
                                        identifier is a member of a set.
 @end verbatim
 
-@include ggssapi-api-misc.texi
+@include gss-api-misc.texi
 
 @c **********************************************************
 @c *******************  Invoking ggssapi  *******************
 @c **********************************************************
-@node Invoking ggssapi
-@chapter Invoking ggssapi
+@node Invoking gss
+@chapter Invoking gss
 
-@pindex ggssapi
-@cindex invoking @command{ggssapi}
+@pindex gss
+@cindex invoking @command{gss}
 @cindex command line
 
 @majorheading Name
 
-GPL GSS-API (ggssapi) -- Generic Security Service command line interface
+GPL GSS-API (gss) -- Generic Security Service command line interface
 
 @majorheading Description
-@code{ggssapi} is the main program of GPL GSS-API.
+@code{gss} is the main program of GPL GSS-API.
 
 This section only lists the commands and options available.
 

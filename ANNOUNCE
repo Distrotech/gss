@@ -7,8 +7,8 @@ Application Program Interface (GSS-API).  GSS-API is used by network
 servers (e.g., IMAP, SMTP) to provide security security services,
 e.g., authenticate clients against servers.
 
-GPL GSS-API contains a library (`libggssapi'), a command line utility
-(`ggssapi') to access the library from the shell, and a manual.
+GPL GSS-API contains a library (`libgss'), a command line utility
+(`gss') to access the library from the shell, and a manual.
 
 GPL GSS-API is developed for the GNU/Linux system, but runs on over 20
 platforms including most major Unix platforms and Windows, and many
@@ -17,7 +17,7 @@ kind of devices including iPAQ handhelds and S/390 mainframes.
 GPL GSS-API is licensed under the GNU Public License.
 
 The project web page:
-http://josefsson.org/ggssapi/
+http://josefsson.org/gss/
 
 For more information see:
 http://www.ietf.org/rfc/rfc2743.txt

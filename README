@@ -3,7 +3,7 @@ Copyright (C) 2003 Simon Josefsson
 See the end for copying conditions.
 
 This directory holds GPL GSS-API.  See ANNOUNCE for an overview, and
-doc/ggssapi.{info,ps,pdf} for the manual.
+doc/gss.{info,ps,pdf} for the manual.
 
 The GPL GSS-API library, command-line application and test suite
 (lib/, src/, and tests/) are licensed under the GNU Public License
@@ -13,7 +13,7 @@ sub-directory (argp/) are distributed here for convenience and have
 their own respective licenses, they are not part of GPL GSS-API
 proper.
 
-For updates to the project, see <http://josefsson.org/ggssapi/>.
+For updates to the project, see <http://josefsson.org/gss/>.
 
 ----------------------------------------------------------------------
 Copying and distribution of this file, with or without modification,

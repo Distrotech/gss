@@ -30,4 +30,4 @@ localedir = $(datadir)/locale
 DEFS = -DLOCALEDIR=\"$(localedir)\" @DEFS@
 
 indent:
-	indent $(ggssapi_SOURCES)
+	indent $(gss_SOURCES)
