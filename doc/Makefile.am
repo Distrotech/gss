@@ -18,7 +18,7 @@
 # Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 # 02111-1307, USA.
 
-EXTRA_DIST = gss.html gss.ps gss.pdf
+EXTRA_DIST = gss.html gss.ps gss.pdf texinfo.css
 
 info_TEXINFOS = gss.texi
 gss_TEXINFOS = gpl.texi fdl.texi $(gdoc_TEXINFOS)
