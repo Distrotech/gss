@@ -38,7 +38,7 @@ localedir = $(datadir)/locale
 DEFS = -DLOCALEDIR=\"$(localedir)\" @DEFS@
 
 gss_asn1_tab.c: $(srcdir)/gss.asn1
-	-asn1Parser -o $@ $<
+	-@ASN1PARSER@ -o $@ $<
 
 indent:
 	indent $(libgss_la_SOURCES) gssapi.h gssapi.h.in
