@@ -412,7 +412,7 @@ gss_krb5_unwrap (OM_uint32 * minor_status,
 	if (memcmp (p + 4, k5->acceptor ? "\x00\x00\x00\x00" :
 		    "\xFF\xFF\xFF\xFF", 4) != 0)
 	  return GSS_S_BAD_MIC;
-	if (C2I (p) != k5->acceptor ? k5->initseqnr : k5->acceptseqnr)
+	if (C2I (p) != (k5->acceptor ? k5->initseqnr : k5->acceptseqnr))
 	  return GSS_S_BAD_MIC;
 
 	if (k5->acceptor)
