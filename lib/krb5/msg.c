@@ -117,13 +117,25 @@ gss_krb5_wrap (OM_uint32 * minor_status,
 	  return GSS_S_FAILURE;
 
 	/* seq_nr */
-	seqno[0] = k5->initseqnr & 0xFF;
-	seqno[1] = k5->initseqnr >> 8 & 0xFF;
-	seqno[2] = k5->initseqnr >> 16 & 0xFF;
-	seqno[3] = k5->initseqnr >> 24 & 0xFF;
-	memset (seqno + 4, k5->acceptor ? 0xFF : 0, 4);
+	if (k5->acceptor)
+	  {
+	    seqno[0] = k5->acceptseqnr & 0xFF;
+	    seqno[1] = k5->acceptseqnr >> 8 & 0xFF;
+	    seqno[2] = k5->acceptseqnr >> 16 & 0xFF;
+	    seqno[3] = k5->acceptseqnr >> 24 & 0xFF;
+	    memset (seqno + 4, 0xFF, 4);
+	  }
+	else
+	  {
+	    seqno[0] = k5->initseqnr & 0xFF;
+	    seqno[1] = k5->initseqnr >> 8 & 0xFF;
+	    seqno[2] = k5->initseqnr >> 16 & 0xFF;
+	    seqno[3] = k5->initseqnr >> 24 & 0xFF;
+	    memset (seqno + 4, 0, 4);
+	  }
 
-	rc = shishi_encrypt_iv_etype (k5->sh, k5->key, 0, SHISHI_DES_CBC_NONE, cksum, 8,	/* cksum */
+	rc = shishi_encrypt_iv_etype (k5->sh, k5->key, 0,
+				      SHISHI_DES_CBC_NONE, cksum, 8,
 				      seqno, 8, &eseqno, &tmplen);
 	if (rc != SHISHI_OK || tmplen != 8)
 	  return GSS_S_FAILURE;
@@ -143,7 +155,10 @@ gss_krb5_wrap (OM_uint32 * minor_status,
 	rc = gss_encapsulate_token (&data, GSS_KRB5, output_message_buffer);
 	if (!rc)
 	  return GSS_S_FAILURE;
-	k5->initseqnr++;
+	if (k5->acceptor)
+	  k5->acceptseqnr++;
+	else
+	  k5->initseqnr++;
       }
       break;
 
@@ -185,11 +200,22 @@ gss_krb5_wrap (OM_uint32 * minor_status,
 	memcpy (data.value + 36, data.value + 8, 8);
 
 	/* seq_nr */
-	((char *) data.value + 8)[0] = k5->initseqnr & 0xFF;
-	((char *) data.value + 8)[1] = k5->initseqnr >> 8 & 0xFF;
-	((char *) data.value + 8)[2] = k5->initseqnr >> 16 & 0xFF;
-	((char *) data.value + 8)[3] = k5->initseqnr >> 24 & 0xFF;
-	memset (data.value + 8 + 4, k5->acceptor ? 0xFF : 0, 4);
+	if (k5->acceptor)
+	  {
+	    ((char *) data.value + 8)[0] = k5->acceptseqnr & 0xFF;
+	    ((char *) data.value + 8)[1] = k5->acceptseqnr >> 8 & 0xFF;
+	    ((char *) data.value + 8)[2] = k5->acceptseqnr >> 16 & 0xFF;
+	    ((char *) data.value + 8)[3] = k5->acceptseqnr >> 24 & 0xFF;
+	    memset (data.value + 8 + 4, 0xFF, 4);
+	  }
+	else
+	  {
+	    ((char *) data.value + 8)[0] = k5->initseqnr & 0xFF;
+	    ((char *) data.value + 8)[1] = k5->initseqnr >> 8 & 0xFF;
+	    ((char *) data.value + 8)[2] = k5->initseqnr >> 16 & 0xFF;
+	    ((char *) data.value + 8)[3] = k5->initseqnr >> 24 & 0xFF;
+	    memset (data.value + 8 + 4, 0, 4);
+	  }
 
 	rc = shishi_encrypt_iv_etype (k5->sh, k5->key, 0, SHISHI_DES3_CBC_NONE, data.value + 16, 8,	/* cksum */
 				      data.value + 8, 8, &tmp, &tmplen);
@@ -206,7 +232,10 @@ gss_krb5_wrap (OM_uint32 * minor_status,
 	rc = gss_encapsulate_token (&data, GSS_KRB5, output_message_buffer);
 	if (!rc)
 	  return GSS_S_FAILURE;
-	k5->initseqnr++;
+	if (k5->acceptor)
+	  k5->acceptseqnr++;
+	else
+	  k5->initseqnr++;
 	break;
       }
 
@@ -310,10 +339,13 @@ gss_krb5_unwrap (OM_uint32 * minor_status,
 	  return GSS_S_BAD_MIC;
 
 	seqnr = C2I (seqno);
-	if (seqnr != k5->acceptseqnr)
+	if (seqnr != k5->acceptor ? k5->initseqnr : k5->acceptseqnr)
 	  return GSS_S_BAD_MIC;
 
-	k5->acceptseqnr++;
+	if (k5->acceptor)
+	  k5->initseqnr++;
+	else
+	  k5->acceptseqnr++;
 
 	/* Check pad */
 	padlen = ((char *) data.value)[data.length - 1];
@@ -380,10 +412,13 @@ gss_krb5_unwrap (OM_uint32 * minor_status,
 	if (memcmp (p + 4, k5->acceptor ? "\x00\x00\x00\x00" :
 		    "\xFF\xFF\xFF\xFF", 4) != 0)
 	  return GSS_S_BAD_MIC;
-	if (C2I (p) != k5->acceptseqnr)
+	if (C2I (p) != k5->acceptor ? k5->initseqnr : k5->acceptseqnr)
 	  return GSS_S_BAD_MIC;
 
-	k5->acceptseqnr++;
+	if (k5->acceptor)
+	  k5->initseqnr++;
+	else
+	  k5->acceptseqnr++;
 
 	/* Check pad */
 	padlen = ((char *) data.value)[data.length - 1];

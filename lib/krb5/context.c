@@ -88,6 +88,12 @@ init_request (OM_uint32 * minor_status,
   if (rc != SHISHI_OK)
     return GSS_S_FAILURE;
 
+  rc = shishi_authenticator_seqnumber_get (k5->sh,
+					   shishi_ap_authenticator (k5->ap),
+					   &k5->initseqnr);
+  if (rc != SHISHI_OK)
+    return GSS_S_FAILURE;
+
   rc = shishi_ap_req_der (k5->ap, &tmp.value, &tmp.length);
   if (rc != SHISHI_OK)
     return GSS_S_FAILURE;
@@ -131,6 +137,7 @@ init_reply (OM_uint32 * minor_status,
     return GSS_S_DEFECTIVE_TOKEN;
 
   rc = shishi_ap_rep_der_set (k5->ap, data.value, data.length);
+  gss_release_buffer (NULL, &data);
   if (rc != SHISHI_OK)
     return GSS_S_DEFECTIVE_TOKEN;
 
@@ -142,7 +149,7 @@ init_reply (OM_uint32 * minor_status,
 					  shishi_ap_encapreppart (k5->ap),
 					  &k5->acceptseqnr);
   if (rc != SHISHI_OK)
-    k5->acceptseqnr = 0;
+    return GSS_S_DEFECTIVE_TOKEN;
 
   return GSS_S_COMPLETE;
 }
