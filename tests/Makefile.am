@@ -25,7 +25,7 @@ check_PROGRAMS = $(tests)
 TESTS = $(tests)
 
 INCLUDES = -I$(top_srcdir)/lib
-LDADD = ../lib/libggssapi.la
+LDADD = ../lib/libgss.la
 
 noinst_PROGRAMS = $(tests)
 
