@@ -63,9 +63,9 @@ AC_ARG_ENABLE(kerberos5,
                        [disable Kerberos V5 mechanism unconditionally]),
 	kerberos5=$enableval)
 if test "$kerberos5" != "no" ; then
-	PKG_CHECK_MODULES(SHISHI, shishi >= 0.0.0, [kerberos5=yes])
+	PKG_CHECK_MODULES(SHISHI, shishi >= 0.0.0,
+				[kerberos5=yes], [kerberos5=no])
 	if test "$kerberos5" != "yes" ; then
-		kerberos5=no
 		AC_MSG_WARN([Shishi not found, required for Kerberos 5])
 	else
 		AC_DEFINE(USE_KERBEROS5, 1,
