@@ -122,6 +122,10 @@ gss_acquire_cred (OM_uint32 * minor_status,
 		  gss_OID_set * actual_mechs, OM_uint32 * time_rec)
 {
   _gss_mech_api_t mech = NULL;
+  OM_uint32 maj_stat;
+
+  if (!output_cred_handle)
+    return GSS_S_NO_CRED | GSS_S_CALL_INACCESSIBLE_WRITE;
 
   if (desired_mechs != GSS_C_NO_OID_SET)
     {
@@ -147,12 +151,24 @@ gss_acquire_cred (OM_uint32 * minor_status,
       return GSS_S_BAD_MECH;
     }
 
-  return mech->acquire_cred (minor_status,
-			     desired_name,
-			     time_req,
-			     desired_mechs,
-			     cred_usage,
-			     output_cred_handle, actual_mechs, time_rec);
+  *output_cred_handle = xcalloc (sizeof (**output_cred_handle), 1);
+  (*output_cred_handle)->mech = mech->mech;
+
+  maj_stat = mech->acquire_cred (minor_status,
+				 desired_name,
+				 time_req,
+				 desired_mechs,
+				 cred_usage,
+				 output_cred_handle,
+				 actual_mechs, time_rec);
+  if (GSS_ERROR (maj_stat))
+    {
+      free (*output_cred_handle);
+      *output_cred_handle = GSS_C_NO_CREDENTIAL;
+      return maj_stat;
+    }
+
+  return GSS_S_COMPLETE;
 }
 
 /**
@@ -454,9 +470,9 @@ gss_inquire_cred_by_mech (OM_uint32 * minor_status,
  *   nothing.
  *
  * Informs GSS-API that the specified credential handle is no longer
- * required by the application, and frees associated resources.
- * Implementations are encouraged to set the cred_handle to
- * GSS_C_NO_CREDENTIAL on successful completion of this call.
+ * required by the application, and frees associated resources.  The
+ * cred_handle is set to GSS_C_NO_CREDENTIAL on successful completion
+ * of this call.
  *
  * Return value:
  *
@@ -467,15 +483,37 @@ gss_inquire_cred_by_mech (OM_uint32 * minor_status,
 OM_uint32
 gss_release_cred (OM_uint32 * minor_status, gss_cred_id_t * cred_handle)
 {
-  if (minor_status)
-    *minor_status = 0;
+  _gss_mech_api_t mech;
+  OM_uint32 maj_stat;
 
-  if (cred_handle && *cred_handle)
-    free (*cred_handle);
+  if (!cred_handle)
+    {
+      if (minor_status)
+	*minor_status = 0;
+      return GSS_S_NO_CRED | GSS_S_CALL_INACCESSIBLE_READ;
+    }
 
-  /* XXX krb5 deallocate */
+  if (*cred_handle == GSS_C_NO_CREDENTIAL)
+    {
+      if (minor_status)
+	*minor_status = 0;
+      return GSS_S_COMPLETE;
+    }
 
+  mech = _gss_find_mech ((*cred_handle)->mech);
+  if (mech == NULL)
+    {
+      gss_warn ("gss_release_cred bug, report to %s", PACKAGE_BUGREPORT);
+      if (minor_status)
+	*minor_status = 0;
+      return GSS_S_DEFECTIVE_CREDENTIAL;
+    }
+
+  maj_stat = mech->release_cred (minor_status, cred_handle);
+  free (*cred_handle);
   *cred_handle = GSS_C_NO_CREDENTIAL;
+  if (GSS_ERROR (maj_stat))
+    return maj_stat;
 
   return GSS_S_COMPLETE;
 }
