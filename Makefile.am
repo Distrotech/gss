@@ -23,7 +23,7 @@ EXTRA_DIST = ANNOUNCE TODO config.h.in config.rpath mkinstalldirs gss.pc.in
 pkgconfigdir = $(libdir)/pkgconfig
 pkgconfig_DATA = gss.pc
 
-SUBDIRS = m4 po argp lib src tests doc
+SUBDIRS = m4 po argp lib tests doc
 
 ACLOCAL_AMFLAGS = -I m4 -I argp
 
@@ -37,7 +37,6 @@ ChangeLog:
 
 indent:
 	(cd lib && make indent)
-	(cd src && make indent)
 	(cd tests && make indent)
 
 tag = $(PACKAGE)-`echo $(VERSION) | sed 's/\./-/g'`

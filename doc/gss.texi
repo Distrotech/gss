@@ -37,11 +37,6 @@ Software Foundation raise funds for GNU development.''
 * gss: (gss).			Generic Security Service API Library
 @end direntry
 
-@dircategory Utilities
-@direntry
-* gss: (gss)Invoking gss.	Command line interface to GSS Library.
-@end direntry
-
 @titlepage
 @title Generic Security Service
 @subtitle for version @value{VERSION}, @value{UPDATED}
@@ -65,7 +60,6 @@ Software Foundation raise funds for GNU development.''
 * Preparation::                 What you should do before using the library.
 * Standard GSS API::            Reference documentation for the Standard API.
 * Extended GSS API::            Non-standard functions.
-* Invoking gss::                Command line interface to the library.
 * Acknowledgements::            Whom to blame.
 
 Appendices
@@ -89,10 +83,8 @@ Indices
 GSS is an implementation of the Generic Security Service Application
 Program Interface (GSS-API).  GSS-API is used by network servers
 (e.g., IMAP, SMTP) to provide security security services, e.g.,
-authenticate clients against servers.
-
-GSS contains a library (`libgss'), a command line utility (`gss') to
-access the library from the shell, and a manual.
+authenticate clients against servers.  GSS contains a library
+(`libgss') and a manual.
 
 GSS is developed for the GNU/Linux system, but runs on over 20
 platforms including most major Unix platforms and Windows, and many
@@ -1384,28 +1376,6 @@ intializes some subsystems.  In a multithreaded environment if
 should be called before any more threads are created.
 
 @end deftypefun
-
-@c **********************************************************
-@c *********************  Invoking gss  *********************
-@c **********************************************************
-@node Invoking gss
-@chapter Invoking gss
-
-@pindex gss
-@cindex invoking @command{gss}
-@cindex command line
-
-@majorheading Name
-
-GSS (gss) -- Generic Security Service command line interface
-
-@majorheading Description
-@code{gss} is the main program of GPL GSS-API.
-
-This section only lists the commands and options available.
-
-Mandatory or optional arguments to long options are also mandatory or
-optional for any corresponding short options.
 
 @c **********************************************************
 @c *******************  Acknowledgements  *******************

@@ -87,6 +87,6 @@ AC_CONFIG_SUBDIRS(argp)
 
 # We are done
 AC_CONFIG_FILES(Makefile gss.pc lib/gss.h po/Makefile.in m4/Makefile \
-		doc/Makefile lib/Makefile src/Makefile tests/Makefile)
+		doc/Makefile lib/Makefile tests/Makefile)
 
 AC_OUTPUT
