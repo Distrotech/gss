@@ -51,6 +51,8 @@
 # include <strings.h>
 #endif
 
+#include <argp.h>
+
 #include "gettext.h"
 #include "ggssapi.h"
 #include "gssapi.h"
