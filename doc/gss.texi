@@ -1644,6 +1644,9 @@ TBA: the API may block, unusable in select() based servers.
 Especially if the servers contacted is decided by the, yet
 unauthenticated, remote client.
 
+TBA: krb5: no support for GSS_C_PROT_READY_FLAG.  We support it
+anyway, though.
+
 TBA: krb5: gssapi-cfx differ from rfc 1964 in the reply token in that
 the latter require presence of sequence numbers whereas the former
 doesn't.
