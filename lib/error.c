@@ -269,3 +269,16 @@ gss_display_status (OM_uint32 * minor_status,
 
   return GSS_S_COMPLETE;
 }
+
+/* For va_list, va_start, va_end. */
+#include <stdarg.h>
+
+void
+gss_warn (const char *format, ...)
+{
+  va_list ap;
+
+  va_start (ap, format);
+  vfprintf (stderr, format, ap);
+  va_end (ap);
+}

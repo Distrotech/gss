@@ -52,6 +52,9 @@ extern int
 gss_decapsulate_token (gss_buffer_t input_message,
 		       gss_OID token_oid, gss_buffer_t output_message);
 
+extern void
+gss_warn (const char *format, ...)
+
 extern gss_OID_desc GSS_C_NT_USER_NAME_static;
 extern gss_OID_desc GSS_C_NT_MACHINE_UID_NAME_static;
 extern gss_OID_desc GSS_C_NT_STRING_UID_NAME_static;
