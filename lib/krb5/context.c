@@ -174,6 +174,8 @@ gss_krb5_init_sec_context (OM_uint32 * minor_status,
       return GSS_S_COMPLETE;
     }
 
+  if (minor_status)
+    *minor_status = 0;
   return GSS_S_FAILURE;
 }
 
@@ -319,6 +321,8 @@ gss_krb5_accept_sec_context (OM_uint32 * minor_status,
 	}
     }
 
+  if (minor_status)
+    *minor_status = 0;
   return GSS_S_COMPLETE;
 }
 
@@ -329,9 +333,6 @@ gss_krb5_delete_sec_context (OM_uint32 * minor_status,
 {
   _gss_krb5_ctx_t k5 = (*context_handle)->krb5;
 
-  if (minor_status)
-    *minor_status = 0;
-
   if (k5->key)
     shishi_key_done (k5->key);
 
@@ -340,6 +341,8 @@ gss_krb5_delete_sec_context (OM_uint32 * minor_status,
 
   shishi_done (k5->sh);
 
+  if (minor_status)
+    *minor_status = 0;
   return GSS_S_COMPLETE;
 }
 
@@ -350,16 +353,20 @@ gss_krb5_context_time (OM_uint32 * minor_status,
 {
   _gss_krb5_ctx_t k5 = context_handle->krb5;
 
-  if (minor_status)
-    *minor_status = 0;
 
   if (time_rec)
     {
       *time_rec = gss_krb5_tktlifetime (k5->tkt);
 
       if (*time_rec == 0)
-	return GSS_S_CONTEXT_EXPIRED;
+	{
+	  if (minor_status)
+	    *minor_status = 0;
+	  return GSS_S_CONTEXT_EXPIRED;
+	}
     }
 
+  if (minor_status)
+    *minor_status = 0;
   return GSS_S_COMPLETE;
 }
