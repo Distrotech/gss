@@ -1,5 +1,5 @@
 /* basic.c	Basic GSS self tests.
- * Copyright (C) 2003  Simon Josefsson
+ * Copyright (C) 2003, 2004  Simon Josefsson
  *
  * This file is part of the Generic Security Service (GSS).
  *
@@ -21,19 +21,14 @@
 
 #include "utils.c"
 
-const char *program_name = PACKAGE;
-
 int
 main (int argc, char *argv[])
 {
-  char buffer[BUFSIZ];
-  char buffer2[BUFSIZ];
-  char *p, *q;
-  int n, res;
   gss_uint32 maj_stat, min_stat, msgctx;
   gss_buffer_desc bufdesc, bufdesc2;
   gss_name_t service;
   gss_OID_set oids;
+  int n;
 
 #if HAVE_LOCALE_H
   setlocale (LC_ALL, "");
@@ -279,7 +274,7 @@ main (int argc, char *argv[])
 
   if (debug)
     printf ("    display_name() => %d: %s\n", bufdesc2.length,
-	    bufdesc2.value);
+	    (char*) bufdesc2.value);
 
 #ifdef USE_KERBEROS5
   /* NB: "service" resused from previous test */
@@ -339,7 +334,7 @@ main (int argc, char *argv[])
 
   if (debug)
     printf ("    Display status for GSS_S_COMPLETE => %*s\n",
-	    bufdesc.length, bufdesc.value);
+	    bufdesc.length, (char*)bufdesc.value);
 
   if (verbose)
     printf ("Name self tests done with %d errors\n", error_count);

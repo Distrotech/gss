@@ -1,5 +1,5 @@
 /* asn1.c	Wrapper around pseudo-ASN.1 token format.
- * Copyright (C) 2003  Simon Josefsson
+ * Copyright (C) 2003, 2004  Simon Josefsson
  *
  * This file is part of the Generic Security Service (GSS).
  *
@@ -91,7 +91,6 @@ _gss_encapsulate_token (char *oid, size_t oidlen,
   size_t oidlenlen;
   size_t asn1len, asn1lenlen;
   char *p;
-  int rc;
 
   _gss_asn1_length_der (oidlen, NULL, &oidlenlen);
   asn1len = 1 + oidlenlen + oidlen + inlen;

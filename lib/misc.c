@@ -229,8 +229,6 @@ gss_add_oid_set_member (OM_uint32 * minor_status,
 			const gss_OID member_oid, gss_OID_set * oid_set)
 {
   OM_uint32 major_stat;
-  gss_OID new_oid;
-  gss_OID *p;
   int present;
 
   if (minor_status)
@@ -371,7 +369,6 @@ OM_uint32
 gss_indicate_mechs (OM_uint32 * minor_status, gss_OID_set * mech_set)
 {
   OM_uint32 maj_stat;
-  gss_OID_set oids;
   int i;
 
   maj_stat = gss_create_empty_oid_set (minor_status, mech_set);

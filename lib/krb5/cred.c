@@ -33,7 +33,6 @@ gss_krb5_acquire_cred1 (OM_uint32 * minor_status,
 {
   _gss_krb5_cred_t k5 = (*output_cred_handle)->krb5;
   OM_uint32 maj_stat;
-  int rc;
 
   if (desired_name == GSS_C_NO_NAME)
     {

@@ -51,13 +51,10 @@ gss_krb5_wrap (OM_uint32 * minor_status,
     case SHISHI_DES_CBC_MD5:
       {
 	char header[8];
-	char encseqno[8];
 	char seqno[8];
 	char *eseqno;
 	char *cksum;
 	char confounder[8];
-	char tmp[20];
-	char *pt;
 
 	/* Typical data:
 	   ;; 02 01 00 00 ff ff ff ff  0c 22 1f 79 59 3d 00 cb
@@ -254,7 +251,6 @@ gss_krb5_unwrap (OM_uint32 * minor_status,
 	char cksum[8];
 	char confounder[8];
 	char *tmp;
-	size_t cksumlen = 8;
 	int seqnr;
 	int i;
 
@@ -342,7 +338,6 @@ gss_krb5_unwrap (OM_uint32 * minor_status,
 	unsigned char *p;
 	char *t;
 	char cksum[20];
-	size_t cksumlen = 20;
 	int i;
 
 	if (data.length < 8 + 8 + 20 + 8 + 8)

@@ -260,7 +260,6 @@ gss_krb5_accept_sec_context (OM_uint32 * minor_status,
       gss_ctx_id_t cx;
       _gss_krb5_ctx_t cxk5;
       _gss_krb5_cred_t crk5;
-      Shishi_asn1 *p;
 
       crk5 = acceptor_cred_handle->krb5;
 

@@ -21,6 +21,7 @@
 
 #include "internal.h"
 #include "krb5.h"
+#include "protos.h"
 
 #include <shishi.h>
 

@@ -134,10 +134,12 @@ gss_display_name (OM_uint32 * minor_status,
     memcpy (output_name_buffer->value, input_name->value, input_name->length);
 
   if (output_name_type)
-    if (input_name->type)
-      *output_name_type = &input_name->type;
-    else
-      *output_name_type = GSS_C_NO_OID;
+    {
+      if (input_name->type)
+	*output_name_type = input_name->type;
+      else
+	*output_name_type = GSS_C_NO_OID;
+    }
 
   if (minor_status)
     *minor_status = 0;
@@ -173,17 +175,19 @@ gss_compare_name (OM_uint32 * minor_status,
 		  const gss_name_t name1,
 		  const gss_name_t name2, int *name_equal)
 {
+  if (minor_status)
+    *minor_status = 0;
+
   if (!name1 || !name2)
-    return GSS_S_BAD_NAME;
+    return GSS_S_BAD_NAME | GSS_S_CALL_INACCESSIBLE_READ;
 
   if (!gss_oid_equal (name1->type, name2->type))
     return GSS_S_BAD_NAMETYPE;
 
-  name_equal == (name1->length == name2->length) &&
-    memcmp (name1->value, name2->value, name1->length) == 0;
+  if (name_equal)
+    *name_equal = (name1->length == name2->length) &&
+      memcmp (name1->value, name2->value, name1->length) == 0;
 
-  if (minor_status)
-    *minor_status = 0;
   return GSS_S_COMPLETE;
 }
 
@@ -366,7 +370,6 @@ gss_inquire_mechs_for_name (OM_uint32 * minor_status,
 			    const gss_name_t input_name,
 			    gss_OID_set * mech_types)
 {
-  int i;
   OM_uint32 maj_stat;
 
   maj_stat = gss_create_empty_oid_set (minor_status, mech_types);

@@ -1,5 +1,5 @@
 /* utils.c	GSS self tests utilities.
- * Copyright (C) 2002, 2003  Simon Josefsson
+ * Copyright (C) 2002, 2003, 2004  Simon Josefsson
  *
  * This file is part of the Generic Security Service (GSS).
  *
@@ -23,12 +23,11 @@
 #include "config.h"
 #endif
 
-#ifdef STDC_HEADERS
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdarg.h>
 #include <ctype.h>
-#endif
+#include <string.h>
 
 #ifdef HAVE_LOCALE_H
 #include <locale.h>
