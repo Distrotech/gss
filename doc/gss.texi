@@ -45,7 +45,7 @@ developing GNU and protecting and promoting software freedom.''
 @titlepage
 @title Generic Security Service
 @subtitle for version @value{VERSION}, @value{UPDATED}
-@author Simon Josefsson (@email{bug-gss.org})
+@author Simon Josefsson (@email{bug-gss@@josefsson.org})
 @page
 @vskip 0pt plus 1filll
 @insertcopying
