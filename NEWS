@@ -8,7 +8,7 @@ See the end for copying conditions.
 The incorrect sequence numbers prevented gss_(un)wrap from working
 correctly.
 
-** Kerberos 5 gss_unwrap for DES-MD5 now check sequence numbers correctly.
+** Kerberos 5 gss_unwrap now check sequence numbers correctly.
 
 ** Polish translation added, by Jakub Bogusz.
 
