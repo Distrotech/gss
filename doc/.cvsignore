@@ -1,4 +1,5 @@
 Makefile
+Makefile.gdoc
 Makefile.in
 gss.1
 gss.aux
