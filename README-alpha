@@ -1,0 +1,26 @@
+GPL GSS-API README-alpha -- Important introductory notes for alpha releases.
+Copyright (C) 2003 Simon Josefsson
+See the end for copying conditions.
+
+GPL GSS-API is unstable.  You should expect it to not work.  You
+should expect it to have security problems.  The API and ABI will
+likely change.  This is the development release.  A proper release
+will be made in due time.  Let me repeat that, GPL GSS-API IS MOST
+LIKELY INSECURE. DO NOT USE IN A PRODUCTION ENVIRONMENT!
+
+The code will go through a security review before the stable release
+is made.  Volunteers needed.
+
+It will not become stable without help.  Donate time or money.
+
+To compile from CVS, you need perl, texinfo, GTK-DOC, autoconf 2.5+,
+and automake 1.7+.  Bootstrap the build environment with:
+
+  $ ./autogen.sh
+
+Then run ./configure etc as usual.
+
+----------------------------------------------------------------------
+Copying and distribution of this file, with or without modification,
+are permitted in any medium without royalty provided the copyright
+notice and this notice are preserved.
