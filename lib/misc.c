@@ -30,22 +30,41 @@ gss_oid_equal (gss_OID first_oid, gss_OID second_oid)
 }
 
 OM_uint32
+gss_copy_oid (OM_uint32 * minor_status,
+	      const gss_OID src_oid, gss_OID dest_oid)
+{
+  if (!src_oid || src_oid->length == 0 || src_oid->elements == NULL)
+    return GSS_S_FAILURE;
+
+  dest_oid->length = src_oid->length;
+  dest_oid->elements = malloc(src_oid->length);
+  if (!dest_oid->elements)
+    return GSS_S_FAILURE;
+
+  memcpy(dest_oid->elements, src_oid->elements, src_oid->length);
+
+  return GSS_S_COMPLETE;
+}
+
+OM_uint32
 gss_duplicate_oid (OM_uint32 * minor_status,
 		   const gss_OID src_oid, gss_OID * dest_oid)
 {
-  if (src_oid->length == 0 || src_oid->elements == NULL)
+  OM_uint32 maj_stat;
+
+  if (!src_oid || src_oid->length == 0 || src_oid->elements == NULL)
     return GSS_S_FAILURE;
 
   *dest_oid = malloc(sizeof(**dest_oid));
   if (!*dest_oid)
     return GSS_S_FAILURE;
 
-  (*dest_oid)->length = src_oid->length;
-  (*dest_oid)->elements = malloc(src_oid->length);
-  if (!(*dest_oid)->elements)
-    return GSS_S_FAILURE;
-
-  memcpy((*dest_oid)->elements, src_oid->elements, src_oid->length);
+  maj_stat = gss_copy_oid (minor_status, src_oid, *dest_oid);
+  if (maj_stat != GSS_S_COMPLETE)
+    {
+      free(*dest_oid);
+      return maj_stat;
+    }
 
   return GSS_S_COMPLETE;
 }
@@ -69,6 +88,7 @@ gss_add_oid_set_member (OM_uint32 * minor_status,
 {
   OM_uint32 major_stat;
   gss_OID new_oid;
+  gss_OID *p;
   int present;
 
   if (!member_oid || member_oid->length == 0 || member_oid->elements == NULL)
@@ -89,9 +109,11 @@ gss_add_oid_set_member (OM_uint32 * minor_status,
   (*oid_set)->elements = realloc((*oid_set)->elements,
 				 (*oid_set)->count *
 				 sizeof(*(*oid_set)->elements));
+  if (!(*oid_set)->elements)
+    return GSS_S_FAILURE;
 
-  major_stat = gss_duplicate_oid (minor_status, member_oid,
-				  &((*oid_set)->elements));
+  major_stat = gss_copy_oid (minor_status, member_oid,
+			     (*oid_set)->elements + ((*oid_set)->count - 1));
   if (major_stat != GSS_S_COMPLETE)
     return major_stat;
 
@@ -128,10 +150,7 @@ gss_release_oid_set (OM_uint32 * minor_status, gss_OID_set * set)
   gss_OID cur;
 
   for (i = 0, cur = (*set)->elements; i < (*set)->count; i++, cur++)
-    {
-      free(cur->elements);
-      free(cur);
-    }
+    free(cur->elements);
 
   free(*set);
   *set = GSS_C_NO_OID_SET;
