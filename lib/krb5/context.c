@@ -48,7 +48,7 @@ init_request (OM_uint32 * minor_status,
 {
   gss_ctx_id_t ctx = *context_handle;
   _gss_krb5_ctx_t k5 = ctx->krb5;
-  char *cksum;
+  char *cksum, *der;
   size_t cksumlen;
   int rc;
   OM_uint32 maj_stat;
@@ -88,15 +88,19 @@ init_request (OM_uint32 * minor_status,
   if (rc != SHISHI_OK)
     return GSS_S_FAILURE;
 
+  free (cksum);
+
   rc = shishi_authenticator_seqnumber_get (k5->sh,
 					   shishi_ap_authenticator (k5->ap),
 					   &k5->initseqnr);
   if (rc != SHISHI_OK)
     return GSS_S_FAILURE;
 
-  rc = shishi_ap_req_der (k5->ap, &tmp.value, &tmp.length);
+  rc = shishi_ap_req_der (k5->ap, &der, &tmp.length);
   if (rc != SHISHI_OK)
     return GSS_S_FAILURE;
+
+  tmp.value = der;
 
   rc = gss_encapsulate_token_prefix (&tmp, TOK_AP_REQ, TOK_LEN,
 				     GSS_KRB5, output_token);
