@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: bug-gss@josefsson.org\n"
-"POT-Creation-Date: 2004-01-11 05:10+0100\n"
+"POT-Creation-Date: 2004-01-11 08:00+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -213,22 +213,27 @@ msgid "Unknown krb5 error"
 msgstr ""
 
 #: lib/obsolete.c:31
+#, c-format
 msgid "warning: gss_sign() is obsolete, use gss_get_mic() instead."
 msgstr ""
 
 #: lib/obsolete.c:46
+#, c-format
 msgid "warning: gss_verify() is obsolete, use gss_verify_mic() instead."
 msgstr ""
 
 #: lib/obsolete.c:61
+#, c-format
 msgid "warning: gss_seal() is obsolete, use gss_wrap() instead."
 msgstr ""
 
 #: lib/obsolete.c:76
+#, c-format
 msgid "warning: gss_unseal() is obsolete, use gss_unwrap() instead."
 msgstr ""
 
 #: lib/meta.c:32
+#, c-format
 msgid "warning: no suitable mechanism found\n"
 msgstr ""
 
