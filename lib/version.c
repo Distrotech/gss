@@ -1,5 +1,5 @@
 /* version.c	version handling
- * Copyright (C) 2003  Simon Josefsson
+ * Copyright (C) 2003, 2004  Simon Josefsson
  * Copyright (C) 1998, 1999, 2000, 2001, 2002 Free Software Foundation, Inc.
  *
  * This file is part of the Generic Security Service (GSS).
@@ -63,6 +63,9 @@ _gss_parse_version_string (const char *s, int *major, int *minor, int *micro)
  * @req_version: version string to compare with, or NULL
  *
  * Check library version.
+ *
+ * WARNING: This function is a GNU GSS specific extension, and is not
+ * part of the official GSS API.
  *
  * Return value: Check that the the version of the library is at
  * minimum the one given as a string in @req_version and return the
