@@ -360,9 +360,14 @@ sub output_texinfo {
     foreach $parameter (@{$args{'parameterlist'}}) {
 	if ($args{'parameters'}{$parameter}) {
 	    open FH, ">tmp" or die "cannot open tmp";
-	    print FH "`".$parameter."`: " . $args{'parameters'}{$parameter};
+	    $_ = $args{'parameters'}{$parameter};
+	    s/^ *//gm;
+	    print FH $_;
 	    close FH;
-	    $_ = `asciidoc -s -b texinfo -o - tmp 2>/dev/null`; chop; print;
+	    $_ = `asciidoc -s -b texinfo -o - tmp 2>/dev/null`;
+	    s/^\n//s;
+	    chop;
+	    print "\@var{".$parameter."}: " . $_ . "\n";
 	    unlink "tmp";
 
 	}
