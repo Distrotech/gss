@@ -1,3 +1,369 @@
+2004-08-01  Simon Josefsson <simon@josefsson.org>
+
+	* tests/Makefile.am: Fix objdir != srcdir.
+
+2004-08-01  Simon Josefsson <simon@josefsson.org>
+
+	* po/pl.po, po/sv.po: Generated.
+
+2004-08-01  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS: Version 0.0.12.
+
+2004-08-01  Simon Josefsson <simon@josefsson.org>
+
+	* tests/krb5context.c: Fix i18n.
+
+2004-08-01  Simon Josefsson <simon@josefsson.org>
+
+	* tests/Makefile.am: Add -lintl.
+
+2004-08-01  Simon Josefsson <simon@josefsson.org>
+
+	* m4/autobuild.m4: Add.
+
+2004-08-01  Simon Josefsson <simon@josefsson.org>
+
+	* configure.ac: Use autobuild.
+
+2004-08-01  Simon Josefsson <simon@josefsson.org>
+
+	* doc/reference/Makefile.am: Fix.
+
+2004-08-01  Simon Josefsson <simon@josefsson.org>
+
+	* tests/Makefile.am: Dist krb5context.key.
+
+2004-08-01  Simon Josefsson <simon@josefsson.org>
+
+	* tests/Makefile.am: Dist krb5context.tkt.
+
+2004-08-01  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS: Add.
+
+2004-08-01  Simon Josefsson <simon@josefsson.org>
+
+	* tests/krb5context.tkt: Add.
+
+2004-08-01  Simon Josefsson <simon@josefsson.org>
+
+	* README: Fix.
+
+2004-08-01  Simon Josefsson <simon@josefsson.org>
+
+	* gl/getopt.c, gl/getopt1.c, gl/m4/getopt.m4: Sync.
+
+2004-07-27  Simon Josefsson <simon@josefsson.org>
+
+	* doc/specification/draft-ietf-nfsv4-channel-bindings-02.txt: Add.
+
+2004-07-13  Simon Josefsson <simon@josefsson.org>
+
+	* doc/specification/draft-hartman-gss-naming-00.txt: Add.
+
+2004-07-13  Simon Josefsson <simon@josefsson.org>
+
+	* doc/specification/draft-ietf-nfsv4-ccm-03.txt: Add.
+
+2004-07-11  Simon Josefsson <simon@josefsson.org>
+
+	* lib/krb5/cred.c: Fix mem leak.
+
+2004-07-11  Simon Josefsson <simon@josefsson.org>
+
+	* tests/krb5context.c: Fix mem leak.
+
+2004-07-11  Simon Josefsson <simon@josefsson.org>
+
+	* tests/krb5context.c: Fix.
+
+2004-07-11  Simon Josefsson <simon@josefsson.org>
+
+	* tests/krb5context.c: Remove.
+
+2004-07-11  Simon Josefsson <simon@josefsson.org>
+
+	* tests/krb5context.c: I18n.
+
+2004-07-11  Simon Josefsson <simon@josefsson.org>
+
+	* tests/Makefile.am, tests/krb5context.c: Fix.
+
+2004-07-11  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS: Add.
+
+2004-07-11  Simon Josefsson <simon@josefsson.org>
+
+	* tests/krb5context.key, tests/Makefile.am, NEWS: Add.
+
+2004-07-11  Simon Josefsson <simon@josefsson.org>
+
+	* tests/Makefile.am: Fix.
+
+2004-07-11  Simon Josefsson <simon@josefsson.org>
+
+	* tests/krb5context.c, tests/Makefile.am: Fix.
+
+2004-07-11  Simon Josefsson <simon@josefsson.org>
+
+	* tests/krb5context.c: Cleanup.
+
+2004-07-11  Simon Josefsson <simon@josefsson.org>
+
+	* tests/krb5context.c: Add.
+
+2004-07-11  Simon Josefsson <simon@josefsson.org>
+
+	* lib/krb5/context.c:
+	(gss_krb5_accept_sec_context): Support ret_flags of
+	GSS_C_PROT_READY_FLAG.
+
+2004-07-11  Simon Josefsson <simon@josefsson.org>
+
+	* lib/krb5/context.c:
+	(gss_krb5_delete_sec_context): Don't shishi_done for acceptor
+	contexts.
+
+2004-07-11  Simon Josefsson <simon@josefsson.org>
+
+	* tests/krb5context.c: Add.
+
+2004-07-11  Simon Josefsson <simon@josefsson.org>
+
+	* tests/Makefile.am: Fix env's.
+
+2004-07-11  Simon Josefsson <simon@josefsson.org>
+
+	* lib/asn1.c: Fix signedness bug.
+
+2004-07-11  Simon Josefsson <simon@josefsson.org>
+
+	* tests/Makefile.am: Don't install, for libtool.
+
+2004-07-11  Simon Josefsson <simon@josefsson.org>
+
+	* tests/.cvsignore: [no log message]
+
+2004-07-11  Simon Josefsson <simon@josefsson.org>
+
+	* tests/Makefile.am: Add krb5context.
+
+2004-07-11  Simon Josefsson <simon@josefsson.org>
+
+	* tests/krb5context.c: Add.
+
+2004-07-02  Simon Josefsson <simon@josefsson.org>
+
+	* gl/.cvsignore: [no log message]
+
+2004-07-02  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS, doc/gss.texi: Add.
+
+2004-07-02  Simon Josefsson <simon@josefsson.org>
+
+	* gl/Makefile.am: Fix.
+
+2004-07-02  Simon Josefsson <simon@josefsson.org>
+
+	* configure.ac, gl/Makefile.am, gl/getopt.c, gl/getopt.h,
+	gl/getopt1.c, gl/getopt_.h, gl/m4/getopt.m4: Update getopt, mainly
+	to get uClibc targets working, which lack getopt_long.
+
+2004-06-02  Simon Josefsson <simon@josefsson.org>
+
+	* doc/specification/draft-williams-gssapi-cred-store-00.txt: Add.
+
+2004-05-21  Simon Josefsson <simon@josefsson.org>
+
+	*
+	doc/specification/draft-williams-gssapi-stackable-pseudo-mechs-00.txt,
+	doc/specification/draft-williams-gssapi-store-deleg-creds-01.txt:
+	Add.
+
+2004-04-22  Simon Josefsson <simon@josefsson.org>
+
+	* doc/gss.texi: Fix.
+
+2004-04-21  Simon Josefsson <simon@josefsson.org>
+
+	* lib/krb5/context.c: Fix ret_flags.
+
+2004-04-21  Simon Josefsson <simon@josefsson.org>
+
+	* lib/krb5/context.c: Permit absent sequence number in
+	EncAPRepPart, according to gssapi-cfx.
+
+2004-04-21  Simon Josefsson <simon@josefsson.org>
+
+	* lib/krb5/context.c: Fix mem leak.
+
+2004-04-21  Simon Josefsson <simon@josefsson.org>
+
+	* lib/krb5/checksum.h, lib/krb5/checksum.c, lib/krb5/context.c:
+	Cosmetic.
+
+2004-04-21  Simon Josefsson <simon@josefsson.org>
+
+	* doc/gss.texi: Add.
+
+2004-04-21  Simon Josefsson <simon@josefsson.org>
+
+	* lib/asn1.c, lib/ext.h, lib/krb5/context.c, lib/krb5/msg.c:
+	(gss_decapsulate_token): Don't allocate output.  Update callers.
+
+2004-04-21  Simon Josefsson <simon@josefsson.org>
+
+	* lib/asn1.c, lib/ext.h, lib/krb5/context.c, lib/krb5/msg.c:
+	(gss_decapsulate_token_check): Remove.
+	(gss_decapsulate_token): Modify.  Update callers.
+
+2004-04-21  Simon Josefsson <simon@josefsson.org>
+
+	* lib/krb5/context.c:
+	(gss_krb5_init_sec_context): Fix ret_flags.
+
+2004-04-21  Simon Josefsson <simon@josefsson.org>
+
+	* lib/context.c: Add.
+
+2004-04-21  Simon Josefsson <simon@josefsson.org>
+
+	* lib/krb5/checksum.c: Fix.
+
+2004-04-21  Simon Josefsson <simon@josefsson.org>
+
+	* doc/gss.texi: Add.
+
+2004-04-21  Simon Josefsson <simon@josefsson.org>
+
+	* AUTHORS: Update PGP key.
+
+2004-04-21  Simon Josefsson <simon@josefsson.org>
+
+	* tests/basic.c: Typo.
+
+2004-04-21  Simon Josefsson <simon@josefsson.org>
+
+	* lib/krb5/context.c: Fix mem leak.
+
+2004-04-20  Simon Josefsson <simon@josefsson.org>
+
+	* lib/krb5/context.c: Fix warnings.  Fix mem leak.
+
+2004-04-20  Simon Josefsson <simon@josefsson.org>
+
+	* lib/ext.h: Use const.
+
+2004-04-20  Simon Josefsson <simon@josefsson.org>
+
+	* lib/asn1.c: Fix warnings.
+
+2004-04-20  Simon Josefsson <simon@josefsson.org>
+
+	* lib/krb5/utils.c: Fix cast.
+
+2004-04-20  Simon Josefsson <simon@josefsson.org>
+
+	* lib/krb5/cred.c: Fix.
+
+2004-04-20  Simon Josefsson <simon@josefsson.org>
+
+	* lib/krb5/cred.c: Typo.
+
+2004-04-20  Simon Josefsson <simon@josefsson.org>
+
+	* lib/krb5/cred.c:
+	(acquire_cred1): Avoid cast.  Release memory.
+
+2004-04-20  Simon Josefsson <simon@josefsson.org>
+
+	* lib/misc.c: Robustness.
+
+2004-04-20  Simon Josefsson <simon@josefsson.org>
+
+	* lib/name.c: Add comment.
+
+2004-04-20  Simon Josefsson <simon@josefsson.org>
+
+	* lib/name.c: Cosmetics.
+
+2004-04-20  Simon Josefsson <simon@josefsson.org>
+
+	* lib/msg.c: Robustness.
+
+2004-04-20  Simon Josefsson <simon@josefsson.org>
+
+	* lib/error.c: No need for internal.h.
+
+2004-04-19  Simon Josefsson <simon@josefsson.org>
+
+	* lib/cred.c: Indent.
+
+2004-04-19  Simon Josefsson <simon@josefsson.org>
+
+	* lib/cred.c:
+	(gss_inquire_cred_by_mech): Simplify.
+
+2004-04-19  Simon Josefsson <simon@josefsson.org>
+
+	* lib/cred.c:
+	(gss_inquire_cred): Simplify.
+
+2004-04-19  Simon Josefsson <simon@josefsson.org>
+
+	* lib/context.c: Robustness.
+
+2004-04-19  Simon Josefsson <simon@josefsson.org>
+
+	* lib/meta.h: Typo.
+
+2004-04-19  Simon Josefsson <simon@josefsson.org>
+
+	* lib/internal.h, lib/meta.h: Move trampoline structs to meta.h.
+
+2004-04-19  Simon Josefsson <simon@josefsson.org>
+
+	* lib/error.c, lib/internal.h, lib/krb5/error.c: Move i18n to where
+	they belong.
+
+2004-04-19  Simon Josefsson <simon@josefsson.org>
+
+	* lib/meta.c: Include meta.h.
+
+2004-04-19  Simon Josefsson <simon@josefsson.org>
+
+	* lib/context.c, lib/cred.c, lib/error.c, lib/internal.h,
+	lib/misc.c, lib/msg.c, lib/name.c, lib/krb5/name.c: Remove
+	gss_warn.  Include meta.h when necessary.
+
+2004-04-19  Simon Josefsson <simon@josefsson.org>
+
+	* lib/Makefile.am, lib/internal.h, lib/meta.h: Move meta.c
+	prototypes from internal.h to meta.h.
+
+2004-04-18  Simon Josefsson <simon@josefsson.org>
+
+	* gss.pc.in: Drop -R libs flag.
+
+2004-04-18  Simon Josefsson <simon@josefsson.org>
+
+	* m4/.cvsignore: [no log message]
+
+2004-04-18  Simon Josefsson <simon@josefsson.org>
+
+	* configure.ac: Require modern autoconf/automake/gettext.
+
+2004-04-18  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS, configure.ac: Bump versions.
+
+2004-04-18  Simon Josefsson <simon@josefsson.org>
+
+	* ChangeLog: [no log message]
+
 2004-04-18  Simon Josefsson <simon@josefsson.org>
 
 	* po/pl.po, po/sv.po: Generated.
