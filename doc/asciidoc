@@ -59,7 +59,7 @@ OPTIONS
     -v
         Verbosely print processing information to stderr.
 
-    --version, -v
+    --version
         Print program version number.
 
 BUGS
@@ -82,14 +82,14 @@ RESOURCES
     Main website: http://www.methods.co.nz/asciidoc/
 
 COPYING
-    Copyright (C) 2002,2003 Stuart Rackham. Free use of this software is
+    Copyright (C) 2002,2004 Stuart Rackham. Free use of this software is
     granted under the terms of the GNU General Public License (GPL).
 '''
 
 import sys, os, re, string, time, traceback, tempfile, popen2
 from types import *
 
-VERSION = '5.0.3'       # See CHANGLOG file for version history.
+VERSION = '5.0.5'       # See CHANGLOG file for version history.
 
 #---------------------------------------------------------------------------
 # Utility functions and classes.
@@ -835,8 +835,8 @@ class Document:
         self.glossary['user-dir'] = USER_DIR
         if reader.fname:
             self.glossary['infile'] = reader.fname
-            self.glossary['outfile'] = reader.fname
         if writer.fname:
+            self.glossary['outfile'] = writer.fname
             s = os.path.splitext(writer.fname)[1][1:]   # Output file extension.
             self.glossary['filetype'] = s
             self.glossary['filetype-'+s] = ''
@@ -924,33 +924,42 @@ class Header:
             # Parse author line.
             s = reader.read()
             s = subs_glossary([s])[0]
-            a = re.split(r'\s+',string.strip(s))
-            if len(a) == 0: raise EAsciiDoc,'malformed author line'
-            mo = re.match(r'^<(?P<email>\S+)>$',a[-1])
-            if mo:
-                gloss['email'] = mo.group('email')
-                del a[-1]
-            author = ''
-            for i in a: author = author+' '+i
-            gloss['author'] = string.strip(author)
-            a = a + [None]*3
-            if not a[2]:    # If only 2 names the second is the last name.
-                a[2] = a[1]
-                a[1] = None
-            gloss['firstname'] = a[0]
-            gloss['middlename'] = a[1]
-            gloss['lastname'] = a[2]
-            # Build author initials.
-            initials = ''
-            for s in a[:3]:
-                if s: initials = initials + string.upper(s[0])
+            s = string.strip(s)
+            mo = re.match(r'^(?P<name1>[^<>\s]+)'
+                    '(\s+(?P<name2>[^<>\s]+))?'
+                    '(\s+(?P<name3>[^<>\s]+))?'
+                    '(\s+<(?P<email>\S+)>)?$',s)
+            if not mo:
+                raise EAsciiDoc,'malformed author line'
+            firstname = mo.group('name1')
+            if mo.group('name3'):
+                middlename = mo.group('name2')
+                lastname = mo.group('name3')
+            else:
+                middlename = None
+                lastname = mo.group('name2')
+            email = mo.group('email')
+            gloss['firstname'] = firstname
+            gloss['middlename'] = middlename
+            gloss['lastname'] = lastname
+            gloss['email'] = email
+            author = firstname
+            initials = firstname[0]
+            if middlename:
+                author += ' '+middlename
+                initials += middlename[0]
+            if lastname:
+                author += ' '+lastname
+                initials += lastname[0]
+            gloss['author'] = author
+            initials = string.upper(initials)
             gloss['authorinitials'] = initials
             if reader.read_next():
                 # Parse revision line.
                 s = reader.read()
                 s = subs_glossary([s])[0]
                 # Match RCS/CVS $Id$ marker format.
-                mo = re.match(r'^\$Id: \S+ (?P<revision>\S+)' \
+                mo = re.match(r'^\$Id: \S+ (?P<revision>\S+)'
                     ' (?P<date>\S+) \S+ \S+ \S+ \$$',s)
                 if not mo:
                     # Match AsciiDoc revision,date format.
@@ -2190,10 +2199,11 @@ class Macros:
     def isnext(self):
         '''Return matching macro if block macro is next on reader.'''
         reader.skip_blank_lines()
-        if reader.read_next():
+        line = reader.read_next()
+        if line:
             for m in self.macros:
                 if m.prefix == '#':
-                    if m.reo.match(reader.read_next()):
+                    if m.reo.match(line):
                         self.current = m
                         return m
         return 0
@@ -2210,9 +2220,9 @@ class Macros:
                         return mo
         return None
 
-# Macro name set just prior to calling _subs_macro(). Ugly but there's no way
+# Macro set just prior to calling _subs_macro(). Ugly but there's no way
 # to pass optional arguments with _subs_macro().
-_subs_macro_name = ''
+_macro = None
 
 def _subs_macro(mo):
     '''Function called to perform inline macro substitution. Uses matched macro
@@ -2225,15 +2235,16 @@ def _subs_macro(mo):
     # Delete groups that didn't participate in match.
     for k,v in dict.items():
         if v is None: del dict[k]
-    if _subs_macro_name:
-        name = _subs_macro_name
+    if _macro.name:
+        name = _macro.name
     else:
         if not dict.has_key('name'):
             warning('missing macro name group: %s' % (mo.re.pattern,))
             return ''
         name = dict['name']
-    # Get optional preceding block title.
-    BlockTitle.gettitle(dict)
+    # If we're dealing with a block macro get optional block title.
+    if _macro.prefix == '#':
+        BlockTitle.gettitle(dict)
     # Parse macro caption to macro arguments.
     assert dict.has_key('caption') and dict['caption'] is not None
     if dict['caption'] == '':
@@ -2279,8 +2290,8 @@ class Macro:
             raise EAsciiDoc,'illegal section name in macro entry "%s"' % \
                 (entry,)
     def subs(self,text):
-        global _subs_macro_name
-        _subs_macro_name = self.name    # Pass the macro name to _subs_macro().
+        global _macro
+        _macro = self   # Pass the macro to _subs_macro().
         return self.reo.sub(_subs_macro,text)
     def translate(self):
         '''Translate block macro at reader.'''
@@ -3090,15 +3101,15 @@ def asciidoc(backend, doctype, confiles, infile, outfile, options):
                     config.load(conf)
                 else:
                     raise EAsciiDoc,'configuration file %s missing' % (conf,)
+        document.init_glossary()    # Add conf file.
         # Check configuration for consistency.
         config.check()
-        # Build outfile name.
+        # Build outfile name now all conf files have been read.
         if outfile is None:
             outfile = os.path.splitext(infile)[0] + '.' + backend
             if config.outfilesuffix:
                 # Change file extension.
                 outfile = os.path.splitext(outfile)[0] + config.outfilesuffix
-        document.init_glossary()    # Add conf file and file name entries.
         if '-c' in options:
             config.dump()
         else:
@@ -3108,6 +3119,7 @@ def asciidoc(backend, doctype, confiles, infile, outfile, options):
                 writer.newline = config.newline
                 writer.open(outfile)
                 try:
+                    document.init_glossary()    # Add file name related entries.
                     document.translate()
                 finally:
                     writer.close()
