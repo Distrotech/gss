@@ -1349,20 +1349,20 @@ allocated.  Any length field associated with such pointers (as in a
 @section Credential Management
 
 @verbatim
-   Table 2-1  GSS-API Credential-management Routines
+   GSS-API Credential-management Routines
 
-   Routine                Section              Function
-   -------                -------              --------
-   gss_acquire_cred           5.2  Assume a global identity; Obtain
+   Routine                         Function
+   -------                         --------
+   gss_acquire_cred                Assume a global identity; Obtain
                                    a GSS-API credential handle for
                                    pre-existing credentials.
-   gss_add_cred               5.3  Construct credentials
-                                   incrementally
-   gss_inquire_cred           5.21 Obtain information about a
-                                   credential
-   gss_inquire_cred_by_mech   5.22 Obtain per-mechanism information
+   gss_add_cred                    Construct credentials
+                                   incrementally.
+   gss_inquire_cred                Obtain information about a
+                                   credential.
+   gss_inquire_cred_by_mech        Obtain per-mechanism information
                                    about a credential.
-   gss_release_cred           5.27 Discard a credential handle.
+   gss_release_cred                Discard a credential handle.
 @end verbatim
 
 @deftypefun OM_uint32 gss_acquire_cred (OM_uint32 *minor_status, const gss_name_t desired_name, OM_uint32 time_req, const gss_OID_set desired_mechs, gss_cred_usage_t cred_usage, gss_cred_id_t *output_cred_handle, gss_OID_set *actual_mechs, OM_uint32 *time_rec)
@@ -1735,27 +1735,26 @@ for credentials could not be accessed.
 @section Context-Level Routines
 
 @verbatim
-   Table 2-2  GSS-API Context-Level Routines
+   GSS-API Context-Level Routines
 
-   Routine                 Section              Function
-   -------                 -------              --------
-   gss_init_sec_context       5.19 Initiate a security context with
-                                   a peer application
-   gss_accept_sec_context     5.1  Accept a security context
-                                   initiated by a
-                                   peer application
-   gss_delete_sec_context     5.9  Discard a security context
-   gss_process_context_token  5.25 Process a token on a security
-                                   context from a peer application
-   gss_context_time           5.7  Determine for how long a context
-                                   will remain valid
-   gss_inquire_context        5.20 Obtain information about a
-                                   security context
-   gss_wrap_size_limit        5.34 Determine token-size limit for
-                                   gss_wrap on a context
-   gss_export_sec_context     5.14 Transfer a security context to
-                                   another process
-   gss_import_sec_context     5.17 Import a transferred context
+   Routine                         Function
+   -------                         --------
+   gss_init_sec_context            Initiate a security context with
+                                   a peer application.
+   gss_accept_sec_context          Accept a security context
+                                   initiated by a peer application.
+   gss_delete_sec_context          Discard a security context.
+   gss_process_context_token       Process a token on a security
+                                   context from a peer application.
+   gss_context_time                Determine for how long a context
+                                   will remain valid.
+   gss_inquire_context             Obtain information about a
+                                   security context.
+   gss_wrap_size_limit             Determine token-size limit for
+                                   gss_wrap on a context.
+   gss_export_sec_context          Transfer a security context to
+                                   another process.
+   gss_import_sec_context          Import a transferred context.
 @end verbatim
 
 @include texi/gss_init_sec_context.texi
@@ -1772,21 +1771,21 @@ for credentials could not be accessed.
 @section Per-Message Routines
 
 @verbatim
-   Table 2-3  GSS-API Per-message Routines
+   GSS-API Per-message Routines
 
-   Routine                 Section              Function
-   -------                 -------              --------
-   gss_get_mic                5.15 Calculate a cryptographic message
+   Routine                         Function
+   -------                         --------
+   gss_get_mic                     Calculate a cryptographic message
                                    integrity code (MIC) for a
-                                   message; integrity service
-   gss_verify_mic             5.32 Check a MIC against a message;
+                                   message; integrity service.
+   gss_verify_mic                  Check a MIC against a message;
                                    verify integrity of a received
-                                   message
-   gss_wrap                   5.33 Attach a MIC to a message, and
+                                   message.
+   gss_wrap                        Attach a MIC to a message, and
                                    optionally encrypt the message
-                                   content;
+                                   content.
                                    confidentiality service
-   gss_unwrap                 5.31 Verify a message with attached
+   gss_unwrap                      Verify a message with attached
                                    MIC, and decrypt message content
                                    if necessary.
 @end verbatim
@@ -1798,24 +1797,23 @@ for credentials could not be accessed.
 @section Name Manipulation
 
 @verbatim
-   Table 2-4  GSS-API Name manipulation Routines
+   GSS-API Name manipulation Routines
 
-   Routine                 Section              Function
-   -------                 -------              --------
-   gss_import_name            5.16 Convert a contiguous string name
-                                   to internal-form
-   gss_display_name           5.10 Convert internal-form name to
-                                   text
-   gss_compare_name           5.6  Compare two internal-form names
-
-   gss_release_name           5.28 Discard an internal-form name
-   gss_inquire_names_for_mech 5.24 List the name-types supported by
-                                   the specified mechanism
-   gss_inquire_mechs_for_name 5.23 List mechanisms that support the
-                                   specified name-type
-   gss_canonicalize_name      5.5  Convert an internal name to an MN
-   gss_export_name            5.13 Convert an MN to export form
-   gss_duplicate_name         5.12 Create a copy of an internal name
+   Routine                         Function
+   -------                         --------
+   gss_import_name                 Convert a contiguous string name
+                                   to internal-form.
+   gss_display_name                Convert internal-form name to
+                                   text.
+   gss_compare_name                Compare two internal-form names.
+   gss_release_name                Discard an internal-form name.
+   gss_inquire_names_for_mech      List the name-types supported by.
+                                   the specified mechanism.
+   gss_inquire_mechs_for_name      List mechanisms that support the
+                                   specified name-type.
+   gss_canonicalize_name           Convert an internal name to an MN.
+   gss_export_name                 Convert an MN to export form.
+   gss_duplicate_name              Create a copy of an internal name.
 @end verbatim
 
 @include texi/gss_import_name.texi
@@ -1832,23 +1830,23 @@ for credentials could not be accessed.
 @section Miscellaneous Routines
 
 @verbatim
-   Table 2-5  GSS-API Miscellaneous Routines
+   GSS-API Miscellaneous Routines
 
-   Routine                Section              Function
-   -------                -------              --------
-   gss_add_oid_set_member    5.4  Add an object identifier to
-                                  a set
-   gss_display_status        5.11 Convert a GSS-API status code
-                                  to text
-   gss_indicate_mechs        5.18 Determine available underlying
-                                  authentication mechanisms
-   gss_release_buffer        5.26 Discard a buffer
-   gss_release_oid_set       5.29 Discard a set of object
-                                  identifiers
-   gss_create_empty_oid_set  5.8  Create a set containing no
-                                  object identifiers
-   gss_test_oid_set_member   5.30 Determines whether an object
-                                       identifier is a member of a set.
+   Routine                        Function
+   -------                        --------
+   gss_add_oid_set_member         Add an object identifier to
+                                  a set.
+   gss_display_status             Convert a GSS-API status code
+                                  to text.
+   gss_indicate_mechs             Determine available underlying
+                                  authentication mechanisms.
+   gss_release_buffer             Discard a buffer.
+   gss_release_oid_set            Discard a set of object
+                                  identifiers.
+   gss_create_empty_oid_set       Create a set containing no
+                                  object identifiers.
+   gss_test_oid_set_member        Determines whether an object
+                                  identifier is a member of a set.
 @end verbatim
 
 @deftypefun OM_uint32 gss_release_buffer (OM_uint32 * @var{minor_status}, gss_buffer_t @var{buffer})
