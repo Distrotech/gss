@@ -136,10 +136,10 @@ gss_duplicate_oid (OM_uint32 * minor_status,
 /**
  * gss_release_oid:
  * @minor_status: (Integer, modify) Mechanism specific status code.
- * @oid: (gss_name_t, modify) The OID to be deleted.
+ * @oid: (gss_OID, modify) The OID to be deleted.
  *
  * Free GSSAPI-allocated storage associated with an OID.  The OID is
- * set to GSS_C_NO_NAME on successful completion of this call.
+ * set to GSS_C_NO_OID on successful completion of this call.
  *
  * WARNING: This function is a GNU GSS specific extension, and is not
  * part of the official GSS API.
