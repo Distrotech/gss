@@ -1,3 +1,111 @@
+2004-08-08  Simon Josefsson <simon@josefsson.org>
+
+	* po/fr.po, po/pl.po, po/ro.po, po/sv.po: Generated.
+
+2004-08-08  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS: Version 0.0.13.
+
+2004-08-08  Simon Josefsson <simon@josefsson.org>
+
+	* gl/xgethostname.c: Fix.
+
+2004-08-08  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS: Add.
+
+2004-08-08  Simon Josefsson <simon@josefsson.org>
+
+	* gl/Makefile.am: Fix.
+
+2004-08-08  Simon Josefsson <simon@josefsson.org>
+
+	* configure.ac, gl/Makefile.am, gl/m4/codeset.m4, gl/m4/gettext.m4,
+	gl/m4/glibc21.m4, gl/m4/gnulib.m4, gl/m4/iconv.m4,
+	gl/m4/intdiv0.m4, gl/m4/intmax.m4, gl/m4/inttypes-pri.m4,
+	gl/m4/inttypes.m4, gl/m4/inttypes_h.m4, gl/m4/isc-posix.m4,
+	gl/m4/lcmessage.m4, gl/m4/lib-ld.m4, gl/m4/lib-link.m4,
+	gl/m4/lib-prefix.m4, gl/m4/longdouble.m4, gl/m4/longlong.m4,
+	gl/m4/nls.m4, gl/m4/onceonly_2_57.m4, gl/m4/po.m4,
+	gl/m4/printf-posix.m4, gl/m4/progtest.m4, gl/m4/signed.m4,
+	gl/m4/size_max.m4, gl/m4/stdint_h.m4, gl/m4/uintmax_t.m4,
+	gl/m4/ulonglong.m4, gl/m4/wchar_t.m4, gl/m4/wint_t.m4,
+	gl/m4/xsize.m4: Use new gnulib-tool stuff.
+
+2004-08-07  Simon Josefsson <simon@josefsson.org>
+
+	* gl/xgethostname.c: Update.
+
+2004-08-06  Simon Josefsson <simon@josefsson.org>
+
+	* Makefile.am: Fix.
+
+2004-08-06  Simon Josefsson <simon@josefsson.org>
+
+	* po/LINGUAS: Sync with TP.
+
+2004-08-06  Simon Josefsson <simon@josefsson.org>
+
+	* Makefile.am: Fix.
+
+2004-08-06  Simon Josefsson <simon@josefsson.org>
+
+	* po/fr.po, po/ro.po: Sync with TP.
+
+2004-08-06  Simon Josefsson <simon@josefsson.org>
+
+	* Makefile.am: Fix.
+
+2004-08-06  Simon Josefsson <simon@josefsson.org>
+
+	* Makefile.am:
+	(update-po): Add.
+
+2004-08-06  Simon Josefsson <simon@josefsson.org>
+
+	* po/fr.po, po/ro.po, po/sv.po: Sync with TP.
+
+2004-08-06  Simon Josefsson <simon@josefsson.org>
+
+	* po/.cvsignore: [no log message]
+
+2004-08-06  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS: Fix.
+
+2004-08-06  Simon Josefsson <simon@josefsson.org>
+
+	* configure.ac: Bump versions.
+
+2004-08-06  Simon Josefsson <simon@josefsson.org>
+
+	* po/LINGUAS, po/pl.po: Update.
+
+2004-08-06  Simon Josefsson <simon@josefsson.org>
+
+	* po/fr.po, po/ro.po, NEWS: Add.
+
+2004-08-03  Simon Josefsson <simon@josefsson.org>
+
+	* doc/specification/ietf60-kitten-agenda-charter.pdf,
+	doc/specification/ietf60-kitten-gss-ggf-ext.pdf,
+	doc/specification/ietf60-kitten-hartman.pdf,
+	doc/specification/ietf60-kitten-oncbindings.pdf,
+	doc/specification/ietf60-kitten-spnego.pdf,
+	doc/specification/ietf60-kitten-stackable.pdf: Add.
+
+2004-08-03  Simon Josefsson <simon@josefsson.org>
+
+	* doc/specification/GFD-E.024.pdf: Add.
+
+2004-08-02  Simon Josefsson <simon@josefsson.org>
+
+	* doc/gss.texi: Add.
+
+2004-08-01  Simon Josefsson <simon@josefsson.org>
+
+	* ChangeLog: [no log message]
+
 2004-08-01  Simon Josefsson <simon@josefsson.org>
 
 	* tests/Makefile.am: Fix objdir != srcdir.
