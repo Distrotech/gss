@@ -77,7 +77,7 @@ main (int argc, char *argv[])
     printf("display_name() => %d: %s\n", bufdesc2.length, bufdesc2.value);
 
   if (verbose)
-    printf ("Ticket set self tests done with %d errors\n", error_count);
+    printf ("Name self tests done with %d errors\n", error_count);
 
   return error_count ? 1 : 0;
 }
