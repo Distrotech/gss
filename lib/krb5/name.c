@@ -35,8 +35,8 @@ gss_krb5_canonicalize_name (OM_uint32 * minor_status,
   if (minor_status)
     *minor_status = 0;
 
-  /* We consider GSS_KRB5_NT_PRINCIPAL_NAME the canonical mechanism
-     name type.  Convert everything into it.  */
+  /* We consider (a zero terminated) GSS_KRB5_NT_PRINCIPAL_NAME the
+     canonical mechanism name type.  Convert everything into it.  */
 
   if (gss_oid_equal (input_name->type, GSS_C_NT_EXPORT_NAME))
     {
@@ -45,9 +45,10 @@ gss_krb5_canonicalize_name (OM_uint32 * minor_status,
 	  *output_name = xmalloc (sizeof (**output_name));
 	  (*output_name)->type = GSS_KRB5_NT_PRINCIPAL_NAME;
 	  (*output_name)->length = input_name->length - 15;
-	  (*output_name)->value = xmalloc (input_name->length);
+	  (*output_name)->value = xmalloc ((*output_name)->length + 1);
 	  memcpy ((*output_name)->value, input_name->value + 15,
 		  (*output_name)->length);
+	  (*output_name)->value[(*output_name)->length] = '\0';
 	}
       else
 	{
@@ -75,10 +76,11 @@ gss_krb5_canonicalize_name (OM_uint32 * minor_status,
 	  size_t hostlen = strlen (hostname);
 	  size_t oldlen = (*output_name)->length;
 	  size_t newlen = oldlen + 1 + hostlen;
-	  (*output_name)->value = xrealloc ((*output_name)->value, newlen);
+	  (*output_name)->value = xrealloc ((*output_name)->value, newlen + 1);
 	  (*output_name)->value[oldlen] = '/';
 	  memcpy ((*output_name)->value + 1 + oldlen, hostname, hostlen);
 	  (*output_name)->length = newlen;
+	  (*output_name)->value[oldlen + 1 + hostlen] = '\0';
 	}
     }
   else if (gss_oid_equal (input_name->type, GSS_KRB5_NT_PRINCIPAL_NAME))
