@@ -18,7 +18,7 @@
 # Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 # 02111-1307, USA.
 
-HIGNORE = internal.h k5internal.h protos.h checksum.h
+HIGNORE = internal.h k5internal.h protos.h checksum.h meta.h
 HTML_OBJECTS = index.html c4.html \
 	gss-gss.html gss-api.html gss-ext.html gss-krb5.html
 
