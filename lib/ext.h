@@ -38,6 +38,8 @@ gss_copy_oid (OM_uint32 * minor_status,
 extern OM_uint32
 gss_duplicate_oid (OM_uint32 * minor_status,
 		   const gss_OID src_oid, gss_OID * dest_oid);
+extern int
+gss_userok (const gss_name_t name, const char *username);
 
 /* See asn1.c. */
 extern int
