@@ -1,3 +1,246 @@
+2003-11-26  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS: Version 0.0.7.
+
+2003-11-26  Simon Josefsson <simon@josefsson.org>
+
+	* Makefile.am: Fix release target.
+
+2003-11-26  Simon Josefsson <simon@josefsson.org>
+
+	* Makefile.am: Fix.
+
+2003-11-25  Simon Josefsson <simon@josefsson.org>
+
+	* configure.ac: Disable fortran etc libtool tests.
+
+2003-11-24  Simon Josefsson <simon@josefsson.org>
+
+	* lib/meta.c: Fix warnings.
+
+2003-11-24  Simon Josefsson <simon@josefsson.org>
+
+	* gl/xmalloc.c: Fix.
+
+2003-11-24  Simon Josefsson <simon@josefsson.org>
+
+	* gl/xmalloc.c: Use perror().
+
+2003-11-24  Simon Josefsson <simon@josefsson.org>
+
+	* gl/xmalloc.c: Don't use inline keyword.
+
+2003-11-24  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS: Fix.
+
+2003-11-24  Simon Josefsson <simon@josefsson.org>
+
+	* lib/krb5.c:
+	(gss_krb5_unwrap): Fix typo to make 3DES work.
+
+2003-11-23  Simon Josefsson <simon@josefsson.org>
+
+	* doc/gendocs.sh: Sync with texinfo.
+
+2003-11-23  Simon Josefsson <simon@josefsson.org>
+
+	* m4/codeset.m4, m4/gettext.m4, m4/glibc21.m4, m4/iconv.m4,
+	m4/intdiv0.m4, m4/inttypes-pri.m4, m4/inttypes.m4,
+	m4/inttypes_h.m4, m4/isc-posix.m4, m4/lcmessage.m4, m4/lib-ld.m4,
+	m4/lib-link.m4, m4/lib-prefix.m4, m4/nls.m4, m4/po.m4,
+	m4/progtest.m4, m4/stdint_h.m4, m4/uintmax_t.m4, m4/ulonglong.m4:
+	Remove.
+
+2003-11-23  Simon Josefsson <simon@josefsson.org>
+
+	* po/gss.pot, po/sv.po: Generated.
+
+2003-11-23  Simon Josefsson <simon@josefsson.org>
+
+	* Makefile.am, ANNOUNCE, TODO: Remove ANNOUNCE and TODO.
+
+2003-11-23  Simon Josefsson <simon@josefsson.org>
+
+	* doc/gss.texi: Add "Planned Features".
+
+2003-11-23  Simon Josefsson <simon@josefsson.org>
+
+	* doc/gendocs.sh: Fix.
+
+2003-11-23  Simon Josefsson <simon@josefsson.org>
+
+	* doc/gendocs.sh: Fix URLs.
+
+2003-11-23  Simon Josefsson <simon@josefsson.org>
+
+	* Makefile.am: Use gendocs in release target.
+
+2003-11-23  Simon Josefsson <simon@josefsson.org>
+
+	* doc/gendocs.sh, doc/gendocs_template: Add (from texinfo).
+
+2003-11-23  Simon Josefsson <simon@josefsson.org>
+
+	* gl/xalloc.h: Remove unused stuff.
+
+2003-11-23  Simon Josefsson <simon@josefsson.org>
+
+	* lib/error.c, lib/krb5.c, lib/meta.c: Use xstrdup.
+
+2003-11-23  Simon Josefsson <simon@josefsson.org>
+
+	* configure.ac, gl/Makefile.am, gl/error.c, gl/error.h,
+	gl/gethostname.c, gl/gettext.h, gl/malloc.c, gl/realloc.c,
+	gl/unlocked-io.h, gl/xalloc.h, gl/xgethostname.c,
+	gl/xgethostname.h, gl/xmalloc.c, gl/xstrdup.c, gl/xstrdup.h,
+	gl/m4/error.m4, gl/m4/malloc.m4, gl/m4/nls.m4,
+	gl/m4/onceonly_2_57.m4, gl/m4/po.m4, gl/m4/realloc.m4,
+	gl/m4/strerror_r.m4, gl/m4/unlocked-io.m4, gl/m4/xalloc.m4,
+	lib/Makefile.am, lib/internal.h, lib/krb5.c: Cleanup gnulib
+	situation.
+
+2003-11-23  Simon Josefsson <simon@josefsson.org>
+
+	* lib/internal.h: Simplify #include mess.
+
+2003-11-22  Simon Josefsson <simon@josefsson.org>
+
+	* TODO: Fix.
+
+2003-11-22  Simon Josefsson <simon@josefsson.org>
+
+	* doc/gss.texi: Fix.
+
+2003-11-22  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS: Add.
+
+2003-11-22  Simon Josefsson <simon@josefsson.org>
+
+	* configure.ac, lib/gss.h.in, ANNOUNCE: Typo.
+
+2003-11-22  Simon Josefsson <simon@josefsson.org>
+
+	* THANKS: Add.
+
+2003-11-22  Simon Josefsson <simon@josefsson.org>
+
+	* Makefile.am, configure.ac, gl/Makefile.am, gl/m4/Makefile.am,
+	m4/Makefile.am, m4/check_headerlib.m4, m4/pkg.m4: Simplify m4
+	situation (with help from automake 1.8 beta).
+
+2003-11-22  Simon Josefsson <simon@josefsson.org>
+
+	* lib/gss.h.in: Don't include gss/krb5.h unconditionally because it
+	may not be installed.  Reported by Wojciech Polak <polak@gnu.org>.
+
+2003-11-22  Simon Josefsson <simon@josefsson.org>
+
+	* configure.ac: Fix bug e-mail.  Move libtool check.  Use
+	sj_CHECK_HEADERLIB for Shishi test.  Add '#include <gss/krb5.h>'
+	substitution, for gss.h.
+
+2003-11-22  Simon Josefsson <simon@josefsson.org>
+
+	* lib/Makefile.am: Fix LIBADD.
+
+2003-11-21  Simon Josefsson <simon@josefsson.org>
+
+	* Makefile.am: Cleanup EXTRA_DIST.
+
+2003-11-21  Simon Josefsson <simon@josefsson.org>
+
+	* Makefile.am: Remove.
+
+2003-11-21  Simon Josefsson <simon@josefsson.org>
+
+	* doc/Makefile.am: Cleanup.
+
+2003-11-21  Simon Josefsson <simon@josefsson.org>
+
+	* configure.ac: Remove AC_GNU_SOURCE hack.
+
+2003-11-17  Simon Josefsson <simon@josefsson.org>
+
+	* configure.ac: Fix automake syntax.
+
+2003-11-17  Simon Josefsson <simon@josefsson.org>
+
+	* configure.ac: Autoupdate fixes.
+
+2003-11-03  Simon Josefsson <simon@josefsson.org>
+
+	* configure.ac: Fix for buggy libtool.
+
+2003-11-01  Simon Josefsson <simon@josefsson.org>
+
+	* AUTHORS: Update PGP key.
+
+2003-10-31  Simon Josefsson <simon@josefsson.org>
+
+	* doc/gdoc: Use @strong instead of @header, better rendered almost
+	everywhere.
+
+2003-10-27  Simon Josefsson <simon@josefsson.org>
+
+	* doc/gdoc: Revert texinfo highlighting (texinfo @ interpolated by
+	perl).  Rewrite interpolate handling to make it more debuggable.
+
+2003-10-26  Simon Josefsson <simon@josefsson.org>
+
+	* doc/gdoc: Fix.
+
+2003-10-26  Simon Josefsson <simon@josefsson.org>
+
+	* doc/gdoc: Workaround interpolate problem.
+
+2003-10-26  Simon Josefsson <simon@josefsson.org>
+
+	* doc/gdoc: Fix function regexp (old version completely broken??).
+
+2003-10-26  Simon Josefsson <simon@josefsson.org>
+
+	* doc/gdoc: Fix 'section' regexp to require initial upper case,
+	unless it start with [@&$%].  Before the following line was regarded
+	as a section heading.  following restrictions apply to the output
+	parameters:
+
+2003-10-26  Simon Josefsson <simon@josefsson.org>
+
+	* doc/gdoc: Print section headers for texinfo.
+
+2003-10-26  Simon Josefsson <simon@josefsson.org>
+
+	* doc/gdoc: Fix texinfo cleanup (accidently added @ last checkin).
+
+2003-10-26  Simon Josefsson <simon@josefsson.org>
+
+	* doc/gdoc: Move texinfo cleanup into texinfo function.
+
+2003-10-26  Simon Josefsson <simon@josefsson.org>
+
+	* doc/gdoc: Add -listfunc output mode.  Add -sourceversion,
+	-includefuncprefix, -bugsto, -seeinfo, -copyright, -verbatimcopying
+	for man pages.  Translate { into @{ and } into @} in texinfo mode.
+	White space fix for texinfo.  Man page output mode mostly rewritten.
+
+2003-10-26  Simon Josefsson <simon@josefsson.org>
+
+	* doc/gdoc: Add, straight from GNUTLS.
+
+2003-10-10  Simon Josefsson <simon@josefsson.org>
+
+	* configure.ac: Fix so version comment (matches libtool manual).
+
+2003-09-27  Simon Josefsson <simon@josefsson.org>
+
+	* doc/gss.texi: Add.
+
+2003-09-22  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS, configure.ac: Bump versions.
+
 2003-09-22  Simon Josefsson <simon@josefsson.org>
 
 	* NEWS: Version 0.0.6.
