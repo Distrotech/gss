@@ -427,10 +427,7 @@ gss_krb5_accept_sec_context (OM_uint32 * minor_status,
       if (rc != SHISHI_OK)
 	return GSS_S_FAILURE;
 
-      maj_stat = gss_duplicate_oid (minor_status,
-				    GSS_KRB5_NT_PRINCIPAL_NAME, &p->type);
-      if (GSS_ERROR (maj_stat))
-	return GSS_S_FAILURE;
+      p->type = GSS_KRB5_NT_PRINCIPAL_NAME;
 
       *src_name = p;
     }
