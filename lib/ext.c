@@ -22,7 +22,6 @@
 #include "internal.h"
 
 #include <stdio.h>
-#include <errno.h>
 
 /* If non-NULL, call this function when memory is exhausted. */
 void (*gss_alloc_fail_function) (void) = 0;
@@ -33,7 +32,7 @@ xalloc_die (void)
   if (gss_alloc_fail_function)
     (*gss_alloc_fail_function) ();
   fflush (stdout);
-  fprintf (stderr, "%s: %s\n", PACKAGE, strerror (ENOMEM));
+  fprintf (stderr, _("%s: Memory allocation failed\n"), PACKAGE);
   abort ();
 }
 
