@@ -4,6 +4,9 @@ See the end for copying conditions.
 
 * Version 0.0.15 (unreleased)
 
+** Documentation improvements.
+For example, you can now browse the GSS manual using DevHelp.
+
 ** Libtool's -export-symbols-regex is now used to only export official APIs.
 Before, applications might accidentally access internal functions.
 Note that this is not supported on all platforms, so you must still
