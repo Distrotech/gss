@@ -86,6 +86,40 @@ gss_import_name (OM_uint32 * minor_status,
   return GSS_S_COMPLETE;
 }
 
+/**
+ * gss_display_name:
+ * @minor_status: (Integer, modify) Mechanism specific status code.
+ * @input_name: (gss_name_t, read) Name to be displayed.
+ * @output_name_buffer: (buffer, character-string, modify) Buffer to
+ *   receive textual name string.  The application must free storage
+ *   associated with this name after use with a call to
+ *   gss_release_buffer().
+ * @output_name_type: (Object ID, modify, optional) The type of the
+ *   returned name.  The returned gss_OID will be a pointer into
+ *   static storage, and should be treated as read-only by the caller
+ *   (in particular, the application should not attempt to free
+ *   it). Specify NULL if not required.
+ *
+ * Allows an application to obtain a textual representation of an
+ * opaque internal-form name for display purposes.  The syntax of a
+ * printable name is defined by the GSS-API implementation.
+ *
+ * If input_name denotes an anonymous principal, the implementation
+ * should return the gss_OID value GSS_C_NT_ANONYMOUS as the
+ * output_name_type, and a textual name that is syntactically distinct
+ * from all valid supported printable names in output_name_buffer.
+ *
+ * If input_name was created by a call to gss_import_name, specifying
+ * GSS_C_NO_OID as the name-type, implementations that employ lazy
+ * conversion between name types may return GSS_C_NO_OID via the
+ * output_name_type parameter.
+ *
+ * Valid return values and their meaning:
+ *
+ * `GSS_S_COMPLETE`: Successful completion.
+ *
+ * `GSS_S_BAD_NAME`: @input_name was ill-formed.
+ **/
 OM_uint32
 gss_display_name (OM_uint32 * minor_status,
 		  const gss_name_t input_name,
@@ -110,6 +144,30 @@ gss_display_name (OM_uint32 * minor_status,
   return GSS_S_COMPLETE;
 }
 
+/**
+ * gss_compare_name:
+ * @minor_status: (Integer, modify) Mechanism specific status code.
+ * @name1: (gss_name_t, read) Internal-form name.
+ * @name2: (gss_name_t, read) Internal-form name.
+ * @name_equal: (boolean, modify) Non-zero - names refer to same
+ *   entity. Zero - names refer to different entities (strictly, the
+ *   names are not known to refer to the same identity).
+ *
+ * Allows an application to compare two internal-form names to
+ * determine whether they refer to the same entity.
+ *
+ * If either name presented to gss_compare_name denotes an anonymous
+ * principal, the routines should indicate that the two names do not
+ * refer to the same identity.
+ *
+ * Valid return values and their meaning:
+ *
+ * `GSS_S_COMPLETE`: Successful completion.
+ *
+ * `GSS_S_BAD_NAMETYPE`: The two names were of incomparable types.
+ *
+ * `GSS_S_BAD_NAME`: One or both of name1 or name2 was ill-formed.
+ **/
 OM_uint32
 gss_compare_name (OM_uint32 * minor_status,
 		  const gss_name_t name1,
@@ -166,6 +224,20 @@ gss_release_name (OM_uint32 * minor_status, gss_name_t * name)
   return GSS_S_COMPLETE;
 }
 
+/**
+ * gss_inquire_names_for_mech:
+ * @minor_status: (Integer, modify) Mechanism specific status code.
+ * @mechanism: (gss_OID, read) The mechanism to be interrogated.
+ * @name_types: (gss_OID_set, modify) Set of name-types supported by
+ *   the specified mechanism.  The returned OID set must be freed by
+ *   the application after use with a call to gss_release_oid_set().
+ *
+ * Returns the set of nametypes supported by the specified mechanism.
+ *
+ * Valid return values and their meaning:
+ *
+ * `GSS_S_COMPLETE`: Successful completion.
+ **/
 OM_uint32
 gss_inquire_names_for_mech (OM_uint32 * minor_status,
 			    const gss_OID mechanism, gss_OID_set * name_types)
@@ -255,6 +327,40 @@ _gss_inquire_mechs_for_name1 (OM_uint32 * minor_status,
   return GSS_S_COMPLETE;
 }
 
+/**
+ * gss_inquire_mechs_for_name:
+ * @minor_status: (Integer, modify) Mechanism specific status code.
+ * @input_name: (gss_name_t, read) The name to which the inquiry
+ *   relates.
+ * @mech_types: (gss_OID_set, modify) Set of mechanisms that may
+ *   support the specified name.  The returned OID set must be freed
+ *   by the caller after use with a call to gss_release_oid_set().
+ *
+ * Returns the set of mechanisms supported by the GSS-API
+ * implementation that may be able to process the specified name.
+ *
+ * Each mechanism returned will recognize at least one element within
+ * the name.  It is permissible for this routine to be implemented
+ * within a mechanism-independent GSS-API layer, using the type
+ * information contained within the presented name, and based on
+ * registration information provided by individual mechanism
+ * implementations.  This means that the returned mech_types set may
+ * indicate that a particular mechanism will understand the name when
+ * in fact it would refuse to accept the name as input to
+ * gss_canonicalize_name, gss_init_sec_context, gss_acquire_cred or
+ * gss_add_cred (due to some property of the specific name, as opposed
+ * to the name type).  Thus this routine should be used only as a
+ * prefilter for a call to a subsequent mechanism-specific routine.
+ *
+ * Valid return values and their meaning:
+ *
+ * `GSS_S_COMPLETE`: Successful completion.
+ *
+ * `GSS_S_BAD_NAME`: The input_name parameter was ill-formed.
+ *
+ * `GSS_S_BAD_NAMETYPE`: The input_name parameter contained an invalid
+ * or unsupported type of name.
+ **/
 OM_uint32
 gss_inquire_mechs_for_name (OM_uint32 * minor_status,
 			    const gss_name_t input_name,
@@ -280,6 +386,34 @@ gss_inquire_mechs_for_name (OM_uint32 * minor_status,
   return GSS_S_COMPLETE;
 }
 
+/**
+ * gss_export_name:
+ * @minor_status: (Integer, modify) Mechanism specific status code.
+ * @input_name: (gss_name_t, read) The MN to be exported.
+ * @exported_name: (gss_buffer_t, octet-string, modify) The canonical
+ *   contiguous string form of @input_name.  Storage associated with
+ *   this string must freed by the application after use with
+ *   gss_release_buffer().
+ *
+ * To produce a canonical contiguous string representation of a
+ * mechanism name (MN), suitable for direct comparison (e.g. with
+ * memcmp) for use in authorization functions (e.g. matching entries
+ * in an access-control list).  The @input_name parameter must specify
+ * a valid MN (i.e. an internal name generated by
+ * gss_accept_sec_context() or by gss_canonicalize_name()).
+ *
+ * Valid return values and their meaning:
+ *
+ * `GSS_S_COMPLETE`: Successful completion.
+ *
+ * `GSS_S_NAME_NOT_MN`: The provided internal name was not a mechanism
+ * name.
+ *
+ * `GSS_S_BAD_NAME`: The provided internal name was ill-formed.
+ *
+ * `GSS_S_BAD_NAMETYPE`: The internal name was of a type not supported
+ * by the GSS-API implementation.
+ **/
 OM_uint32
 gss_export_name (OM_uint32 * minor_status,
 		 const gss_name_t input_name, gss_buffer_t exported_name)
@@ -287,6 +421,30 @@ gss_export_name (OM_uint32 * minor_status,
   return GSS_S_FAILURE;
 }
 
+/**
+ * gss_canonicalize_name:
+ * @minor_status: (Integer, modify) Mechanism specific status code.
+ * @input_name: (gss_name_t, read) The name for which a canonical form
+ *   is desired.
+ * @mech_type: (Object ID, read) The authentication mechanism for
+ *   which the canonical form of the name is desired.  The desired
+ *   mechanism must be specified explicitly; no default is provided.
+ * @output_name: (gss_name_t, modify) The resultant canonical name.
+ *   Storage associated with this name must be freed by the
+ *   application after use with a call to gss_release_name().
+ *
+ * Generate a canonical mechanism name (MN) from an arbitrary internal
+ * name.  The mechanism name is the name that would be returned to a
+ * context acceptor on successful authentication of a context where
+ * the initiator used the input_name in a successful call to
+ * gss_acquire_cred, specifying an OID set containing @mech_type as
+ * its only member, followed by a call to gss_init_sec_context(),
+ * specifying @mech_type as the authentication mechanism.
+ *
+ * Valid return values and their meaning:
+ *
+ * `GSS_S_COMPLETE`: Successful completion.
+ **/
 OM_uint32
 gss_canonicalize_name (OM_uint32 * minor_status,
 		       const gss_name_t input_name,
