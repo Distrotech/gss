@@ -52,6 +52,25 @@ AC_HEADER_STDC
 
 # Checks for library functions.
 
+# Test for Shishi
+AC_ARG_ENABLE(shishi,
+	AC_HELP_STRING([--disable-shishi],
+                       [disable Shishi support even if available]),
+	shishi=$enableval)
+if test "$shishi" != "no" ; then
+	PKG_CHECK_MODULES(SHISHI, shishi >= 0.0.0, [shishi=yes],
+                                                   [shishi=no])
+	if test "$shishi" != "yes" ; then
+		shishi=no
+		AC_MSG_WARN([shishi not found, disabling Kerberos 5])
+	else
+		shishi=yes
+		AC_DEFINE(USE_SHISHI, 1, [Define to 1 if you want Shishi.])
+	fi
+fi
+AC_MSG_CHECKING([if Kerberos 5 should be supported])
+AC_MSG_RESULT($shishi)
+
 # Test if the libc includes a good enough argp.
 AC_ARG_WITH(system-argp,
   AC_HELP_STRING([--without-system-argp], [Don't use the system's argp]))
