@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: bug-gss@josefsson.org\n"
-"POT-Creation-Date: 2004-01-11 01:32+0100\n"
+"POT-Creation-Date: 2004-01-11 05:10+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -124,15 +124,15 @@ msgstr ""
 msgid "An expected per-message token was not received"
 msgstr ""
 
-#: lib/error.c:125
+#: lib/error.c:208
 msgid "Unknown calling error"
 msgstr ""
 
-#: lib/error.c:163
+#: lib/error.c:246
 msgid "Unknown routine error"
 msgstr ""
 
-#: lib/error.c:168
+#: lib/error.c:251
 msgid "No error"
 msgstr ""
 
@@ -208,23 +208,23 @@ msgstr ""
 msgid "No krb5 error"
 msgstr ""
 
-#: lib/krb5/error.c:112
+#: lib/krb5/error.c:113
 msgid "Unknown krb5 error"
 msgstr ""
 
-#: lib/obsolete.c:30
+#: lib/obsolete.c:31
 msgid "warning: gss_sign() is obsolete, use gss_get_mic() instead."
 msgstr ""
 
-#: lib/obsolete.c:43
+#: lib/obsolete.c:46
 msgid "warning: gss_verify() is obsolete, use gss_verify_mic() instead."
 msgstr ""
 
-#: lib/obsolete.c:57
+#: lib/obsolete.c:61
 msgid "warning: gss_seal() is obsolete, use gss_wrap() instead."
 msgstr ""
 
-#: lib/obsolete.c:71
+#: lib/obsolete.c:76
 msgid "warning: gss_unseal() is obsolete, use gss_unwrap() instead."
 msgstr ""
 
