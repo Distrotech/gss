@@ -21,6 +21,14 @@
 
 #include "internal.h"
 
+int
+_gss_oid_equal (gss_OID first_oid, gss_OID second_oid)
+{
+  return first_oid && second_oid &&
+    first_oid->length == second_oid->length &&
+    memcmp(first_oid->elements, second_oid->elements, second_oid->length) == 0;
+}
+
 OM_uint32
 _gss_duplicate_oid (OM_uint32 * minor_status,
 		    const gss_OID src_oid, gss_OID * dest_oid)
