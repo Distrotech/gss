@@ -42,8 +42,8 @@ init_request (OM_uint32 * minor_status,
 {
   gss_ctx_id_t ctx = *context_handle;
   _gss_krb5_ctx_t k5 = ctx->krb5;
-  char *data;
-  size_t len;
+  char *cksum;
+  size_t cksumlen;
   int rc;
   OM_uint32 maj_stat;
   gss_buffer_desc tmp;
@@ -68,14 +68,10 @@ init_request (OM_uint32 * minor_status,
   shishi_tkts_to_file (shishi_tkts_default (k5->sh),
 		       shishi_tkts_default_file (k5->sh));
 
-  data = xmalloc (2 + 24);
-  memcpy (&data[0], TOK_AP_REQ, TOK_LEN);
-  memcpy (&data[2], "\x10\x00\x00\x00", 4);	/* length of Bnd */
-  memset (&data[6], 0, 16);	/* XXX we only support GSS_C_NO_BINDING */
-  data[22] = req_flags & 0xFF;
-  data[23] = (req_flags >> 8) & 0xFF;
-  data[24] = (req_flags >> 16) & 0xFF;
-  data[25] = (req_flags >> 24) & 0xFF;
+  maj_stat = _gss_krb5_checksum1964_pack (initiator_cred_handle,
+					  input_chan_bindings,
+					  req_flags,
+					  &cksum, &cksumlen);
   k5->flags = req_flags;
 
   rc = shishi_ap_tktoptionsdata (k5->sh, &k5->ap, k5->tkt,
@@ -92,7 +88,7 @@ init_request (OM_uint32 * minor_status,
 
   rc = shishi_authenticator_set_cksum (k5->sh,
 				       shishi_ap_authenticator (k5->ap),
-				       0x8003, data + 2, 24);
+				       0x8003, cksum, cksumlen);
   if (rc != SHISHI_OK)
     return GSS_S_FAILURE;
 
@@ -104,18 +100,15 @@ init_request (OM_uint32 * minor_status,
   if (rc != SHISHI_OK)
     return GSS_S_FAILURE;
 
-  free (data);
+  free (cksum);
 
-  rc = shishi_new_a2d (k5->sh, shishi_ap_req (k5->ap), &data, &len);
+  rc = shishi_new_a2d (k5->sh, shishi_ap_req (k5->ap),
+		       &tmp.value, &tmp.length);
   if (rc != SHISHI_OK)
     return GSS_S_FAILURE;
 
-  tmp.length = len + TOK_LEN;
-  tmp.value = xmalloc (tmp.length);
-  memcpy (tmp.value, TOK_AP_REQ, TOK_LEN);
-  memcpy ((char *) tmp.value + TOK_LEN, data, len);
-
-  rc = gss_encapsulate_token (&tmp, GSS_KRB5, output_token);
+  rc = gss_encapsulate_token_prefix (&tmp, TOK_AP_REQ, TOK_LEN,
+				     GSS_KRB5, output_token);
   if (!rc)
     return GSS_S_FAILURE;
 
