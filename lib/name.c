@@ -75,7 +75,7 @@ gss_import_name (OM_uint32 * minor_status,
     {
       major_stat = gss_duplicate_oid (minor_status, input_name_type,
 				      &(*output_name)->type);
-      if (GSS_ERROR (major_stat)
+      if (GSS_ERROR (major_stat))
 	  return major_stat;
     }
   else
