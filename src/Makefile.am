@@ -34,6 +34,11 @@ $(BUILT_SOURCES): gss.ggo
 		test -f gss_cmd.h -a -f gss_cmd.c || \
 		cp $(srcdir)/gss_cmd.h $(srcdir)/gss_cmd.h .
 
+# For gettext.
+datadir = @datadir@
+localedir = $(datadir)/locale
+DEFS = -DLOCALEDIR=\"$(localedir)\" @DEFS@
+
 # Maintainer targets
 
 indent:
