@@ -1,5 +1,5 @@
 /* misc.c	Implementation of GSS-API Miscellaneous functions.
- * Copyright (C) 2003  Simon Josefsson
+ * Copyright (C) 2003, 2004  Simon Josefsson
  *
  * This file is part of the Generic Security Service (GSS).
  *
@@ -55,6 +55,8 @@ OM_uint32
 gss_duplicate_oid (OM_uint32 * minor_status,
 		   const gss_OID src_oid, gss_OID * dest_oid)
 {
+  /* This function is not part of the official GSS API */
+
   OM_uint32 maj_stat;
 
   if (minor_status)
