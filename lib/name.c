@@ -209,12 +209,11 @@ gss_compare_name (OM_uint32 * minor_status,
 OM_uint32
 gss_release_name (OM_uint32 * minor_status, gss_name_t * name)
 {
+  if (minor_status)
+    *minor_status = 0;
+
   if (!name)
-    {
-      if (minor_status)
-	*minor_status = 0;
-      return GSS_S_BAD_NAME | GSS_S_CALL_INACCESSIBLE_READ;
-    }
+    return GSS_S_BAD_NAME | GSS_S_CALL_INACCESSIBLE_READ;
 
   if (*name != GSS_C_NO_NAME)
     {
