@@ -1,3 +1,60 @@
+2003-08-31  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS: Version 0.0.5.
+
+2003-08-31  Simon Josefsson <simon@josefsson.org>
+
+	* po/gss.pot, po/sv.po: Update.
+
+2003-08-31  Simon Josefsson <simon@josefsson.org>
+
+	* tests/utils.c: Remove.
+
+2003-08-31  Simon Josefsson <simon@josefsson.org>
+
+	* tests/basic.c: Add program_name, for gnulib.
+
+2003-08-31  Simon Josefsson <simon@josefsson.org>
+
+	* configure.ac: Fix.
+
+2003-08-31  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS, Makefile.am: Fix.
+
+2003-08-29  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS: Typo.
+
+2003-08-29  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS: Fix.
+
+2003-08-29  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS: Add.
+
+2003-08-29  Simon Josefsson <simon@josefsson.org>
+
+	* lib/krb5.c: Support AP subkeys.
+
+2003-08-12  Simon Josefsson <simon@josefsson.org>
+
+	* configure.ac: Simplify shishi test.
+
+2003-08-12  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS: Add.
+
+2003-08-12  Simon Josefsson <simon@josefsson.org>
+
+	* configure.ac: Bump versions.
+
+2003-08-12  Simon Josefsson <simon@josefsson.org>
+
+	* configure.ac: Remove help2man, texipdf checks (not used).  Make
+	shishi test work without pkg-config.
+
 2003-08-10  Simon Josefsson <simon@josefsson.org>
 
 	* NEWS: Version 0.0.4.
@@ -40,8 +97,8 @@
 
 2003-08-09  Simon Josefsson <simon@josefsson.org>
 
-	* lib/internal.h: Add mech OID to cred struct.	Add inquire_cred to
-	  meta structure.
+	* lib/internal.h: Add mech OID to cred struct.  Add inquire_cred to
+	meta structure.
 
 2003-08-09  Simon Josefsson <simon@josefsson.org>
 
@@ -73,7 +130,8 @@
 
 2003-07-08  Simon Josefsson <simon@josefsson.org>
 
-	* lib/krb5.c: (gss_krb5_unwrap): Decrypt properly.
+	* lib/krb5.c:
+	(gss_krb5_unwrap): Decrypt properly.
 
 2003-07-08  Simon Josefsson <simon@josefsson.org>
 
@@ -89,8 +147,9 @@
 
 2003-07-05  Simon Josefsson <simon@josefsson.org>
 
-	* lib/krb5.c: (gss_krb5_init_sec_context): Reuse shishi handle from
-	  credential, if available.
+	* lib/krb5.c:
+	(gss_krb5_init_sec_context): Reuse shishi handle from credential, if
+	available.
 
 2003-07-02  Simon Josefsson <simon@josefsson.org>
 
@@ -122,7 +181,8 @@
 
 2003-06-29  Simon Josefsson <simon@josefsson.org>
 
-	* lib/cred.c: (gss_release_cred): Fix minor_status.
+	* lib/cred.c:
+	(gss_release_cred): Fix minor_status.
 
 2003-06-29  Simon Josefsson <simon@josefsson.org>
 
@@ -130,15 +190,18 @@
 
 2003-06-29  Simon Josefsson <simon@josefsson.org>
 
-	* lib/misc.c: (gss_release_oid_set): Handle NULL set.
+	* lib/misc.c:
+	(gss_release_oid_set): Handle NULL set.
 
 2003-06-29  Simon Josefsson <simon@josefsson.org>
 
-	* lib/misc.c: (gss_test_oid_set_member): Handle NULL member.
+	* lib/misc.c:
+	(gss_test_oid_set_member): Handle NULL member.
 
 2003-06-29  Simon Josefsson <simon@josefsson.org>
 
-	* lib/cred.c: (gss_acquire_cred): Support desired_mechs.
+	* lib/cred.c:
+	(gss_acquire_cred): Support desired_mechs.
 
 2003-06-29  Simon Josefsson <simon@josefsson.org>
 
@@ -159,8 +222,8 @@
 2003-06-29  Simon Josefsson <simon@josefsson.org>
 
 	* m4/gettext.m4, m4/inttypes_h.m4, m4/lib-ld.m4, m4/lib-link.m4,
-	  m4/lib-prefix.m4, m4/nls.m4, m4/po.m4, m4/progtest.m4,
-	  m4/stdint_h.m4, m4/uintmax_t.m4: Generated.
+	m4/lib-prefix.m4, m4/nls.m4, m4/po.m4, m4/progtest.m4,
+	m4/stdint_h.m4, m4/uintmax_t.m4: Generated.
 
 2003-06-29  Simon Josefsson <simon@josefsson.org>
 
@@ -173,13 +236,13 @@
 2003-06-29  Simon Josefsson <simon@josefsson.org>
 
 	* Makefile.am, configure.ac, gl/m4/Makefile.am, gl/m4/error.m4,
-	  gl/m4/gethostname.m4, gl/m4/malloc.m4, gl/m4/nls.m4,
-	  gl/m4/onceonly_2_57.m4, gl/m4/po.m4, gl/m4/realloc.m4,
-	  gl/m4/strerror_r.m4, gl/m4/unlocked-io.m4, gl/m4/xalloc.m4,
-	  m4/Makefile.am, m4/error.m4, m4/gethostname.m4, m4/malloc.m4,
-	  m4/nls.m4, m4/onceonly_2_57.m4, m4/po.m4, m4/realloc.m4,
-	  m4/strerror_r.m4, m4/unlocked-io.m4, m4/xalloc.m4: Move gnulib
-	  m4's from m4/ to gl/m4/.
+	gl/m4/gethostname.m4, gl/m4/malloc.m4, gl/m4/nls.m4,
+	gl/m4/onceonly_2_57.m4, gl/m4/po.m4, gl/m4/realloc.m4,
+	gl/m4/strerror_r.m4, gl/m4/unlocked-io.m4, gl/m4/xalloc.m4,
+	m4/Makefile.am, m4/error.m4, m4/gethostname.m4, m4/malloc.m4,
+	m4/nls.m4, m4/onceonly_2_57.m4, m4/po.m4, m4/realloc.m4,
+	m4/strerror_r.m4, m4/unlocked-io.m4, m4/xalloc.m4: Move gnulib m4's
+	from m4/ to gl/m4/.
 
 2003-06-29  Simon Josefsson <simon@josefsson.org>
 
@@ -192,7 +255,7 @@
 2003-06-29  Simon Josefsson <simon@josefsson.org>
 
 	* lib/internal.h, lib/meta.c, lib/misc.c, lib/name.c: Move meta.c
-	  functions to where they belong.
+	functions to where they belong.
 
 2003-06-29  Simon Josefsson <simon@josefsson.org>
 
@@ -217,7 +280,7 @@
 2003-06-29  Simon Josefsson <simon@josefsson.org>
 
 	* configure.ac, gl/gethostname.c, m4/Makefile.am,
-	  m4/gethostname.m4, gl/Makefile.am: Add gethostname() from gnulib.
+	m4/gethostname.m4, gl/Makefile.am: Add gethostname() from gnulib.
 
 2003-06-28  Simon Josefsson <simon@josefsson.org>
 
@@ -250,7 +313,7 @@
 2003-06-28  Simon Josefsson <simon@josefsson.org>
 
 	* lib/asn1.c, lib/cred.c, lib/krb5.c, lib/misc.c, lib/name.c: Use
-	  xalloc.
+	xalloc.
 
 2003-06-28  Simon Josefsson <simon@josefsson.org>
 
@@ -259,17 +322,17 @@
 2003-06-28  Simon Josefsson <simon@josefsson.org>
 
 	* Makefile.am, configure.ac, gl/Makefile.am, gl/error.c,
-	  gl/error.h, gl/gettext.h, gl/malloc.c, gl/realloc.c,
-	  gl/unlocked-io.h, gl/xalloc.h, gl/xmalloc.c, gl/xstrdup.c,
-	  lib/Makefile.am, lib/internal.h, m4/Makefile.am, m4/codeset.m4,
-	  m4/error.m4, m4/gettext.m4, m4/glibc21.m4, m4/iconv.m4,
-	  m4/intdiv0.m4, m4/inttypes-pri.m4, m4/inttypes.m4,
-	  m4/inttypes_h.m4, m4/isc-posix.m4, m4/lcmessage.m4, m4/lib-ld.m4,
-	  m4/lib-link.m4, m4/lib-prefix.m4, m4/malloc.m4, m4/nls.m4,
-	  m4/onceonly_2_57.m4, m4/po.m4, m4/progtest.m4, m4/realloc.m4,
-	  m4/stdint_h.m4, m4/strerror_r.m4, m4/uintmax_t.m4,
-	  m4/ulonglong.m4, m4/unlocked-io.m4, m4/xalloc.m4: Add xalloc
-	  (with deps) from gnulib.
+	gl/error.h, gl/gettext.h, gl/malloc.c, gl/realloc.c,
+	gl/unlocked-io.h, gl/xalloc.h, gl/xmalloc.c, gl/xstrdup.c,
+	lib/Makefile.am, lib/internal.h, m4/Makefile.am, m4/codeset.m4,
+	m4/error.m4, m4/gettext.m4, m4/glibc21.m4, m4/iconv.m4,
+	m4/intdiv0.m4, m4/inttypes-pri.m4, m4/inttypes.m4,
+	m4/inttypes_h.m4, m4/isc-posix.m4, m4/lcmessage.m4, m4/lib-ld.m4,
+	m4/lib-link.m4, m4/lib-prefix.m4, m4/malloc.m4, m4/nls.m4,
+	m4/onceonly_2_57.m4, m4/po.m4, m4/progtest.m4, m4/realloc.m4,
+	m4/stdint_h.m4, m4/strerror_r.m4, m4/uintmax_t.m4, m4/ulonglong.m4,
+	m4/unlocked-io.m4, m4/xalloc.m4: Add xalloc (with deps) from
+	gnulib.
 
 2003-06-28  Simon Josefsson <simon@josefsson.org>
 
@@ -286,7 +349,7 @@
 2003-06-28  Simon Josefsson <simon@josefsson.org>
 
 	* lib/krb5.c: Add accept_sec_context, acquire_cred.  Fixes.  (GSASL
-	  via GSS can connect to Mailutils IMAP server via native GSS.)
+	via GSS can connect to Mailutils IMAP server via native GSS.)
 
 2003-06-28  Simon Josefsson <simon@josefsson.org>
 
@@ -299,7 +362,7 @@
 2003-06-28  Simon Josefsson <simon@josefsson.org>
 
 	* lib/meta.c, lib/internal.h, lib/krb5.h: Add accept_sec_context,
-	  acquire_cred.
+	acquire_cred.
 
 2003-06-28  Simon Josefsson <simon@josefsson.org>
 
@@ -340,7 +403,7 @@
 2003-06-12  Simon Josefsson <simon@josefsson.org>
 
 	* lib/error.c, lib/krb5.c, lib/meta.c, lib/obsolete.c,
-	  po/POTFILES.in, po/gss.pot, po/sv.po: Translation fixes.
+	po/POTFILES.in, po/gss.pot, po/sv.po: Translation fixes.
 
 2003-06-12  Simon Josefsson <simon@josefsson.org>
 
@@ -449,7 +512,7 @@
 2003-06-09  Simon Josefsson <simon@josefsson.org>
 
 	* Makefile.am: Only generate ChangeLog for releases.  (Allows make
-	  dist to work when savannah is down.)
+	dist to work when savannah is down.)
 
 2003-06-09  Simon Josefsson <simon@josefsson.org>
 
@@ -578,7 +641,7 @@
 2003-05-30  Simon Josefsson <simon@josefsson.org>
 
 	* tests/basic.c, tests/name.c, tests/Makefile.am: Rename name.c to
-	  basic.c.
+	basic.c.
 
 2003-05-30  Simon Josefsson <simon@josefsson.org>
 
@@ -687,7 +750,7 @@
 2003-05-29  Simon Josefsson <simon@josefsson.org>
 
 	* lib/Makefile.am: Install api.h (former gssapi.h) and krb5.h in
-	  $(includedir)/gss/.  Fix indents.
+	$(includedir)/gss/.  Fix indents.
 
 2003-05-29  Simon Josefsson <simon@josefsson.org>
 
@@ -739,7 +802,7 @@
 
 2003-05-27  Simon Josefsson <simon@josefsson.org>
 
-	* doc/gss.texi: Drop licenses.	Add criticism todos.
+	* doc/gss.texi: Drop licenses.  Add criticism todos.
 
 2003-05-27  Simon Josefsson <simon@josefsson.org>
 
@@ -755,9 +818,9 @@
 
 2003-05-27  Simon Josefsson <simon@josefsson.org>
 
-	* lib/krb5.c: Support mutual authentication (and other flags).	Fix
-	  sequence number handling.  Works as client via GSASL against
-	  Cyrus IMAP/SASL server.
+	* lib/krb5.c: Support mutual authentication (and other flags).  Fix
+	sequence number handling.  Works as client via GSASL against Cyrus
+	IMAP/SASL server.
 
 2003-05-26  Simon Josefsson <simon@josefsson.org>
 
@@ -770,7 +833,7 @@
 2003-05-25  Simon Josefsson <simon@josefsson.org>
 
 	* lib/krb5.c: Add. (GSASL using GSS is now able to log on to GNU
-	  Mailutils imap4d linked to MIT GSSAPI.)
+	Mailutils imap4d linked to MIT GSSAPI.)
 
 2003-05-25  Simon Josefsson <simon@josefsson.org>
 
@@ -803,7 +866,7 @@
 2003-05-18  Simon Josefsson <simon@josefsson.org>
 
 	* lib/context.c, lib/cred.c, lib/misc.c, lib/msg.c, lib/name.c:
-	  Remove documentation.
+	Remove documentation.
 
 2003-05-18  Simon Josefsson <simon@josefsson.org>
 
@@ -967,7 +1030,7 @@
 
 2003-05-08  Simon Josefsson <simon@josefsson.org>
 
-	* lib/Makefile.am: Add krb5.c.	Build gss_asn1_tab.c.
+	* lib/Makefile.am: Add krb5.c.  Build gss_asn1_tab.c.
 
 2003-05-08  Simon Josefsson <simon@josefsson.org>
 
@@ -1012,7 +1075,7 @@
 2003-05-01  Simon Josefsson <simon@josefsson.org>
 
 	* lib/version.c, configure.ac, lib/ggssapi.h.in, lib/gss.h.in:
-	  Rename ggssapi to gss.
+	Rename ggssapi to gss.
 
 2003-05-01  Simon Josefsson <simon@josefsson.org>
 
@@ -1041,7 +1104,7 @@
 2003-05-01  Simon Josefsson <simon@josefsson.org>
 
 	* doc/Makefile.am, configure.ac, ggssapi.pc.in, gss.pc.in,
-	  ANNOUNCE: Rename ggssapi to gss.
+	ANNOUNCE: Rename ggssapi to gss.
 
 2003-05-01  Simon Josefsson <simon@josefsson.org>
 
@@ -1074,7 +1137,7 @@
 2003-05-01  Simon Josefsson <simon@josefsson.org>
 
 	* lib/internal.h: Include inttypes/stdint.  Add hidden GSS
-	  structures.
+	structures.
 
 2003-05-01  Simon Josefsson <simon@josefsson.org>
 
@@ -1106,7 +1169,7 @@
 
 2003-05-01  Simon Josefsson <simon@josefsson.org>
 
-	* lib/gssapi.h: Fix prototypes (RFC is buggy).	Indent.
+	* lib/gssapi.h: Fix prototypes (RFC is buggy).  Indent.
 
 2003-05-01  Simon Josefsson <simon@josefsson.org>
 
@@ -1135,7 +1198,7 @@
 2003-04-30  Simon Josefsson <simon@josefsson.org>
 
 	* lib/gssapi.h: Never use xom.h.  Define gss_ctx_id_t,
-	  gss_cred_id_t, gss_name_t, and gss_uint32.  Fix routine errors.
+	gss_cred_id_t, gss_name_t, and gss_uint32.  Fix routine errors.
 
 2003-04-30  Simon Josefsson <simon@josefsson.org>
 
@@ -1144,7 +1207,7 @@
 2003-04-30  Simon Josefsson <simon@josefsson.org>
 
 	* po/LINGUAS, po/Makevars, po/POTFILES.in, po/ggssapi.pot,
-	  po/sv.po, lib/gettext.h, lib/ggssapi.h.in, lib/internal.h: Add.
+	po/sv.po, lib/gettext.h, lib/ggssapi.h.in, lib/internal.h: Add.
 
 2003-04-30  Simon Josefsson <simon@josefsson.org>
 
@@ -1173,15 +1236,15 @@
 2003-04-30  Simon Josefsson <simon@josefsson.org>
 
 	* configure.ac: Remove AC_REPLACE_FUNCS() until we know they are
-	  required.
+	required.
 
 2003-04-30  Simon Josefsson <simon@josefsson.org>
 
 	* ANNOUNCE, AUTHORS, Makefile.am, NEWS, README, README-alpha,
-	  THANKS, configure.ac, ggssapi.pc.in, doc/Makefile.am,
-	  doc/fdl.texi, doc/gdoc, doc/gdoc-error, doc/ggssapi.texi,
-	  doc/gpl.texi, lib/Makefile.am, lib/gssapi.h, lib/version.c,
-	  tests/Makefile.am: Initial import, empty dummy project.
+	THANKS, configure.ac, ggssapi.pc.in, doc/Makefile.am, doc/fdl.texi,
+	doc/gdoc, doc/gdoc-error, doc/ggssapi.texi, doc/gpl.texi,
+	lib/Makefile.am, lib/gssapi.h, lib/version.c, tests/Makefile.am:
+	Initial import, empty dummy project.
 
 ----------------------------------------------------------------------
   Copyright 2003  Simon Josefsson
