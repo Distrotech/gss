@@ -328,12 +328,6 @@ gss_krb5_delete_sec_context (OM_uint32 * minor_status,
 {
   _gss_krb5_ctx_t k5 = (*context_handle)->krb5;
 
-  if (k5->key)
-    shishi_key_done (k5->key);
-
-  if (k5->tkt)
-    shishi_tkt_done (k5->tkt);
-
   shishi_done (k5->sh);
 
   if (minor_status)
