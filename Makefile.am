@@ -54,6 +54,6 @@ release:
 	gpg -a --sign --detach $(distdir).tar.gz
 	gpg --verify $(distdir).tar.gz.asc
 	cvs rtag $(tag) $(PACKAGE)
-	test -d $(htmldir) && cp -v doc/$(PACKAGE).{ps,pdf,html} $(htmldir)/
-	test -d $(htmldir) && cd $(htmldir) && cvs commit -m "Update." \
-		$(PACKAGE).{ps,pdf,html}
+	-cd doc && ./gendocs.sh -o ../$(htmldir)/manual/ $(PACKAGE) "GNU Generic Security Service Library"
+	-cd $(htmldir) && \
+		cvs commit -m "Update." manual/
