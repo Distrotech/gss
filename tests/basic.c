@@ -28,10 +28,15 @@ main (int argc, char *argv[])
   char buffer2[BUFSIZ];
   char *p, *q;
   int n, res;
-  gss_uint32 maj_stat, min_stat;
+  gss_uint32 maj_stat, min_stat, msgctx;
   gss_buffer_desc bufdesc, bufdesc2;
   gss_name_t service;
   gss_OID_set oids;
+
+#if ENABLE_NLS
+  setlocale (LC_ALL, "");
+  bindtextdomain (PACKAGE, LOCALEDIR);
+#endif
 
   do
     if (strcmp (argv[argc - 1], "-v") == 0 ||
@@ -311,6 +316,19 @@ main (int argc, char *argv[])
   else
     fail("gss_release_oid_set() failed (%d,%d)\n", maj_stat, min_stat);
 #endif
+
+  /* Check display_status */
+  msgctx = 0;
+  maj_stat = gss_display_status (&min_stat, GSS_S_COMPLETE, GSS_C_GSS_CODE,
+				 GSS_C_NO_OID, &msgctx, &bufdesc);
+  if (maj_stat == GSS_S_COMPLETE)
+    success("gss_display_status() OK\n");
+  else
+    fail("gss_display_status() failed (%d,%d)\n", maj_stat, min_stat);
+
+  if (debug)
+    printf("    Display status for GSS_S_COMPLETE => %*s\n",
+	   bufdesc.length, bufdesc.value);
 
   if (verbose)
     printf ("Name self tests done with %d errors\n", error_count);
