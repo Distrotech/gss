@@ -1,21 +1,21 @@
 /* internal.h	Internal header file for GPL GSS-API.
  * Copyright (C) 2003  Simon Josefsson
  *
- * This file is part of GPL GSS-API.
+ * This file is part of the Generic Security Service (GSS).
  *
- * GPL GSS-API is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published
- * by the Free Software Foundation; either version 2 of the License,
- * or (at your option) any later version.
+ * GSS is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
  *
- * GPL GSS-API is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ * GSS is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public
+ * License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with GPL GSS-API; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * along with GSS; if not, write to the Free Software Foundation,
+ * Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  *
  */
 
@@ -89,9 +89,13 @@ typedef struct gss_ctx_id_struct
 } gss_ctx_id_desc;
 
 int
-_gss_wrap_token (char *oid, size_t oidlen,
-		 char *in, size_t inlen,
-		 char **out, size_t *outlen);
+_gss_encapsulate_token (char *oid, size_t oidlen,
+			char *in, size_t inlen,
+			char **out, size_t *outlen);
+int
+_gss_decapsulate_token (gss_buffer_t input_message,
+			gss_OID token_oid,
+			gss_buffer_t output_message);
 
 int
 _gss_oid_equal (gss_OID first_oid, gss_OID second_oid);
@@ -120,5 +124,19 @@ krb5_gss_canonicalize_name (OM_uint32 * minor_status,
 			    const gss_OID mech_type,
 			    gss_name_t * output_name);
 
+OM_uint32
+krb5_gss_unwrap (OM_uint32 * minor_status,
+		 const gss_ctx_id_t context_handle,
+		 const gss_buffer_t input_message_buffer,
+		 gss_buffer_t output_message_buffer,
+		 int *conf_state, gss_qop_t * qop_state);
+
+OM_uint32
+krb5_gss_wrap (OM_uint32 * minor_status,
+	       const gss_ctx_id_t context_handle,
+	       int conf_req_flag,
+	       gss_qop_t qop_req,
+	       const gss_buffer_t input_message_buffer,
+	       int *conf_state, gss_buffer_t output_message_buffer);
 
 #endif /* _INTERNAL_H */

@@ -26,10 +26,12 @@
 #define _GSS_KRB5_OID "\x2a\x86\x48\x86\xf7\x12\x01\x02\x02"
 #define _GSS_KRB5_OID_STRING "1.2.840.113554.1.2.2"
 
-gss_OID_desc GSS_KRB5_NT_PRINCIPAL_NAME_static = {
+gss_OID_desc GSS_KRB5_MECH_OID_static = {
   9, (void *) _GSS_KRB5_OID
 };
-gss_OID GSS_KRB5_NT_PRINCIPAL_NAME = &GSS_KRB5_NT_PRINCIPAL_NAME_static;
+gss_OID GSS_KRB5_MECH_OID = &GSS_KRB5_MECH_OID_static;
+gss_OID GSS_KRB5_NT_PRINCIPAL_NAME = &GSS_KRB5_MECH_OID_static;
+
 
 #define _GSS_KRB5_OID_DER "\x06\x09" _GSS_KRB5_OID
 #define _GSS_KRB5_OID_LEN  strlen(_GSS_KRB5_OID_DER)
@@ -42,6 +44,11 @@ gss_OID GSS_KRB5_NT_PRINCIPAL_NAME = &GSS_KRB5_NT_PRINCIPAL_NAME_static;
 
 #define _GSS_KRB5_KRB_ERROR_DATA _GSS_KRB5_OID_DER "\x03\x00"
 #define _GSS_KRB5_KRB_ERROR_LEN  (_GSS_KRB5_OID_LEN+2)
+
+#define _GSS_KRB5_TOK_MIC_DATA  "\x01\x01"
+#define _GSS_KRB5_TOK_MIC_LEN   strlen(_GSS_KRB5_TOK_MIC_DATA)
+#define _GSS_KRB5_TOK_WRAP_DATA "\x02\x01"
+#define _GSS_KRB5_TOK_WRAP_LEN  strlen(_GSS_KRB5_TOK_WRAP_DATA)
 
 OM_uint32
 krb5_gss_init_sec_context (OM_uint32 * minor_status,
@@ -65,7 +72,7 @@ krb5_gss_init_sec_context (OM_uint32 * minor_status,
   int rc;
   OM_uint32 maj_stat;
 
-  /* Note: mech_type not tested */
+  /* XXX mech_type not tested */
 
   if (*context_handle == GSS_C_NO_CONTEXT)
     {
@@ -176,10 +183,10 @@ krb5_gss_init_sec_context (OM_uint32 * minor_status,
       if (rc != SHISHI_OK)
 	return GSS_S_FAILURE;
 
-      rc = _gss_wrap_token(_GSS_KRB5_AP_REQ_DATA, _GSS_KRB5_AP_REQ_LEN,
-			   data, len,
-			   (void**)&(output_token->value),
-			   &output_token->length);
+      rc = _gss_encapsulate_token(_GSS_KRB5_AP_REQ_DATA, _GSS_KRB5_AP_REQ_LEN,
+				  data, len,
+				  (void**)&(output_token->value),
+				  &output_token->length);
       if (!rc)
 	return GSS_S_FAILURE;
 
@@ -225,6 +232,95 @@ krb5_gss_canonicalize_name (OM_uint32 * minor_status,
     }
   else
     return GSS_S_FAILURE;
+
+  return GSS_S_COMPLETE;
+}
+
+OM_uint32
+krb5_gss_wrap (OM_uint32 * minor_status,
+	       const gss_ctx_id_t context_handle,
+	       int conf_req_flag,
+	       gss_qop_t qop_req,
+	       const gss_buffer_t input_message_buffer,
+	       int *conf_state, gss_buffer_t output_message_buffer)
+{
+  puts("wrap:");
+
+  {
+    int i;
+    for (i = 0; i < input_message_buffer->length; i++)
+      {
+	printf("%02x ", ((char*)input_message_buffer->value)[i] & 0xFF);
+	if ((i+1)%16 == 0)
+	  printf("\n");
+      }
+  }
+  return GSS_S_FAILURE;
+}
+
+OM_uint32
+krb5_gss_unwrap (OM_uint32 * minor_status,
+		 const gss_ctx_id_t context_handle,
+		 const gss_buffer_t input_message_buffer,
+		 gss_buffer_t output_message_buffer,
+		 int *conf_state, gss_qop_t * qop_state)
+{
+  gss_OID_desc tokenoid;
+  gss_buffer_desc data;
+  OM_uint32 sgn_alg, seal_alg;
+  int rc;
+
+  rc = _gss_decapsulate_token (input_message_buffer, &tokenoid, &data);
+  if (!rc)
+    return GSS_S_BAD_MIC;
+
+  if (!_gss_oid_equal (&tokenoid, GSS_KRB5_MECH_OID))
+    return GSS_S_BAD_MIC;
+
+  if (data.length < 24)
+    return GSS_S_BAD_MIC;
+
+  if (memcmp(data.value, _GSS_KRB5_TOK_WRAP_DATA, _GSS_KRB5_TOK_WRAP_LEN) != 0)
+    return GSS_S_BAD_MIC;
+
+  sgn_alg = ((char*)data.value)[2] & 0xFF;
+  sgn_alg |= ((char*)data.value)[3] << 8 & 0xFF00;
+
+  seal_alg = ((char*)data.value)[4] & 0xFF;
+  seal_alg |= ((char*)data.value)[5] << 8 & 0xFF00;
+
+  if (memcmp(data.value + 6, "\xFF\xFF", 2) != 0)
+    return GSS_S_BAD_MIC;
+
+  switch (sgn_alg)
+    {
+      /* XXX implement other checksums */
+
+    case 4: /* 3DES */
+      {
+	size_t padlength;
+	char *pad;
+
+	/* XXX verify checksum */
+
+	pad = data.value + data.length - 1;
+	padlength = *pad;
+	/* XXX check pad chars */
+
+	if (data.length < 44 + padlength)
+	  return GSS_S_BAD_MIC;
+
+	output_message_buffer->length = data.length - 44 - padlength;
+	output_message_buffer->value = malloc(output_message_buffer->length);
+	memcpy(output_message_buffer->value,
+	       data.value + 44,
+	       data.length - 44 - padlength);
+	break;
+      }
+
+    default:
+      return GSS_S_FAILURE;
+    }
 
   return GSS_S_COMPLETE;
 }
