@@ -1665,6 +1665,4 @@ to use GSS instead of the Kerberos 5 implementation specific APIs.
 
 @printindex fn
 
-@summarycontents
-@contents
 @bye
