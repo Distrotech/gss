@@ -1,7 +1,7 @@
 /* xmalloc.c -- malloc with out of memory checking
 
    Copyright (C) 1990, 1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998, 2003,
-   1999, 2000, 2002, 2003, 2004 Free Software Foundation, Inc.
+   1999, 2000, 2002, 2003 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -121,8 +121,8 @@ xrealloc (void *p, size_t n)
    Here is an example of use:
 
      int *p = NULL;
-     size used = 0;
-     size allocated = 0;
+     size_t used = 0;
+     size_t allocated = 0;
 
      void
      append_int (int value)
@@ -140,9 +140,9 @@ xrealloc (void *p, size_t n)
    example:
 
      int *p = NULL;
-     size used = 0;
-     size allocated = 0;
-     size allocated1 = 1000;
+     size_t used = 0;
+     size_t allocated = 0;
+     size_t allocated1 = 1000;
 
      void
      append_int (int value)
@@ -240,6 +240,7 @@ xclone (void const *p, size_t s)
 }
 
 /* Return a newly allocated copy of STRING.  */
+
 char *
 xstrdup (const char *string)
 {
