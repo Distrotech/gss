@@ -4,7 +4,15 @@ See the end for copying conditions.
 
 * Changes in 0.0.3 (unreleased)
 
-** Cleanups.
+** Includes compatibility functionality from gnulib in gl/.
+
+** Documentation improvements.
+The file README-alpha contains some hints for binary packagers.
+Essentially, don't distribute shared libraries, as this package is too
+immature to bump the shared object version for every modification
+currently.
+
+** Bugfixes and cleanups.
 
 * Changes in 0.0.2 (released 2003-06-28)
 
