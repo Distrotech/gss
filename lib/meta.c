@@ -67,7 +67,7 @@ _gss_mech_api_desc _gss_mech_apis[] = {
 #endif
   {
     0,
-    { },
+    { GSS_C_NO_OID },
     _gss_dummy,
     _gss_dummy,
     _gss_dummy,
