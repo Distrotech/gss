@@ -45,7 +45,7 @@ AC_PROG_CC
 AC_GNU_SOURCE
 AC_HEADER_STDC
 
-# We use libtool
+# We use libtool.
 AC_PROG_LIBTOOL
 
 # For gnulib stuff in gl/.
@@ -75,6 +75,7 @@ AC_MSG_CHECKING([if the Kerberos V5 mechanism should be supported])
 AC_MSG_RESULT($kerberos5)
 AM_CONDITIONAL(KRB5, test "$kerberos5" = "yes")
 
+# We are done.
 AC_CONFIG_FILES(Makefile gss.pc lib/gss.h po/Makefile.in m4/Makefile \
 		doc/Makefile lib/Makefile tests/Makefile \
 		gl/Makefile gl/m4/Makefile)

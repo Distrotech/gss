@@ -4,11 +4,7 @@ See the end for copying conditions.
 
 * Changes in 0.0.5 (unreleased)
 
-** Kerberos 5.
-
-*** Shishi 0.0.4 required.
-
-*** Subkeys are supported.
+** Kerberos 5: Subkeys are supported. Shishi 0.0.4 required.
 
 ** Bug fixes.
 

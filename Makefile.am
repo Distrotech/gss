@@ -35,7 +35,7 @@ indent:
 
 ChangeLog:
 	test ! -f .cvsusers || \
-	(cvs2cl --FSF --usermap .cvsusers \
+	(cvs2cl --fsf --FSF --usermap .cvsusers \
 		-I "ChangeLog|.cvs|autogen.sh|doc/specification" && \
 	cat .cvscopying >> ChangeLog)
 
@@ -53,7 +53,7 @@ release:
 	rm -f $(distdir).tar.gz.asc
 	gpg -a --sign --detach $(distdir).tar.gz
 	gpg --verify $(distdir).tar.gz.asc
+	cvs rtag $(tag) $(PACKAGE)
 	test -d $(htmldir) && cp -v doc/$(PACKAGE).{ps,pdf,html} $(htmldir)/
 	test -d $(htmldir) && cd $(htmldir) && cvs commit -m "Update." \
 		$(PACKAGE).{ps,pdf,html}
-	cvs rtag $(tag) $(PACKAGE)
