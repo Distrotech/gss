@@ -80,11 +80,9 @@ init_request (OM_uint32 * minor_status,
 
   rc = shishi_ap_tktoptionsraw (k5->sh, &k5->ap, k5->tkt,
 				SHISHI_APOPTIONS_MUTUAL_REQUIRED,
-				cksum, cksumlen);
+				0x8003, cksum, cksumlen);
   if (rc != SHISHI_OK)
     return GSS_S_FAILURE;
-
-  shishi_ap_authenticator_cksumtype_set (k5->ap, 0x8003);
 
   rc = shishi_ap_req_der (k5->ap, &tmp.value, &tmp.length);
   if (rc != SHISHI_OK)
