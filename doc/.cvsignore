@@ -1,11 +1,5 @@
 Makefile
 Makefile.in
-gss-api-context.texi
-gss-api-cred.texi
-gss-api-misc.texi
-gss-api-msg.texi
-gss-api-name.texi
-gss-api-version.texi
 gss.1
 gss.aux
 gss.cp
