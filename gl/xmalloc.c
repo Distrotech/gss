@@ -49,7 +49,7 @@ xalloc_die (void)
 /* Allocate an array of N objects, each with S bytes of memory,
    dynamically, with error checking.  S must be nonzero.  */
 
-static inline void *
+static void *
 xnmalloc_inline (size_t n, size_t s)
 {
   void *p;
@@ -75,7 +75,7 @@ xmalloc (size_t n)
 /* Change the size of an allocated block of memory P to an array of N
    objects each of S bytes, with error checking.  S must be nonzero.  */
 
-static inline void *
+static void *
 xnrealloc_inline (void *p, size_t n, size_t s)
 {
   if (xalloc_oversized (n, s) || ! (p = realloc (p, n * s)))
@@ -154,7 +154,7 @@ xrealloc (void *p, size_t n)
 
    */
 
-static inline void *
+static void *
 x2nrealloc_inline (void *p, size_t *pn, size_t s)
 {
   size_t n = *pn;
