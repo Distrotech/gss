@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: bug-gss@josefsson.org\n"
-"POT-Creation-Date: 2003-08-09 23:32+0200\n"
+"POT-Creation-Date: 2003-08-31 16:41+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -136,79 +136,79 @@ msgstr ""
 msgid "No error"
 msgstr ""
 
-#: lib/krb5.c:744
+#: lib/krb5.c:745
 msgid "No @ in SERVICE-NAME name string"
 msgstr ""
 
-#: lib/krb5.c:746
+#: lib/krb5.c:747
 msgid "STRING-UID-NAME contains nondigits"
 msgstr ""
 
-#: lib/krb5.c:748
+#: lib/krb5.c:749
 msgid "UID does not resolve to username"
 msgstr ""
 
-#: lib/krb5.c:750
+#: lib/krb5.c:751
 msgid "Validation error"
 msgstr ""
 
-#: lib/krb5.c:752
+#: lib/krb5.c:753
 msgid "Couldn't allocate gss_buffer_t data"
 msgstr ""
 
-#: lib/krb5.c:754
+#: lib/krb5.c:755
 msgid "Message context invalid"
 msgstr ""
 
-#: lib/krb5.c:756
+#: lib/krb5.c:757
 msgid "Buffer is the wrong size"
 msgstr ""
 
-#: lib/krb5.c:758
+#: lib/krb5.c:759
 msgid "Credential usage type is unknown"
 msgstr ""
 
-#: lib/krb5.c:760
+#: lib/krb5.c:761
 msgid "Unknown quality of protection specified"
 msgstr ""
 
-#: lib/krb5.c:763
+#: lib/krb5.c:764
 msgid "Principal in credential cache does not match desired name"
 msgstr ""
 
-#: lib/krb5.c:765
+#: lib/krb5.c:766
 msgid "No principal in keytab matches desired name"
 msgstr ""
 
-#: lib/krb5.c:767
+#: lib/krb5.c:768
 msgid "Credential cache has no TGT"
 msgstr ""
 
-#: lib/krb5.c:769
+#: lib/krb5.c:770
 msgid "Authenticator has no subkey"
 msgstr ""
 
-#: lib/krb5.c:771
+#: lib/krb5.c:772
 msgid "Context is already fully established"
 msgstr ""
 
-#: lib/krb5.c:773
+#: lib/krb5.c:774
 msgid "Unknown signature type in token"
 msgstr ""
 
-#: lib/krb5.c:775
+#: lib/krb5.c:776
 msgid "Invalid field length in token"
 msgstr ""
 
-#: lib/krb5.c:777
+#: lib/krb5.c:778
 msgid "Attempt to use incomplete security context"
 msgstr ""
 
-#: lib/krb5.c:794
+#: lib/krb5.c:795
 msgid "No krb5 error"
 msgstr ""
 
-#: lib/krb5.c:822
+#: lib/krb5.c:823
 msgid "Unknown krb5 error"
 msgstr ""
 
