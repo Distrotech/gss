@@ -715,6 +715,9 @@ fail.
 @chapter Standard GSS API
 
 @menu
+* Simple Data Types::		About integers, strings, OIDs, and OID sets.
+* Complex Data Types::		About credentials, contexts, names, etc.
+* Optional Parameters::		What value to use when you don't want one.
 * Error Handling::		How errors in GSS are reported and handled.
 * Credential Management::	Standard GSS credential functions.
 * Context-Level Routines::	Standard GSS context functions.
@@ -722,6 +725,444 @@ fail.
 * Name Manipulation::		Standard GSS name manipulation functions.
 * Miscellaneous Routines::	Standard miscellaneous functions.
 @end menu
+
+@node Simple Data Types
+@section Simple Data Types
+
+The following conventions are used by the GSS-API C-language bindings:
+
+@subsection Integer types
+
+GSS-API uses the following integer data type:
+
+@verbatim
+   OM_uint32    32-bit unsigned integer
+@end verbatim
+
+@subsection String and similar data
+
+Many of the GSS-API routines take arguments and return values that
+describe contiguous octet-strings.  All such data is passed between
+the GSS-API and the caller using the @code{gss_buffer_t} data type.
+This data type is a pointer to a buffer descriptor, which consists of
+a length field that contains the total number of bytes in the datum,
+and a value field which contains a pointer to the actual datum:
+
+@verbatim
+   typedef struct gss_buffer_desc_struct {
+      size_t    length;
+      void      *value;
+   } gss_buffer_desc, *gss_buffer_t;
+@end verbatim
+
+Storage for data returned to the application by a GSS-API routine
+using the @code{gss_buffer_t} conventions is allocated by the GSS-API
+routine.  The application may free this storage by invoking the
+@code{gss_release_buffer} routine.  Allocation of the
+@code{gss_buffer_desc} object is always the responsibility of the
+application; unused @code{gss_buffer_desc} objects may be initialized
+to the value @code{GSS_C_EMPTY_BUFFER}.
+
+@subsubsection Opaque data types
+
+Certain multiple-word data items are considered opaque data types at
+the GSS-API, because their internal structure has no significance
+either to the GSS-API or to the caller.  Examples of such opaque data
+types are the input_token parameter to @code{gss_init_sec_context}
+(which is opaque to the caller), and the input_message parameter to
+@code{gss_wrap} (which is opaque to the GSS-API).  Opaque data is
+passed between the GSS-API and the application using the
+@code{gss_buffer_t} datatype.
+
+@subsubsection Character strings
+
+Certain multiple-word data items may be regarded as simple ISO Latin-1
+character strings.  Examples are the printable strings passed to
+@code{gss_import_name} via the input_name_buffer parameter. Some
+GSS-API routines also return character strings.  All such character
+strings are passed between the application and the GSS-API
+implementation using the @code{gss_buffer_t} datatype, which is a
+pointer to a @code{gss_buffer_desc} object.
+
+When a @code{gss_buffer_desc} object describes a printable string, the
+length field of the @code{gss_buffer_desc} should only count printable
+characters within the string.  In particular, a trailing NUL character
+should NOT be included in the length count, nor should either the
+GSS-API implementation or the application assume the presence of an
+uncounted trailing NUL.
+
+@subsection Object Identifiers
+@anchor{Object Identifiers}
+
+Certain GSS-API procedures take parameters of the type @code{gss_OID},
+or Object identifier.  This is a type containing ISO-defined tree-
+structured values, and is used by the GSS-API caller to select an
+underlying security mechanism and to specify namespaces.  A value of
+type @code{gss_OID} has the following structure:
+
+@verbatim
+   typedef struct gss_OID_desc_struct {
+      OM_uint32   length;
+      void        *elements;
+   } gss_OID_desc, *gss_OID;
+@end verbatim
+
+The elements field of this structure points to the first byte of an
+octet string containing the ASN.1 BER encoding of the value portion of
+the normal BER TLV encoding of the @code{gss_OID}.  The length field
+contains the number of bytes in this value.  For example, the
+@code{gss_OID} value corresponding to @code{iso(1)
+identified-organization(3) icd-ecma(12) member-company(2) dec(1011)
+cryptoAlgorithms(7) DASS(5)}, meaning the DASS X.509 authentication
+mechanism, has a length field of 7 and an elements field pointing to
+seven octets containing the following octal values:
+53,14,2,207,163,7,5. GSS-API implementations should provide constant
+@code{gss_OID} values to allow applications to request any supported
+mechanism, although applications are encouraged on portability grounds
+to accept the default mechanism.  @code{gss_OID} values should also be
+provided to allow applications to specify particular name types (see
+section 3.10).  Applications should treat @code{gss_OID_desc} values
+returned by GSS-API routines as read-only.  In particular, the
+application should not attempt to deallocate them with free().
+
+@subsection Object Identifier Sets
+
+Certain GSS-API procedures take parameters of the type
+@code{gss_OID_set}.  This type represents one or more object
+identifiers (@pxref{Object Identifiers}).  A @code{gss_OID_set} object
+has the following structure:
+
+@verbatim
+   typedef struct gss_OID_set_desc_struct {
+      size_t    count;
+      gss_OID   elements;
+   } gss_OID_set_desc, *gss_OID_set;
+@end verbatim
+
+The count field contains the number of OIDs within the set.  The
+elements field is a pointer to an array of @code{gss_OID_desc}
+objects, each of which describes a single OID.  @code{gss_OID_set}
+values are used to name the available mechanisms supported by the
+GSS-API, to request the use of specific mechanisms, and to indicate
+which mechanisms a given credential supports.
+
+All OID sets returned to the application by GSS-API are dynamic
+objects (the @code{gss_OID_set_desc}, the "elements" array of the set,
+and the "elements" array of each member OID are all dynamically
+allocated), and this storage must be deallocated by the application
+using the @code{gss_release_oid_set} routine.
+
+@node Complex Data Types
+@section Complex Data Types
+
+@subsection Credentials
+
+A credential handle is a caller-opaque atomic datum that identifies a
+GSS-API credential data structure.  It is represented by the caller-
+opaque type @code{gss_cred_id_t}.
+
+GSS-API credentials can contain mechanism-specific principal
+authentication data for multiple mechanisms.  A GSS-API credential is
+composed of a set of credential-elements, each of which is applicable
+to a single mechanism.  A credential may contain at most one
+credential-element for each supported mechanism. A credential-element
+identifies the data needed by a single mechanism to authenticate a
+single principal, and conceptually contains two credential-references
+that describe the actual mechanism-specific authentication data, one
+to be used by GSS-API for initiating contexts, and one to be used for
+accepting contexts.  For mechanisms that do not distinguish between
+acceptor and initiator credentials, both references would point to the
+same underlying mechanism-specific authentication data.
+
+Credentials describe a set of mechanism-specific principals, and give
+their holder the ability to act as any of those principals. All
+principal identities asserted by a single GSS-API credential should
+belong to the same entity, although enforcement of this property is an
+implementation-specific matter.  The GSS-API does not make the actual
+credentials available to applications; instead a credential handle is
+used to identify a particular credential, held internally by GSS-API.
+The combination of GSS-API credential handle and mechanism identifies
+the principal whose identity will be asserted by the credential when
+used with that mechanism.
+
+The @code{gss_init_sec_context} and @code{gss_accept_sec_context}
+routines allow the value @code{GSS_C_NO_CREDENTIAL} to be specified as
+their credential handle parameter.  This special credential-handle
+indicates a desire by the application to act as a default principal.
+
+@subsection Contexts
+
+The @code{gss_ctx_id_t} data type contains a caller-opaque atomic
+value that identifies one end of a GSS-API security context.
+
+The security context holds state information about each end of a peer
+communication, including cryptographic state information.
+
+@subsection Authentication tokens
+
+A token is a caller-opaque type that GSS-API uses to maintain
+synchronization between the context data structures at each end of a
+GSS-API security context.  The token is a cryptographically protected
+octet-string, generated by the underlying mechanism at one end of a
+GSS-API security context for use by the peer mechanism at the other
+end.  Encapsulation (if required) and transfer of the token are the
+responsibility of the peer applications.  A token is passed between
+the GSS-API and the application using the @code{gss_buffer_t}
+conventions.
+
+@subsection Interprocess tokens
+
+Certain GSS-API routines are intended to transfer data between
+processes in multi-process programs.  These routines use a
+caller-opaque octet-string, generated by the GSS-API in one process
+for use by the GSS-API in another process.  The calling application is
+responsible for transferring such tokens between processes in an
+OS-specific manner.  Note that, while GSS-API implementors are
+encouraged to avoid placing sensitive information within interprocess
+tokens, or to cryptographically protect them, many implementations
+will be unable to avoid placing key material or other sensitive data
+within them.  It is the application's responsibility to ensure that
+interprocess tokens are protected in transit, and transferred only to
+processes that are trustworthy. An interprocess token is passed
+between the GSS-API and the application using the @code{gss_buffer_t}
+conventions.
+
+@subsection Names
+
+A name is used to identify a person or entity.  GSS-API authenticates
+the relationship between a name and the entity claiming the name.
+
+Since different authentication mechanisms may employ different
+namespaces for identifying their principals, GSSAPI's naming support
+is necessarily complex in multi-mechanism environments (or even in
+some single-mechanism environments where the underlying mechanism
+supports multiple namespaces).
+
+Two distinct representations are defined for names:
+
+@itemize
+@item An internal form.
+This is the GSS-API "native" format for names, represented by the
+implementation-specific @code{gss_name_t} type.  It is opaque to
+GSS-API callers.  A single @code{gss_name_t} object may contain
+multiple names from different namespaces, but all names should refer
+to the same entity.  An example of such an internal name would be the
+name returned from a call to the @code{gss_inquire_cred} routine, when
+applied to a credential containing credential elements for multiple
+authentication mechanisms employing different namespaces.  This
+@code{gss_name_t} object will contain a distinct name for the entity
+for each authentication mechanism.
+
+For GSS-API implementations supporting multiple namespaces, objects of
+type @code{gss_name_t} must contain sufficient information to
+determine the namespace to which each primitive name belongs.
+
+@item Mechanism-specific contiguous octet-string forms.
+A format capable of containing a single name (from a single
+namespace).  Contiguous string names are always accompanied by an
+object identifier specifying the namespace to which the name belongs,
+and their format is dependent on the authentication mechanism that
+employs the name.  Many, but not all, contiguous string names will be
+printable, and may therefore be used by GSS-API applications for
+communication with their users.
+@end itemize
+
+Routines (@code{gss_import_name} and @code{gss_display_name}) are
+provided to convert names between contiguous string representations
+and the internal @code{gss_name_t} type.  @code{gss_import_name} may
+support multiple syntaxes for each supported namespace, allowing users
+the freedom to choose a preferred name
+representation. @code{gss_display_name} should use an
+implementation-chosen printable syntax for each supported name-type.
+
+If an application calls @code{gss_display_name}, passing the internal
+name resulting from a call to @code{gss_import_name}, there is no
+guarantee the the resulting contiguous string name will be the same as
+the original imported string name.  Nor do name-space identifiers
+necessarily survive unchanged after a journey through the internal
+name-form.  An example of this might be a mechanism that authenticates
+X.500 names, but provides an algorithmic mapping of Internet DNS names
+into X.500.  That mechanism's implementation of @code{gss_import_name}
+might, when presented with a DNS name, generate an internal name that
+contained both the original DNS name and the equivalent X.500 name.
+Alternatively, it might only store the X.500 name.  In the latter
+case, @code{gss_display_name} would most likely generate a printable
+X.500 name, rather than the original DNS name.
+
+The process of authentication delivers to the context acceptor an
+internal name.  Since this name has been authenticated by a single
+mechanism, it contains only a single name (even if the internal name
+presented by the context initiator to @code{gss_init_sec_context} had
+multiple components).  Such names are termed internal mechanism names,
+or "MN"s and the names emitted by @code{gss_accept_sec_context} are
+always of this type.  Since some applications may require MNs without
+wanting to incur the overhead of an authentication operation, a second
+function, @code{gss_canonicalize_name}, is provided to convert a
+general internal name into an MN.
+
+Comparison of internal-form names may be accomplished via the
+@code{gss_compare_name} routine, which returns true if the two names
+being compared refer to the same entity.  This removes the need for
+the application program to understand the syntaxes of the various
+printable names that a given GSS-API implementation may support.
+Since GSS-API assumes that all primitive names contained within a
+given internal name refer to the same entity, @code{gss_compare_name}
+can return true if the two names have at least one primitive name in
+common.  If the implementation embodies knowledge of equivalence
+relationships between names taken from different namespaces, this
+knowledge may also allow successful comparison of internal names
+containing no overlapping primitive elements.
+
+When used in large access control lists, the overhead of invoking
+@code{gss_import_name} and @code{gss_compare_name} on each name from
+the ACL may be prohibitive.  As an alternative way of supporting this
+case, GSS-API defines a special form of the contiguous string name
+which may be compared directly (e.g. with memcmp()).  Contiguous names
+suitable for comparison are generated by the @code{gss_export_name}
+routine, which requires an MN as input.  Exported names may be re-
+imported by the @code{gss_import_name} routine, and the resulting
+internal name will also be an MN.  The @code{gss_OID} constant
+@code{GSS_C_NT_EXPORT_NAME} indentifies the "export name" type, and
+the value of this constant is given in Appendix A.  Structurally, an
+exported name object consists of a header containing an OID
+identifying the mechanism that authenticated the name, and a trailer
+containing the name itself, where the syntax of the trailer is defined
+by the individual mechanism specification.  The precise format of an
+export name is defined in the language-independent GSS-API
+specification [GSSAPI].
+
+Note that the results obtained by using @code{gss_compare_name} will
+in general be different from those obtained by invoking
+@code{gss_canonicalize_name} and @code{gss_export_name}, and then
+comparing the exported names.  The first series of operation
+determines whether two (unauthenticated) names identify the same
+principal; the second whether a particular mechanism would
+authenticate them as the same principal.  These two operations will in
+general give the same results only for MNs.
+
+The @code{gss_name_t} datatype should be implemented as a pointer
+type. To allow the compiler to aid the application programmer by
+performing type-checking, the use of (void *) is discouraged.  A
+pointer to an implementation-defined type is the preferred choice.
+
+Storage is allocated by routines that return @code{gss_name_t}
+values. A procedure, @code{gss_release_name}, is provided to free
+storage associated with an internal-form name.
+
+@subsection Channel Bindings
+
+GSS-API supports the use of user-specified tags to identify a given
+context to the peer application.  These tags are intended to be used
+to identify the particular communications channel that carries the
+context.  Channel bindings are communicated to the GSS-API using the
+following structure:
+
+@verbatim
+   typedef struct gss_channel_bindings_struct {
+      OM_uint32       initiator_addrtype;
+      gss_buffer_desc initiator_address;
+      OM_uint32       acceptor_addrtype;
+      gss_buffer_desc acceptor_address;
+      gss_buffer_desc application_data;
+   } *gss_channel_bindings_t;
+@end verbatim
+
+The initiator_addrtype and acceptor_addrtype fields denote the type of
+addresses contained in the initiator_address and acceptor_address
+buffers.  The address type should be one of the following:
+
+@verbatim
+   GSS_C_AF_UNSPEC     Unspecified address type
+   GSS_C_AF_LOCAL      Host-local address type
+   GSS_C_AF_INET       Internet address type (e.g. IP)
+   GSS_C_AF_IMPLINK    ARPAnet IMP address type
+   GSS_C_AF_PUP        pup protocols (eg BSP) address type
+   GSS_C_AF_CHAOS      MIT CHAOS protocol address type
+   GSS_C_AF_NS         XEROX NS address type
+   GSS_C_AF_NBS        nbs address type
+   GSS_C_AF_ECMA       ECMA address type
+   GSS_C_AF_DATAKIT    datakit protocols address type
+   GSS_C_AF_CCITT      CCITT protocols
+   GSS_C_AF_SNA        IBM SNA address type
+   GSS_C_AF_DECnet     DECnet address type
+   GSS_C_AF_DLI        Direct data link interface address type
+   GSS_C_AF_LAT        LAT address type
+   GSS_C_AF_HYLINK     NSC Hyperchannel address type
+   GSS_C_AF_APPLETALK  AppleTalk address type
+   GSS_C_AF_BSC        BISYNC 2780/3780 address type
+   GSS_C_AF_DSS        Distributed system services address type
+   GSS_C_AF_OSI        OSI TP4 address type
+   GSS_C_AF_X25        X.25
+   GSS_C_AF_NULLADDR   No address specified
+@end verbatim
+
+Note that these symbols name address families rather than specific
+addressing formats.  For address families that contain several
+alternative address forms, the initiator_address and acceptor_address
+fields must contain sufficient information to determine which address
+form is used.  When not otherwise specified, addresses should be
+specified in network byte-order (that is, native byte-ordering for the
+address family).
+
+Conceptually, the GSS-API concatenates the initiator_addrtype,
+initiator_address, acceptor_addrtype, acceptor_address and
+application_data to form an octet string.  The mechanism calculates a
+MIC over this octet string, and binds the MIC to the context
+establishment token emitted by @code{gss_init_sec_context}. The same bindings
+are presented by the context acceptor to @code{gss_accept_sec_context}, and a
+MIC is calculated in the same way. The calculated MIC is compared with
+that found in the token, and if the MICs differ,
+@code{gss_accept_sec_context} will return a @code{GSS_S_BAD_BINDINGS} error, and the
+context will not be established.  Some mechanisms may include the
+actual channel binding data in the token (rather than just a MIC);
+applications should therefore not use confidential data as
+channel-binding components.
+
+Individual mechanisms may impose additional constraints on addresses
+and address types that may appear in channel bindings.  For example, a
+mechanism may verify that the initiator_address field of the channel
+bindings presented to @code{gss_init_sec_context} contains the correct
+network address of the host system.  Portable applications should
+therefore ensure that they either provide correct information for the
+address fields, or omit addressing information, specifying
+@code{GSS_C_AF_NULLADDR} as the address-types.
+
+@node Optional Parameters
+@section Optional Parameters
+
+Various parameters are described as optional.  This means that they
+follow a convention whereby a default value may be requested.  The
+following conventions are used for omitted parameters.  These
+conventions apply only to those parameters that are explicitly
+documented as optional.
+
+@itemize
+@item gss_buffer_t types.
+Specify GSS_C_NO_BUFFER as a value.  For an input parameter this
+signifies that default behavior is requested, while for an output
+parameter it indicates that the information that would be returned via
+the parameter is not required by the application.
+
+@item Integer types (input).
+Individual parameter documentation lists values to be used to indicate
+default actions.
+
+@item Integer types (output).
+Specify NULL as the value for the pointer.
+
+@item Pointer types.
+Specify NULL as the value.
+
+@item Object IDs.
+Specify GSS_C_NO_OID as the value.
+
+@item Object ID Sets.
+Specify GSS_C_NO_OID_SET as the value.
+
+@item Channel Bindings.
+Specify GSS_C_NO_CHANNEL_BINDINGS to indicate that channel bindings
+are not to be used.
+@end itemize
 
 @node Error Handling
 @section Error Handling
@@ -734,9 +1175,9 @@ codes.
 
 @subsection GSS status codes
 
-GSS-API routines return GSS status codes as their OM_uint32 function
-value.  These codes indicate errors that are independent of the
-underlying mechanism(s) used to provide the security service.  The
+GSS-API routines return GSS status codes as their @code{OM_uint32}
+function value.  These codes indicate errors that are independent of
+the underlying mechanism(s) used to provide the security service.  The
 errors that can be indicated via a GSS status code are either generic
 API routine errors (errors that are defined in the GSS-API
 specification) or calling errors (errors that are specific to these
@@ -854,37 +1295,44 @@ supplementary information bits.
 @findex GSS_ROUTINE_ERROR
 @findex GSS_SUPPLEMENTARY_INFO
 @findex GSS_ERROR
-All GSS_S_xxx symbols equate to complete OM_uint32 status codes,
-rather than to bitfield values.  For example, the actual value of the
-symbol GSS_S_BAD_NAMETYPE (value 3 in the routine error field) is
-3<<16.  The macros GSS_CALLING_ERROR(), GSS_ROUTINE_ERROR() and
-GSS_SUPPLEMENTARY_INFO() are provided, each of which takes a GSS
-status code and removes all but the relevant field.  For example, the
-value obtained by applying GSS_ROUTINE_ERROR to a status code removes
-the calling errors and supplementary info fields, leaving only the
-routine errors field.  The values delivered by these macros may be
-directly compared with a GSS_S_xxx symbol of the appropriate type.
-The macro GSS_ERROR() is also provided, which when applied to a GSS
-status code returns a non-zero value if the status code indicated a
-calling or routine error, and a zero value otherwise.  All macros
-defined by GSS-API evaluate their argument(s) exactly once.
+All GSS_S_xxx symbols equate to complete @code{OM_uint32} status
+codes, rather than to bitfield values.  For example, the actual value
+of the symbol @code{GSS_S_BAD_NAMETYPE} (value 3 in the routine error
+field) is 3<<16.  The macros @code{GSS_CALLING_ERROR},
+@code{GSS_ROUTINE_ERROR} and @code{GSS_SUPPLEMENTARY_INFO} are
+provided, each of which takes a GSS status code and removes all but
+the relevant field.  For example, the value obtained by applying
+@code{GSS_ROUTINE_ERROR} to a status code removes the calling errors
+and supplementary info fields, leaving only the routine errors field.
+The values delivered by these macros may be directly compared with a
+@code{GSS_S_xxx} symbol of the appropriate type.  The macro
+@code{GSS_ERROR} is also provided, which when applied to a GSS status
+code returns a non-zero value if the status code indicated a calling
+or routine error, and a zero value otherwise.  All macros defined by
+GSS-API evaluate their argument(s) exactly once.
 
 A GSS-API implementation may choose to signal calling errors in a
 platform-specific manner instead of, or in addition to the routine
 value; routine errors and supplementary info should be returned via
 major status values only.
 
-The GSS major status code GSS_S_FAILURE is used to indicate that the
-underlying mechanism detected an error for which no specific GSS
-status code is defined.  The mechanism-specific status code will
+The GSS major status code @code{GSS_S_FAILURE} is used to indicate
+that the underlying mechanism detected an error for which no specific
+GSS status code is defined.  The mechanism-specific status code will
 provide more details about the error.
+
+In addition to the explicit major status codes for each API function,
+the code @code{GSS_S_FAILURE} may be returned by any routine,
+indicating an implementation-specific or mechanism-specific error
+condition, further details of which are reported via the
+@code{minor_status} parameter.
 
 @subsection Mechanism-specific status codes
 
 GSS-API routines return a minor_status parameter, which is used to
 indicate specialized errors from the underlying security mechanism.
 This parameter may contain a single mechanism-specific error,
-indicated by a OM_uint32 value.
+indicated by a @code{OM_uint32} value.
 
 The minor_status parameter will always be set by a GSS-API routine,
 even if it returns a calling error or one of the generic API errors
@@ -895,7 +1343,7 @@ always be set by the routine, even in the event of an error, although
 in such cases the GSS-API routine may elect to set the returned
 parameter value to NULL to indicate that no storage was actually
 allocated.  Any length field associated with such pointers (as in a
-gss_buffer_desc structure) should also be set to zero in such cases.
+@code{gss_buffer_desc} structure) should also be set to zero in such cases.
 
 @node Credential Management
 @section Credential Management
