@@ -1,4 +1,3 @@
-# List of source files containing translatable strings for GPL GSS-API.
+# List of source files containing translatable strings for GSS.
 # Copyright (c) 2003 by Simon Josefsson
-
-lib/version.c
+lib/error.c
