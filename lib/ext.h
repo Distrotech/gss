@@ -22,11 +22,9 @@
 #ifndef GSS_EXT_H_
 #define GSS_EXT_H_
 
-extern const char *
-gss_check_version (const char *req_version);
+extern const char *gss_check_version (const char *req_version);
 
-extern int
-gss_oid_equal (gss_OID first_oid, gss_OID second_oid);
+extern int gss_oid_equal (gss_OID first_oid, gss_OID second_oid);
 
 extern OM_uint32
 gss_copy_oid (OM_uint32 * minor_status,
@@ -38,19 +36,16 @@ gss_duplicate_oid (OM_uint32 * minor_status,
 
 extern int
 gss_encapsulate_token (gss_buffer_t input_message,
-		       gss_OID token_oid,
-		       gss_buffer_t output_message);
+		       gss_OID token_oid, gss_buffer_t output_message);
 
 extern int
 gss_encapsulate_token_prefix (gss_buffer_t input_message,
 			      char *prefix, size_t prefixlen,
-			      gss_OID token_oid,
-			      gss_buffer_t output_message);
+			      gss_OID token_oid, gss_buffer_t output_message);
 
 extern int
 gss_decapsulate_token (gss_buffer_t input_message,
-		       gss_OID token_oid,
-		       gss_buffer_t output_message);
+		       gss_OID token_oid, gss_buffer_t output_message);
 
 extern gss_OID_desc GSS_C_NT_USER_NAME_static;
 extern gss_OID_desc GSS_C_NT_MACHINE_UID_NAME_static;

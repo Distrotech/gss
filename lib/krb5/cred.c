@@ -29,8 +29,7 @@ gss_krb5_acquire_cred1 (OM_uint32 * minor_status,
 			const gss_OID_set desired_mechs,
 			gss_cred_usage_t cred_usage,
 			gss_cred_id_t * output_cred_handle,
-			gss_OID_set * actual_mechs,
-			OM_uint32 * time_rec)
+			gss_OID_set * actual_mechs, OM_uint32 * time_rec)
 {
   _gss_krb5_cred_t k5 = (*output_cred_handle)->krb5;
   OM_uint32 maj_stat;
@@ -41,11 +40,11 @@ gss_krb5_acquire_cred1 (OM_uint32 * minor_status,
       gss_buffer_desc buf;
 
       buf.value = "host";
-      buf.length = strlen(buf.value);
+      buf.length = strlen (buf.value);
       maj_stat = gss_import_name (minor_status, &buf,
 				  GSS_C_NT_HOSTBASED_SERVICE,
-				  (gss_name_t*)&desired_name);
-      if (GSS_ERROR(maj_stat))
+				  (gss_name_t *) & desired_name);
+      if (GSS_ERROR (maj_stat))
 	return maj_stat;
     }
 
@@ -59,22 +58,22 @@ gss_krb5_acquire_cred1 (OM_uint32 * minor_status,
       maj_stat = gss_krb5_canonicalize_name (minor_status, desired_name,
 					     GSS_KRB5, &k5->peerptr);
     }
-  if (GSS_ERROR(maj_stat))
+  if (GSS_ERROR (maj_stat))
     return maj_stat;
 
-  if (shishi_init_server(&k5->sh) != SHISHI_OK)
+  if (shishi_init_server (&k5->sh) != SHISHI_OK)
     return GSS_S_FAILURE;
 
   {
     char *p;
 
-    p = xmalloc(k5->peerptr->length + 1);
-    memcpy(p, k5->peerptr->value, k5->peerptr->length);
+    p = xmalloc (k5->peerptr->length + 1);
+    memcpy (p, k5->peerptr->value, k5->peerptr->length);
     p[k5->peerptr->length] = 0;
 
     k5->key = shishi_hostkeys_for_serverrealm (k5->sh, p,
-					       shishi_realm_default(k5->sh));
-    free(p);
+					       shishi_realm_default (k5->sh));
+    free (p);
   }
 
   if (!k5->key)
@@ -97,8 +96,7 @@ gss_krb5_acquire_cred (OM_uint32 * minor_status,
 		       const gss_OID_set desired_mechs,
 		       gss_cred_usage_t cred_usage,
 		       gss_cred_id_t * output_cred_handle,
-		       gss_OID_set * actual_mechs,
-		       OM_uint32 * time_rec)
+		       gss_OID_set * actual_mechs, OM_uint32 * time_rec)
 {
   OM_uint32 maj_stat;
   gss_cred_id_t p;
@@ -109,30 +107,30 @@ gss_krb5_acquire_cred (OM_uint32 * minor_status,
   if (actual_mechs)
     {
       maj_stat = gss_create_empty_oid_set (minor_status, actual_mechs);
-      if (GSS_ERROR(maj_stat))
+      if (GSS_ERROR (maj_stat))
 	return maj_stat;
-      maj_stat = gss_add_oid_set_member (minor_status, GSS_KRB5, actual_mechs);
-      if (GSS_ERROR(maj_stat))
+      maj_stat =
+	gss_add_oid_set_member (minor_status, GSS_KRB5, actual_mechs);
+      if (GSS_ERROR (maj_stat))
 	return maj_stat;
     }
 
-  p = xcalloc(sizeof(*p), 1);
+  p = xcalloc (sizeof (*p), 1);
   p->mech = GSS_KRB5;
-  p->krb5 = xcalloc(sizeof(*p->krb5), 1);
+  p->krb5 = xcalloc (sizeof (*p->krb5), 1);
   p->krb5->peerptr = &p->krb5->peer;
 
   maj_stat = gss_krb5_acquire_cred1 (minor_status, desired_name, time_req,
 				     desired_mechs, cred_usage,
-				     &p, actual_mechs,
-				     time_rec);
-  if (GSS_ERROR(maj_stat))
+				     &p, actual_mechs, time_rec);
+  if (GSS_ERROR (maj_stat))
     {
       OM_uint32 junk;
 
-      gss_release_oid_set(&junk, actual_mechs);
+      gss_release_oid_set (&junk, actual_mechs);
 
-      free(p->krb5);
-      free(p);
+      free (p->krb5);
+      free (p);
       *output_cred_handle = NULL;
 
       return maj_stat;
@@ -158,7 +156,7 @@ gss_krb5_inquire_cred (OM_uint32 * minor_status,
 
   if (cred_handle == GSS_C_NO_CREDENTIAL)
     {
-      
+
     }
 
   if (name)

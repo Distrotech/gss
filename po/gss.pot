@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: bug-gss@josefsson.org\n"
-"POT-Creation-Date: 2003-11-23 10:23+0100\n"
+"POT-Creation-Date: 2004-01-11 01:32+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -136,79 +136,79 @@ msgstr ""
 msgid "No error"
 msgstr ""
 
-#: lib/krb5.c:716
+#: lib/krb5/error.c:34
 msgid "No @ in SERVICE-NAME name string"
 msgstr ""
 
-#: lib/krb5.c:718
+#: lib/krb5/error.c:36
 msgid "STRING-UID-NAME contains nondigits"
 msgstr ""
 
-#: lib/krb5.c:720
+#: lib/krb5/error.c:38
 msgid "UID does not resolve to username"
 msgstr ""
 
-#: lib/krb5.c:722
+#: lib/krb5/error.c:40
 msgid "Validation error"
 msgstr ""
 
-#: lib/krb5.c:724
+#: lib/krb5/error.c:42
 msgid "Couldn't allocate gss_buffer_t data"
 msgstr ""
 
-#: lib/krb5.c:726
+#: lib/krb5/error.c:44
 msgid "Message context invalid"
 msgstr ""
 
-#: lib/krb5.c:728
+#: lib/krb5/error.c:46
 msgid "Buffer is the wrong size"
 msgstr ""
 
-#: lib/krb5.c:730
+#: lib/krb5/error.c:48
 msgid "Credential usage type is unknown"
 msgstr ""
 
-#: lib/krb5.c:732
+#: lib/krb5/error.c:50
 msgid "Unknown quality of protection specified"
 msgstr ""
 
-#: lib/krb5.c:735
+#: lib/krb5/error.c:53
 msgid "Principal in credential cache does not match desired name"
 msgstr ""
 
-#: lib/krb5.c:737
+#: lib/krb5/error.c:55
 msgid "No principal in keytab matches desired name"
 msgstr ""
 
-#: lib/krb5.c:739
+#: lib/krb5/error.c:57
 msgid "Credential cache has no TGT"
 msgstr ""
 
-#: lib/krb5.c:741
+#: lib/krb5/error.c:59
 msgid "Authenticator has no subkey"
 msgstr ""
 
-#: lib/krb5.c:743
+#: lib/krb5/error.c:61
 msgid "Context is already fully established"
 msgstr ""
 
-#: lib/krb5.c:745
+#: lib/krb5/error.c:63
 msgid "Unknown signature type in token"
 msgstr ""
 
-#: lib/krb5.c:747
+#: lib/krb5/error.c:65
 msgid "Invalid field length in token"
 msgstr ""
 
-#: lib/krb5.c:749
+#: lib/krb5/error.c:67
 msgid "Attempt to use incomplete security context"
 msgstr ""
 
-#: lib/krb5.c:766
+#: lib/krb5/error.c:84
 msgid "No krb5 error"
 msgstr ""
 
-#: lib/krb5.c:794
+#: lib/krb5/error.c:112
 msgid "Unknown krb5 error"
 msgstr ""
 
@@ -228,10 +228,10 @@ msgstr ""
 msgid "warning: gss_unseal() is obsolete, use gss_unwrap() instead."
 msgstr ""
 
-#: lib/meta.c:31
+#: lib/meta.c:32
 msgid "warning: no suitable mechanism found\n"
 msgstr ""
 
-#: lib/meta.c:43
+#: lib/meta.c:44
 msgid "No suitable mechanism supported"
 msgstr ""

@@ -120,8 +120,7 @@ gss_wrap (OM_uint32 * minor_status,
   mech = _gss_find_mech (context_handle->mech);
 
   return mech->wrap (minor_status, context_handle, conf_req_flag, qop_req,
-		     input_message_buffer, conf_state,
-		     output_message_buffer);
+		     input_message_buffer, conf_state, output_message_buffer);
 }
 
 /**

@@ -46,5 +46,4 @@ typedef struct _gss_krb5_ctx_struct
   int repdone;
 } _gss_krb5_ctx_desc, *_gss_krb5_ctx_t;
 
-OM_uint32
-gss_krb5_tktlifetime (Shishi_tkt * tkt);
+OM_uint32 gss_krb5_tktlifetime (Shishi_tkt * tkt);

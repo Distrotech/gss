@@ -61,7 +61,7 @@ gss_display_name (OM_uint32 * minor_status,
     return GSS_S_BAD_NAME;
 
   output_name_buffer->length = input_name->length;
-  output_name_buffer->value = xmalloc (input_name->length+1);
+  output_name_buffer->value = xmalloc (input_name->length + 1);
   if (input_name->value)
     memcpy (output_name_buffer->value, input_name->value, input_name->length);
 
@@ -88,7 +88,7 @@ gss_compare_name (OM_uint32 * minor_status,
     return GSS_S_BAD_NAMETYPE;
 
   name_equal == (name1->length == name2->length) &&
-    memcmp(name1->value, name2->value, name1->length) == 0;
+    memcmp (name1->value, name2->value, name1->length) == 0;
 
   if (minor_status)
     *minor_status = 0;
@@ -122,7 +122,7 @@ gss_release_name (OM_uint32 * minor_status, gss_name_t * name)
   if ((*name)->value)
     free ((*name)->value);
 
-  free(*name);
+  free (*name);
   *name = GSS_C_NO_NAME;
 
   return GSS_S_COMPLETE;
@@ -161,8 +161,7 @@ gss_inquire_names_for_mech (OM_uint32 * minor_status,
 static OM_uint32
 _gss_inquire_mechs_for_name2 (OM_uint32 * minor_status,
 			      _gss_mech_api_t mech,
-			      gss_OID name_type,
-			      gss_OID_set *mech_types)
+			      gss_OID name_type, gss_OID_set * mech_types)
 {
   gss_OID_set oids;
   int supported;
@@ -183,8 +182,7 @@ _gss_inquire_mechs_for_name2 (OM_uint32 * minor_status,
   if (supported)
     {
       maj_stat = gss_add_oid_set_member (minor_status,
-					 mech->mech,
-					 mech_types);
+					 mech->mech, mech_types);
       if (maj_stat != GSS_S_COMPLETE)
 	{
 	  gss_release_oid_set (minor_status, &oids);
@@ -200,8 +198,7 @@ _gss_inquire_mechs_for_name2 (OM_uint32 * minor_status,
 
 static OM_uint32
 _gss_inquire_mechs_for_name1 (OM_uint32 * minor_status,
-			      gss_OID name_type,
-			      gss_OID_set *mech_types)
+			      gss_OID name_type, gss_OID_set * mech_types)
 {
   OM_uint32 maj_stat;
   int i;
@@ -210,8 +207,7 @@ _gss_inquire_mechs_for_name1 (OM_uint32 * minor_status,
     {
       maj_stat = _gss_inquire_mechs_for_name2 (minor_status,
 					       &_gss_mech_apis[i],
-					       name_type,
-					       mech_types);
+					       name_type, mech_types);
       if (maj_stat != GSS_S_COMPLETE)
 	return maj_stat;
     }
@@ -280,11 +276,11 @@ gss_duplicate_name (OM_uint32 * minor_status,
 
   maj_stat = gss_duplicate_oid (minor_status, src_name->type,
 				&((*dest_name)->type));
-  if (GSS_ERROR(maj_stat))
+  if (GSS_ERROR (maj_stat))
     return maj_stat;
   (*dest_name)->length = src_name->length;
-  (*dest_name)->value = xmalloc(src_name->length);
-  memcpy((*dest_name)->value, src_name->value, src_name->length);
+  (*dest_name)->value = xmalloc (src_name->length);
+  memcpy ((*dest_name)->value, src_name->value, src_name->length);
 
   if (minor_status)
     *minor_status = 0;

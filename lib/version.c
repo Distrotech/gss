@@ -42,8 +42,7 @@ _gss_parse_version_number (const char *s, int *number)
 
 
 static const char *
-_gss_parse_version_string (const char *s, int *major, int *minor,
-			     int *micro)
+_gss_parse_version_string (const char *s, int *major, int *minor, int *micro)
 {
   s = _gss_parse_version_number (s, major);
   if (!s || *s != '.')
@@ -85,12 +84,11 @@ gss_check_version (const char *req_version)
   if (!req_version)
     return ver;
 
-  my_plvl = _gss_parse_version_string (ver,
-					 &my_major, &my_minor, &my_micro);
+  my_plvl = _gss_parse_version_string (ver, &my_major, &my_minor, &my_micro);
   if (!my_plvl)
     return NULL;		/* very strange our own version is bogus */
   rq_plvl = _gss_parse_version_string (req_version, &rq_major, &rq_minor,
-					 &rq_micro);
+				       &rq_micro);
   if (!rq_plvl)
     return NULL;		/* req version string is invalid */
 

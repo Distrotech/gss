@@ -31,40 +31,40 @@ struct gss_status_codes
 struct gss_status_codes gss_krb5_errors[] = {
   /* 4.1.1. Non-Kerberos-specific codes */
   {GSS_KRB5_S_G_BAD_SERVICE_NAME, "GSS_KRB5_S_G_BAD_SERVICE_NAME",
-   N_ ("No @ in SERVICE-NAME name string")},
+   N_("No @ in SERVICE-NAME name string")},
   {GSS_KRB5_S_G_BAD_STRING_UID, "GSS_KRB5_S_G_BAD_STRING_UID",
-   N_ ("STRING-UID-NAME contains nondigits")},
+   N_("STRING-UID-NAME contains nondigits")},
   {GSS_KRB5_S_G_NOUSER, "GSS_KRB5_S_G_NOUSER",
-   N_ ("UID does not resolve to username")},
+   N_("UID does not resolve to username")},
   {GSS_KRB5_S_G_VALIDATE_FAILED, "GSS_KRB5_S_G_VALIDATE_FAILED",
-   N_ ("Validation error")},
+   N_("Validation error")},
   {GSS_KRB5_S_G_BUFFER_ALLOC, "GSS_KRB5_S_G_BUFFER_ALLOC",
-   N_ ("Couldn't allocate gss_buffer_t data")},
+   N_("Couldn't allocate gss_buffer_t data")},
   {GSS_KRB5_S_G_BAD_MSG_CTX, "GSS_KRB5_S_G_BAD_MSG_CTX",
-   N_ ("Message context invalid")},
+   N_("Message context invalid")},
   {GSS_KRB5_S_G_WRONG_SIZE, "GSS_KRB5_S_G_WRONG_SIZE",
-   N_ ("Buffer is the wrong size")},
+   N_("Buffer is the wrong size")},
   {GSS_KRB5_S_G_BAD_USAGE, "GSS_KRB5_S_G_BAD_USAGE",
-   N_ ("Credential usage type is unknown")},
+   N_("Credential usage type is unknown")},
   {GSS_KRB5_S_G_UNKNOWN_QOP, "GSS_KRB5_S_G_UNKNOWN_QOP",
-   N_ ("Unknown quality of protection specified")},
+   N_("Unknown quality of protection specified")},
   /* 4.1.2. Kerberos-specific-codes */
   {GSS_KRB5_S_KG_CCACHE_NOMATCH, "GSS_KRB5_S_KG_CCACHE_NOMATCH",
-   N_ ("Principal in credential cache does not match desired name")},
+   N_("Principal in credential cache does not match desired name")},
   {GSS_KRB5_S_KG_KEYTAB_NOMATCH, "GSS_KRB5_S_KG_KEYTAB_NOMATCH",
-   N_ ("No principal in keytab matches desired name")},
+   N_("No principal in keytab matches desired name")},
   {GSS_KRB5_S_KG_TGT_MISSING, "GSS_KRB5_S_KG_TGT_MISSING",
-   N_ ("Credential cache has no TGT")},
+   N_("Credential cache has no TGT")},
   {GSS_KRB5_S_KG_NO_SUBKEY, "GSS_KRB5_S_KG_NO_SUBKEY",
-   N_ ("Authenticator has no subkey")},
+   N_("Authenticator has no subkey")},
   {GSS_KRB5_S_KG_CONTEXT_ESTABLISHED, "GSS_KRB5_S_KG_CONTEXT_ESTABLISHED",
-   N_ ("Context is already fully established")},
+   N_("Context is already fully established")},
   {GSS_KRB5_S_KG_BAD_SIGN_TYPE, "GSS_KRB5_S_KG_BAD_SIGN_TYPE",
-   N_ ("Unknown signature type in token")},
+   N_("Unknown signature type in token")},
   {GSS_KRB5_S_KG_BAD_LENGTH, "GSS_KRB5_S_KG_BAD_LENGTH",
-   N_ ("Invalid field length in token")},
+   N_("Invalid field length in token")},
   {GSS_KRB5_S_KG_CTX_INCOMPLETE, "GSS_KRB5_S_KG_CTX_INCOMPLETE",
-   N_ ("Attempt to use incomplete security context")}
+   N_("Attempt to use incomplete security context")}
 };
 
 OM_uint32
@@ -81,8 +81,8 @@ gss_krb5_display_status (OM_uint32 * minor_status,
   switch (status_value)
     {
     case 0:
-      status_string->value = xstrdup(_("No krb5 error"));
-      status_string->length = strlen(status_string->value);
+      status_string->value = xstrdup (_("No krb5 error"));
+      status_string->length = strlen (status_string->value);
       break;
 
       /* 4.1.1. Non-Kerberos-specific codes */
@@ -104,13 +104,14 @@ gss_krb5_display_status (OM_uint32 * minor_status,
     case GSS_KRB5_S_KG_BAD_SIGN_TYPE:
     case GSS_KRB5_S_KG_BAD_LENGTH:
     case GSS_KRB5_S_KG_CTX_INCOMPLETE:
-      status_string->value = xstrdup(_(gss_krb5_errors[status_value-1].text));
-      status_string->length = strlen(status_string->value);
+      status_string->value =
+	xstrdup (_(gss_krb5_errors[status_value - 1].text));
+      status_string->length = strlen (status_string->value);
       break;
 
     default:
-      status_string->value = xstrdup(_("Unknown krb5 error"));
-      status_string->length = strlen(status_string->value);
+      status_string->value = xstrdup (_("Unknown krb5 error"));
+      status_string->length = strlen (status_string->value);
       break;
     }
 

@@ -28,8 +28,7 @@
 OM_uint32
 gss_krb5_canonicalize_name (OM_uint32 * minor_status,
 			    const gss_name_t input_name,
-			    const gss_OID mech_type,
-			    gss_name_t * output_name)
+			    const gss_OID mech_type, gss_name_t * output_name)
 {
   OM_uint32 maj_stat;
 
@@ -43,23 +42,23 @@ gss_krb5_canonicalize_name (OM_uint32 * minor_status,
       /* XXX we don't do DNS name canoncalization, it may be insecure */
 
       maj_stat = gss_duplicate_name (minor_status, input_name, output_name);
-      if (GSS_ERROR(maj_stat))
+      if (GSS_ERROR (maj_stat))
 	return maj_stat;
       (*output_name)->type = GSS_KRB5_NT_PRINCIPAL_NAME;
 
-      if ((p = memchr((*output_name)->value, '@', (*output_name)->length)))
+      if ((p = memchr ((*output_name)->value, '@', (*output_name)->length)))
 	{
 	  *p = '/';
 	}
       else
 	{
-	  char *hostname = xgethostname();
-	  size_t hostlen = strlen(hostname);
+	  char *hostname = xgethostname ();
+	  size_t hostlen = strlen (hostname);
 	  size_t oldlen = (*output_name)->length;
 	  size_t newlen = oldlen + 1 + hostlen;
-	  (*output_name)->value = xrealloc((*output_name)->value, newlen);
+	  (*output_name)->value = xrealloc ((*output_name)->value, newlen);
 	  (*output_name)->value[oldlen] = '/';
-	  memcpy((*output_name)->value + 1 + oldlen, hostname, hostlen);
+	  memcpy ((*output_name)->value + 1 + oldlen, hostname, hostlen);
 	  (*output_name)->length = newlen;
 	}
     }

@@ -353,8 +353,7 @@ gss_init_sec_context (OM_uint32 * minor_status,
   _gss_mech_api_t mech;
 
   mech = (*context_handle == GSS_C_NO_CONTEXT) ?
-    _gss_find_mech (mech_type) :
-    _gss_find_mech ((*context_handle)->mech);
+    _gss_find_mech (mech_type) : _gss_find_mech ((*context_handle)->mech);
 
   return mech->init_sec_context (minor_status,
 				 initiator_cred_handle,
@@ -366,9 +365,7 @@ gss_init_sec_context (OM_uint32 * minor_status,
 				 input_chan_bindings,
 				 input_token,
 				 actual_mech_type,
-				 output_token,
-				 ret_flags,
-				 time_rec);
+				 output_token, ret_flags, time_rec);
 }
 
 /**
@@ -651,8 +648,7 @@ gss_accept_sec_context (OM_uint32 * minor_status,
 				   mech_type,
 				   output_token,
 				   ret_flags,
-				   time_rec,
-				   delegated_cred_handle);
+				   time_rec, delegated_cred_handle);
 }
 
 /**
@@ -727,12 +723,12 @@ gss_delete_sec_context (OM_uint32 * minor_status,
 
   ret = mech->delete_sec_context (minor_status, context_handle, output_token);
   if (GSS_ERROR (ret))
-    /* XXX? Ignore error. */;
+    /* XXX? Ignore error. */ ;
 
   (*context_handle)->peerptr = &(*context_handle)->peer;
   ret = gss_release_name (minor_status, &(*context_handle)->peerptr);
   if (GSS_ERROR (ret))
-    /* XXX? Ignore error. */;
+    /* XXX? Ignore error. */ ;
 
   free (*context_handle);
   *context_handle = GSS_C_NO_CONTEXT;
@@ -808,8 +804,7 @@ gss_process_context_token (OM_uint32 * minor_status,
  **/
 OM_uint32
 gss_context_time (OM_uint32 * minor_status,
-		  const gss_ctx_id_t context_handle,
-		  OM_uint32 * time_rec)
+		  const gss_ctx_id_t context_handle, OM_uint32 * time_rec)
 {
   _gss_mech_api_t mech;
 

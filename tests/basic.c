@@ -68,255 +68,264 @@ main (int argc, char *argv[])
   oids = GSS_C_NO_OID_SET;
   maj_stat = gss_create_empty_oid_set (&min_stat, &oids);
   if (maj_stat == GSS_S_COMPLETE)
-    success("gss_create_empty_oid_set() OK\n");
+    success ("gss_create_empty_oid_set() OK\n");
   else
-    fail("gss_create_empty_oid_set() failed (%d,%d)\n", maj_stat, min_stat);
+    fail ("gss_create_empty_oid_set() failed (%d,%d)\n", maj_stat, min_stat);
 
   /* Test empty set */
-  maj_stat = gss_test_oid_set_member (&min_stat, GSS_C_NT_USER_NAME, oids, &n);
+  maj_stat =
+    gss_test_oid_set_member (&min_stat, GSS_C_NT_USER_NAME, oids, &n);
   if (maj_stat == GSS_S_COMPLETE)
-    success("gss_test_oid_set_member() OK\n");
+    success ("gss_test_oid_set_member() OK\n");
   else
-    fail("gss_test_oid_set_member() failed (%d,%d)\n", maj_stat, min_stat);
+    fail ("gss_test_oid_set_member() failed (%d,%d)\n", maj_stat, min_stat);
 
   if (debug)
-    printf("    OID present in empty set => %d\n", n);
+    printf ("    OID present in empty set => %d\n", n);
 
   if (!n)
-    success("gss_test_oid_set_member() OK\n");
+    success ("gss_test_oid_set_member() OK\n");
   else
-    fail("gss_test_oid_set_member() failed (%d,%d)\n", maj_stat, min_stat);
+    fail ("gss_test_oid_set_member() failed (%d,%d)\n", maj_stat, min_stat);
 
   /* Add an OID */
   maj_stat = gss_add_oid_set_member (&min_stat, GSS_C_NT_USER_NAME, &oids);
   if (maj_stat == GSS_S_COMPLETE)
-    success("gss_add_oid_set_member() OK\n");
+    success ("gss_add_oid_set_member() OK\n");
   else
-    fail("gss_add_oid_set_member() failed (%d,%d)\n", maj_stat, min_stat);
+    fail ("gss_add_oid_set_member() failed (%d,%d)\n", maj_stat, min_stat);
 
   /* Test set for added OID */
-  maj_stat = gss_test_oid_set_member (&min_stat, GSS_C_NT_USER_NAME, oids, &n);
+  maj_stat =
+    gss_test_oid_set_member (&min_stat, GSS_C_NT_USER_NAME, oids, &n);
   if (maj_stat == GSS_S_COMPLETE)
-    success("gss_test_oid_set_member() OK\n");
+    success ("gss_test_oid_set_member() OK\n");
   else
-    fail("gss_test_oid_set_member() failed (%d,%d)\n", maj_stat, min_stat);
+    fail ("gss_test_oid_set_member() failed (%d,%d)\n", maj_stat, min_stat);
 
   if (debug)
-    printf("    OID present in set with the OID added to it => %d\n", n);
+    printf ("    OID present in set with the OID added to it => %d\n", n);
 
   if (n)
-    success("gss_test_oid_set_member() OK\n");
+    success ("gss_test_oid_set_member() OK\n");
   else
-    fail("gss_test_oid_set_member() failed (%d,%d)\n", maj_stat, min_stat);
+    fail ("gss_test_oid_set_member() failed (%d,%d)\n", maj_stat, min_stat);
 
   /* Test set for another OID */
-  maj_stat = gss_test_oid_set_member (&min_stat, GSS_C_NT_ANONYMOUS, oids, &n);
+  maj_stat =
+    gss_test_oid_set_member (&min_stat, GSS_C_NT_ANONYMOUS, oids, &n);
   if (maj_stat == GSS_S_COMPLETE)
-    success("gss_test_oid_set_member() OK\n");
+    success ("gss_test_oid_set_member() OK\n");
   else
-    fail("gss_test_oid_set_member() failed (%d,%d)\n", maj_stat, min_stat);
+    fail ("gss_test_oid_set_member() failed (%d,%d)\n", maj_stat, min_stat);
 
   if (debug)
-    printf("    Another OID present in set without the OID => %d\n", n);
+    printf ("    Another OID present in set without the OID => %d\n", n);
 
   if (!n)
-    success("gss_test_oid_set_member() OK\n");
+    success ("gss_test_oid_set_member() OK\n");
   else
-    fail("gss_test_oid_set_member() failed (%d,%d)\n", maj_stat, min_stat);
+    fail ("gss_test_oid_set_member() failed (%d,%d)\n", maj_stat, min_stat);
 
   /* Add another OID */
   maj_stat = gss_add_oid_set_member (&min_stat, GSS_C_NT_ANONYMOUS, &oids);
   if (maj_stat == GSS_S_COMPLETE)
-    success("gss_add_oid_set_member() OK\n");
+    success ("gss_add_oid_set_member() OK\n");
   else
-    fail("gss_add_oid_set_member() failed (%d,%d)\n", maj_stat, min_stat);
+    fail ("gss_add_oid_set_member() failed (%d,%d)\n", maj_stat, min_stat);
 
   /* Test set for added OID */
-  maj_stat = gss_test_oid_set_member (&min_stat, GSS_C_NT_ANONYMOUS, oids, &n);
+  maj_stat =
+    gss_test_oid_set_member (&min_stat, GSS_C_NT_ANONYMOUS, oids, &n);
   if (maj_stat == GSS_S_COMPLETE)
-    success("gss_test_oid_set_member() OK\n");
+    success ("gss_test_oid_set_member() OK\n");
   else
-    fail("gss_test_oid_set_member() failed (%d,%d)\n", maj_stat, min_stat);
+    fail ("gss_test_oid_set_member() failed (%d,%d)\n", maj_stat, min_stat);
 
   if (debug)
-    printf("    Another OID present in set with it added => %d\n", n);
+    printf ("    Another OID present in set with it added => %d\n", n);
 
   if (n)
-    success("gss_test_oid_set_member() OK\n");
+    success ("gss_test_oid_set_member() OK\n");
   else
-    fail("gss_test_oid_set_member() failed (%d,%d)\n", maj_stat, min_stat);
+    fail ("gss_test_oid_set_member() failed (%d,%d)\n", maj_stat, min_stat);
 
   /* Test set for first OID */
-  maj_stat = gss_test_oid_set_member (&min_stat, GSS_C_NT_USER_NAME, oids, &n);
+  maj_stat =
+    gss_test_oid_set_member (&min_stat, GSS_C_NT_USER_NAME, oids, &n);
   if (maj_stat == GSS_S_COMPLETE)
-    success("gss_test_oid_set_member() OK\n");
+    success ("gss_test_oid_set_member() OK\n");
   else
-    fail("gss_test_oid_set_member() failed (%d,%d)\n", maj_stat, min_stat);
+    fail ("gss_test_oid_set_member() failed (%d,%d)\n", maj_stat, min_stat);
 
   if (debug)
-    printf("    First OID present in set => %d\n", n);
+    printf ("    First OID present in set => %d\n", n);
 
   if (n)
-    success("gss_test_oid_set_member() OK\n");
+    success ("gss_test_oid_set_member() OK\n");
   else
-    fail("gss_test_oid_set_member() failed (%d,%d)\n", maj_stat, min_stat);
+    fail ("gss_test_oid_set_member() failed (%d,%d)\n", maj_stat, min_stat);
 
   /* Check mechs */
   oids = GSS_C_NO_OID_SET;
   maj_stat = gss_indicate_mechs (&min_stat, &oids);
   if (maj_stat == GSS_S_COMPLETE)
-    success("gss_indicate_mechs() OK\n");
+    success ("gss_indicate_mechs() OK\n");
   else
-    fail("gss_indicate_mechs() failed (%d,%d)\n", maj_stat, min_stat);
+    fail ("gss_indicate_mechs() failed (%d,%d)\n", maj_stat, min_stat);
 
 #ifdef USE_KERBEROS5
   maj_stat = gss_test_oid_set_member (&min_stat, GSS_KRB5, oids, &n);
   if (maj_stat == GSS_S_COMPLETE)
-    success("gss_test_oid_set_member() OK\n");
+    success ("gss_test_oid_set_member() OK\n");
   else
-    fail("gss_test_oid_set_member() failed (%d,%d)\n", maj_stat, min_stat);
+    fail ("gss_test_oid_set_member() failed (%d,%d)\n", maj_stat, min_stat);
 
   if (debug)
-    printf("    kerberos5 supported => %d\n", n);
+    printf ("    kerberos5 supported => %d\n", n);
 
   if (n)
-    success("gss_test_oid_set_member() OK\n");
+    success ("gss_test_oid_set_member() OK\n");
   else
-    fail("gss_test_oid_set_member() failed (%d,%d)\n", maj_stat, min_stat);
+    fail ("gss_test_oid_set_member() failed (%d,%d)\n", maj_stat, min_stat);
 #endif
 
   maj_stat = gss_release_oid_set (&min_stat, &oids);
   if (maj_stat == GSS_S_COMPLETE)
-    success("gss_release_oid_set() OK\n");
+    success ("gss_release_oid_set() OK\n");
   else
-    fail("gss_release_oid_set() failed (%d,%d)\n", maj_stat, min_stat);
+    fail ("gss_release_oid_set() failed (%d,%d)\n", maj_stat, min_stat);
 
 #ifdef USE_KERBEROS5
   maj_stat = gss_inquire_names_for_mech (&min_stat, GSS_KRB5, &oids);
   if (maj_stat == GSS_S_COMPLETE)
-    success("gss_inquire_names_for_mech() OK\n");
+    success ("gss_inquire_names_for_mech() OK\n");
   else
-    fail("gss_inquire_names_for_mech() failed (%d,%d)\n", maj_stat, min_stat);
+    fail ("gss_inquire_names_for_mech() failed (%d,%d)\n", maj_stat,
+	  min_stat);
 
   /* Check if KRB5 supports PRINCIPAL_NAME name type */
   maj_stat = gss_test_oid_set_member (&min_stat, GSS_KRB5_NT_PRINCIPAL_NAME,
 				      oids, &n);
   if (maj_stat == GSS_S_COMPLETE)
-    success("gss_test_oid_set_member() OK\n");
+    success ("gss_test_oid_set_member() OK\n");
   else
-    fail("gss_test_oid_set_member() failed (%d,%d)\n", maj_stat, min_stat);
+    fail ("gss_test_oid_set_member() failed (%d,%d)\n", maj_stat, min_stat);
 
   if (debug)
-    printf("    kerberos5 supports PRINCIPAL_NAME name type => %d\n", n);
+    printf ("    kerberos5 supports PRINCIPAL_NAME name type => %d\n", n);
 
   if (n)
-    success("gss_test_oid_set_member() OK\n");
+    success ("gss_test_oid_set_member() OK\n");
   else
-    fail("gss_test_oid_set_member() failed (%d,%d)\n", maj_stat, min_stat);
+    fail ("gss_test_oid_set_member() failed (%d,%d)\n", maj_stat, min_stat);
 
   /* Check if KRB5 supports HOSTBASED NAME name type */
   maj_stat = gss_test_oid_set_member (&min_stat, GSS_C_NT_HOSTBASED_SERVICE,
 				      oids, &n);
   if (maj_stat == GSS_S_COMPLETE)
-    success("gss_test_oid_set_member() OK\n");
+    success ("gss_test_oid_set_member() OK\n");
   else
-    fail("gss_test_oid_set_member() failed (%d,%d)\n", maj_stat, min_stat);
+    fail ("gss_test_oid_set_member() failed (%d,%d)\n", maj_stat, min_stat);
 
   if (debug)
-    printf("    kerberos5 supports HOSTBASED_SERVICE name type => %d\n", n);
+    printf ("    kerberos5 supports HOSTBASED_SERVICE name type => %d\n", n);
 
   if (n)
-    success("gss_test_oid_set_member() OK\n");
+    success ("gss_test_oid_set_member() OK\n");
   else
-    fail("gss_test_oid_set_member() failed (%d,%d)\n", maj_stat, min_stat);
+    fail ("gss_test_oid_set_member() failed (%d,%d)\n", maj_stat, min_stat);
 
   /* Check if KRB5 supports ANONYMOUS name type */
-  maj_stat = gss_test_oid_set_member (&min_stat, GSS_C_NT_ANONYMOUS, oids, &n);
+  maj_stat =
+    gss_test_oid_set_member (&min_stat, GSS_C_NT_ANONYMOUS, oids, &n);
   if (maj_stat == GSS_S_COMPLETE)
-    success("gss_test_oid_set_member() OK\n");
+    success ("gss_test_oid_set_member() OK\n");
   else
-    fail("gss_test_oid_set_member() failed (%d,%d)\n", maj_stat, min_stat);
+    fail ("gss_test_oid_set_member() failed (%d,%d)\n", maj_stat, min_stat);
 
   if (debug)
-    printf("    kerberos5 supports ANONYMOUS name type => %d\n", n);
+    printf ("    kerberos5 supports ANONYMOUS name type => %d\n", n);
 
   if (!n)
-    success("gss_test_oid_set_member() OK\n");
+    success ("gss_test_oid_set_member() OK\n");
   else
-    fail("gss_test_oid_set_member() failed (%d,%d)\n", maj_stat, min_stat);
+    fail ("gss_test_oid_set_member() failed (%d,%d)\n", maj_stat, min_stat);
 
   maj_stat = gss_release_oid_set (&min_stat, &oids);
   if (maj_stat == GSS_S_COMPLETE)
-    success("gss_release_oid_set() OK\n");
+    success ("gss_release_oid_set() OK\n");
   else
-    fail("gss_release_oid_set() failed (%d,%d)\n", maj_stat, min_stat);
+    fail ("gss_release_oid_set() failed (%d,%d)\n", maj_stat, min_stat);
 #endif
 
   /* Check name */
   service = NULL;
   bufdesc.value = "imap@server.example.org@FOO";
-  bufdesc.length = strlen(bufdesc.value);
+  bufdesc.length = strlen (bufdesc.value);
 
   maj_stat = gss_import_name (&min_stat, &bufdesc, GSS_C_NT_HOSTBASED_SERVICE,
 			      &service);
   if (maj_stat == GSS_S_COMPLETE)
-    success("gss_import_name() OK\n");
+    success ("gss_import_name() OK\n");
   else
-    fail("gss_import_name() failed (%d,%d)\n", maj_stat, min_stat);
+    fail ("gss_import_name() failed (%d,%d)\n", maj_stat, min_stat);
 
   maj_stat = gss_display_name (&min_stat, service, &bufdesc2, NULL);
   if (maj_stat == GSS_S_COMPLETE)
-    success("gss_display_name() OK\n");
+    success ("gss_display_name() OK\n");
   else
-    fail("gss_display_name() failed (%d,%d)\n", maj_stat, min_stat);
+    fail ("gss_display_name() failed (%d,%d)\n", maj_stat, min_stat);
 
   if (debug)
-    printf("    display_name() => %d: %s\n", bufdesc2.length, bufdesc2.value);
+    printf ("    display_name() => %d: %s\n", bufdesc2.length,
+	    bufdesc2.value);
 
 #ifdef USE_KERBEROS5
   /* NB: "service" resused from previous test */
   maj_stat = gss_inquire_mechs_for_name (&min_stat, service, &oids);
   if (maj_stat == GSS_S_COMPLETE)
-    success("gss_inquire_mechs_for_name() OK\n");
+    success ("gss_inquire_mechs_for_name() OK\n");
   else
-    fail("gss_inquire_mechs_for_name() failed (%d,%d)\n", maj_stat, min_stat);
+    fail ("gss_inquire_mechs_for_name() failed (%d,%d)\n", maj_stat,
+	  min_stat);
 
   /* Check GSS_C_NT_HOSTBASED_SERVICE name type is supported by KRB5 */
   maj_stat = gss_test_oid_set_member (&min_stat, GSS_KRB5, oids, &n);
   if (maj_stat == GSS_S_COMPLETE)
-    success("gss_test_oid_set_member() OK\n");
+    success ("gss_test_oid_set_member() OK\n");
   else
-    fail("gss_test_oid_set_member() failed (%d,%d)\n", maj_stat, min_stat);
+    fail ("gss_test_oid_set_member() failed (%d,%d)\n", maj_stat, min_stat);
 
   if (debug)
-    printf("    HOSTBASED_SERVICE supported by kerberos5 => %d\n", n);
+    printf ("    HOSTBASED_SERVICE supported by kerberos5 => %d\n", n);
 
   if (n)
-    success("gss_test_oid_set_member() OK\n");
+    success ("gss_test_oid_set_member() OK\n");
   else
-    fail("gss_test_oid_set_member() failed (%d,%d)\n", maj_stat, min_stat);
+    fail ("gss_test_oid_set_member() failed (%d,%d)\n", maj_stat, min_stat);
 
   /* Dummy OID check */
   maj_stat = gss_test_oid_set_member (&min_stat, GSS_C_NT_ANONYMOUS,
 				      oids, &n);
   if (maj_stat == GSS_S_COMPLETE)
-    success("gss_test_oid_set_member() OK\n");
+    success ("gss_test_oid_set_member() OK\n");
   else
-    fail("gss_test_oid_set_member() failed (%d,%d)\n", maj_stat, min_stat);
+    fail ("gss_test_oid_set_member() failed (%d,%d)\n", maj_stat, min_stat);
 
   if (debug)
-    printf("    Dummy oid supported by kerberos5 => %d\n", n);
+    printf ("    Dummy oid supported by kerberos5 => %d\n", n);
 
   if (!n)
-    success("gss_test_oid_set_member() OK\n");
+    success ("gss_test_oid_set_member() OK\n");
   else
-    fail("gss_test_oid_set_member() failed (%d,%d)\n", maj_stat, min_stat);
+    fail ("gss_test_oid_set_member() failed (%d,%d)\n", maj_stat, min_stat);
 
   maj_stat = gss_release_oid_set (&min_stat, &oids);
   if (maj_stat == GSS_S_COMPLETE)
-    success("gss_release_oid_set() OK\n");
+    success ("gss_release_oid_set() OK\n");
   else
-    fail("gss_release_oid_set() failed (%d,%d)\n", maj_stat, min_stat);
+    fail ("gss_release_oid_set() failed (%d,%d)\n", maj_stat, min_stat);
 #endif
 
   /* Check display_status */
@@ -324,13 +333,13 @@ main (int argc, char *argv[])
   maj_stat = gss_display_status (&min_stat, GSS_S_COMPLETE, GSS_C_GSS_CODE,
 				 GSS_C_NO_OID, &msgctx, &bufdesc);
   if (maj_stat == GSS_S_COMPLETE)
-    success("gss_display_status() OK\n");
+    success ("gss_display_status() OK\n");
   else
-    fail("gss_display_status() failed (%d,%d)\n", maj_stat, min_stat);
+    fail ("gss_display_status() failed (%d,%d)\n", maj_stat, min_stat);
 
   if (debug)
-    printf("    Display status for GSS_S_COMPLETE => %*s\n",
-	   bufdesc.length, bufdesc.value);
+    printf ("    Display status for GSS_S_COMPLETE => %*s\n",
+	    bufdesc.length, bufdesc.value);
 
   if (verbose)
     printf ("Name self tests done with %d errors\n", error_count);

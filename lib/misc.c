@@ -28,7 +28,8 @@ gss_oid_equal (gss_OID first_oid, gss_OID second_oid)
 
   return first_oid && second_oid &&
     first_oid->length == second_oid->length &&
-    memcmp(first_oid->elements, second_oid->elements, second_oid->length) == 0;
+    memcmp (first_oid->elements, second_oid->elements,
+	    second_oid->length) == 0;
 }
 
 OM_uint32
@@ -44,8 +45,8 @@ gss_copy_oid (OM_uint32 * minor_status,
     return GSS_S_FAILURE;
 
   dest_oid->length = src_oid->length;
-  dest_oid->elements = xmalloc(src_oid->length);
-  memcpy(dest_oid->elements, src_oid->elements, src_oid->length);
+  dest_oid->elements = xmalloc (src_oid->length);
+  memcpy (dest_oid->elements, src_oid->elements, src_oid->length);
 
   return GSS_S_COMPLETE;
 }
@@ -62,12 +63,12 @@ gss_duplicate_oid (OM_uint32 * minor_status,
   if (!src_oid || src_oid->length == 0 || src_oid->elements == NULL)
     return GSS_S_FAILURE;
 
-  *dest_oid = xmalloc(sizeof(**dest_oid));
+  *dest_oid = xmalloc (sizeof (**dest_oid));
 
   maj_stat = gss_copy_oid (minor_status, src_oid, *dest_oid);
   if (maj_stat != GSS_S_COMPLETE)
     {
-      free(*dest_oid);
+      free (*dest_oid);
       return maj_stat;
     }
 
@@ -80,7 +81,7 @@ gss_create_empty_oid_set (OM_uint32 * minor_status, gss_OID_set * oid_set)
   if (minor_status)
     *minor_status = 0;
 
-  *oid_set = xmalloc(sizeof(**oid_set));
+  *oid_set = xmalloc (sizeof (**oid_set));
   (*oid_set)->count = 0;
   (*oid_set)->elements = NULL;
 
@@ -110,13 +111,13 @@ gss_add_oid_set_member (OM_uint32 * minor_status,
   if (present)
     return GSS_S_COMPLETE;
 
-  if ((*oid_set)->count + 1 == 0) /* integer overflow */
+  if ((*oid_set)->count + 1 == 0)	/* integer overflow */
     return GSS_S_FAILURE;
 
   (*oid_set)->count++;
-  (*oid_set)->elements = xrealloc((*oid_set)->elements,
-				  (*oid_set)->count *
-				  sizeof(*(*oid_set)->elements));
+  (*oid_set)->elements = xrealloc ((*oid_set)->elements,
+				   (*oid_set)->count *
+				   sizeof (*(*oid_set)->elements));
 
   major_stat = gss_copy_oid (minor_status, member_oid,
 			     (*oid_set)->elements + ((*oid_set)->count - 1));
@@ -145,7 +146,7 @@ gss_test_oid_set_member (OM_uint32 * minor_status,
   for (i = 0, cur = set->elements; i < set->count; i++, cur++)
     {
       if (cur->length == member->length &&
-	  memcmp(cur->elements, member->elements, member->length) == 0)
+	  memcmp (cur->elements, member->elements, member->length) == 0)
 	{
 	  *present = 1;
 	  return GSS_S_COMPLETE;
@@ -168,9 +169,9 @@ gss_release_oid_set (OM_uint32 * minor_status, gss_OID_set * set)
     return GSS_S_COMPLETE;
 
   for (i = 0, cur = (*set)->elements; i < (*set)->count; i++, cur++)
-    free(cur->elements);
+    free (cur->elements);
 
-  free(*set);
+  free (*set);
   *set = GSS_C_NO_OID_SET;
 
   return GSS_S_COMPLETE;

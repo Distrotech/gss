@@ -28,8 +28,7 @@ gss_acquire_cred (OM_uint32 * minor_status,
 		  const gss_OID_set desired_mechs,
 		  gss_cred_usage_t cred_usage,
 		  gss_cred_id_t * output_cred_handle,
-		  gss_OID_set * actual_mechs,
-		  OM_uint32 * time_rec)
+		  gss_OID_set * actual_mechs, OM_uint32 * time_rec)
 {
   OM_uint32 maj_stat;
   _gss_mech_api_t mech = NULL;
@@ -40,17 +39,17 @@ gss_acquire_cred (OM_uint32 * minor_status,
       int present;
 
       /* XXX this assumes GSS credentials are mutually exclusive.
-	 I.e., a credential for one mechanism cannot be used with
-	 another mechanism.  If at some point in time this GSS library
-	 support two different mechanisms that can use the same kind
-	 of credential, this logic has to be improved somehow. */
+         I.e., a credential for one mechanism cannot be used with
+         another mechanism.  If at some point in time this GSS library
+         support two different mechanisms that can use the same kind
+         of credential, this logic has to be improved somehow. */
 
       for (i = 0; _gss_mech_apis[i].mech; i++)
 	{
 	  maj_stat = gss_test_oid_set_member (minor_status,
 					      _gss_mech_apis[i].mech,
 					      desired_mechs, &present);
-	  if (!GSS_ERROR(maj_stat) && present)
+	  if (!GSS_ERROR (maj_stat) && present)
 	    {
 	      mech = &_gss_mech_apis[i];
 	      break;
@@ -66,9 +65,7 @@ gss_acquire_cred (OM_uint32 * minor_status,
 			     time_req,
 			     desired_mechs,
 			     cred_usage,
-			     output_cred_handle,
-			     actual_mechs,
-			     time_rec);
+			     output_cred_handle, actual_mechs, time_rec);
 }
 
 OM_uint32
@@ -96,15 +93,11 @@ gss_inquire_cred (OM_uint32 * minor_status,
   _gss_mech_api_t mech;
 
   mech = cred_handle == GSS_C_NO_CREDENTIAL ?
-    _gss_find_mech (GSS_C_NO_OID) :
-    _gss_find_mech (cred_handle->mech);
+    _gss_find_mech (GSS_C_NO_OID) : _gss_find_mech (cred_handle->mech);
 
   return mech->inquire_cred (minor_status,
 			     cred_handle,
-			     name,
-			     lifetime,
-			     cred_usage,
-			     mechanisms);
+			     name, lifetime, cred_usage, mechanisms);
 }
 
 OM_uint32

@@ -27,7 +27,8 @@ gss_sign (OM_uint32 * minor_status,
 	  int qop_req,
 	  gss_buffer_t message_buffer, gss_buffer_t message_token)
 {
-  fprintf (stderr, _("warning: gss_sign() is obsolete, use gss_get_mic() instead."));
+  fprintf (stderr,
+	   _("warning: gss_sign() is obsolete, use gss_get_mic() instead."));
 
   return gss_get_mic (minor_status, context_handle,
 		      qop_req, message_buffer, message_token);
@@ -40,7 +41,9 @@ gss_verify (OM_uint32 * minor_status,
 	    gss_buffer_t message_buffer,
 	    gss_buffer_t token_buffer, int *qop_state)
 {
-  fprintf (stderr, _("warning: gss_verify() is obsolete, use gss_verify_mic() instead."));
+  fprintf (stderr,
+	   _
+	   ("warning: gss_verify() is obsolete, use gss_verify_mic() instead."));
 
   return gss_verify_mic (minor_status, context_handle, message_buffer,
 			 token_buffer, qop_state);
@@ -54,7 +57,8 @@ gss_seal (OM_uint32 * minor_status,
 	  gss_buffer_t input_message_buffer,
 	  int *conf_state, gss_buffer_t output_message_buffer)
 {
-  fprintf (stderr, _("warning: gss_seal() is obsolete, use gss_wrap() instead."));
+  fprintf (stderr,
+	   _("warning: gss_seal() is obsolete, use gss_wrap() instead."));
 
   return gss_wrap (minor_status, context_handle, conf_req_flag, qop_req,
 		   input_message_buffer, conf_state, output_message_buffer);
@@ -68,7 +72,8 @@ gss_unseal (OM_uint32 * minor_status,
 	    gss_buffer_t output_message_buffer,
 	    int *conf_state, int *qop_state)
 {
-  fprintf (stderr, _("warning: gss_unseal() is obsolete, use gss_unwrap() instead."));
+  fprintf (stderr,
+	   _("warning: gss_unseal() is obsolete, use gss_unwrap() instead."));
 
   return gss_unwrap (minor_status, context_handle, input_message_buffer,
 		     output_message_buffer, conf_state, qop_state);
