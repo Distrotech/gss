@@ -64,14 +64,6 @@ init_request (OM_uint32 * minor_status,
   if (!k5->tkt)
     return GSS_S_FAILURE;
 
-  /* XXX */
-  shishi_tkts_to_file (shishi_tkts_default (k5->sh),
-		       shishi_tkts_default_file (k5->sh));
-
-  maj_stat = _gss_krb5_checksum1964_pack (initiator_cred_handle,
-					  input_chan_bindings,
-					  req_flags,
-					  &cksum, &cksumlen);
   k5->flags = req_flags;
 
   rc = shishi_ap_tktoptionsdata (k5->sh, &k5->ap, k5->tkt,
@@ -86,9 +78,18 @@ init_request (OM_uint32 * minor_status,
   if (rc != SHISHI_OK)
     return GSS_S_FAILURE;
 
+  maj_stat = _gss_krb5_checksum1964_pack (initiator_cred_handle,
+					  input_chan_bindings,
+					  req_flags,
+					  &cksum, &cksumlen);
+  if (GSS_ERROR (maj_stat))
+    return maj_stat;
+
   rc = shishi_authenticator_set_cksum (k5->sh,
 				       shishi_ap_authenticator (k5->ap),
 				       0x8003, cksum, cksumlen);
+
+  free (cksum);
   if (rc != SHISHI_OK)
     return GSS_S_FAILURE;
 
@@ -99,8 +100,6 @@ init_request (OM_uint32 * minor_status,
      shishi_ap_authenticator (k5->ap));
   if (rc != SHISHI_OK)
     return GSS_S_FAILURE;
-
-  free (cksum);
 
   rc = shishi_new_a2d (k5->sh, shishi_ap_req (k5->ap),
 		       &tmp.value, &tmp.length);
