@@ -81,7 +81,7 @@ hexprint (const unsigned char *str, int len)
 /* Return number of seconds left of ticket lifetime, or 0 if ticket
    has expired, or GSS_C_INDEFINITE if ticket is NULL. */
 static OM_uint32
-lifetime (Shishi_tkt * tkt)
+tktlifetime (Shishi_tkt * tkt)
 {
   time_t now, end;
 
@@ -966,7 +966,7 @@ gss_krb5_inquire_cred (OM_uint32 * minor_status,
     }
 
   if (lifetime)
-    *lifetime = lifetime (cred_handle->krb5->tkt);
+    *lifetime = tktlifetime (cred_handle->krb5->tkt);
 
   if (cred_usage)
     *cred_usage = GSS_C_BOTH;
@@ -1159,7 +1159,7 @@ gss_krb5_context_time (OM_uint32 * minor_status,
 
   if (time_rec)
     {
-      *time_rec = lifetime (k5->tkt);
+      *time_rec = tktlifetime (k5->tkt);
 
       if (*time_rec == 0)
 	return GSS_S_CONTEXT_EXPIRED;
