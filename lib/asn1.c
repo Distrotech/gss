@@ -58,10 +58,10 @@ _gss_asn1_length_der (size_t len, unsigned char *ans, size_t * ans_len)
     }
 }
 
-static unsigned long
-_gss_asn1_get_length_der (const unsigned char *der, int *len)
+static size_t
+_gss_asn1_get_length_der (const char *der, int *len)
 {
-  unsigned long ans;
+  size_t ans;
   int k, punt;
 
   if (!(der[0] & 128))
@@ -85,12 +85,13 @@ _gss_asn1_get_length_der (const unsigned char *der, int *len)
 }
 
 static int
-_gss_encapsulate_token (char *oid, size_t oidlen,
-			char *in, size_t inlen, char **out, size_t * outlen)
+_gss_encapsulate_token (const char *oid, size_t oidlen,
+			const char *in, size_t inlen,
+			void **out, size_t * outlen)
 {
   size_t oidlenlen;
   size_t asn1len, asn1lenlen;
-  char *p;
+  unsigned char *p;
 
   _gss_asn1_length_der (oidlen, NULL, &oidlenlen);
   asn1len = 1 + oidlenlen + oidlen + inlen;
@@ -114,7 +115,7 @@ _gss_encapsulate_token (char *oid, size_t oidlen,
 }
 
 int
-gss_encapsulate_token (gss_buffer_t input_message,
+gss_encapsulate_token (const gss_buffer_t input_message,
 		       gss_OID token_oid, gss_buffer_t output_message)
 {
   return _gss_encapsulate_token (token_oid->elements,
@@ -126,8 +127,8 @@ gss_encapsulate_token (gss_buffer_t input_message,
 }
 
 int
-gss_encapsulate_token_prefix (gss_buffer_t input_message,
-			      char *prefix, size_t prefixlen,
+gss_encapsulate_token_prefix (const gss_buffer_t input_message,
+			      const char *prefix, size_t prefixlen,
 			      gss_OID token_oid, gss_buffer_t output_message)
 {
   char *in;
@@ -152,7 +153,7 @@ gss_encapsulate_token_prefix (gss_buffer_t input_message,
 }
 
 static int
-_gss_decapsulate_token (char *in, size_t inlen,
+_gss_decapsulate_token (const char *in, size_t inlen,
 			char **oid, size_t * oidlen,
 			char **out, size_t * outlen)
 {
@@ -206,7 +207,7 @@ _gss_decapsulate_token (char *in, size_t inlen,
 }
 
 int
-gss_decapsulate_token (gss_buffer_t input_message,
+gss_decapsulate_token (const gss_buffer_t input_message,
 		       gss_OID token_oid, gss_buffer_t output_message)
 {
   char *oid, *out;
@@ -229,8 +230,8 @@ gss_decapsulate_token (gss_buffer_t input_message,
 }
 
 int
-gss_decapsulate_token_check (gss_buffer_t input_message,
-			     char *prefix, size_t prefixlen,
+gss_decapsulate_token_check (const gss_buffer_t input_message,
+			     const char *prefix, size_t prefixlen,
 			     gss_OID token_oid, gss_buffer_t output_message)
 {
   gss_OID_desc tmp;
@@ -244,7 +245,7 @@ gss_decapsulate_token_check (gss_buffer_t input_message,
   if (!gss_oid_equal (&tmp, token_oid) ||
       data.length < prefixlen || memcmp (data.value, prefix, prefixlen) != 0)
     {
-      gss_release_oid (NULL, &tmp);
+      free (tmp.elements);
       gss_release_buffer (NULL, &data);
       return 0;
     }
