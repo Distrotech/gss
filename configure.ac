@@ -57,17 +57,15 @@ gl_XALLOC
 gl_FUNC_GETHOSTNAME
 
 # Test for Shishi.
+AC_CHECK_HEADER(shishi.h,
+	AC_CHECK_LIB(shishi, shishi_check_version,
+		[kerberos5=yes AC_SUBST(SHISHI_LIBS, -lshishi)],
+		kerberos5=no),
+	kerberos5=no)
 AC_ARG_ENABLE(kerberos5,
 	AC_HELP_STRING([--disable-kerberos5],
                        [disable Kerberos V5 mechanism unconditionally]),
 	kerberos5=$enableval)
-if test "$kerberos5" != "no"; then
-	AC_RUN_IFELSE(AC_LANG_PROGRAM([[#include <shishi.h>]],
-			[[return shishi_check_version ("0.0.1");]]),
-		[kerberos5=no],
-		[kerberos5=yes AC_SUBST(SHISHI_LIBS, -lshishi)],
-		[-lshishi])
-fi
 if test "$kerberos5" != "no" ; then
 	AC_DEFINE(USE_KERBEROS5, 1, [Define to 1 if you want Kerberos 5 mech.])
 else
