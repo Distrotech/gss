@@ -1,3 +1,62 @@
+/* gssapi.h	Header file for GSS-API.
+ * Copyright (C) 2003  Simon Josefsson
+ * Copyright (C) The Internet Society (2000).  All Rights Reserved.
+ *
+ * This file is part of GPL GSS-API.
+ *
+ * GPL GSS-API is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public
+ * License as published by the Free Software Foundation; either
+ * version 2.1 of the License, or (at your option) any later version.
+ *
+ * GPL GSS-API is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with GPL GSS-API; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *
+ */
+
+/*
+ * This file was copied verbatim, by Simon Josefsson for the GPL
+ * GSS-API project, from RFC 2744, written by John Wray, which
+ * contains the following copyright statement:
+ *
+ *   Copyright (C) The Internet Society (2000).  All Rights Reserved.
+ *
+ *   This document and translations of it may be copied and furnished to
+ *   others, and derivative works that comment on or otherwise explain it
+ *   or assist in its implementation may be prepared, copied, published
+ *   and distributed, in whole or in part, without restriction of any
+ *   kind, provided that the above copyright notice and this paragraph are
+ *   included on all such copies and derivative works.  However, this
+ *   document itself may not be modified in any way, such as by removing
+ *   the copyright notice or references to the Internet Society or other
+ *   Internet organizations, except as needed for the purpose of
+ *   developing Internet standards in which case the procedures for
+ *   copyrights defined in the Internet Standards process must be
+ *   followed, or as required to translate it into languages other than
+ *   English.
+ *
+ *   The limited permissions granted above are perpetual and will not be
+ *   revoked by the Internet Society or its successors or assigns.
+ *
+ *   This document and the information contained herein is provided on an
+ *   "AS IS" basis and THE INTERNET SOCIETY AND THE INTERNET ENGINEERING
+ *   TASK FORCE DISCLAIMS ALL WARRANTIES, EXPRESS OR IMPLIED, INCLUDING
+ *   BUT NOT LIMITED TO ANY WARRANTY THAT THE USE OF THE INFORMATION
+ *   HEREIN WILL NOT INFRINGE ANY RIGHTS OR ANY IMPLIED WARRANTIES OF
+ *   MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE.
+ *
+ * It has been modified as follows:
+ *
+ * $log$
+ *
+ */
+
 #ifndef GSSAPI_H_
 #define GSSAPI_H_
 
@@ -21,6 +80,7 @@ typedef struct gss_name_t    *gss_name_t;
  * unsigned integer supported by the platform that has at least
  * 32 bits of precision.
  */
+#include <limits.h>
 #if UCHAR_MAX == 4294967295
 typedef unsigned char gss_uint32;
 #elif USHRT_MAX == 4294967295
