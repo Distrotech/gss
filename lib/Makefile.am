@@ -18,6 +18,8 @@
 # Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 # 02111-1307, USA.
 
+INCLUDES = -I../gl
+
 lib_LTLIBRARIES = libgss.la
 include_HEADERS = gss.h
 
@@ -26,7 +28,7 @@ gssinclude_HEADERS = api.h ext.h
 
 libgss_la_SOURCES = internal.h gettext.h version.c error.c meta.c asn1.c \
 	context.c cred.c misc.c msg.c name.c obsolete.c oid.c
-libgss_la_LIBADD = @LTLIBINTL@ @SHISHI_LIBS@
+libgss_la_LIBADD = @LTLIBINTL@ @SHISHI_LIBS@ ../gl/libfoo.a
 libgss_la_LDFLAGS = -version-info $(LT_CURRENT):$(LT_REVISION):$(LT_AGE)
 
 if KRB5

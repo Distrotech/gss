@@ -51,6 +51,8 @@
 # include <strings.h>
 #endif
 
+#include "xalloc.h"
+
 #include "gettext.h"
 #include "api.h"
 #include "ext.h"

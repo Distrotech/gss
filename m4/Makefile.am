@@ -1,20 +1,26 @@
-## Process this file with automake to produce Makefile.in
+## Process this file with automake to produce Makefile.in.
 # Copyright (C) 2003 Simon Josefsson.
 #
-# This file is part of GPL GSS-API.
+# This file is part of the Generic Security Service (GSS).
 #
-# GPL GSS-API is free software; you can redistribute it and/or modify
-# it under the terms of the GNU Lesser General Public License as
-# published by the Free Software Foundation; either version 2.1 of
-# the License, or (at your option) any later version.
+# GSS is free software; you can redistribute it and/or modify it under
+# the terms of the GNU General Public License as published by the Free
+# Software Foundation; either version 2, or (at your option) any later
+# version.
 #
-# GPL GSS-API is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU Lesser General Public License for more details.
+# GSS is distributed in the hope that it will be useful, but WITHOUT
+# ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+# or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public
+# License for more details.
 #
-# You should have received a copy of the GNU Lesser General Public
-# License along with this program; if not, write to the Free Software
-# Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA
+# You should have received a copy of the GNU General Public License
+# along with GSS; see the file COPYING.  If not, write to the Free
+# Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
+# 02111-1307, USA.
 
-EXTRA_DIST = codeset.m4 gettext.m4 glibc21.m4 iconv.m4 intdiv0.m4 inttypes_h.m4 inttypes.m4 inttypes-pri.m4 isc-posix.m4 lcmessage.m4 lib-ld.m4 lib-link.m4 lib-prefix.m4 progtest.m4 stdint_h.m4 uintmax_t.m4 ulonglong.m4
+EXTRA_DIST = codeset.m4 error.m4 gettext.m4 glibc21.m4 iconv.m4		\
+	intdiv0.m4 inttypes_h.m4 inttypes.m4 inttypes-pri.m4		\
+	isc-posix.m4 lcmessage.m4 lib-ld.m4 lib-link.m4 lib-prefix.m4	\
+	malloc.m4 nls.m4 onceonly_2_57.m4 po.m4 progtest.m4 realloc.m4	\
+	stdint_h.m4 strerror_r.m4 uintmax_t.m4 ulonglong.m4		\
+	unlocked-io.m4 xalloc.m4

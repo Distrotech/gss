@@ -23,7 +23,7 @@ EXTRA_DIST = ANNOUNCE TODO config.h.in config.rpath mkinstalldirs gss.pc.in
 pkgconfigdir = $(libdir)/pkgconfig
 pkgconfig_DATA = gss.pc
 
-SUBDIRS = m4 po lib tests doc
+SUBDIRS = m4 po gl lib tests doc
 
 ACLOCAL_AMFLAGS = -I m4
 

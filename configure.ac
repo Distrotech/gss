@@ -39,18 +39,23 @@ AM_CONFIG_HEADER(config.h)
 # Checks for programs.
 AM_GNU_GETTEXT(external)
 AM_GNU_GETTEXT_VERSION(0.11.5)
-AC_PROG_LIBTOOL
 AC_PROG_CC
 AM_MISSING_PROG(HELP2MAN, help2man, $missing_dir)
 AM_MISSING_PROG(TEXI2PDF, texi2pdf, $missing_dir)
 
 # Checks for header files.
+AC_GNU_SOURCE
 AC_HEADER_STDC
-AC_CHECK_HEADERS([locale.h])
 
-# Checks for typedefs, structures, and compiler characteristics.
+# We use libtool
+AC_PROG_LIBTOOL
 
-# Checks for library functions.
+# For gnulib stuff in gl/.
+gl_ERROR
+jm_FUNC_MALLOC
+jm_FUNC_REALLOC
+jm_FUNC_GLIBC_UNLOCKED_IO
+gl_XALLOC
 
 # Test for Shishi.
 AC_ARG_ENABLE(kerberos5,
@@ -73,6 +78,6 @@ AM_CONDITIONAL(KRB5, test "$kerberos5" = "yes")
 
 # We are done
 AC_CONFIG_FILES(Makefile gss.pc lib/gss.h po/Makefile.in m4/Makefile \
-		doc/Makefile lib/Makefile tests/Makefile)
+		doc/Makefile lib/Makefile tests/Makefile gl/Makefile)
 
 AC_OUTPUT
