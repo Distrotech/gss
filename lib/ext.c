@@ -32,6 +32,7 @@ xalloc_die (void)
 {
   if (gss_alloc_fail_function)
     (*gss_alloc_fail_function) ();
+  fflush (stdout);
   fprintf (stderr, "%s: %s\n", PACKAGE, strerror (ENOMEM));
   abort ();
 }
