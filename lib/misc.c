@@ -164,6 +164,9 @@ gss_release_oid_set (OM_uint32 * minor_status, gss_OID_set * set)
   if (minor_status)
     *minor_status = 0;
 
+  if (!set || *set == GSS_C_NO_OID_SET)
+    return GSS_S_COMPLETE;
+
   for (i = 0, cur = (*set)->elements; i < (*set)->count; i++, cur++)
     free(cur->elements);
 
