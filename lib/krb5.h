@@ -22,6 +22,46 @@
 #ifndef GSS_KRB5_H_
 #define GSS_KRB5_H_
 
+/* 4.1.1. Non-Kerberos-specific codes */
+
+#define GSS_KRB5_S_G_BAD_SERVICE_NAME 1
+/* "No @ in SERVICE-NAME name string" */
+#define GSS_KRB5_S_G_BAD_STRING_UID 2
+/* "STRING-UID-NAME contains nondigits" */
+#define GSS_KRB5_S_G_NOUSER 3
+/* "UID does not resolve to username" */
+#define GSS_KRB5_S_G_VALIDATE_FAILED 4
+/* "Validation error" */
+#define GSS_KRB5_S_G_BUFFER_ALLOC 5
+/* "Couldn't allocate gss_buffer_t data" */
+#define GSS_KRB5_S_G_BAD_MSG_CTX 6
+/* "Message context invalid" */
+#define GSS_KRB5_S_G_WRONG_SIZE 7
+/* "Buffer is the wrong size" */
+#define GSS_KRB5_S_G_BAD_USAGE 8
+/* "Credential usage type is unknown" */
+#define GSS_KRB5_S_G_UNKNOWN_QOP 9
+/* "Unknown quality of protection specified" */
+
+/* 4.1.2. Kerberos-specific-codes */
+
+#define GSS_KRB5_S_KG_CCACHE_NOMATCH 10
+/* "Principal in credential cache does not match desired name" */
+#define GSS_KRB5_S_KG_KEYTAB_NOMATCH 11
+/* "No principal in keytab matches desired name" */
+#define GSS_KRB5_S_KG_TGT_MISSING 12
+/* "Credential cache has no TGT" */
+#define GSS_KRB5_S_KG_NO_SUBKEY 13
+/* "Authenticator has no subkey" */
+#define GSS_KRB5_S_KG_CONTEXT_ESTABLISHED 14
+/* "Context is already fully established" */
+#define GSS_KRB5_S_KG_BAD_SIGN_TYPE 15
+/* "Unknown signature type in token" */
+#define GSS_KRB5_S_KG_BAD_LENGTH 16
+/* "Invalid field length in token" */
+#define GSS_KRB5_S_KG_CTX_INCOMPLETE 17
+/* "Attempt to use incomplete security context" */
+
 /*
  * To support ongoing experimentation, testing, and evolution of the
  * specification, the Kerberos V5 GSS-API mechanism as defined in this
@@ -113,5 +153,13 @@ gss_krb5_wrap (OM_uint32 * minor_status,
 	       gss_qop_t qop_req,
 	       const gss_buffer_t input_message_buffer,
 	       int *conf_state, gss_buffer_t output_message_buffer);
+
+extern OM_uint32
+gss_krb5_display_status (OM_uint32 * minor_status,
+			 OM_uint32 status_value,
+			 int status_type,
+			 const gss_OID mech_type,
+			 OM_uint32 * message_context,
+			 gss_buffer_t status_string);
 
 #endif /* GSS_KRB5_H_ */
