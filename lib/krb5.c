@@ -389,7 +389,7 @@ gss_krb5_wrap (OM_uint32 * minor_status,
 	memcpy (header + 2, "\x00\x00", 2);  /* SGN_ALG: DES-MAC-MD5 */
 	memcpy (header + 4, "\xFF\xFF", 2);  /* SEAL_ALG: none */
 	memcpy (header + 6, "\xFF\xFF", 2);  /* filler */
-	rc = shishi_randomize(k5->sh, confounder, 8);
+	rc = shishi_randomize(k5->sh, 0, confounder, 8);
 	if (rc != SHISHI_OK)
 	  return GSS_S_FAILURE;
 
@@ -461,7 +461,7 @@ gss_krb5_wrap (OM_uint32 * minor_status,
 	memcpy (data.value + 2, "\x04\x00", 2);  /* SGN_ALG: 3DES */
 	memcpy (data.value + 4, "\xFF\xFF", 2);  /* SEAL_ALG: none */
 	memcpy (data.value + 6, "\xFF\xFF", 2);  /* filler */
-	rc = shishi_randomize(k5->sh, data.value + 8, 8);
+	rc = shishi_randomize(k5->sh, 0, data.value + 8, 8);
 	if (rc != SHISHI_OK)
 	  return GSS_S_FAILURE;
 	memcpy (data.value + 16, input_message_buffer->value,
