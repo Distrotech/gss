@@ -205,6 +205,9 @@ gss_krb5_release_cred (OM_uint32 * minor_status, gss_cred_id_t * cred_handle)
 {
   _gss_krb5_cred_t k5 = (*cred_handle)->krb5;
 
+  if (k5->peerptr != GSS_C_NO_NAME)
+    gss_release_name (NULL, &k5->peerptr);
+
   shishi_key_done (k5->key);
   shishi_done (k5->sh);
   free (k5);
