@@ -1,4 +1,4 @@
-/* cred.c	Implementation of GSS-API Credential Management functions.
+/* cred.c --- Implementation of GSS-API Credential Management functions.
  * Copyright (C) 2003, 2004  Simon Josefsson
  *
  * This file is part of the Generic Security Service (GSS).
@@ -379,8 +379,7 @@ gss_inquire_cred (OM_uint32 * minor_status,
     {
       maj_stat = gss_acquire_cred (minor_status, GSS_C_NO_NAME,
 				   GSS_C_INDEFINITE, GSS_C_NO_OID_SET,
-				   GSS_C_INITIATE, &credh,
-				   NULL, NULL);
+				   GSS_C_INITIATE, &credh, NULL, NULL);
       if (GSS_ERROR (maj_stat))
 	return maj_stat;
     }
@@ -486,15 +485,14 @@ gss_inquire_cred_by_mech (OM_uint32 * minor_status,
 				      as desired_mechs.  Maybe even
 				      check actual_mechs too. */
 				   GSS_C_NO_OID_SET,
-				   GSS_C_INITIATE,
-				   &credh, NULL, NULL);
+				   GSS_C_INITIATE, &credh, NULL, NULL);
       if (GSS_ERROR (maj_stat))
 	return maj_stat;
     }
 
   maj_stat = mech->inquire_cred_by_mech (minor_status, credh, mech_type, name,
-					 initiator_lifetime, acceptor_lifetime,
-					 cred_usage);
+					 initiator_lifetime,
+					 acceptor_lifetime, cred_usage);
 
   if (cred_handle == GSS_C_NO_CREDENTIAL)
     gss_release_cred (NULL, &credh);
