@@ -18,15 +18,13 @@
 # the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 # Boston, MA 02111-1307, USA.
 
-INCLUDES = -I../lib -I../intl @ARGP_CFLAGS@
+INCLUDES = -I$(top_srcdir)/lib -I../lib -I../intl @ARGP_CFLAGS@
 
 bin_PROGRAMS = gss
-
 gss_SOURCES = internal.h gss.c
 gss_LDADD = ../lib/libgss.la @ARGP_LIBS@
 
 localedir = $(datadir)/locale
-
 DEFS = -DLOCALEDIR=\"$(localedir)\" @DEFS@
 
 indent:
