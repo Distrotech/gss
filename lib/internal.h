@@ -63,33 +63,42 @@
 #define gettext_noop(String) String
 #define N_(String) gettext_noop (String)
 
-struct gss_ctx_id_t
+typedef struct gss_name_struct
 {
+  int length;
+  char *value;
+  gss_OID type;
+} gss_name_desc;
+
+typedef struct gss_cred_id_struct
+{
+#ifdef USE_KERBEROS5
+  Shishi_tkt *tkt;
+#endif
+} gss_cred_id_desc;
+
+typedef struct gss_ctx_id_struct
+{
+  gss_name_desc peer;
+  gss_name_t peerptr;
 #ifdef USE_KERBEROS5
   Shishi *sh;
   Shishi_ap *ap;
   Shishi_tkt *tkt;
 #endif
-};
-
-struct gss_cred_id_t
-{
-#ifdef USE_KERBEROS5
-  Shishi_tkt *tkt;
-#endif
-};
-
-struct gss_name_t
-{
-  int length;
-  char *value;
-  gss_OID type;
-};
+} gss_ctx_id_desc;
 
 int
 _gss_wrap_token (char *oid, size_t oidlen,
 		 char *in, size_t inlen,
 		 char **out, size_t *outlen);
+
+int
+_gss_oid_equal (gss_OID first_oid, gss_OID second_oid);
+
+OM_uint32
+_gss_duplicate_oid (OM_uint32 * minor_status,
+		    const gss_OID src_oid, gss_OID * dest_oid);
 
 OM_uint32
 krb5_gss_init_sec_context (OM_uint32 * minor_status,
@@ -104,5 +113,12 @@ krb5_gss_init_sec_context (OM_uint32 * minor_status,
 			   gss_OID * actual_mech_type,
 			   gss_buffer_t output_token,
 			   OM_uint32 * ret_flags, OM_uint32 * time_rec);
+
+OM_uint32
+krb5_gss_canonicalize_name (OM_uint32 * minor_status,
+			    const gss_name_t input_name,
+			    const gss_OID mech_type,
+			    gss_name_t * output_name);
+
 
 #endif /* _INTERNAL_H */
