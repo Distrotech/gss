@@ -20,7 +20,9 @@
 
 man_MANS = ggssapi.1
 
-ggssapi_texi_auto_deps = ggssapi-api-version.texi
+ggssapi_texi_auto_deps = ggssapi-api-version.texi \
+	ggssapi-api-context.texi ggssapi-api-cred.texi \
+	ggssapi-api-misc.texi ggssapi-api-msg.texi ggssapi-api-name.texi
 
 EXTRA_DIST = gdoc gdoc-error $(man_MANS) $(ggssapi_texi_auto_deps) \
 	ggssapi.html ggssapi.ps ggssapi.pdf
@@ -33,6 +35,21 @@ ggssapi_TEXINFOS = gpl.texi fdl.texi $(ggssapi_texi_auto_deps)
 ggssapi_api_version_deps = $(top_srcdir)/lib/version.c
 
 ggssapi-api-version.texi: $(ggssapi_api_version_deps)
+	$(PERL) $(srcdir)/gdoc -texinfo $^ > $@
+
+ggssapi-api-cred.texi: $(top_srcdir)/lib/cred.c
+	$(PERL) $(srcdir)/gdoc -texinfo $^ > $@
+
+ggssapi-api-context.texi: $(top_srcdir)/lib/context.c
+	$(PERL) $(srcdir)/gdoc -texinfo $^ > $@
+
+ggssapi-api-msg.texi: $(top_srcdir)/lib/msg.c
+	$(PERL) $(srcdir)/gdoc -texinfo $^ > $@
+
+ggssapi-api-name.texi: $(top_srcdir)/lib/name.c
+	$(PERL) $(srcdir)/gdoc -texinfo $^ > $@
+
+ggssapi-api-misc.texi: $(top_srcdir)/lib/misc.c
 	$(PERL) $(srcdir)/gdoc -texinfo $^ > $@
 
 # Man page:
