@@ -272,59 +272,87 @@ gss_inquire_names_for_mech (OM_uint32 * minor_status,
   return GSS_S_COMPLETE;
 }
 
+/* Add mechanism MECH to OID set MECH_TYPES if mechanism MECH support
+   the NAME_TYPE name type. */
 static OM_uint32
-_gss_inquire_mechs_for_name2 (OM_uint32 * minor_status,
-			      _gss_mech_api_t mech,
-			      gss_OID name_type, gss_OID_set * mech_types)
+_gss_inquire_mechs_for_name3 (OM_uint32 * minor_status,
+			      gss_OID mech,
+			      gss_OID name_type,
+			      gss_OID_set * mech_types)
 {
   gss_OID_set oids;
   int supported;
   OM_uint32 maj_stat;
 
-  maj_stat = gss_inquire_names_for_mech (minor_status, mech->mech, &oids);
-  if (maj_stat != GSS_S_COMPLETE)
+  maj_stat = gss_inquire_names_for_mech (minor_status, mech, &oids);
+  if (GSS_ERROR (maj_stat))
     return maj_stat;
 
   maj_stat = gss_test_oid_set_member (minor_status, name_type,
 				      oids, &supported);
-  if (maj_stat != GSS_S_COMPLETE)
-    {
-      gss_release_oid_set (minor_status, &oids);
-      return maj_stat;
-    }
+  gss_release_oid_set (minor_status, &oids);
+  if (GSS_ERROR (maj_stat))
+    return maj_stat;
 
   if (supported)
     {
-      maj_stat = gss_add_oid_set_member (minor_status,
-					 mech->mech, mech_types);
-      if (maj_stat != GSS_S_COMPLETE)
-	{
-	  gss_release_oid_set (minor_status, &oids);
-	  return maj_stat;
-	}
+      maj_stat = gss_add_oid_set_member (minor_status, mech, mech_types);
+      if (GSS_ERROR (maj_stat))
+	return maj_stat;
     }
-  gss_release_oid_set (minor_status, &oids);
 
   if (minor_status)
     *minor_status = 0;
   return GSS_S_COMPLETE;
 }
 
+/* Iterate over SUPPORTED_MECH_TYPES and invoke
+   gss_inquire_mechs_for_name3 on each type, thus adding all mechanism
+   OIDs, that support the NAME_TYPE name type, to OUT_MECH_TYPES. */
 static OM_uint32
-_gss_inquire_mechs_for_name1 (OM_uint32 * minor_status,
-			      gss_OID name_type, gss_OID_set * mech_types)
+_gss_inquire_mechs_for_name2 (OM_uint32 * minor_status,
+			      gss_OID name_type,
+			      gss_OID_set * out_mech_types,
+			      gss_OID_set supported_mech_types)
 {
   OM_uint32 maj_stat;
-  int i;
+  size_t i;
 
-  for (i = 0; _gss_mech_apis[i].mech; i++)
+  for (i = 0; i < supported_mech_types->count; i++)
     {
-      maj_stat = _gss_inquire_mechs_for_name2 (minor_status,
-					       &_gss_mech_apis[i],
-					       name_type, mech_types);
-      if (maj_stat != GSS_S_COMPLETE)
+      maj_stat = _gss_inquire_mechs_for_name3
+	(minor_status, &(supported_mech_types->elements)[i],
+	 name_type, out_mech_types);
+      if (GSS_ERROR(maj_stat))
 	return maj_stat;
     }
+
+  if (minor_status)
+    *minor_status = 0;
+  return GSS_S_COMPLETE;
+}
+
+/* List all supported mechanisms, and invoke
+   gss_inquire_mechs_for_name2, thus adding all mechanism OIDs, that
+   support the NAME_TYPE name type, to OUT_MECH_TYPES. */
+static OM_uint32
+_gss_inquire_mechs_for_name1 (OM_uint32 * minor_status,
+			      gss_OID name_type, gss_OID_set * out_mech_types)
+{
+  OM_uint32 maj_stat;
+  gss_OID_set supported_mech_types;
+  size_t i;
+
+  maj_stat = gss_indicate_mechs (minor_status, &supported_mech_types);
+  if (GSS_ERROR (maj_stat))
+    return maj_stat;
+
+  maj_stat = _gss_inquire_mechs_for_name2 (minor_status, name_type,
+					   out_mech_types,
+					   supported_mech_types);
+  gss_release_oid_set (minor_status, &supported_mech_types);
+  if (GSS_ERROR (maj_stat))
+    return maj_stat;
 
   if (minor_status)
     *minor_status = 0;
@@ -372,13 +400,17 @@ gss_inquire_mechs_for_name (OM_uint32 * minor_status,
 {
   OM_uint32 maj_stat;
 
+  if (input_name == GSS_C_NO_NAME)
+    return GSS_S_BAD_NAME | GSS_S_CALL_INACCESSIBLE_READ;
+
   maj_stat = gss_create_empty_oid_set (minor_status, mech_types);
-  if (maj_stat != GSS_S_COMPLETE)
+  if (GSS_ERROR (maj_stat))
     return maj_stat;
 
-  maj_stat = _gss_inquire_mechs_for_name1 (minor_status, input_name->type,
+  maj_stat = _gss_inquire_mechs_for_name1 (minor_status,
+					   input_name->type,
 					   mech_types);
-  if (maj_stat != GSS_S_COMPLETE)
+  if (GSS_ERROR (maj_stat))
     {
       gss_release_oid_set (minor_status, mech_types);
       return maj_stat;
