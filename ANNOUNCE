@@ -11,10 +11,10 @@ GSS is developed for the GNU/Linux system, but runs on over 20
 platforms including most major Unix platforms and Windows, and many
 kind of devices including iPAQ handhelds and S/390 mainframes.
 
-GSS is licensed under the GNU Public License.
+GSS is licensed under the GNU Public License.  GSS is a GNU project.
 
 The project web page:
-http://josefsson.org/gss/
+http://www.gnu.org/software/gss/
 
 For more information see:
 http://www.ietf.org/rfc/rfc2743.txt
