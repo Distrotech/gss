@@ -1,4 +1,4 @@
-/* basic.c	Basic GSS self tests.
+/* basic.c --- Basic GSS self tests.
  * Copyright (C) 2003, 2004  Simon Josefsson
  *
  * This file is part of the Generic Security Service (GSS).
@@ -451,7 +451,7 @@ main (int argc, char *argv[])
 	    bufdesc.length, (char *) bufdesc.value);
 
   if (verbose)
-    printf ("Name self tests done with %d errors\n", error_count);
+    printf ("Basic self tests done with %d errors\n", error_count);
 
   return error_count ? 1 : 0;
 }
