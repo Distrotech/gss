@@ -144,7 +144,6 @@ gss_krb5_init_sec_context (OM_uint32 * minor_status,
     }
   else if (!k5->repdone)
     {
-      gss_ctx_id_t ctx = *context_handle;
       gss_OID_desc tokenoid;
       gss_buffer_desc data;
 
