@@ -4,6 +4,12 @@ See the end for copying conditions.
 
 * Changes in 0.0.11 (unreleased)
 
+** Kerberos 5 gss_init_sec_context set sequence numbers correctly.
+The incorrect sequence numbers prevented gss_(un)wrap from working
+correctly.
+
+** Kerberos 5 gss_unwrap for DES-MD5 now check sequence numbers correctly.
+
 ** Polish translation added, by Jakub Bogusz.
 
 * Changes in 0.0.10 (released 2004-01-22)
