@@ -26,7 +26,7 @@ INCLUDES = -I../intl
 
 include_HEADERS = gssapi.h ggssapi.h
 
-libggssapi_la_SOURCES = version.c
+libggssapi_la_SOURCES = version.c error.c
 
 libggssapi_la_LIBADD = @LTLIBINTL@ @LTLIBOBJS@
 libggssapi_la_LDFLAGS = -version-info $(LT_CURRENT):$(LT_REVISION):$(LT_AGE)
