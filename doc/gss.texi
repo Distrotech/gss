@@ -325,19 +325,21 @@ GSS may be to look at the examples at the end of this manual.
 @node Header
 @section Header
 
-@cindex gssapi.h, api.h, gss.h, krb5.h
+@cindex Header files
 All standard interfaces (data types and functions) of the official GSS
-API are defined in the header file `gss/api.h'.  The file is taken
-verbatim from the RFC (after correcting a few typos) where it is known
-as gssapi.h.  However, to be able to co-exist gracefully with other
-GSS-API implementation, the name gssapi.h was changed.
+API are defined in the header file @file{gss/api.h}.  The file is
+taken verbatim from the RFC (after correcting a few typos) where it is
+known as @file{gssapi.h}.  However, to be able to co-exist gracefully
+with other GSS-API implementation, the name @file{gssapi.h} was
+changed.
 
-The header file `gss.h' contains a few non-standard extensions, C++
-namespace fixes, and takes care of including header files related to
-all supported mechanisms (e.g., gss/krb5.h).  Therefore, including
-`gss.h' in your project is recommended over `gss/api.h'.  If using
-`gss.h' instead of `gss/api.h' causes problems, it should be regarded
-a bug.
+The header file @file{gss.h} includes @file{gss/api.h}, add a few
+non-standard extensions (by including @file{gss/ext.h}), takes care of
+including header files related to all supported mechanisms (e.g.,
+gss/krb5.h) and finally add C++ namespace protection of all
+definitions.  Therefore, including @file{gss.h} in your project is
+recommended over @file{gss/api.h}.  If using @file{gss.h} instead of
+@file{gss/api.h} causes problems, it should be regarded a bug.
 
 You must include either file in all programs using the library, either
 directly or through some other header file, like this:
@@ -353,14 +355,32 @@ internal use and should never be used by an application.
 
 Each supported GSS mechanism may want to expose mechanism specific
 functionality, and can do so through one or more header files under
-the `gss/' directory.  The Kerberos 5 mechanism uses the file
-`gss/krb5.h', but again, it is included (with C++ namespace fixes)
-from `gss.h'.
+the @file{gss/} directory.  The Kerberos 5 mechanism uses the file
+@file{gss/krb5.h}, but again, it is included (with C++ namespace
+fixes) from @file{gss.h}.
 
 @node Initialization
 @section Initialization
 
 GSS does not need to be initialized before it can be used.
+
+In order to take advantage of the internationalisation features in
+GSS, e.g. translated error messages, the application must set the
+current locale using @code{setlocale()} before calling, e.g.,
+@code{gss_display_status()}.  This is typically done in @code{main()}
+as in the following example.
+
+@example
+#include <gss.h>
+#include <locale.h>
+...
+int
+main (int argc, char *argv[])
+@{
+  ...
+  setlocale (LC_ALL, "");
+  ...
+@end example
 
 @node Version Check
 @section Version Check
@@ -370,8 +390,8 @@ one which fits all requirements.  Even with binary compatibility new
 features may have been introduced but due to problem with the dynamic
 linker an old version is actually used.  So you may want to check that
 the version is okay right after program startup.  The function is
-called @code{gss_check_version()} and is described in @xref{Extended
-GSS API}.
+called @code{gss_check_version()} and is described formally in
+@xref{Extended GSS API}.
 
 The normal way to use the function is to put something similar to the
 following early in your @code{main()}:
@@ -391,7 +411,7 @@ following early in your @code{main()}:
 @section Building the source
 @cindex Compiling your application
 
-If you want to compile a source file that includes the `gss.h' header
+If you want to compile a source file that includes the @file{gss.h} header
 file, you must make sure that the compiler can find it in the
 directory hierarchy.  This is accomplished by adding the path to the
 directory in which the header file is located to the compilers include
@@ -410,7 +430,7 @@ gcc -c foo.c `pkg-config gss --cflags`
 @end example
 
 Adding the output of @samp{pkg-config gss --cflags} to the compilers
-command line will ensure that the compiler can find the `gss.h' header
+command line will ensure that the compiler can find the @file{gss.h} header
 file.
 
 A similar problem occurs when linking the program with the library.
@@ -461,7 +481,7 @@ written using GSS-API with Shishi.  For general GSS-API information,
 and some programming examples, a good guide is available online at
 @url{http://docs.sun.com/db/doc/816-1331}.
 
-Shishi exposes the GSS-API through the standard `gssapi.h' header file
+Shishi exposes the GSS-API through the standard @file{gssapi.h} header file
 and the library `libshishi-gss'.  To avoid conflicting with other
 GSS-API implementations on your system, the header file is installed
 in a sub-directory `shishi/' under the header file location specified
@@ -490,12 +510,187 @@ this manual (@pxref{Building the source}), but note that you must use
 @command{pkg-config}.
 
 @menu
+* Error Handling::		How errors in GSS are reported and handled.
 * Credential Management::	Standard GSS credential functions.
 * Context-Level Routines::	Standard GSS context functions.
 * Per-Message Routines::	Standard GSS per-message functions.
 * Name Manipulation::		Standard GSS name manipulation functions.
 * Miscellaneous Routines::	Standard miscellaneous functions.
 @end menu
+
+@node Error Handling
+@section Error Handling
+
+@cindex status codes
+@cindex mechanism status codes
+Every GSS-API routine returns two distinct values to report status
+information to the caller: GSS status codes and Mechanism status
+codes.
+
+@subsection GSS status codes
+
+GSS-API routines return GSS status codes as their OM_uint32 function
+value.  These codes indicate errors that are independent of the
+underlying mechanism(s) used to provide the security service.  The
+errors that can be indicated via a GSS status code are either generic
+API routine errors (errors that are defined in the GSS-API
+specification) or calling errors (errors that are specific to these
+language bindings).
+
+A GSS status code can indicate a single fatal generic API error from
+the routine and a single calling error.  In addition, supplementary
+status information may be indicated via the setting of bits in the
+supplementary info field of a GSS status code.
+
+These errors are encoded into the 32-bit GSS status code as follows:
+
+@verbatim
+      MSB                                                        LSB
+      |------------------------------------------------------------|
+      |  Calling Error | Routine Error  |    Supplementary Info    |
+      |------------------------------------------------------------|
+   Bit 31            24 23            16 15                       0
+@end verbatim
+
+Hence if a GSS-API routine returns a GSS status code whose upper 16
+bits contain a non-zero value, the call failed.  If the calling error
+field is non-zero, the invoking application's call of the routine was
+erroneous.  Calling errors are defined in table 3-1.  If the routine
+error field is non-zero, the routine failed for one of the routine-
+specific reasons listed below in table 3-2.  Whether or not the upper
+16 bits indicate a failure or a success, the routine may indicate
+additional information by setting bits in the supplementary info field
+of the status code. The meaning of individual bits is listed below in
+table 3-3.
+
+@vindex GSS_S_...
+@verbatim
+   Table 3-1  Calling Errors
+
+   Name                   Value in field           Meaning
+   ----                   --------------           -------
+   GSS_S_CALL_INACCESSIBLE_READ  1       A required input parameter
+                                         could not be read
+   GSS_S_CALL_INACCESSIBLE_WRITE 2       A required output parameter
+                                          could not be written.
+   GSS_S_CALL_BAD_STRUCTURE      3       A parameter was malformed
+@end verbatim
+
+@verbatim
+   Table 3-2  Routine Errors
+
+   Name                   Value in field           Meaning
+   ----                   --------------           -------
+   GSS_S_BAD_MECH                1       An unsupported mechanism
+                                         was requested
+   GSS_S_BAD_NAME                2       An invalid name was
+                                         supplied
+   GSS_S_BAD_NAMETYPE            3       A supplied name was of an
+                                         unsupported type
+   GSS_S_BAD_BINDINGS            4       Incorrect channel bindings
+                                         were supplied
+   GSS_S_BAD_STATUS              5       An invalid status code was
+                                         supplied
+   GSS_S_BAD_MIC GSS_S_BAD_SIG   6       A token had an invalid MIC
+   GSS_S_NO_CRED                 7       No credentials were
+                                         supplied, or the
+                                         credentials were
+                                         unavailable or
+                                         inaccessible.
+   GSS_S_NO_CONTEXT              8       No context has been
+                                         established
+   GSS_S_DEFECTIVE_TOKEN         9       A token was invalid
+   GSS_S_DEFECTIVE_CREDENTIAL   10       A credential was invalid
+   GSS_S_CREDENTIALS_EXPIRED    11       The referenced credentials
+                                         have expired
+   GSS_S_CONTEXT_EXPIRED        12       The context has expired
+   GSS_S_FAILURE                13       Miscellaneous failure (see
+                                         text)
+   GSS_S_BAD_QOP                14       The quality-of-protection
+                                         requested could not be
+                                         provided
+   GSS_S_UNAUTHORIZED           15       The operation is forbidden
+                                         by local security policy
+   GSS_S_UNAVAILABLE            16       The operation or option is
+                                         unavailable
+   GSS_S_DUPLICATE_ELEMENT      17       The requested credential
+                                         element already exists
+   GSS_S_NAME_NOT_MN            18       The provided name was not a
+                                         mechanism name
+@end verbatim
+
+@verbatim
+   Table 3-3  Supplementary Status Bits
+
+   Name                   Bit Number           Meaning
+   ----                   ----------           -------
+   GSS_S_CONTINUE_NEEDED   0 (LSB)   Returned only by
+                                     gss_init_sec_context or
+                                     gss_accept_sec_context. The
+                                     routine must be called again
+                                     to complete its function.
+                                     See routine documentation for
+                                     detailed description
+   GSS_S_DUPLICATE_TOKEN   1         The token was a duplicate of
+                                     an earlier token
+   GSS_S_OLD_TOKEN         2         The token's validity period
+                                     has expired
+   GSS_S_UNSEQ_TOKEN       3         A later token has already been
+                                     processed
+   GSS_S_GAP_TOKEN         4         An expected per-message token
+                                     was not received
+@end verbatim
+
+The routine documentation also uses the name GSS_S_COMPLETE, which is
+a zero value, to indicate an absence of any API errors or
+supplementary information bits.
+
+@findex GSS_CALLING_ERROR
+@findex GSS_ROUTINE_ERROR
+@findex GSS_SUPPLEMENTARY_INFO
+@findex GSS_ERROR
+All GSS_S_xxx symbols equate to complete OM_uint32 status codes,
+rather than to bitfield values.  For example, the actual value of the
+symbol GSS_S_BAD_NAMETYPE (value 3 in the routine error field) is
+3<<16.  The macros GSS_CALLING_ERROR(), GSS_ROUTINE_ERROR() and
+GSS_SUPPLEMENTARY_INFO() are provided, each of which takes a GSS
+status code and removes all but the relevant field.  For example, the
+value obtained by applying GSS_ROUTINE_ERROR to a status code removes
+the calling errors and supplementary info fields, leaving only the
+routine errors field.  The values delivered by these macros may be
+directly compared with a GSS_S_xxx symbol of the appropriate type.
+The macro GSS_ERROR() is also provided, which when applied to a GSS
+status code returns a non-zero value if the status code indicated a
+calling or routine error, and a zero value otherwise.  All macros
+defined by GSS-API evaluate their argument(s) exactly once.
+
+A GSS-API implementation may choose to signal calling errors in a
+platform-specific manner instead of, or in addition to the routine
+value; routine errors and supplementary info should be returned via
+major status values only.
+
+The GSS major status code GSS_S_FAILURE is used to indicate that the
+underlying mechanism detected an error for which no specific GSS
+status code is defined.  The mechanism-specific status code will
+provide more details about the error.
+
+@subsection Mechanism-specific status codes
+
+GSS-API routines return a minor_status parameter, which is used to
+indicate specialized errors from the underlying security mechanism.
+This parameter may contain a single mechanism-specific error,
+indicated by a OM_uint32 value.
+
+The minor_status parameter will always be set by a GSS-API routine,
+even if it returns a calling error or one of the generic API errors
+indicated above as fatal, although most other output parameters may
+remain unset in such cases.  However, output parameters that are
+expected to return pointers to storage allocated by a routine must
+always be set by the routine, even in the event of an error, although
+in such cases the GSS-API routine may elect to set the returned
+parameter value to NULL to indicate that no storage was actually
+allocated.  Any length field associated with such pointers (as in a
+gss_buffer_desc structure) should also be set to zero in such cases.
 
 @node Credential Management
 @section Credential Management
@@ -1643,7 +1838,8 @@ loss-less, all data is preserved as is.
 @node Acknowledgements
 @chapter Acknowledgements
 
-TBA
+This manual borrows text from RFC 2743 and RFC 2744 that describe GSS
+API formally.
 
 @c **********************************************************
 @c *******************  Appendices  *************************
