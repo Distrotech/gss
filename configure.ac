@@ -2,22 +2,22 @@ dnl Process this file with autoconf to produce a configure script.
 
 # Copyright (C) 2003 Simon Josefsson.
 #
-# This file is part of GPL GSS-API.
+# This file is part of the Generic Security Service (GSS).
 #
-# GPL GSS-API is free software; you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation; either version 2, or (at your option)
-# any later version.
+# GSS is free software; you can redistribute it and/or modify it under
+# the terms of the GNU General Public License as published by the Free
+# Software Foundation; either version 2, or (at your option) any later
+# version.
 #
-# GPL GSS-API is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
+# GSS is distributed in the hope that it will be useful, but WITHOUT
+# ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+# or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public
+# License for more details.
 #
 # You should have received a copy of the GNU General Public License
-# along with GPL GSS-API; see the file COPYING.  If not, write to
-# the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
-# Boston, MA 02111-1307, USA.
+# along with GSS; see the file COPYING.  If not, write to the Free
+# Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
+# 02111-1307, USA.
 
 AC_PREREQ(2.50)
 AC_INIT(gss, 0.0.0, bug-gss@josefsson.org)
@@ -44,17 +44,20 @@ AC_PROG_CC
 AM_MISSING_PROG(PERL, perl, $missing_dir)
 AM_MISSING_PROG(HELP2MAN, help2man, $missing_dir)
 AM_MISSING_PROG(TEXI2PDF, texi2pdf, $missing_dir)
+AM_MISSING_PROG(ASN1PARSER, asn1Parser, $missing_dir)
 
 # Checks for header files.
 AC_HEADER_STDC
-AC_CHECK_HEADER(libtasn1.h,, AC_MSG_ERROR([
-You need libtasn1 from <ftp://ftp.gnutls.org/pub/gnutls/libtasn1/>])
+AC_CHECK_HEADER(libtasn1.h,, AC_MSG_ERROR([[
+You need libtasn1 from <ftp://ftp.gnutls.org/pub/gnutls/libtasn1/>.
+]]))
 
 # Checks for typedefs, structures, and compiler characteristics.
 
 # Checks for library functions.
-AC_CHECK_LIB(tasn1, asn1_read_tag,, AC_MSG_ERROR([
-You need libtasn1 from <ftp://ftp.gnutls.org/pub/gnutls/libtasn1/>])
+AC_CHECK_LIB(tasn1, asn1_read_tag,, AC_MSG_ERROR([[
+You need libtasn1 from <ftp://ftp.gnutls.org/pub/gnutls/libtasn1/>.
+]]))
 
 # Test for Shishi.
 AC_ARG_ENABLE(kerberos5,
