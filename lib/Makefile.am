@@ -42,3 +42,4 @@ DEFS = -DLOCALEDIR=\"$(localedir)\" @DEFS@
 
 indent:
 	indent $(libgss_la_SOURCES) $(gssinclude_HEADERS)
+	(cd krb5 && make indent)
