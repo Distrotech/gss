@@ -364,7 +364,22 @@ features may have been introduced but due to problem with the dynamic
 linker an old version is actually used.  So you may want to check that
 the version is okay right after program startup.
 
-@include gss-api-version.texi
+@deftypefun {const char *} gss_check_version (const char * @var{req_version})
+
+@var{req_version}:  version string to compare with, or NULL
+
+Check library version.
+
+ Check that the the version of the library is at
+minimum the one given as a string in @code{req_version} and return the
+actual version string of the library; return NULL if the condition
+is not met.  If @var{NULL} is passed to this function no check is done
+and only the version string is returned.  It is a pretty good idea
+to run this function as soon as possible, because it may also
+intializes some subsystems.  In a multithreaded environment if
+should be called before any more threads are created.
+
+@end deftypefun
 
 The normal way to use the function is to put something similar to the
 following early in your @code{main()}:
@@ -510,7 +525,23 @@ this manual (@pxref{Building the source}), but note that you must use
    gss_release_cred           5.27 Discard a credential handle.
 @end verbatim
 
-@include gss-api-cred.texi
+@deftypefun {OM_uint32} gss_release_cred (OM_uint32 * @var{minor_status}, gss_cred_id_t * @var{cred_handle})
+
+@var{minor_status}:  Mechanism specific status code.
+
+@var{cred_handle}:  Optional opaque handle identifying credential to be
+released.  If GSS_C_NO_CREDENTIAL is supplied, the routine will
+complete successfully, but will do nothing.
+
+Informs GSS-API that the specified credential handle is no longer
+required by the application, and frees associated resources.
+Implementations are encouraged to set the cred_handle to
+GSS_C_NO_CREDENTIAL on successful completion of this call.
+
+ Returns GSS_S_COMPLETE for successful completion, and
+GSS_S_NO_CRED for credentials could not be accessed.
+
+@end deftypefun
 
 @node Context-Level Routines
 @section Context-Level Routines
@@ -539,7 +570,361 @@ this manual (@pxref{Building the source}), but note that you must use
    gss_import_sec_context     5.17 Import a transferred context
 @end verbatim
 
-@include gss-api-context.texi
+@deftypefun {OM_uint32} gss_init_sec_context (OM_uint32 * @var{minor_status}, const gss_cred_id_t @var{initiator_cred_handle}, gss_ctx_id_t * @var{context_handle}, const gss_name_t @var{target_name}, const gss_OID @var{mech_type}, OM_uint32 @var{req_flags}, OM_uint32 @var{time_req}, const gss_channel_bindings_t @var{input_chan_bindings}, const gss_buffer_t @var{input_token}, gss_OID * @var{actual_mech_type}, gss_buffer_t @var{output_token}, OM_uint32 * @var{ret_flags}, OM_uint32 * @var{time_rec})
+
+@var{minor_status}:  Mechanism specific status code.
+
+@var{initiator_cred_handle}:  Optional handle for credentials claimed.
+Supply GSS_C_NO_CREDENTIAL to act as a default initiator principal.
+If no default initiator is defined, the function will return
+GSS_S_NO_CRED.
+
+@var{context_handle}:  Context handle for new context.  Supply
+GSS_C_NO_CONTEXT for first call; use value returned by first call
+in continuation calls.  Resources associated with this
+context-handle must be released by the application after use with a
+call to @code{gss_delete_sec_context()}.
+
+@var{target_name}:  Name of target.
+
+@var{mech_type}:  Optional object ID of desired mechanism. Supply
+GSS_C_NO_OID to obtain an implementation specific default
+
+@var{req_flags}:  Contains various independent flags, each of which
+requests that the context support a specific service option.
+Symbolic names are provided for each flag, and the symbolic names
+corresponding to the required flags should be logically-ORed
+together to form the bit-mask value.  See below for details.
+
+@var{time_req}:  Optional Desired number of seconds for which context
+should remain valid.  Supply 0 to request a default validity
+period.
+
+@var{input_chan_bindings}:  Optional Application-specified bindings.
+Allows application to securely bind channel identification
+information to the security context.  Specify
+GSS_C_NO_CHANNEL_BINDINGS if channel bindings are not used.
+
+@var{input_token}:  Optional (see text) Token received from peer
+application.  Supply GSS_C_NO_BUFFER, or a pointer to a buffer
+containing the value GSS_C_EMPTY_BUFFER on initial call.
+
+@var{actual_mech_type}:  Optional actual mechanism used.  The OID
+returned via this parameter will be a pointer to static storage
+that should be treated as read-only; In particular the application
+should not attempt to free it.  Specify NULL if not required.
+
+@var{output_token}:  Token to be sent to peer application.  If the length
+field of the returned buffer is zero, no token need be sent to the
+peer application.  Storage associated with this buffer must be
+freed by the application after use with a call to
+@code{gss_release_buffer()}.
+
+@var{ret_flags}:  Optional various independent flags, each of which
+indicates that the context supports a specific service option.
+Specify NULL if not required.  Symbolic names are provided for each
+flag, and the symbolic names corresponding to the required flags
+should be logically-ANDed with the ret_flags value to test whether
+a given option is supported by the context. See below for details.
+
+@var{time_rec}:  Optional number of seconds for which the context will
+remain valid. If the implementation does not support context
+expiration, the value GSS_C_INDEFINITE will be returned.  Specify
+NULL if not required.
+
+Initiates the establishment of a security context between the
+application and a remote peer.  Initially, the input_token
+parameter should be specified either as GSS_C_NO_BUFFER, or as a
+pointer to a gss_buffer_desc object whose length field contains the
+value zero.  The routine may return a output_token which should be
+transferred to the peer application, where the peer application
+will present it to gss_accept_sec_context.  If no token need be
+sent, gss_init_sec_context will indicate this by setting the length
+field of the output_token argument to zero. To complete the context
+establishment, one or more reply tokens may be required from the
+peer application; if so, gss_init_sec_context will return a status
+containing the supplementary information bit GSS_S_CONTINUE_NEEDED.
+In this case, gss_init_sec_context should be called again when the
+reply token is received from the peer application, passing the
+reply token to gss_init_sec_context via the input_token parameters.
+
+Portable applications should be constructed to use the token length
+and return status to determine whether a token needs to be sent or
+waited for.  Thus a typical portable caller should always invoke
+
+
+int context_established = 0;
+gss_ctx_id_t context_hdl = GSS_C_NO_CONTEXT;
+...
+input_token->length = 0;
+
+while (!context_established) @{
+maj_stat = gss_init_sec_context(@code{min_stat}, cred_hdl, @code{context_hdl},
+target_name, desired_mech,
+desired_services, desired_time,
+input_bindings, input_token, @code{actual_mech},
+output_token, @code{actual_services},
+@code{actual_time});
+if (GSS_ERROR(maj_stat)) @{
+report_error(maj_stat, min_stat);
+@};
+
+if (output_token->length != 0) @{
+send_token_to_peer(output_token);
+gss_release_buffer(@code{min_stat}, output_token)
+@};
+if (GSS_ERROR(maj_stat)) @{
+
+if (context_hdl != GSS_C_NO_CONTEXT)
+gss_delete_sec_context(@code{min_stat}, @code{context_hdl}, GSS_C_NO_BUFFER);
+break;
+@};
+
+if (maj_stat & GSS_S_CONTINUE_NEEDED) @{
+receive_token_from_peer(input_token);
+@} else @{
+context_established = 1;
+@};
+@};
+
+Whenever the routine returns a major status that includes the value
+GSS_S_CONTINUE_NEEDED, the context is not fully established and the
+
+
+The value returned via the time_rec parameter is undefined Unless
+the accompanying ret_flags parameter contains the bit
+GSS_C_PROT_READY_FLAG, indicating that per-message services may be
+applied in advance of a successful completion status, the value
+returned via the actual_mech_type parameter is undefined until the
+routine returns a major status value of GSS_S_COMPLETE.
+
+The values of the GSS_C_DELEG_FLAG, GSS_C_MUTUAL_FLAG,
+GSS_C_REPLAY_FLAG, GSS_C_SEQUENCE_FLAG, GSS_C_CONF_FLAG,
+GSS_C_INTEG_FLAG and GSS_C_ANON_FLAG bits returned via the
+ret_flags parameter should contain the values that the
+implementation expects would be valid if context establishment were
+to succeed.  In particular, if the application has requested a
+service such as delegation or anonymous authentication via the
+req_flags argument, and such a service is unavailable from the
+underlying mechanism, gss_init_sec_context should generate a token
+that will not provide the service, and indicate via the ret_flags
+argument that the service will not be supported.  The application
+may choose to abort the context establishment by calling
+gss_delete_sec_context (if it cannot continue in the absence of the
+service), or it may choose to transmit the token and continue
+context establishment (if the service was merely desired but not
+mandatory).
+
+The values of the GSS_C_PROT_READY_FLAG and GSS_C_TRANS_FLAG bits
+within ret_flags should indicate the actual state at the time
+gss_init_sec_context returns, whether or not the context is fully
+established.
+
+GSS-API implementations that support per-message protection are
+encouraged to set the GSS_C_PROT_READY_FLAG in the final ret_flags
+returned to a caller (i.e. when accompanied by a GSS_S_COMPLETE
+status code).  However, applications should not rely on this
+behavior as the flag was not defined in Version 1 of the GSS-API.
+Instead, applications should determine what per-message services
+are available after a successful context establishment according to
+the GSS_C_INTEG_FLAG and GSS_C_CONF_FLAG values.
+
+All other bits within the ret_flags argument should be set to
+zero.
+
+If the initial call of @code{gss_init_sec_context()} fails, the
+implementation should not create a context object, and should leave
+the value of the context_handle parameter set to GSS_C_NO_CONTEXT
+to indicate this.  In the event of a failure on a subsequent call,
+the implementation is permitted to delete the "half-built" security
+context (in which case it should set the context_handle parameter
+to GSS_C_NO_CONTEXT), but the preferred behavior is to leave the
+security context untouched for the application to delete (using
+gss_delete_sec_context).
+
+During context establishment, the informational status bits
+GSS_S_OLD_TOKEN and GSS_S_DUPLICATE_TOKEN indicate fatal errors,
+and GSS-API mechanisms should always return them in association
+with a routine error of GSS_S_FAILURE.  This requirement for
+pairing did not exist in version 1 of the GSS-API specification, so
+applications that wish to run over version 1 implementations must
+special-case these codes.
+
+
+GSS_C_DELEG_FLAG
+True - Delegate credentials to remote peer
+False - Don't delegate
+
+GSS_C_MUTUAL_FLAG
+True - Request that remote peer authenticate itself
+False - Authenticate self to remote peer only
+
+GSS_C_REPLAY_FLAG
+True - Enable replay detection for messages protected with gss_wrap
+or gss_get_mic
+False - Don't attempt to detect replayed messages
+
+GSS_C_SEQUENCE_FLAG
+True - Enable detection of out-of-sequence protected messages
+False - Don't attempt to detect out-of-sequence messages
+
+GSS_C_CONF_FLAG
+True - Request that confidentiality service be made available (via gss_wrap)
+False - No per-message confidentiality service is required.
+
+GSS_C_INTEG_FLAG
+True - Request that integrity service be made available (via gss_wrap or
+gss_get_mic)
+False - No per-message integrity service is required.
+
+GSS_C_ANON_FLAG
+True - Do not reveal the initiator's identity to the acceptor.
+False - Authenticate normally.
+
+
+GSS_C_DELEG_FLAG
+True - Credentials were delegated to the remote peer
+False - No credentials were delegated
+
+GSS_C_MUTUAL_FLAG
+True - The remote peer has authenticated itself.
+False - Remote peer has not authenticated itself.
+
+GSS_C_REPLAY_FLAG
+True - replay of protected messages will be detected
+False - replayed messages will not be detected
+
+GSS_C_SEQUENCE_FLAG
+True - out-of-sequence protected messages will be detected
+False - out-of-sequence messages will not be detected
+
+GSS_C_CONF_FLAG
+True - Confidentiality service may be invoked by calling gss_wrap routine
+False - No confidentiality service (via gss_wrap) available. gss_wrap will
+provide message encapsulation, data-origin authentication and
+integrity services only.
+
+GSS_C_INTEG_FLAG
+True - Integrity service may be invoked by calling either gss_get_mic
+or gss_wrap routines.
+False - Per-message integrity service unavailable.
+
+GSS_C_ANON_FLAG
+True - The initiator's identity has not been revealed, and will not
+be revealed if any emitted token is passed to the acceptor.
+False - The initiator's identity has been or will be authenticated normally.
+
+GSS_C_PROT_READY_FLAG
+True - Protection services (as specified by the states of the
+GSS_C_CONF_FLAG and GSS_C_INTEG_FLAG) are available for use if the
+accompanying major status return value is either GSS_S_COMPLETE or
+GSS_S_CONTINUE_NEEDED.
+False - Protection services (as specified by the states of the
+GSS_C_CONF_FLAG and GSS_C_INTEG_FLAG) are available only if the
+accompanying major status return value is GSS_S_COMPLETE.
+
+GSS_C_TRANS_FLAG
+True - The resultant security context may be transferred to other
+processes via a call to @code{gss_export_sec_context()}.
+False - The security context is not transferable.
+
+All other bits should be set to zero.
+
+ Returns:
+
+GSS_S_COMPLETE    Successful completion
+
+GSS_S_CONTINUE_NEEDED Indicates that a token from the peer
+application is required to complete the
+context, and that gss_init_sec_context
+must be called again with that token.
+
+GSS_S_DEFECTIVE_TOKEN Indicates that consistency checks performed
+on the input_token failed
+
+GSS_S_DEFECTIVE_CREDENTIAL Indicates that consistency checks
+performed on the credential failed.
+
+GSS_S_NO_CRED     The supplied credentials were not valid for
+context initiation, or the credential handle
+did not reference any credentials.
+
+GSS_S_CREDENTIALS_EXPIRED The referenced credentials have expired
+
+GSS_S_BAD_BINDINGS The input_token contains different channel
+bindings to those specified via the
+input_chan_bindings parameter
+
+GSS_S_BAD_SIG     The input_token contains an invalid MIC, or a MIC
+that could not be verified
+
+GSS_S_OLD_TOKEN   The input_token was too old.  This is a fatal
+error during context establishment
+
+GSS_S_DUPLICATE_TOKEN The input_token is valid, but is a duplicate
+of a token already processed.  This is a
+fatal error during context establishment.
+
+GSS_S_NO_CONTEXT  Indicates that the supplied context handle did
+not refer to a valid context
+
+GSS_S_BAD_NAMETYPE The provided target_name parameter contained an
+invalid or unsupported type of name
+
+GSS_S_BAD_NAME    The provided target_name parameter was ill-formed.
+
+GSS_S_BAD_MECH    The specified mechanism is not supported by the
+provided credential, or is unrecognized by the
+implementation.
+
+@end deftypefun
+
+@deftypefun {OM_uint32} gss_delete_sec_context (OM_uint32 * @var{minor_status}, gss_ctx_id_t * @var{context_handle}, gss_buffer_t @var{output_token})
+
+@var{minor_status}:  Mechanism specific status code.
+
+@var{context_handle}:  Context handle identifying context to delete.
+After deleting the context, the GSS-API will set this context
+handle to GSS_C_NO_CONTEXT.
+
+@var{output_token}:  Optional token to be sent to remote application to
+instruct it to also delete the context.  It is recommended that
+applications specify GSS_C_NO_BUFFER for this parameter, requesting
+local deletion only.  If a buffer parameter is provided by the
+application, the mechanism may return a token in it; mechanisms
+that implement only local deletion should set the length field of
+this token to zero to indicate to the application that no token is
+to be sent to the peer.
+
+Delete a security context.  @code{gss_delete_sec_context()} will delete
+the local data structures associated with the specified security
+context, and may generate an output_token, which when passed to the
+peer @code{gss_process_context_token()} will instruct it to do likewise.
+If no token is required by the mechanism, the GSS-API should set
+the length field of the output_token (if provided) to zero.  No
+further security services may be obtained using the context
+specified by context_handle.
+
+In addition to deleting established security contexts,
+@code{gss_delete_sec_context()} must also be able to delete "half-built"
+security contexts resulting from an incomplete sequence of
+@code{gss_init_sec_context()}/@code{gss_accept_sec_context()} calls.
+
+The output_token parameter is retained for compatibility with
+version 1 of the GSS-API.  It is recommended that both peer
+applications invoke @code{gss_delete_sec_context()} passing the value
+GSS_C_NO_BUFFER for the output_token parameter, indicating that no
+token is required, and that @code{gss_delete_sec_context()} should simply
+delete local context data structures.  If the application does pass
+a valid buffer to @code{gss_delete_sec_context()}, mechanisms are
+encouraged to return a zero-length token, indicating that no peer
+action is necessary, and that no token should be transferred by the
+application.
+
+ Returns GSS_S_COMPLETE for successful completion, and
+GSS_S_NO_CONTEXT if no valid context was supplied.
+
+@end deftypefun
 
 @node Per-Message Routines
 @section Per-Message Routines
@@ -564,7 +949,105 @@ this manual (@pxref{Building the source}), but note that you must use
                                    if necessary.
 @end verbatim
 
-@include gss-api-msg.texi
+@deftypefun {OM_uint32} gss_wrap (OM_uint32 * @var{minor_status}, const gss_ctx_id_t @var{context_handle}, int @var{conf_req_flag}, gss_qop_t @var{qop_req}, const gss_buffer_t @var{input_message_buffer}, int * @var{conf_state}, gss_buffer_t @var{output_message_buffer})
+
+@var{minor_status}:  Mechanism specific status code.
+
+@var{context_handle}:  Identifies the context on which the message will be sent
+
+@var{conf_req_flag}:  Whether confidentiality is requested.
+
+@var{qop_req}:  Specifies required quality of protection.  A
+mechanism-specific default may be requested by setting qop_req to
+GSS_C_QOP_DEFAULT.  If an unsupported protection strength is
+requested, gss_wrap will return a major_status of GSS_S_BAD_QOP.
+
+@var{input_message_buffer}:  Message to be protected.
+
+@var{conf_state}:  Optional output variable indicating if confidentiality
+services have been applied.
+
+@var{output_message_buffer}:  Buffer to receive protected message.
+Storage associated with this message must be freed by the
+application after use with a call to @code{gss_release_buffer()}.
+
+Attaches a cryptographic MIC and optionally encrypts the specified
+input_message.  The output_message contains both the MIC and the
+message.  The qop_req parameter allows a choice between several
+cryptographic algorithms, if supported by the chosen mechanism.
+
+Since some application-level protocols may wish to use tokens
+emitted by @code{gss_wrap()} to provide "secure framing", implementations
+must support the wrapping of zero-length messages.
+
+ Returns
+
+GSS_S_COMPLETE    Successful completion
+
+GSS_S_CONTEXT_EXPIRED The context has already expired
+
+GSS_S_NO_CONTEXT The context_handle parameter did not identify a
+valid context
+
+GSS_S_BAD_QOP     The specified QOP is not supported by the mechanism.
+
+@end deftypefun
+
+@deftypefun {OM_uint32} gss_unwrap (OM_uint32 * @var{minor_status}, const gss_ctx_id_t @var{context_handle}, const gss_buffer_t @var{input_message_buffer}, gss_buffer_t @var{output_message_buffer}, int * @var{conf_state}, gss_qop_t * @var{qop_state})
+
+@var{minor_status}:  Mechanism specific status code.
+
+@var{context_handle}:  Identifies the context on which the message arrived
+
+@var{input_message_buffer}:  input protected message
+
+@var{output_message_buffer}:  Buffer to receive unwrapped message.
+Storage associated with this buffer must be freed by the
+application after use use with a call to @code{gss_release_buffer()}.
+
+@var{conf_state}:  optional output variable indicating if confidentiality
+protection was used.
+
+@var{qop_state}:  optional output variable indicating quality of protection.
+
+Converts a message previously protected by gss_wrap back to a
+usable form, verifying the embedded MIC.  The conf_state parameter
+indicates whether the message was encrypted; the qop_state
+parameter indicates the strength of protection that was used to
+provide the confidentiality and integrity services.
+
+Since some application-level protocols may wish to use tokens
+emitted by @code{gss_wrap()} to provide "secure framing", implementations
+must support the wrapping and unwrapping of zero-length messages.
+
+ Returns:
+
+GSS_S_COMPLETE    Successful completion
+
+GSS_S_DEFECTIVE_TOKEN The token failed consistency checks
+
+GSS_S_BAD_SIG     The MIC was incorrect
+
+GSS_S_DUPLICATE_TOKEN The token was valid, and contained a correct
+MIC for the message, but it had already been processed
+
+GSS_S_OLD_TOKEN The token was valid, and contained a correct MIC
+for the message, but it is too old to check for duplication.
+
+GSS_S_UNSEQ_TOKEN The token was valid, and contained a correct MIC
+for the message, but has been verified out of sequence; a later
+token has already been received.
+
+GSS_S_GAP_TOKEN The token was valid, and contained a correct MIC
+for the message, but has been verified out of sequence; an earlier
+expected token has not yet been received.
+
+GSS_S_CONTEXT_EXPIRED The context has already expired
+
+GSS_S_NO_CONTEXT The context_handle parameter did not identify a
+valid context
+
+@end deftypefun
 
 @node Name Manipulation
 @section Name Manipulation
@@ -590,7 +1073,167 @@ this manual (@pxref{Building the source}), but note that you must use
    gss_duplicate_name         5.12 Create a copy of an internal name
 @end verbatim
 
-@include gss-api-name.texi
+@deftypefun {OM_uint32} gss_import_name (OM_uint32 * @var{minor_status}, const gss_buffer_t @var{input_name_buffer}, const gss_OID @var{input_name_type}, gss_name_t * @var{output_name})
+
+@var{minor_status}:  Mechanism specific status code
+
+@var{input_name_buffer}:  buffer containing contiguous string name to convert
+
+@var{input_name_type}:  Optional Object ID specifying type of printable
+name.  Applications may specify either GSS_C_NO_OID to use a
+mechanism-specific default printable syntax, or an OID recognized
+by the GSS-API implementation to name a specific namespace.
+
+@var{output_name}:  returned name in internal form.  Storage associated
+with this name must be freed by the application after use with a call
+to @code{gss_release_name()}.
+
+Convert a contiguous string name to internal form.  In general, the
+internal name returned (via the <output_name> parameter) will not
+be an MN; the exception to this is if the <input_name_type>
+indicates that the contiguous string provided via the
+<input_name_buffer> parameter is of type GSS_C_NT_EXPORT_NAME, in
+which case the returned internal name will be an MN for the
+mechanism that exported the name.
+
+ Returns GSS_S_COMPLETE for successful completion,
+GSS_S_BAD_NAMETYPE when the input_name_type was unrecognized,
+GSS_S_BAD_NAME when the input_name parameter could not be
+interpreted as a name of the specified type, and GSS_S_BAD_MECH
+when the input name-type was GSS_C_NT_EXPORT_NAME, but the
+mechanism contained within the input-name is not supported.
+
+@end deftypefun
+
+@deftypefun {OM_uint32} gss_display_name (OM_uint32 * @var{minor_status}, const gss_name_t @var{input_name}, gss_buffer_t @var{output_name_buffer}, gss_OID * @var{output_name_type})
+
+@var{minor_status}:  Mechanism specific status code.
+
+@var{input_name}:  Name to be displayed
+
+@var{output_name_buffer}:  Buffer to receive textual name string.  The
+application must free storage associated with this name after use
+with a call to @code{gss_release_buffer()}.
+
+@var{output_name_type}:  Optional type of the returned name.  The
+returned gss_OID will be a pointer into static storage, and should
+be treated as read-only by the caller (in particular, the
+application should not attempt to free it). Specify NULL if not
+required.
+
+Allows an application to obtain a textual representation of an
+opaque internal-form name for display purposes.  The syntax of a
+printable name is defined by the GSS-API implementation.
+
+If input_name denotes an anonymous principal, the implementation
+should return the gss_OID value GSS_C_NT_ANONYMOUS as the
+output_name_type, and a textual name that is syntactically distinct
+from all valid supported printable names in output_name_buffer.
+
+If input_name was created by a call to gss_import_name, specifying
+GSS_C_NO_OID as the name-type, implementations that employ lazy
+conversion between name types may return GSS_C_NO_OID via the
+output_name_type parameter.
+
+ Returns GSS_S_COMPLETE for successful completion,
+GSS_S_BAD_NAME when input_name was ill-formed.
+
+@end deftypefun
+
+@deftypefun {OM_uint32} gss_compare_name (OM_uint32 * @var{minor_status}, const gss_name_t @var{name1}, const gss_name_t @var{name2}, int * @var{name_equal})
+
+@var{minor_status}:  Mechanism specific status code.
+
+@var{name1}:  Internal-form name.
+
+@var{name2}:  Internal-form name.
+
+@var{name_equal}:  non-zero if names refer to same entity.
+
+Allows an application to compare two internal-form names to
+determine whether they refer to the same entity.
+
+If either name presented to gss_compare_name denotes an anonymous
+principal, the routines should indicate that the two names do not
+refer to the same identity.
+
+ Returns GSS_S_COMPLETE for successful completion,
+GSS_S_BAD_NAMETYPE when the two names were of incomparable types,
+and GSS_S_BAD_NAME if one or both of name1 or name2 was ill-formed.
+
+@end deftypefun
+
+@deftypefun {OM_uint32} gss_release_name (OM_uint32 * @var{minor_status}, gss_name_t * @var{name})
+
+@var{minor_status}:  Mechanism specific status code.
+
+@var{name}:  The name to be deleted.
+
+Free GSSAPI-allocated storage associated with an internal-form
+name.  Implementations are encouraged to set the name to
+GSS_C_NO_NAME on successful completion of this call.
+
+ Returns GSS_S_COMPLETE for successful completion, and
+GSS_S_BAD_NAME when the name parameter did not contain a valid
+name.
+
+@end deftypefun
+
+@deftypefun {OM_uint32} gss_canonicalize_name (OM_uint32 * @var{minor_status}, const gss_name_t @var{input_name}, const gss_OID @var{mech_type}, gss_name_t * @var{output_name})
+
+@var{minor_status}:  Mechanism specific status code.
+
+@var{input_name}:  The name for which a canonical form is desired.
+
+@var{mech_type}:  The authentication mechanism for which the canonical
+form of the name is desired.  The desired mechanism must be
+specified explicitly; no default is provided.
+
+@var{output_name}:  The resultant canonical name.  Storage associated
+with this name must be freed by the application after use with a
+call to @code{gss_release_name()}.
+
+Generate a canonical mechanism name (MN) from an arbitrary internal
+name.  The mechanism name is the name that would be returned to a
+context acceptor on successful authentication of a context where
+the initiator used the input_name in a successful call to
+gss_acquire_cred, specifying an OID set containing <mech_type> as
+its only member, followed by a call to gss_init_sec_context,
+specifying <mech_type> as the authentication mechanism.
+
+ Returns
+
+GSS_S_COMPLETE    Successful completion.
+
+GSS_S_BAD_MECH    The identified mechanism is not supported.
+
+GSS_S_BAD_NAMETYPE The provided internal name contains no elements
+that could be processed by the specified
+mechanism.
+
+GSS_S_BAD_NAME    The provided internal name was ill-formed.
+
+@end deftypefun
+
+@deftypefun {OM_uint32} gss_duplicate_name (OM_uint32 * @var{minor_status}, const gss_name_t @var{src_name}, gss_name_t * @var{dest_name})
+
+@var{minor_status}:  Mechanism specific status code.
+
+@var{src_name}:  Internal name to be duplicated.
+
+@var{dest_name}:  The resultant copy of <src_name>.  Storage associated
+with this name must be freed by the application after use with a
+call to @code{gss_release_name()}.
+
+Create an exact duplicate of the existing internal name src_name.
+The new dest_name will be independent of src_name (i.e. src_name
+and dest_name must both be released, and the release of one shall
+not affect the validity of the other).
+
+ Returns GSS_S_COMPLETE for successful completion, and
+GSS_S_BAD_NAME when the src_name parameter was ill-formed.
+
+@end deftypefun
 
 @node Miscellaneous Routines
 @section Miscellaneous Routines
@@ -615,7 +1258,109 @@ this manual (@pxref{Building the source}), but note that you must use
                                        identifier is a member of a set.
 @end verbatim
 
-@include gss-api-misc.texi
+@deftypefun {OM_uint32} gss_create_empty_oid_set (OM_uint32 * @var{minor_status}, gss_OID_set * @var{oid_set})
+
+@var{minor_status}:  Mechanism specific status code
+
+@var{oid_set}:  The empty object identifier set. The routine will
+allocate the gss_OID_set_desc object, which the application must free
+after use with a call to @code{gss_release_oid_set()}.
+
+Create an object-identifier set containing no object identifiers,
+to which members may be subsequently added using the
+@code{gss_add_oid_set_member()} routine.  These routines are intended to
+be used to construct sets of mechanism object identifiers, for
+input to gss_acquire_cred.
+
+ Returns GSS_S_COMPLETE for successful completion.
+
+@end deftypefun
+
+@deftypefun {OM_uint32} gss_add_oid_set_member (OM_uint32 * @var{minor_status}, const gss_OID @var{member_oid}, gss_OID_set * @var{oid_set})
+
+@var{minor_status}:  Mechanism specific status code
+
+@var{member_oid}:  The object identifier to copied into the set.
+
+@var{oid_set}:  The set in which the object identifier should be inserted.
+
+Add an Object Identifier to an Object Identifier set.  This routine
+is intended for use in conjunction with gss_create_empty_oid_set
+when constructing a set of mechanism OIDs for input to
+gss_acquire_cred.  The oid_set parameter must refer to an OID-set
+that was created by GSS-API (e.g. a set returned by
+@code{gss_create_empty_oid_set()}). GSS-API creates a copy of the
+member_oid and inserts this copy into the set, expanding the
+storage allocated to the OID-set's elements array if necessary.
+The routine may add the new member OID anywhere within the elements
+array, and implementations should verify that the new member_oid is
+not already contained within the elements array; if the member_oid
+is already present, the oid_set should remain unchanged.
+
+ Returns GSS_S_COMPLETE for successful completion.
+
+@end deftypefun
+
+@deftypefun {OM_uint32} gss_test_oid_set_member (OM_uint32 * @var{minor_status}, const gss_OID @var{member}, const gss_OID_set @var{set}, int * @var{present})
+
+@var{minor_status}:  Mechanism specific status code
+
+@var{member}:  The object identifier whose presence is to be tested.
+
+@var{set}:  The Object Identifier set.
+
+@var{present}:  output indicating if the specified OID is a member of the
+set, zero if not.
+
+Interrogate an Object Identifier set to determine whether a
+specified Object Identifier is a member.  This routine is intended
+to be used with OID sets returned by @code{gss_indicate_mechs()},
+@code{gss_acquire_cred()}, and @code{gss_inquire_cred()}, but will also work with
+user-generated sets.
+
+ Returns GSS_S_COMPLETE for successful completion.
+
+@end deftypefun
+
+@deftypefun {OM_uint32} gss_release_oid_set (OM_uint32 * @var{minor_status}, gss_OID_set * @var{set})
+
+@var{minor_status}:  Mechanism specific status code
+
+@var{set}:  The storage associated with the gss_OID_set will be deleted.
+
+Free storage associated with a GSSAPI-generated gss_OID_set object.
+The set parameter must refer to an OID-set that was returned from a
+GSS-API routine.  @code{gss_release_oid_set()} will free the storage
+associated with each individual member OID, the OID set's elements
+array, and the gss_OID_set_desc.
+
+Implementations are encouraged to set the gss_OID_set parameter to
+GSS_C_NO_OID_SET on successful completion of this routine.
+
+ Returns GSS_S_COMPLETE for successful completion.
+
+@end deftypefun
+
+@deftypefun {OM_uint32} gss_release_buffer (OM_uint32 * @var{minor_status}, gss_buffer_t @var{buffer})
+
+@var{minor_status}:  Mechanism specific status code.
+
+@var{buffer}:  The storage associated with the buffer will be deleted.
+The gss_buffer_desc object will not be freed, but its length field
+will be zeroed.
+
+Free storage associated with a buffer.  The storage must have been
+allocated by a GSS-API routine.  In addition to freeing the
+associated storage, the routine will zero the length field in the
+descriptor to which the buffer parameter refers, and
+implementations are encouraged to additionally set the pointer
+field in the descriptor to NULL.  Any buffer object returned by a
+GSS-API routine may be passed to gss_release_buffer (even if there
+is no storage associated with the buffer).
+
+ Returns GSS_S_COMPLETE for successful completion.
+
+@end deftypefun
 
 @c **********************************************************
 @c ************** Generic Security Services  ****************
@@ -623,7 +1368,22 @@ this manual (@pxref{Building the source}), but note that you must use
 @node Extended GSS API
 @chapter Extended GSS API
 
-@include gss-api-version.texi
+@deftypefun {const char *} gss_check_version (const char * @var{req_version})
+
+@var{req_version}:  version string to compare with, or NULL
+
+Check library version.
+
+ Check that the the version of the library is at
+minimum the one given as a string in @code{req_version} and return the
+actual version string of the library; return NULL if the condition
+is not met.  If @var{NULL} is passed to this function no check is done
+and only the version string is returned.  It is a pretty good idea
+to run this function as soon as possible, because it may also
+intializes some subsystems.  In a multithreaded environment if
+should be called before any more threads are created.
+
+@end deftypefun
 
 @c **********************************************************
 @c *********************  Invoking gss  *********************
