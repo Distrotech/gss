@@ -2684,8 +2684,12 @@ software projects looking for a implementation agnostic security
 framework.  We express these doubts in this section, so that the
 reader can judge for herself if any of the potential problems
 discussed here are relevant for their project, or if the benefit
-outweigh the problems.  GSS can be criticized on several levels.  We
-start with the actual implementation.
+outweigh the problems.  We are aware that some of the opinions are
+highly subjective, but we offer them in the hope they can serve as
+anecdotal evidence.
+
+GSS can be criticized on several levels.  We start with the actual
+implementation.
 
 GSS does not appear to be designed by experienced C programmers.
 While generally this may be a good thing (C is not the best language),
