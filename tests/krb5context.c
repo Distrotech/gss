@@ -419,6 +419,13 @@ main (int argc, char *argv[])
     }
   /* Clean up. */
 
+  maj_stat = gss_release_cred (&min_stat, &server_creds);
+  if (GSS_ERROR (maj_stat))
+    {
+      fail ("gss_release_cred");
+      display_status ("release credentials", maj_stat, min_stat);
+    }
+
   maj_stat = gss_release_name (&min_stat, &servername);
   if (GSS_ERROR(maj_stat))
     {
