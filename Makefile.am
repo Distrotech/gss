@@ -29,7 +29,6 @@ ACLOCAL_AMFLAGS = -I m4
 
 # Maintainer targets
 
-.PHONY: ChangeLog
 ChangeLog:
 	test ! -f .cvsusers || \
 	cvs2cl --FSF --usermap .cvsusers \
@@ -48,7 +47,7 @@ release:
 	if cvs upd -p -r $(tag) NEWS > /dev/null; then false else true; fi
 	rm -f ChangeLog && cvs upd ChangeLog
 	cvs commit
-	$(MAKE) distcheck
+	$(MAKE) ChangeLog distcheck
 	cvs commit -m "" ChangeLog
 	rm -f $(distdir).tar.gz.asc
 	gpg -a --sign --detach $(distdir).tar.gz
