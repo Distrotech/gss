@@ -164,7 +164,10 @@ typedef struct _gss_mech_api_struct
      OM_uint32 * acceptor_lifetime, gss_cred_usage_t * cred_usage);
 } _gss_mech_api_desc, *_gss_mech_api_t;
 
+/* See meta.c. */
 _gss_mech_api_t _gss_find_mech (const gss_OID oid);
+OM_uint32 _gss_indicate_mechs1 (OM_uint32 * minor_status,
+				gss_OID_set * mech_set);
 
 /* See error.c. */
 extern void gss_warn (const char *format, ...);
