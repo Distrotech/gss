@@ -231,6 +231,9 @@ gss_krb5_init_sec_context (OM_uint32 * minor_status,
 			       GSS_C_REPLAY_FLAG | GSS_C_SEQUENCE_FLAG |
 			       GSS_C_CONF_FLAG | GSS_C_INTEG_FLAG);
 
+      if (ret_flags)
+	*ret_flags = k5->flags;
+
       k5->key = shishi_ap_key (k5->ap);
       k5->reqdone = 1;
     }
@@ -251,7 +254,7 @@ gss_krb5_init_sec_context (OM_uint32 * minor_status,
 	return maj_stat;
 
       if (ret_flags)
-	*ret_flags |= GSS_C_MUTUAL_FLAG;
+	*ret_flags = k5->flags;
 
       k5->repdone = 1;
     }
