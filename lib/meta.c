@@ -61,7 +61,8 @@ _gss_mech_api_desc _gss_mech_apis[] = {
     _gss_dummy,
     gss_krb5_display_status,
     gss_krb5_acquire_cred,
-    gss_krb5_accept_sec_context
+    gss_krb5_accept_sec_context,
+    gss_krb5_inquire_cred
   },
 #endif
   {
@@ -74,6 +75,7 @@ _gss_mech_api_desc _gss_mech_apis[] = {
     _gss_dummy,
     _gss_dummy,
     _gss_dummy_display_status,
+    _gss_dummy,
     _gss_dummy,
     _gss_dummy
   }

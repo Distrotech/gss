@@ -173,6 +173,14 @@ gss_krb5_acquire_cred (OM_uint32 * minor_status,
 		       OM_uint32 * time_rec);
 
 extern OM_uint32
+gss_krb5_inquire_cred (OM_uint32 * minor_status,
+		       const gss_cred_id_t cred_handle,
+		       gss_name_t * name,
+		       OM_uint32 * lifetime,
+		       gss_cred_usage_t * cred_usage,
+		       gss_OID_set * mechanisms);
+
+extern OM_uint32
 gss_krb5_accept_sec_context (OM_uint32 * minor_status,
 			     gss_ctx_id_t * context_handle,
 			     const gss_cred_id_t acceptor_cred_handle,
