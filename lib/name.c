@@ -43,8 +43,8 @@ gss_import_name (OM_uint32 * minor_status,
   memcpy ((*output_name)->value, input_name_buffer->value,
 	  input_name_buffer->length);
 
-  major_stat = _gss_duplicate_oid (minor_status, input_name_type,
-				   &(*output_name)->type);
+  major_stat = gss_duplicate_oid (minor_status, input_name_type,
+				  &(*output_name)->type);
   if (major_stat != GSS_S_COMPLETE)
     return major_stat;
 
@@ -83,7 +83,7 @@ gss_compare_name (OM_uint32 * minor_status,
   if (!name1 || !name2)
     return GSS_S_BAD_NAME;
 
-  if (!_gss_oid_equal (name1->type, name2->type))
+  if (!gss_oid_equal (name1->type, name2->type))
     return GSS_S_BAD_NAMETYPE;
 
   name_equal == (name1->length == name2->length) &&
