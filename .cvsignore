@@ -18,8 +18,8 @@ conftest.c
 depcomp
 install-sh
 intl
-ggssapi-*
-ggssapi.pc
+gss-*
+gss.pc
 libtool
 ltmain.sh
 missing
