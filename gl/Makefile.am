@@ -24,6 +24,7 @@ MOSTLYCLEANFILES =
 CLEANFILES =
 DISTCLEANFILES =
 MAINTAINERCLEANFILES =
+
 BUILT_SOURCES += $(GETOPT_H)
 EXTRA_DIST += getopt_.h getopt_int.h
 
@@ -37,7 +38,7 @@ MOSTLYCLEANFILES += getopt.h getopt.h-t
 
 libgl_la_SOURCES += gettext.h
 
-# Local changes
+libgl_la_SOURCES += xalloc.h xmalloc.c xstrdup.c
 
-libgl_la_SOURCES += xalloc.h xmalloc.c
 libgl_la_SOURCES += xgethostname.h xgethostname.c
+

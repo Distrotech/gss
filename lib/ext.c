@@ -21,6 +21,21 @@
 
 #include "internal.h"
 
+#include <stdio.h>
+#include <errno.h>
+
+/* If non-NULL, call this function when memory is exhausted. */
+void (*gss_alloc_fail_function) (void) = 0;
+
+void
+xalloc_die (void)
+{
+  if (gss_alloc_fail_function)
+    (*gss_alloc_fail_function) ();
+  printf ("%s: %s\n", PACKAGE, strerror (ENOMEM));
+  abort ();
+}
+
 /**
  * gss_oid_equal:
  * @first_oid: (Object ID, read) First Object identifier.

@@ -53,7 +53,7 @@ AC_CHECK_HEADERS(locale.h)
 # For gnulib stuff in gl/.
 gl_SOURCE_BASE(gl)
 gl_M4_BASE(gl/m4)
-gl_MODULES(getopt)
+gl_MODULES(getopt xalloc xgethostname)
 gl_INIT
 gl_FUNC_GETHOSTNAME
 

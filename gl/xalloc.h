@@ -1,8 +1,7 @@
 /* xalloc.h -- malloc with out-of-memory checking
 
-   Copyright (C) 2004 Simon Josefsson
    Copyright (C) 1990, 1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998,
-   1999, 2000, 2003 Free Software Foundation, Inc.
+   1999, 2000, 2003, 2004 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -23,6 +22,12 @@
 
 # include <stddef.h>
 
+
+# ifdef __cplusplus
+extern "C" {
+# endif
+
+
 # ifndef __attribute__
 #  if __GNUC__ < 2 || (__GNUC__ == 2 && __GNUC_MINOR__ < 8) || __STRICT_ANSI__
 #   define __attribute__(x)
@@ -33,13 +38,9 @@
 #  define ATTRIBUTE_NORETURN __attribute__ ((__noreturn__))
 # endif
 
-/* If this pointer is non-zero, run the specified function upon each
-   allocation failure.  It is initialized to zero. */
-extern void (*xalloc_fail_func) (void);
-
-/* This function is always triggered when memory is exhausted.  It is
-   in charge of honoring the two previous items.  It exits with status
-   exit_failure (defined in exitfail.h).  This is the
+/* This function is always triggered when memory is exhausted.
+   It must be defined by the application, either explicitly
+   or by using gnulib's xalloc-die module.  This is the
    function to call when one wants the program to die because of a
    memory allocation failure.  */
 extern void xalloc_die (void) ATTRIBUTE_NORETURN;
@@ -69,5 +70,21 @@ char *xstrdup (const char *str);
    branch when S is known to be 1.  */
 # define xalloc_oversized(n, s) \
     ((size_t) (sizeof (ptrdiff_t) <= sizeof (size_t) ? -1 : -2) / (s) < (n))
+
+/* These macros are deprecated; they will go away soon, and are retained
+   temporarily only to ease conversion to the functions described above.  */
+# define CCLONE(p, n) xclone (p, (n) * sizeof *(p))
+# define CLONE(p) xclone (p, sizeof *(p))
+# define NEW(type, var) type *var = xmalloc (sizeof (type))
+# define XCALLOC(type, n) xcalloc (n, sizeof (type))
+# define XMALLOC(type, n) xnmalloc (n, sizeof (type))
+# define XREALLOC(p, type, n) xnrealloc (p, n, sizeof (type))
+# define XFREE(p) free (p)
+
+
+# ifdef __cplusplus
+}
+# endif
+
 
 #endif /* !XALLOC_H_ */

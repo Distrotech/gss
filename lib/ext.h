@@ -25,6 +25,9 @@
 /* Get size_t. */
 #include <stddef.h>
 
+/* If non-NULL, call this function when memory is exhausted. */
+extern void (*gss_alloc_fail_function) (void);
+
 /* See version.c. */
 extern const char *gss_check_version (const char *req_version);
 

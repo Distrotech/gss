@@ -15,8 +15,10 @@ AC_DEFUN([gl_EARLY],
 
 AC_DEFUN([gl_INIT],
 [
+  gl_FUNC_GETHOSTNAME
   gl_GETOPT
   dnl you must add AM_GNU_GETTEXT([external]) or similar to configure.ac.
+  gl_XALLOC
 ])
 
 dnl Usage: gl_MODULES(module1 module2 ...)
