@@ -25,7 +25,7 @@ bin_PROGRAMS = gss
 BUILT_SOURCES = gss_cmd.c gss_cmd.h
 gss_SOURCES = gss.c $(BUILT_SOURCES) gss.ggo
 DISTCLEANFILES = $(BUILT_SOURCES)
-gss_LDADD = ../lib/libgss.la @LTLIBINTL@
+gss_LDADD = ../lib/libgss.la ../gl/libgl.la @LTLIBINTL@
 
 gss.c: $(BUILT_SOURCES)
 
