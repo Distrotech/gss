@@ -100,6 +100,9 @@ gss_krb5_init_sec_context (OM_uint32 * minor_status,
   if (!output_token)
     return GSS_S_FAILURE;
 
+  if (actual_mech_type)
+    (*actual_mech_type) = GSS_KRB5;
+
   /* XXX mech_type not tested */
 
   if (*context_handle == GSS_C_NO_CONTEXT)
@@ -117,7 +120,7 @@ gss_krb5_init_sec_context (OM_uint32 * minor_status,
 	h = initiator_cred_handle->krb5->sh;
       else
 	{
-	  rc = shishi_init_server(&h);
+	  rc = shishi_init(&h);
 	  if (rc != SHISHI_OK)
 	    return GSS_S_FAILURE;
 	}
@@ -147,9 +150,12 @@ gss_krb5_init_sec_context (OM_uint32 * minor_status,
 	  Shishi_tkts_hint hint;
 
 	  memset(&hint, 0, sizeof(hint));
-	  hint.server = ctx->peer.value;
+	  hint.server = malloc(ctx->peer.length + 1);
+	  memcpy(hint.server, ctx->peer.value, ctx->peer.length);
+	  hint.server[ctx->peer.length] = '\0';
 
 	  tkt = shishi_tkts_get (shishi_tkts_default (h), &hint);
+	  free(hint.server);
 	  if (!tkt)
 	    return GSS_S_FAILURE;
 
