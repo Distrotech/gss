@@ -31,6 +31,7 @@ acquire_cred1 (OM_uint32 * minor_status,
 	       gss_cred_id_t * output_cred_handle,
 	       gss_OID_set * actual_mechs, OM_uint32 * time_rec)
 {
+  gss_name_t name = desired_name;
   _gss_krb5_cred_t k5 = (*output_cred_handle)->krb5;
   OM_uint32 maj_stat;
 
@@ -41,16 +42,22 @@ acquire_cred1 (OM_uint32 * minor_status,
       buf.value = "host";
       buf.length = strlen (buf.value);
       maj_stat = gss_import_name (minor_status, &buf,
-				  GSS_C_NT_HOSTBASED_SERVICE,
-				  (gss_name_t *) & desired_name);
+				  GSS_C_NT_HOSTBASED_SERVICE, &name);
       if (GSS_ERROR (maj_stat))
 	return maj_stat;
     }
 
-  maj_stat = gss_krb5_canonicalize_name (minor_status, desired_name,
+  maj_stat = gss_krb5_canonicalize_name (minor_status, name,
 					 GSS_KRB5, &k5->peerptr);
   if (GSS_ERROR (maj_stat))
     return maj_stat;
+
+  if (desired_name == GSS_C_NO_NAME)
+    {
+      maj_stat = gss_release_name (minor_status, name);
+      if (GSS_ERROR (maj_stat))
+	return maj_stat;
+    }
 
   if (shishi_init_server (&k5->sh) != SHISHI_OK)
     return GSS_S_FAILURE;
