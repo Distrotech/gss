@@ -122,13 +122,13 @@ gss_krb5_acquire_cred (OM_uint32 * minor_status,
   return GSS_S_COMPLETE;
 }
 
-OM_uint32
-gss_krb5_inquire_cred (OM_uint32 * minor_status,
-		       const gss_cred_id_t cred_handle,
-		       gss_name_t * name,
-		       OM_uint32 * lifetime,
-		       gss_cred_usage_t * cred_usage,
-		       gss_OID_set * mechanisms)
+static OM_uint32
+inquire_cred (OM_uint32 * minor_status,
+	      const gss_cred_id_t cred_handle,
+	      gss_name_t * name,
+	      OM_uint32 * lifetime,
+	      gss_cred_usage_t * cred_usage,
+	      gss_OID_set * mechanisms)
 {
   OM_uint32 maj_stat;
 
@@ -154,15 +154,47 @@ gss_krb5_inquire_cred (OM_uint32 * minor_status,
 	return maj_stat;
     }
 
-  if (lifetime)
-    *lifetime = gss_krb5_tktlifetime (cred_handle->krb5->tkt);
-
   if (cred_usage)
     *cred_usage = GSS_C_BOTH;
+
+  if (lifetime)
+    *lifetime = gss_krb5_tktlifetime (cred_handle->krb5->tkt);
 
   if (minor_status)
     *minor_status = 0;
   return GSS_S_COMPLETE;
+}
+
+OM_uint32
+gss_krb5_inquire_cred (OM_uint32 * minor_status,
+		       const gss_cred_id_t cred_handle,
+		       gss_name_t * name,
+		       OM_uint32 * lifetime,
+		       gss_cred_usage_t * cred_usage,
+		       gss_OID_set * mechanisms)
+{
+  return inquire_cred (minor_status, cred_handle, name, lifetime,
+		       cred_usage, mechanisms);
+}
+
+OM_uint32
+gss_krb5_inquire_cred_by_mech (OM_uint32 * minor_status,
+			       const gss_cred_id_t cred_handle,
+			       const gss_OID mech_type,
+			       gss_name_t * name,
+			       OM_uint32 * initiator_lifetime,
+			       OM_uint32 * acceptor_lifetime,
+			       gss_cred_usage_t * cred_usage)
+{
+  OM_uint32 maj_stat;
+
+  maj_stat = inquire_cred (minor_status, cred_handle, name,
+			   initiator_lifetime, cred_usage, NULL);
+
+  if (acceptor_lifetime)
+    *acceptor_lifetime = *initiator_lifetime;
+
+  return maj_stat;
 }
 
 OM_uint32
