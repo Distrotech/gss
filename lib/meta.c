@@ -26,26 +26,6 @@
 # include "krb5/protos.h"
 #endif
 
-OM_uint32
-_gss_dummy (OM_uint32 minor_status, ...)
-{
-  fprintf (stderr, _("warning: no suitable mechanism found\n"));
-  return GSS_S_BAD_MECH;
-}
-
-OM_uint32
-_gss_dummy_display_status (OM_uint32 * minor_status,
-			   OM_uint32 status_value,
-			   int status_type,
-			   const gss_OID mech_type,
-			   OM_uint32 * message_context,
-			   gss_buffer_t status_string)
-{
-  status_string->value = xstrdup (_("No suitable mechanism supported"));
-  status_string->length = strlen (status_string->value);
-  return GSS_S_COMPLETE;
-}
-
 static _gss_mech_api_desc _gss_mech_apis[] = {
 #ifdef USE_KERBEROS5
   {
@@ -58,40 +38,50 @@ static _gss_mech_api_desc _gss_mech_apis[] = {
    gss_krb5_canonicalize_name,
    gss_krb5_wrap,
    gss_krb5_unwrap,
-   _gss_dummy,
-   _gss_dummy,
+   gss_krb5_get_mic,
+   gss_krb5_verify_mic,
    gss_krb5_display_status,
    gss_krb5_acquire_cred,
    gss_krb5_accept_sec_context,
    gss_krb5_delete_sec_context,
    gss_krb5_context_time,
-   gss_krb5_inquire_cred},
+   gss_krb5_inquire_cred}
 #endif
-  {
-   0,
-   {GSS_C_NO_OID},
-   _gss_dummy,
-   _gss_dummy,
-   _gss_dummy,
-   _gss_dummy,
-   _gss_dummy,
-   _gss_dummy,
-   _gss_dummy_display_status,
-   _gss_dummy,
-   _gss_dummy,
-   _gss_dummy,
-   _gss_dummy,
-   _gss_dummy}
 };
 
 _gss_mech_api_t
 _gss_find_mech (gss_OID oid)
 {
-  int i;
-  if (oid == GSS_C_NO_OID)
-    return &_gss_mech_apis[0];
+  size_t i;
+
   for (i = 0; i < sizeof (_gss_mech_apis) / sizeof (_gss_mech_apis[0]); i++)
     if (gss_oid_equal (oid, _gss_mech_apis[i].mech))
       return &_gss_mech_apis[i];
-  return &_gss_mech_apis[i - 1];
+
+  if (i == 0)
+    return NULL;
+
+  /* FIXME.  When we support more than one mechanism, make it possible
+     to configure the default mechanism. */
+  return &_gss_mech_apis[0];
+}
+
+OM_uint32
+_gss_indicate_mechs1 (OM_uint32 * minor_status, gss_OID_set *mech_set)
+{
+  OM_uint32 maj_stat;
+  int i;
+
+  for (i = 0; i < sizeof (_gss_mech_apis) / sizeof (_gss_mech_apis[0]); i++)
+    {
+      maj_stat = gss_add_oid_set_member (minor_status,
+					 _gss_mech_apis[i].mech,
+					 mech_set);
+      if (GSS_ERROR (maj_stat))
+	return maj_stat;
+    }
+
+  if (minor_status)
+    *minor_status = 0;
+  return GSS_S_COMPLETE;
 }
