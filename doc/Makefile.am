@@ -20,8 +20,8 @@
 
 EXTRA_DIST = gss.html gss.ps gss.pdf
 
-info_TEXINFOS = gss.texi $(gdoc_TEXINFOS)
-gss_TEXINFOS = gpl.texi fdl.texi
+info_TEXINFOS = gss.texi
+gss_TEXINFOS = gpl.texi fdl.texi $(gdoc_TEXINFOS)
 
 AM_MAKEINFOHTMLFLAGS = --no-split --number-sections
 
