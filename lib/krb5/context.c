@@ -107,6 +107,8 @@ init_request (OM_uint32 * minor_status,
   if (!rc)
     return GSS_S_FAILURE;
 
+  free (der);
+
   if (req_flags & GSS_C_MUTUAL_FLAG)
     return GSS_S_CONTINUE_NEEDED;
 
