@@ -177,7 +177,7 @@ gss_acquire_cred (OM_uint32 * minor_status,
  * @input_cred_handle: (gss_cred_id_t, read, optional) The credential
  *   to which a credential-element will be added.  If
  *   GSS_C_NO_CREDENTIAL is specified, the routine will compose the
- *   new credential based on default behavior (see description above).
+ *   new credential based on default behavior (see text).
  *   Note that, while the credential-handle is not modified by
  *   gss_add_cred(), the underlying credential will be modified if
  *   output_credential_handle is NULL.
@@ -322,7 +322,7 @@ gss_add_cred (OM_uint32 * minor_status,
 	      gss_OID_set * actual_mechs,
 	      OM_uint32 * initiator_time_rec, OM_uint32 * acceptor_time_rec)
 {
-  return GSS_S_FAILURE;
+  return GSS_S_UNAVAILABLE;
 }
 
 /**
