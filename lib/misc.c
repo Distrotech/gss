@@ -77,6 +77,24 @@ gss_duplicate_oid (OM_uint32 * minor_status,
   return GSS_S_COMPLETE;
 }
 
+/**
+ * gss_create_empty_oid_set:
+ * @minor_status: (integer, modify) Mechanism specific status code.
+ * @oid_set: (Set of Object IDs, modify) The empty object identifier
+ *   set.  The routine will allocate the gss_OID_set_desc object,
+ *   which the application must free after use with a call to
+ *   gss_release_oid_set().
+ *
+ * Create an object-identifier set containing no object identifiers,
+ * to which members may be subsequently added using the
+ * gss_add_oid_set_member() routine.  These routines are intended to
+ * be used to construct sets of mechanism object identifiers, for
+ * input to gss_acquire_cred.
+ *
+ * Valid return values and their meaning:
+ *
+ * `GSS_S_COMPLETE`: Successful completion.
+ **/
 OM_uint32
 gss_create_empty_oid_set (OM_uint32 * minor_status, gss_OID_set * oid_set)
 {
@@ -90,6 +108,31 @@ gss_create_empty_oid_set (OM_uint32 * minor_status, gss_OID_set * oid_set)
   return GSS_S_COMPLETE;
 }
 
+/**
+ * gss_add_oid_set_member:
+ * @minor_status: (integer, modify) Mechanism specific status code.
+ * @member_oid: (Object ID, read) The object identifier to copied into
+ *   the set.
+ * @oid_set: (Set of Object ID, modify) The set in which the object
+ *   identifier should be inserted.
+ *
+ * Add an Object Identifier to an Object Identifier set.  This routine
+ * is intended for use in conjunction with gss_create_empty_oid_set
+ * when constructing a set of mechanism OIDs for input to
+ * gss_acquire_cred.  The oid_set parameter must refer to an OID-set
+ * that was created by GSS-API (e.g. a set returned by
+ * gss_create_empty_oid_set()). GSS-API creates a copy of the
+ * member_oid and inserts this copy into the set, expanding the
+ * storage allocated to the OID-set's elements array if necessary.
+ * The routine may add the new member OID anywhere within the elements
+ * array, and implementations should verify that the new member_oid is
+ * not already contained within the elements array; if the member_oid
+ * is already present, the oid_set should remain unchanged.
+ *
+ * Valid return values and their meaning:
+ *
+ * `GSS_S_COMPLETE`: Successful completion.
+ **/
 OM_uint32
 gss_add_oid_set_member (OM_uint32 * minor_status,
 			const gss_OID member_oid, gss_OID_set * oid_set)
@@ -129,6 +172,25 @@ gss_add_oid_set_member (OM_uint32 * minor_status,
   return GSS_S_COMPLETE;
 }
 
+/**
+ * gss_test_oid_set_member:
+ * @minor_status: (integer, modify) Mechanism specific status code.
+ * @member: (Object ID, read) The object identifier whose presence is
+ *   to be tested.
+ * @set: (Set of Object ID, read) The Object Identifier set.
+ * @present: (Boolean, modify) Non-zero if the specified OID is a
+ *   member of the set, zero if not.
+ *
+ * Interrogate an Object Identifier set to determine whether a
+ * specified Object Identifier is a member.  This routine is intended
+ * to be used with OID sets returned by gss_indicate_mechs(),
+ * gss_acquire_cred(), and gss_inquire_cred(), but will also work with
+ * user-generated sets.
+ *
+ * Valid return values and their meaning:
+ *
+ * `GSS_S_COMPLETE`: Successful completion.
+ **/
 OM_uint32
 gss_test_oid_set_member (OM_uint32 * minor_status,
 			 const gss_OID member,
@@ -158,6 +220,25 @@ gss_test_oid_set_member (OM_uint32 * minor_status,
   return GSS_S_COMPLETE;
 }
 
+/**
+ * gss_release_oid_set:
+ * @minor_status: (integer, modify) Mechanism specific status code.
+ * @set: (Set of Object IDs, modify) The storage associated with the
+ *   gss_OID_set will be deleted.
+ *
+ * Free storage associated with a GSSAPI-generated gss_OID_set object.
+ * The set parameter must refer to an OID-set that was returned from a
+ * GSS-API routine.  gss_release_oid_set() will free the storage
+ * associated with each individual member OID, the OID set's elements
+ * array, and the gss_OID_set_desc.
+ *
+ * The gss_OID_set parameter is set to GSS_C_NO_OID_SET on successful
+ * completion of this routine.
+ *
+ * Valid return values and their meaning:
+ *
+ * `GSS_S_COMPLETE`: Successful completion.
+ **/
 OM_uint32
 gss_release_oid_set (OM_uint32 * minor_status, gss_OID_set * set)
 {
@@ -179,8 +260,22 @@ gss_release_oid_set (OM_uint32 * minor_status, gss_OID_set * set)
   return GSS_S_COMPLETE;
 }
 
-/* See error.c for gss_display_status() */
-
+/**
+ * gss_indicate_mechs:
+ * @minor_status: (integer, modify) Mechanism specific status code.
+ * @mech_set: (set of Object IDs, modify) Set of
+ *   implementation-supported mechanisms.  The returned gss_OID_set
+ *   value will be a dynamically-allocated OID set, that should be
+ *   released by the caller after use with a call to
+ *   gss_release_oid_set().
+ *
+ * Allows an application to determine which underlying security
+ * mechanisms are available.
+ *
+ * Valid return values and their meaning:
+ *
+ * `GSS_S_COMPLETE`: Successful completion.
+ **/
 OM_uint32
 gss_indicate_mechs (OM_uint32 * minor_status, gss_OID_set * mech_set)
 {
@@ -208,6 +303,26 @@ gss_indicate_mechs (OM_uint32 * minor_status, gss_OID_set * mech_set)
   return GSS_S_COMPLETE;
 }
 
+/**
+ * gss_release_buffer:
+ * @minor_status: (integer, modify) Mechanism specific status code.
+ * @buffer: (buffer, modify) The storage associated with the buffer
+ *   will be deleted.  The gss_buffer_desc object will not be freed,
+ *   but its length field will be zeroed.
+
+ * Free storage associated with a buffer.  The storage must have been
+ * allocated by a GSS-API routine.  In addition to freeing the
+ * associated storage, the routine will zero the length field in the
+ * descriptor to which the buffer parameter refers, and
+ * implementations are encouraged to additionally set the pointer
+ * field in the descriptor to NULL.  Any buffer object returned by a
+ * GSS-API routine may be passed to gss_release_buffer (even if there
+ * is no storage associated with the buffer).
+ *
+ * Valid return values and their meaning:
+ *
+ * `GSS_S_COMPLETE`: Successful completion.
+ **/
 OM_uint32
 gss_release_buffer (OM_uint32 * minor_status, gss_buffer_t buffer)
 {
