@@ -70,6 +70,7 @@ developing GNU and protecting and promoting software freedom.''
 
 Appendices
 
+* Criticism of GSS::            Why you maybe shouldn't use GSS.
 * Copying::                     How you can copy and share GPL GSS-API.
 * Copying This Manual::         How you can copy and share this manual.
 
@@ -700,6 +701,57 @@ TBA
 @c **********************************************************
 @c *******************  Appendices  *************************
 @c **********************************************************
+
+@node Criticism of GSS
+@appendix Criticism of GSS
+
+The author has doubts whether GSS is a good solution.  We express
+these doubts in this section.  GSS can be criticized on several
+levels.  We start with the actual implementation.
+
+GSS do not appear to be designed by experienced C programmers.  While
+generally this may be a good thing (C is a poor language), but since
+they defined the API in C, it is unfortunate.  The primary evidence of
+this is the major_status and minor_status error code solution.  It is
+a complicated way to describe error conditions, but what makes matters
+worse, the error condition is separated; half of the error condition
+is in the function return value and the other half is in the first
+argument to the function, which is always a pointer to an integer.
+(The pointer is not even allowed to be NULL, if the application
+doesn't care about the minor error code.)  This makes the API
+unreadable, and difficult to use.  A better solutions would be to
+return a struct containing the entire error condition, which can be
+accessed using macros, although we acknowledge that the C language
+used at the time may not have allowed this (this may in fact be the
+reason the awkward solution was chosen).  Instead, the return value
+could have been passed back to callers using a pointer to a struct,
+accessible using various macros, and the function could have a void
+prototype.  The fact that minor_status is placed first in the
+parameter list increases the pain it is to use the API.  Important
+parameters should be placed first. A better place for minor_status
+would have been last in the prototypes.
+
+Another evidence of the C inexperience are the memory management
+issues; GSS provides functions to deallocate data stored within, e.g.,
+gss_buffer_t but the caller is responsible of deallocating the
+gss_buffer_t struct itself.  Memory management issues are error prone,
+and this division easily leads to memory leaks (or worse).  Instead,
+the API should be the sole owner of all gss_ctx_id_t, gss_cred_id_t,
+and gss_buffer_t structures: they should be allocated by the library,
+and deallocated (using the utility functions defined for this purpose)
+by the library.
+
+TBA: high-level criticism.
+
+We also note that very few free security systems uses GSS, perhaps the
+only exception to this are Kerberos 5 implementations.  This suggest
+that the GSS may not have been so ``generic'' as it was thought to be.
+
+Our conclusion is that any new project that is looking for a security
+framework, that is independent of any particular implementation,
+should look elsewhere.  In particular SASL is recommended.  The most
+compelling argument is that SASL is, as its acronym suggest, Simple,
+whereas GSS is not, in any regard.
 
 @node Copying This Manual
 @appendix Copying This Manual
