@@ -1,5 +1,5 @@
 ## Process this file with automake to produce Makefile.in
-# Copyright (C) 2003 Simon Josefsson.
+# Copyright (C) 2003, 2004 Simon Josefsson.
 #
 # This file is part of the Generic Security Service (GSS).
 #
@@ -18,7 +18,7 @@
 # Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 # 02111-1307, USA.
 
-INCLUDES = -I$(top_srcdir)/gl
+AM_CPPFLAGS = -I$(top_srcdir)/gl
 
 lib_LTLIBRARIES = libgss.la
 include_HEADERS = gss.h

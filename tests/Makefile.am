@@ -1,5 +1,5 @@
 ## Process this file with automake to produce Makefile.in
-# Copyright (C) 2003 Simon Josefsson.
+# Copyright (C) 2003, 2004 Simon Josefsson.
 #
 # This file is part of the Generic Security Service (GSS).
 #
@@ -22,7 +22,7 @@ EXTRA_DIST = utils.c
 
 TESTS = basic
 
-INCLUDES = -I$(top_srcdir)/lib
+AM_CPPFLAGS = -I$(top_srcdir)/lib
 LDADD = ../lib/libgss.la
 
 noinst_PROGRAMS = $(TESTS)
