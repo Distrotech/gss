@@ -309,7 +309,7 @@ gss_indicate_mechs (OM_uint32 * minor_status, gss_OID_set * mech_set)
  * @buffer: (buffer, modify) The storage associated with the buffer
  *   will be deleted.  The gss_buffer_desc object will not be freed,
  *   but its length field will be zeroed.
-
+ *
  * Free storage associated with a buffer.  The storage must have been
  * allocated by a GSS-API routine.  In addition to freeing the
  * associated storage, the routine will zero the length field in the
