@@ -380,7 +380,7 @@ gss_init_sec_context (OM_uint32 * minor_status,
     }
 
   if (actual_mech_type)
-    (*actual_mech_type) = mech->mech;
+    *actual_mech_type = mech->mech;
 
   if (*context_handle == GSS_C_NO_CONTEXT)
     {
@@ -686,6 +686,9 @@ gss_accept_sec_context (OM_uint32 * minor_status,
   mech = (*context_handle == GSS_C_NO_CONTEXT) ?
     _gss_find_mech (mech_type ? *mech_type : GSS_C_NO_OID) :
     _gss_find_mech ((*context_handle)->mech);
+
+  if (mech_type)
+    *mech_type = mech->mech;
 
   return mech->accept_sec_context (minor_status,
 				   context_handle,
