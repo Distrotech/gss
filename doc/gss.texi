@@ -799,21 +799,153 @@ acquired Because they have expired.
 name.
 @end deftypefun
 
-@deftypefun OM_uint32 gss_release_cred (OM_uint32 * @var{minor_status}, gss_cred_id_t * @var{cred_handle})
+@deftypefun OM_uint32 gss_add_cred (OM_uint32 *minor_status, const gss_cred_id_t input_cred_handle, const gss_name_t desired_name, const gss_OID desired_mech, gss_cred_usage_t cred_usage, OM_uint32 initiator_time_req, OM_uint32 acceptor_time_req, gss_cred_id_t *output_cred_handle, gss_OID_set *actual_mechs, OM_uint32 *initiator_time_rec, OM_uint32 *acceptor_time_rec)
 
-@var{minor_status}:  Mechanism specific status code.
+@var{minor_status}: Integer, modify.  Mechanism specific status code.
 
-@var{cred_handle}:  Optional opaque handle identifying credential to be
-released.  If GSS_C_NO_CREDENTIAL is supplied, the routine will
-complete successfully, but will do nothing.
+@var{input_cred_handle}: gss_cred_id_t, read, optional.  The
+credential to which a credential-element will be added.  If
+GSS_C_NO_CREDENTIAL is specified, the routine will compose the new
+credential based on default behavior (see description above).  Note
+that, while the credential-handle is not modified by gss_add_cred(),
+the underlying credential will be modified if output_credential_handle
+is NULL.
 
-Informs GSS-API that the specified credential handle is no longer
-required by the application, and frees associated resources.
-Implementations are encouraged to set the cred_handle to
-GSS_C_NO_CREDENTIAL on successful completion of this call.
+@var{desired_name}: gss_name_t, read.  Name of principal whose
+credential should be acquired.
 
-Returns GSS_S_COMPLETE for successful completion, and GSS_S_NO_CRED
-for credentials could not be accessed.
+@var{desired_mech}: Object ID, read.  Underlying security mechanism
+with which the credential may be used.
+
+@var{cred_usage}: gss_cred_usage_t, read.  GSS_C_BOTH - Credential may
+be used either to initiate or accept security contexts.
+GSS_C_INITIATE - Credential will only be used to initiate security
+contexts.  GSS_C_ACCEPT - Credential will only be used to accept
+security contexts.
+
+@var{initiator_time_req}: Integer, read, optional.  number of seconds
+that the credential should remain valid for initiating security
+contexts.  This argument is ignored if the composed credentials are of
+type GSS_C_ACCEPT.  Specify GSS_C_INDEFINITE to request that the
+credentials have the maximum permitted initiator lifetime.
+
+@var{acceptor_time_req}: Integer, read, optional.  number of seconds
+that the credential should remain valid for accepting security
+contexts.  This argument is ignored if the composed credentials are of
+type GSS_C_INITIATE.  Specify GSS_C_INDEFINITE to request that the
+credentials have the maximum permitted initiator lifetime.
+
+@var{output_cred_handle}: gss_cred_id_t, modify, optional.  The
+returned credential handle, containing the new credential-element and
+all the credential-elements from input_cred_handle.  If a valid
+pointer to a gss_cred_id_t is supplied for this parameter,
+gss_add_cred creates a new credential handle containing all
+credential-elements from the input_cred_handle and the newly acquired
+credential-element; if NULL is specified for this parameter, the newly
+acquired credential-element will be added to the credential identified
+by input_cred_handle.
+
+The resources associated with any credential handle returned via this
+parameter must be released by the application after use with a call to
+gss_release_cred().
+
+@var{actual_mechs}: Set of Object IDs, modify, optional.  The complete
+set of mechanisms for which the new credential is valid.  Storage for
+the returned OID-set must be freed by the application after use with a
+call to gss_release_oid_set(). Specify NULL if not required.
+
+@var{initiator_time_rec}: Integer, modify, optional.  Actual number of
+seconds for which the returned credentials will remain valid for
+initiating contexts using the specified mechanism.  If the
+implementation or mechanism does not support expiration of
+credentials, the value GSS_C_INDEFINITE will be returned. Specify NULL
+if not required
+
+@var{acceptor_time_rec}: Integer, modify, optional.  Actual number of
+seconds for which the returned credentials will remain valid for
+accepting security contexts using the specified mechanism.  If the
+implementation or mechanism does not support expiration of
+credentials, the value GSS_C_INDEFINITE will be returned. Specify NULL
+if not required
+
+Adds a credential-element to a credential.  The credential-element is
+identified by the name of the principal to which it refers.  GSS-API
+implementations must impose a local access-control policy on callers
+of this routine to prevent unauthorized callers from acquiring
+credential-elements to which they are not entitled. This routine is
+not intended to provide a "login to the network" function, as such a
+function would involve the creation of new mechanism-specific
+authentication data, rather than merely acquiring a GSS-API handle to
+existing data.  Such functions, if required, should be defined in
+implementation-specific extensions to the API.
+
+If desired_name is GSS_C_NO_NAME, the call is interpreted as a request
+to add a credential element that will invoke default behavior when
+passed to gss_init_sec_context() (if cred_usage is GSS_C_INITIATE or
+GSS_C_BOTH) or gss_accept_sec_context() (if cred_usage is GSS_C_ACCEPT
+or GSS_C_BOTH).
+
+This routine is expected to be used primarily by context acceptors,
+since implementations are likely to provide mechanism-specific ways of
+obtaining GSS-API initiator credentials from the system login process.
+Some implementations may therefore not support the acquisition of
+GSS_C_INITIATE or GSS_C_BOTH credentials via gss_acquire_cred for any
+name other than GSS_C_NO_NAME, or a name produced by applying either
+gss_inquire_cred to a valid credential, or gss_inquire_context to an
+active context.
+
+If credential acquisition is time-consuming for a mechanism, the
+mechanism may choose to delay the actual acquisition until the
+credential is required (e.g. by gss_init_sec_context or
+gss_accept_sec_context).  Such mechanism-specific implementation
+decisions should be invisible to the calling application; thus a call
+of gss_inquire_cred immediately following the call of gss_add_cred
+must return valid credential data, and may therefore incur the
+overhead of a deferred credential acquisition.
+
+This routine can be used to either compose a new credential containing
+all credential-elements of the original in addition to the
+newly-acquire credential-element, or to add the new credential-
+element to an existing credential. If NULL is specified for the
+output_cred_handle parameter argument, the new credential-element will
+be added to the credential identified by input_cred_handle; if a valid
+pointer is specified for the output_cred_handle parameter, a new
+credential handle will be created.
+
+If GSS_C_NO_CREDENTIAL is specified as the input_cred_handle,
+gss_add_cred will compose a credential (and set the output_cred_handle
+parameter accordingly) based on default behavior.  That is, the call
+will have the same effect as if the application had first made a call
+to gss_acquire_cred(), specifying the same usage and passing
+GSS_C_NO_NAME as the desired_name parameter to obtain an explicit
+credential handle embodying default behavior, passed this credential
+handle to gss_add_cred(), and finally called gss_release_cred() on the
+first credential handle.
+
+If GSS_C_NO_CREDENTIAL is specified as the input_cred_handle
+parameter, a non-NULL output_cred_handle must be supplied.
+
+Valid return values and their meaning:
+
+@code{GSS_S_COMPLETE}: Successful completion.
+
+@code{GSS_S_BAD_MECH}: Unavailable mechanism requested.
+
+@code{GSS_S_BAD_NAMETYPE}: Type contained within desired_name
+parameter is not supported.
+
+@code{GSS_S_BAD_NAME}: Value supplied for desired_name parameter is
+ill-formed.
+
+@code{GSS_S_DUPLICATE_ELEMENT}: The credential already contains an
+element for the requested mechanism with overlapping usage and
+validity period.
+
+@code{GSS_S_CREDENTIALS_EXPIRED}: The required credentials could not
+be added because they have expired.
+
+@code{GSS_S_NO_CRED}: No credentials were found for the specified
+name.
 
 @end deftypefun
 
@@ -914,6 +1046,24 @@ invalid.
 @code{GSS_S_CREDENTIALS_EXPIRED}: The referenced credentials have
 expired.  If the lifetime parameter was not passed as NULL, it will be
 set to 0.
+
+@end deftypefun
+
+@deftypefun OM_uint32 gss_release_cred (OM_uint32 * @var{minor_status}, gss_cred_id_t * @var{cred_handle})
+
+@var{minor_status}:  Mechanism specific status code.
+
+@var{cred_handle}:  Optional opaque handle identifying credential to be
+released.  If GSS_C_NO_CREDENTIAL is supplied, the routine will
+complete successfully, but will do nothing.
+
+Informs GSS-API that the specified credential handle is no longer
+required by the application, and frees associated resources.
+Implementations are encouraged to set the cred_handle to
+GSS_C_NO_CREDENTIAL on successful completion of this call.
+
+Returns GSS_S_COMPLETE for successful completion, and GSS_S_NO_CRED
+for credentials could not be accessed.
 
 @end deftypefun
 
