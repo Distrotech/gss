@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 
-## Copyright (c) 2002, 2003 Simon Josefsson                      ##
+## Copyright (c) 2002, 2003, 2004 Simon Josefsson                ##
 ##                    added -texinfo, -listfunc                  ##
 ##                    man page revamp                            ##
 ##                    various improvements                       ##
@@ -220,7 +220,8 @@ while ($ARGV[0] =~ m/^-(.*)/) {
 	$blankline = $blankline_sgml;
     } elsif ($cmd eq "-listfunc") {
 	$output_mode = "listfunc";
-    } elsif ($cmd eq "-module") { # not needed for sgml, inherits from calling document
+    } elsif ($cmd eq "-module") {
+	# not needed for sgml, inherits from calling document
 	$modulename = shift @ARGV;
     } elsif ($cmd eq "-sourceversion") {
 	$sourceversion = shift @ARGV;
@@ -276,7 +277,7 @@ sub dump_section {
 #  parameters => %parameter descriptions
 #  sectionlist => @list of sections
 #  sections => %descriont descriptions
-#  
+#
 
 sub repstr {
     $pattern = shift;
@@ -364,9 +365,12 @@ sub output_texinfo {
 	}
     }
     foreach $section (@{$args{'sectionlist'}}) {
-	print "\n\@strong{$section:} " if $section ne $section_default;
-	$args{'sections'}{$section} =~ s:([{}]):\@\1:gs;
-	output_highlight($args{'sections'}{$section});
+	open FH, ">tmp" or die "cannot open tmp";
+	print FH "$section:\n" if $section ne $section_default;
+	print FH $args{'sections'}{$section};
+	close FH;
+	print `asciidoc -s -b texinfo -o - tmp 2>/dev/null`;
+	unlink "tmp";
     }
     print "\@end deftypefun\n\n";
 }
@@ -770,9 +774,9 @@ $doc_special = "\@\%\$\&";
 
 $doc_start = "^/\\*\\*\$";
 $doc_end = "\\*/";
-$doc_com = "\\s*\\*\\s*";
+$doc_com = "\\s*\\* ?";
 $doc_func = $doc_com."(\\w+):?";
-$doc_sect = $doc_com."([".$doc_special."[:upper:]][\\w ]+):(.*)";
+$doc_sect = $doc_com."([".$doc_special."][\\w ]+):(.*)";
 $doc_content = $doc_com."(.*)";
 
 %constants = ();
