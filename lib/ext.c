@@ -171,7 +171,7 @@ gss_release_oid (OM_uint32 * minor_status, gss_OID *oid)
 /**
  * gss_userok:
  * @name: (gss_name_t, read) Name to be compared.
- * @username: zero terminated string with username.
+ * @username: Zero terminated string with username.
  *
  * Compare the username against the output from gss_export_name()
  * invoked on @name, after removing the leading OID.  This answers the
