@@ -11,6 +11,8 @@ The Kerberos 5 backend also support them.
 
 ** Kerberos 5 gss_canonicalize_name now support all mandatory name types.
 
+** Kerberos 5 gss_accept_sec_context now support sub-session keys in AP-REQ.
+
 ** API documentation in HTML format from GTK-DOC included in doc/reference/.
 
 * Changes in 0.0.8 (released 2004-01-11)
