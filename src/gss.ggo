@@ -1,4 +1,4 @@
-# gss.ggo --- Process this file with gengetop to produce gss_cmd.*.
+# gss.ggo --- Process this file with gengetopt to produce gss_cmd.*.
 # Copyright (C) 2003, 2004 Simon Josefsson.
 #
 # This file is part of the Generic Security Service (GSS).
