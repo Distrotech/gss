@@ -1515,6 +1515,7 @@ such, they are not declared in @file{gss/api.h}, but rather in
 @include texi/gss_copy_oid.texi
 @include texi/gss_duplicate_oid.texi
 @include texi/gss_release_oid.texi
+@include texi/gss_userok.texi
 
 @deftypefun {int} gss_encapsulate_token (gss_buffer_t @var{input_message}, gss_OID @var{token_oid}, gss_buffer_t @var{output_message})
 

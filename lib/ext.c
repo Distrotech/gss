@@ -167,3 +167,23 @@ gss_release_oid (OM_uint32 * minor_status, gss_OID *oid)
 
   return GSS_S_COMPLETE;
 }
+
+/**
+ * gss_userok:
+ * @name: (gss_name_t, read) Name to be compared.
+ * @username: zero terminated string with username.
+ *
+ * Compare the username against the output from gss_export_name()
+ * invoked on @name, after removing the leading OID.  This answers the
+ * question whether the particular mechanism would authenticate them
+ * as the same principal
+ *
+ * Return value: Returns 0 if the names match, non-0 otherwise.
+ **/
+int
+gss_userok (gss_name_t name, char *username)
+{
+  /* FIXME: Call gss_export_name, then remove OID. */
+  return name->length == strlen (username) &&
+    memcmp (name->value, username, name->length) == 0;
+}
