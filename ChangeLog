@@ -1,3 +1,101 @@
+2003-06-28  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS: Version 0.0.2.
+
+2003-06-28  Simon Josefsson <simon@josefsson.org>
+
+	* configure.ac: Don't abort if pkg-config isn't available.
+
+2003-06-28  Simon Josefsson <simon@josefsson.org>
+
+	* po/gss.pot, po/sv.po: Generated.
+
+2003-06-28  Simon Josefsson <simon@josefsson.org>
+
+	* lib/Makefile.am: Fix -I.
+
+2003-06-28  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS: Add.
+
+2003-06-28  Simon Josefsson <simon@josefsson.org>
+
+	* configure.ac: Bump so version.
+
+2003-06-28  Simon Josefsson <simon@josefsson.org>
+
+	* lib/asn1.c, lib/cred.c, lib/krb5.c, lib/misc.c, lib/name.c: Use
+	  xalloc.
+
+2003-06-28  Simon Josefsson <simon@josefsson.org>
+
+	* doc/gss.texi: Mention xalloc.
+
+2003-06-28  Simon Josefsson <simon@josefsson.org>
+
+	* Makefile.am, configure.ac, gl/Makefile.am, gl/error.c,
+	  gl/error.h, gl/gettext.h, gl/malloc.c, gl/realloc.c,
+	  gl/unlocked-io.h, gl/xalloc.h, gl/xmalloc.c, gl/xstrdup.c,
+	  lib/Makefile.am, lib/internal.h, m4/Makefile.am, m4/codeset.m4,
+	  m4/error.m4, m4/gettext.m4, m4/glibc21.m4, m4/iconv.m4,
+	  m4/intdiv0.m4, m4/inttypes-pri.m4, m4/inttypes.m4,
+	  m4/inttypes_h.m4, m4/isc-posix.m4, m4/lcmessage.m4, m4/lib-ld.m4,
+	  m4/lib-link.m4, m4/lib-prefix.m4, m4/malloc.m4, m4/nls.m4,
+	  m4/onceonly_2_57.m4, m4/po.m4, m4/progtest.m4, m4/realloc.m4,
+	  m4/stdint_h.m4, m4/strerror_r.m4, m4/uintmax_t.m4,
+	  m4/ulonglong.m4, m4/unlocked-io.m4, m4/xalloc.m4: Add xalloc
+	  (with deps) from gnulib.
+
+2003-06-28  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS: Add.
+
+2003-06-28  Simon Josefsson <simon@josefsson.org>
+
+	* configure.ac: Bump version.
+
+2003-06-28  Simon Josefsson <simon@josefsson.org>
+
+	* lib/context.c: Clear output token for delete_sec_context.
+
+2003-06-28  Simon Josefsson <simon@josefsson.org>
+
+	* lib/krb5.c: Add accept_sec_context, acquire_cred.  Fixes.  (GSASL
+	  via GSS can connect to Mailutils IMAP server via native GSS.)
+
+2003-06-28  Simon Josefsson <simon@josefsson.org>
+
+	* lib/name.c: Fix.
+
+2003-06-28  Simon Josefsson <simon@josefsson.org>
+
+	* lib/cred.c: Add acquire_cred.
+
+2003-06-28  Simon Josefsson <simon@josefsson.org>
+
+	* lib/meta.c, lib/internal.h, lib/krb5.h: Add accept_sec_context,
+	  acquire_cred.
+
+2003-06-28  Simon Josefsson <simon@josefsson.org>
+
+	* lib/context.c: Add accept_sec_context.
+
+2003-06-28  Simon Josefsson <simon@josefsson.org>
+
+	* lib/asn1.c, lib/ext.h: Add prefix encapsulation.
+
+2003-06-28  Simon Josefsson <simon@josefsson.org>
+
+	* lib/asn1.c: Fix.
+
+2003-06-27  Simon Josefsson <simon@josefsson.org>
+
+	* doc/gss.texi: Add.
+
+2003-06-27  Simon Josefsson <simon@josefsson.org>
+
+	* doc/gss.texi: Fix.
+
 2003-06-12  Simon Josefsson <simon@josefsson.org>
 
 	* lib/krb5.c: Translate errors.
@@ -17,7 +115,7 @@
 2003-06-12  Simon Josefsson <simon@josefsson.org>
 
 	* lib/error.c, lib/krb5.c, lib/meta.c, lib/obsolete.c,
-	po/POTFILES.in, po/gss.pot, po/sv.po: Translation fixes.
+	  po/POTFILES.in, po/gss.pot, po/sv.po: Translation fixes.
 
 2003-06-12  Simon Josefsson <simon@josefsson.org>
 
@@ -126,7 +224,7 @@
 2003-06-09  Simon Josefsson <simon@josefsson.org>
 
 	* Makefile.am: Only generate ChangeLog for releases.  (Allows make
-	dist to work when savannah is down.)
+	  dist to work when savannah is down.)
 
 2003-06-09  Simon Josefsson <simon@josefsson.org>
 
@@ -255,7 +353,7 @@
 2003-05-30  Simon Josefsson <simon@josefsson.org>
 
 	* tests/basic.c, tests/name.c, tests/Makefile.am: Rename name.c to
-	basic.c.
+	  basic.c.
 
 2003-05-30  Simon Josefsson <simon@josefsson.org>
 
@@ -364,7 +462,7 @@
 2003-05-29  Simon Josefsson <simon@josefsson.org>
 
 	* lib/Makefile.am: Install api.h (former gssapi.h) and krb5.h in
-	$(includedir)/gss/.  Fix indents.
+	  $(includedir)/gss/.  Fix indents.
 
 2003-05-29  Simon Josefsson <simon@josefsson.org>
 
@@ -433,8 +531,8 @@
 2003-05-27  Simon Josefsson <simon@josefsson.org>
 
 	* lib/krb5.c: Support mutual authentication (and other flags).	Fix
-	sequence number handling.  Works as client via GSASL against Cyrus
-	IMAP/SASL server.
+	  sequence number handling.  Works as client via GSASL against
+	  Cyrus IMAP/SASL server.
 
 2003-05-26  Simon Josefsson <simon@josefsson.org>
 
@@ -447,7 +545,7 @@
 2003-05-25  Simon Josefsson <simon@josefsson.org>
 
 	* lib/krb5.c: Add. (GSASL using GSS is now able to log on to GNU
-	Mailutils imap4d linked to MIT GSSAPI.)
+	  Mailutils imap4d linked to MIT GSSAPI.)
 
 2003-05-25  Simon Josefsson <simon@josefsson.org>
 
@@ -480,7 +578,7 @@
 2003-05-18  Simon Josefsson <simon@josefsson.org>
 
 	* lib/context.c, lib/cred.c, lib/misc.c, lib/msg.c, lib/name.c:
-	Remove documentation.
+	  Remove documentation.
 
 2003-05-18  Simon Josefsson <simon@josefsson.org>
 
@@ -689,7 +787,7 @@
 2003-05-01  Simon Josefsson <simon@josefsson.org>
 
 	* lib/version.c, configure.ac, lib/ggssapi.h.in, lib/gss.h.in:
-	Rename ggssapi to gss.
+	  Rename ggssapi to gss.
 
 2003-05-01  Simon Josefsson <simon@josefsson.org>
 
@@ -718,7 +816,7 @@
 2003-05-01  Simon Josefsson <simon@josefsson.org>
 
 	* doc/Makefile.am, configure.ac, ggssapi.pc.in, gss.pc.in,
-	ANNOUNCE: Rename ggssapi to gss.
+	  ANNOUNCE: Rename ggssapi to gss.
 
 2003-05-01  Simon Josefsson <simon@josefsson.org>
 
@@ -751,7 +849,7 @@
 2003-05-01  Simon Josefsson <simon@josefsson.org>
 
 	* lib/internal.h: Include inttypes/stdint.  Add hidden GSS
-	structures.
+	  structures.
 
 2003-05-01  Simon Josefsson <simon@josefsson.org>
 
@@ -812,7 +910,7 @@
 2003-04-30  Simon Josefsson <simon@josefsson.org>
 
 	* lib/gssapi.h: Never use xom.h.  Define gss_ctx_id_t,
-	gss_cred_id_t, gss_name_t, and gss_uint32.  Fix routine errors.
+	  gss_cred_id_t, gss_name_t, and gss_uint32.  Fix routine errors.
 
 2003-04-30  Simon Josefsson <simon@josefsson.org>
 
@@ -821,7 +919,7 @@
 2003-04-30  Simon Josefsson <simon@josefsson.org>
 
 	* po/LINGUAS, po/Makevars, po/POTFILES.in, po/ggssapi.pot,
-	po/sv.po, lib/gettext.h, lib/ggssapi.h.in, lib/internal.h: Add.
+	  po/sv.po, lib/gettext.h, lib/ggssapi.h.in, lib/internal.h: Add.
 
 2003-04-30  Simon Josefsson <simon@josefsson.org>
 
@@ -850,13 +948,13 @@
 2003-04-30  Simon Josefsson <simon@josefsson.org>
 
 	* configure.ac: Remove AC_REPLACE_FUNCS() until we know they are
-	required.
+	  required.
 
 2003-04-30  Simon Josefsson <simon@josefsson.org>
 
 	* ANNOUNCE, AUTHORS, Makefile.am, NEWS, README, README-alpha,
-	THANKS, configure.ac, ggssapi.pc.in, doc/Makefile.am, doc/fdl.texi,
-	doc/gdoc, doc/gdoc-error, doc/ggssapi.texi, doc/gpl.texi,
-	lib/Makefile.am, lib/gssapi.h, lib/version.c, tests/Makefile.am:
-	Initial import, empty dummy project.
+	  THANKS, configure.ac, ggssapi.pc.in, doc/Makefile.am,
+	  doc/fdl.texi, doc/gdoc, doc/gdoc-error, doc/ggssapi.texi,
+	  doc/gpl.texi, lib/Makefile.am, lib/gssapi.h, lib/version.c,
+	  tests/Makefile.am: Initial import, empty dummy project.
 
