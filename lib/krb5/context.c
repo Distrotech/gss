@@ -157,7 +157,12 @@ init_reply (OM_uint32 * minor_status,
 					  shishi_ap_encapreppart (k5->ap),
 					  &k5->acceptseqnr);
   if (rc != SHISHI_OK)
-    return GSS_S_DEFECTIVE_TOKEN;
+    {
+      /* A strict 1964 implementation would return
+	 GSS_S_DEFECTIVE_TOKEN here.  gssapi-cfx permit absent
+	 sequence number, though. */
+      k5->acceptseqnr = 0;
+    }
 
   return GSS_S_COMPLETE;
 }
