@@ -93,6 +93,8 @@ gss_indicate_mechs (OM_uint32 * minor_status, gss_OID_set * mech_set)
 	}
     }
 
+  if (minor_status)
+    *minor_status = 0;
   return GSS_S_COMPLETE;
 }
 
@@ -121,10 +123,12 @@ gss_inquire_names_for_mech (OM_uint32 * minor_status,
 	}
     }
 
+  if (minor_status)
+    *minor_status = 0;
   return GSS_S_COMPLETE;
 }
 
-OM_uint32
+static OM_uint32
 _gss_inquire_mechs_for_name2 (OM_uint32 * minor_status,
 			      _gss_mech_api_t mech,
 			      gss_OID name_type,
@@ -159,10 +163,12 @@ _gss_inquire_mechs_for_name2 (OM_uint32 * minor_status,
     }
   gss_release_oid_set (minor_status, &oids);
 
+  if (minor_status)
+    *minor_status = 0;
   return GSS_S_COMPLETE;
 }
 
-OM_uint32
+static OM_uint32
 _gss_inquire_mechs_for_name1 (OM_uint32 * minor_status,
 			      gss_OID name_type,
 			      gss_OID_set *mech_types)
@@ -180,6 +186,8 @@ _gss_inquire_mechs_for_name1 (OM_uint32 * minor_status,
 	return maj_stat;
     }
 
+  if (minor_status)
+    *minor_status = 0;
   return GSS_S_COMPLETE;
 }
 
@@ -203,5 +211,7 @@ gss_inquire_mechs_for_name (OM_uint32 * minor_status,
       return maj_stat;
     }
 
+  if (minor_status)
+    *minor_status = 0;
   return GSS_S_COMPLETE;
 }

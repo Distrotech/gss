@@ -37,6 +37,9 @@ gss_copy_oid (OM_uint32 * minor_status,
 {
   /* This function is not part of the official GSS API */
 
+  if (minor_status)
+    *minor_status = 0;
+
   if (!src_oid || src_oid->length == 0 || src_oid->elements == NULL)
     return GSS_S_FAILURE;
 
@@ -55,6 +58,9 @@ gss_duplicate_oid (OM_uint32 * minor_status,
 		   const gss_OID src_oid, gss_OID * dest_oid)
 {
   OM_uint32 maj_stat;
+
+  if (minor_status)
+    *minor_status = 0;
 
   if (!src_oid || src_oid->length == 0 || src_oid->elements == NULL)
     return GSS_S_FAILURE;
@@ -76,6 +82,9 @@ gss_duplicate_oid (OM_uint32 * minor_status,
 OM_uint32
 gss_create_empty_oid_set (OM_uint32 * minor_status, gss_OID_set * oid_set)
 {
+  if (minor_status)
+    *minor_status = 0;
+
   *oid_set = malloc(sizeof(**oid_set));
   if (!*oid_set)
     return GSS_S_FAILURE;
@@ -94,6 +103,9 @@ gss_add_oid_set_member (OM_uint32 * minor_status,
   gss_OID new_oid;
   gss_OID *p;
   int present;
+
+  if (minor_status)
+    *minor_status = 0;
 
   if (!member_oid || member_oid->length == 0 || member_oid->elements == NULL)
     return GSS_S_FAILURE;
@@ -132,6 +144,9 @@ gss_test_oid_set_member (OM_uint32 * minor_status,
   int i;
   gss_OID cur;
 
+  if (minor_status)
+    *minor_status = 0;
+
   *present = 0;
 
   for (i = 0, cur = set->elements; i < set->count; i++, cur++)
@@ -152,6 +167,9 @@ gss_release_oid_set (OM_uint32 * minor_status, gss_OID_set * set)
 {
   int i;
   gss_OID cur;
+
+  if (minor_status)
+    *minor_status = 0;
 
   for (i = 0, cur = (*set)->elements; i < (*set)->count; i++, cur++)
     free(cur->elements);
@@ -178,6 +196,9 @@ gss_display_status (OM_uint32 * minor_status,
 OM_uint32
 gss_release_buffer (OM_uint32 * minor_status, gss_buffer_t buffer)
 {
+  if (minor_status)
+    *minor_status = 0;
+
   if (buffer != GSS_C_NO_BUFFER)
     {
       if (buffer->value)
@@ -185,7 +206,5 @@ gss_release_buffer (OM_uint32 * minor_status, gss_buffer_t buffer)
       buffer->length = 0;
     }
 
-  if (minor_status)
-    *minor_status = 0;
   return GSS_S_COMPLETE;
 }
