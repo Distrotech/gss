@@ -1,4 +1,4 @@
-/* obsolete.c	Obsolete GSS-API v1 compatibility mappings.
+/* obsolete.c --- Obsolete GSS-API v1 compatibility mappings.
  * Copyright (C) 2003, 2004  Simon Josefsson
  *
  * This file is part of the Generic Security Service (GSS).

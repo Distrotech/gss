@@ -2,7 +2,4 @@
 # Copyright (c) 2003, 2004 by Simon Josefsson
 lib/error.c
 lib/krb5/error.c
-lib/obsolete.c
-lib/error.c
-lib/meta.c
 src/gss.c
