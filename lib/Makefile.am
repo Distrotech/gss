@@ -26,7 +26,8 @@ include_HEADERS = gss.h
 gssincludedir=$(includedir)/gss
 gssinclude_HEADERS = api.h ext.h
 
-libgss_la_SOURCES = internal.h meta.c \
+libgss_la_SOURCES = internal.h \
+	meta.h meta.c \
 	context.c cred.c error.c misc.c msg.c name.c obsolete.c oid.c \
 	asn1.c ext.c version.c
 libgss_la_LIBADD = @LTLIBINTL@ $(top_builddir)/gl/libgl.la
