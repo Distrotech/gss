@@ -74,4 +74,39 @@ extern gss_OID GSS_KRB5_NT_PRINCIPAL_NAME;
  */
 extern gss_OID GSS_KRB5_NT_STRING_UID_NAME;
 
+extern OM_uint32
+gss_krb5_init_sec_context (OM_uint32 * minor_status,
+			   const gss_cred_id_t initiator_cred_handle,
+			   gss_ctx_id_t * context_handle,
+			   const gss_name_t target_name,
+			   const gss_OID mech_type,
+			   OM_uint32 req_flags,
+			   OM_uint32 time_req,
+			   const gss_channel_bindings_t input_chan_bindings,
+			   const gss_buffer_t input_token,
+			   gss_OID * actual_mech_type,
+			   gss_buffer_t output_token,
+			   OM_uint32 * ret_flags, OM_uint32 * time_rec);
+
+extern OM_uint32
+gss_krb5_canonicalize_name (OM_uint32 * minor_status,
+			    const gss_name_t input_name,
+			    const gss_OID mech_type,
+			    gss_name_t * output_name);
+
+extern OM_uint32
+gss_krb5_unwrap (OM_uint32 * minor_status,
+		 const gss_ctx_id_t context_handle,
+		 const gss_buffer_t input_message_buffer,
+		 gss_buffer_t output_message_buffer,
+		 int *conf_state, gss_qop_t * qop_state);
+
+extern OM_uint32
+gss_krb5_wrap (OM_uint32 * minor_status,
+	       const gss_ctx_id_t context_handle,
+	       int conf_req_flag,
+	       gss_qop_t qop_req,
+	       const gss_buffer_t input_message_buffer,
+	       int *conf_state, gss_buffer_t output_message_buffer);
+
 #endif /* GSS_KRB5_H_ */
