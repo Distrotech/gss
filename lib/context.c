@@ -333,7 +333,30 @@ gss_init_sec_context (OM_uint32 * minor_status,
 		      gss_buffer_t output_token,
 		      OM_uint32 * ret_flags, OM_uint32 * time_rec)
 {
-  return GSS_S_FAILURE;
+  OM_uint32 maj_stat, min_stat;
+
+  if (!context_handle)
+    return GSS_S_FAILURE;
+
+  if (!output_token)
+    return GSS_S_FAILURE;
+
+  maj_stat = krb5_gss_init_sec_context (minor_status,
+					initiator_cred_handle,
+					context_handle,
+					target_name,
+					mech_type,
+					req_flags,
+					time_req,
+					input_chan_bindings,
+					input_token,
+					actual_mech_type,
+					output_token,
+					ret_flags,
+					time_rec);
+
+
+  return maj_stat;
 }
 
 OM_uint32
