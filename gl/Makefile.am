@@ -39,5 +39,5 @@ libgl_la_SOURCES += gettext.h
 
 # Local changes
 
-libgnu_la_SOURCES += xalloc.h xmalloc.c
-libgnu_la_SOURCES += xgethostname.h xgethostname.c
+libgl_la_SOURCES += xalloc.h xmalloc.c
+libgl_la_SOURCES += xgethostname.h xgethostname.c
