@@ -10,8 +10,8 @@ exec_prefix=@exec_prefix@
 libdir=@libdir@
 includedir=@includedir@
 
-Name: libggssapi
-Description: GPL Generic Security Service Application Program Interface.
+Name: libgss
+Description: Generic Security Service API Library.
 Version: @VERSION@
-Libs: -L${libdir} -R${libdir} -lggssapi
+Libs: -L${libdir} -R${libdir} -lgss
 Cflags: -I${includedir}

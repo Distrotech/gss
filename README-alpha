@@ -13,7 +13,7 @@ is made.  Volunteers needed.
 
 It will not become stable without help.  Donate time or money.
 
-To compile from CVS, you need perl, texinfo, autoconf 2.5+, and
+To compile from CVS, you need texinfo, libtool, autoconf 2.5+,
 automake 1.7+.  Bootstrap the build environment with:
 
   $ ./autogen.sh
