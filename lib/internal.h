@@ -56,7 +56,6 @@ typedef struct gss_name_struct
 typedef struct gss_cred_id_struct
 {
   gss_OID mech;
-  gss_cred_usage_t usage;
 #ifdef USE_KERBEROS5
   struct _gss_krb5_cred_struct *krb5;
 #endif
