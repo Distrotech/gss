@@ -18,6 +18,10 @@
 # Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 # 02111-1307, USA.
 
+if ENABLE_GTK_DOC
+SUBDIRS = reference
+endif
+
 EXTRA_DIST = gss.html gss.ps gss.pdf texinfo.css
 
 info_TEXINFOS = gss.texi

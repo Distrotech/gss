@@ -65,8 +65,12 @@ AC_MSG_RESULT($kerberos5)
 AM_CONDITIONAL(KRB5, test "$kerberos5" = "yes")
 AC_SUBST(INCLUDE_GSS_KRB5)
 
+# Check for gtk-doc.
+GTK_DOC_CHECK(1.1)
+
 # We are done.
 AC_CONFIG_FILES(Makefile gss.pc lib/gss.h po/Makefile.in \
-		doc/Makefile gl/Makefile lib/Makefile tests/Makefile \
+		doc/Makefile doc/reference/Makefile \
+		gl/Makefile lib/Makefile tests/Makefile \
 		lib/krb5/Makefile)
 AC_OUTPUT
