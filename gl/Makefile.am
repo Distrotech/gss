@@ -20,6 +20,5 @@
 
 noinst_LTLIBRARIES = libgl.la
 
-libgl_la_SOURCES = xalloc.h xmalloc.c \
-	xgethostname.h xgethostname.c
+libgl_la_SOURCES = gettext.h xalloc.h xmalloc.c xgethostname.h xgethostname.c
 libgl_la_LIBADD = @LTLIBOBJS@
