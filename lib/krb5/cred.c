@@ -98,7 +98,7 @@ gss_krb5_acquire_cred (OM_uint32 * minor_status,
 		       gss_OID_set * actual_mechs, OM_uint32 * time_rec)
 {
   OM_uint32 maj_stat;
-  gss_cred_id_t p;
+  gss_cred_id_t p = *output_cred_handle;
 
   if (minor_status)
     *minor_status = 0;
@@ -114,8 +114,6 @@ gss_krb5_acquire_cred (OM_uint32 * minor_status,
 	return maj_stat;
     }
 
-  p = xcalloc (sizeof (*p), 1);
-  p->mech = GSS_KRB5;
   p->krb5 = xcalloc (sizeof (*p->krb5), 1);
 
   maj_stat = gss_krb5_acquire_cred1 (minor_status, desired_name, time_req,
@@ -128,13 +126,9 @@ gss_krb5_acquire_cred (OM_uint32 * minor_status,
       gss_release_oid_set (&junk, actual_mechs);
 
       free (p->krb5);
-      free (p);
-      *output_cred_handle = NULL;
 
       return maj_stat;
     }
-
-  *output_cred_handle = p;
 
   return GSS_S_COMPLETE;
 }
@@ -148,13 +142,40 @@ gss_krb5_inquire_cred (OM_uint32 * minor_status,
 		       gss_OID_set * mechanisms)
 {
   OM_uint32 maj_stat;
+  gss_cred_id_t local_cred_handle = GSS_C_NO_CREDENTIAL;
 
   if (minor_status)
     *minor_status = 0;
 
   if (cred_handle == GSS_C_NO_CREDENTIAL)
     {
+      /* XXX Assumes we get a krb5 credential. */
+      maj_stat = gss_acquire_cred (minor_status, GSS_C_NO_NAME,
+				   GSS_C_INDEFINITE,
+				   GSS_C_NO_OID_SET,
+				   GSS_C_INITIATE,
+				   &local_cred_handle,
+				   mechanisms,
+				   lifetime);
+      if (GSS_ERROR (maj_stat))
+	return maj_stat;
+      cred_handle = local_cred_handle;
+    }
+  else
+    {
+      if (mechanisms)
+	{
+	  maj_stat = gss_create_empty_oid_set (minor_status, mechanisms);
+	  if (GSS_ERROR (maj_stat))
+	    return maj_stat;
+	  maj_stat = gss_add_oid_set_member (minor_status, GSS_KRB5,
+					     mechanisms);
+	  if (GSS_ERROR (maj_stat))
+	    return maj_stat;
+	}
 
+      if (lifetime)
+	*lifetime = gss_krb5_tktlifetime (cred_handle->krb5->tkt);
     }
 
   if (name)
@@ -165,21 +186,20 @@ gss_krb5_inquire_cred (OM_uint32 * minor_status,
 	return maj_stat;
     }
 
-  if (lifetime)
-    *lifetime = gss_krb5_tktlifetime (cred_handle->krb5->tkt);
-
   if (cred_usage)
     *cred_usage = GSS_C_BOTH;
 
-  if (mechanisms)
-    {
-      maj_stat = gss_create_empty_oid_set (minor_status, mechanisms);
-      if (GSS_ERROR (maj_stat))
-	return maj_stat;
-      maj_stat = gss_add_oid_set_member (minor_status, GSS_KRB5, mechanisms);
-      if (GSS_ERROR (maj_stat))
-	return maj_stat;
-    }
+  return GSS_S_COMPLETE;
+}
 
+OM_uint32
+gss_krb5_release_cred (OM_uint32 * minor_status,
+		       gss_cred_id_t * cred_handle)
+{
+  shishi_done ((*cred_handle)->krb5->sh);
+  free ((*cred_handle)->krb5);
+
+  if (minor_status)
+    *minor_status = 0;
   return GSS_S_COMPLETE;
 }
