@@ -1,4 +1,4 @@
-/* name.c	Implementation of GSS-API Name Manipulation functions.
+/* name.c --- Implementation of GSS-API Name Manipulation functions.
  * Copyright (C) 2003, 2004  Simon Josefsson
  *
  * This file is part of the Generic Security Service (GSS).
@@ -573,6 +573,8 @@ gss_duplicate_name (OM_uint32 * minor_status,
       return GSS_S_FAILURE | GSS_S_CALL_INACCESSIBLE_WRITE;
     }
 
+  /* FIXME: I'm not sure we should duplicate the OID.  Perhaps just
+     copy the pointer.  Who will deallocate this? */
   maj_stat = gss_duplicate_oid (minor_status, src_name->type, &tmp);
   if (GSS_ERROR (maj_stat))
     return maj_stat;
