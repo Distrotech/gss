@@ -1,0 +1,684 @@
+2003-06-02  Simon Josefsson <simon@josefsson.org>
+
+	* Makefile.am, configure.ac: Remove argp.
+
+2003-06-02  Simon Josefsson <simon@josefsson.org>
+
+	* tests/utils.c: Remove gss/ prefix from includes.
+
+2003-06-02  Simon Josefsson <simon@josefsson.org>
+
+	* tests/utils.c: Use gss/*.h instead of gss.h.
+
+2003-06-02  Simon Josefsson <simon@josefsson.org>
+
+	* lib/Makefile.am: Dist gettext.h.
+
+2003-06-02  Simon Josefsson <simon@josefsson.org>
+
+	* lib/version.c: Fix copying conditions.
+
+2003-06-02  Simon Josefsson <simon@josefsson.org>
+
+	* ANNOUNCE, gss.pc.in, README-alpha: Fix.
+
+2003-06-02  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS: Add.
+
+2003-06-02  Simon Josefsson <simon@josefsson.org>
+
+	* lib/krb5.c: DES works.
+
+2003-05-30  Simon Josefsson <simon@josefsson.org>
+
+	* doc/gss.texi: Add.
+
+2003-05-30  Simon Josefsson <simon@josefsson.org>
+
+	* lib/meta.c: Fix.  (RFC permitted our usage model.)
+
+2003-05-30  Simon Josefsson <simon@josefsson.org>
+
+	* doc/gss.texi: Add. Fix.
+
+2003-05-30  Simon Josefsson <simon@josefsson.org>
+
+	* lib/ext.h: Add.
+
+2003-05-30  Simon Josefsson <simon@josefsson.org>
+
+	* lib/misc.c: Fix.
+
+2003-05-30  Simon Josefsson <simon@josefsson.org>
+
+	* lib/name.c: Fix.
+
+2003-05-30  Simon Josefsson <simon@josefsson.org>
+
+	* tests/Makefile.am, tests/krb5.c: Remove krb5.c for now.
+
+2003-05-30  Simon Josefsson <simon@josefsson.org>
+
+	* tests/basic.c, lib/meta.c: Add.
+
+2003-05-30  Simon Josefsson <simon@josefsson.org>
+
+	* tests/basic.c: Add.
+
+2003-05-30  Simon Josefsson <simon@josefsson.org>
+
+	* lib/internal.h: Fix.
+
+2003-05-30  Simon Josefsson <simon@josefsson.org>
+
+	* lib/misc.c: Add. Fix.
+
+2003-05-30  Simon Josefsson <simon@josefsson.org>
+
+	* tests/basic.c, tests/name.c, tests/Makefile.am: Rename name.c to
+	basic.c.
+
+2003-05-30  Simon Josefsson <simon@josefsson.org>
+
+	* lib/misc.c: Fix.
+
+2003-05-30  Simon Josefsson <simon@josefsson.org>
+
+	* lib/krb5.c: Cleanup.
+
+2003-05-30  Simon Josefsson <simon@josefsson.org>
+
+	* lib/krb5.c: Cleanup.
+
+2003-05-30  Simon Josefsson <simon@josefsson.org>
+
+	* lib/internal.h: Remove.
+
+2003-05-30  Simon Josefsson <simon@josefsson.org>
+
+	* lib/ext.h, lib/krb5.h: Add.
+
+2003-05-30  Simon Josefsson <simon@josefsson.org>
+
+	* lib/asn1.c: Fix.
+
+2003-05-30  Simon Josefsson <simon@josefsson.org>
+
+	* lib/internal.h: Add.
+
+2003-05-30  Simon Josefsson <simon@josefsson.org>
+
+	* lib/misc.c, lib/meta.c: Fix.
+
+2003-05-29  Simon Josefsson <simon@josefsson.org>
+
+	* lib/meta.c, lib/misc.c, lib/internal.h: Add.
+
+2003-05-29  Simon Josefsson <simon@josefsson.org>
+
+	* lib/Makefile.am: Add meta.c.
+
+2003-05-29  Simon Josefsson <simon@josefsson.org>
+
+	* lib/krb5.c: Fix.
+
+2003-05-29  Simon Josefsson <simon@josefsson.org>
+
+	* lib/msg.c, lib/context.c, lib/name.c: Mech independent.
+
+2003-05-29  Simon Josefsson <simon@josefsson.org>
+
+	* lib/internal.h, lib/meta.c: Add.
+
+2003-05-29  Simon Josefsson <simon@josefsson.org>
+
+	* lib/meta.c: Add.
+
+2003-05-29  Simon Josefsson <simon@josefsson.org>
+
+	* lib/krb5.h: Add.
+
+2003-05-29  Simon Josefsson <simon@josefsson.org>
+
+	* lib/krb5.c: Fix.
+
+2003-05-29  Simon Josefsson <simon@josefsson.org>
+
+	* doc/gss.texi: Add.
+
+2003-05-29  Simon Josefsson <simon@josefsson.org>
+
+	* lib/internal.h: Remove.
+
+2003-05-29  Simon Josefsson <simon@josefsson.org>
+
+	* lib/ext.h: Add.
+
+2003-05-29  Simon Josefsson <simon@josefsson.org>
+
+	* lib/misc.c, lib/name.c, lib/krb5.c: Fix.
+
+2003-05-29  Simon Josefsson <simon@josefsson.org>
+
+	* lib/krb5.c, lib/internal.h, tests/utils.c: Fix includes.
+
+2003-05-29  Simon Josefsson <simon@josefsson.org>
+
+	* lib/gss.h.in: Move things to ext.h.
+
+2003-05-29  Simon Josefsson <simon@josefsson.org>
+
+	* lib/Makefile.am: Add ext.h.
+
+2003-05-29  Simon Josefsson <simon@josefsson.org>
+
+	* lib/ext.h: Add.
+
+2003-05-29  Simon Josefsson <simon@josefsson.org>
+
+	* doc/gss.texi: Fix.
+
+2003-05-29  Simon Josefsson <simon@josefsson.org>
+
+	* ANNOUNCE: Fix.
+
+2003-05-29  Simon Josefsson <simon@josefsson.org>
+
+	* lib/Makefile.am: Install api.h (former gssapi.h) and krb5.h in
+	$(includedir)/gss/.  Fix indents.
+
+2003-05-29  Simon Josefsson <simon@josefsson.org>
+
+	* lib/api.h: Support xom.h (conditionally).
+
+2003-05-29  Simon Josefsson <simon@josefsson.org>
+
+	* lib/api.h, lib/gssapi.h: Renamed gssapi.h to api.h.
+
+2003-05-29  Simon Josefsson <simon@josefsson.org>
+
+	* lib/krb5.h: Add.
+
+2003-05-29  Simon Josefsson <simon@josefsson.org>
+
+	* lib/gss.h.in: Add.  Fix.
+
+2003-05-29  Simon Josefsson <simon@josefsson.org>
+
+	* lib/asn1.c, lib/krb5.c, lib/internal.h: Fix.
+
+2003-05-29  Simon Josefsson <simon@josefsson.org>
+
+	* lib/oid.c: Add krb5 OIDs (conditionally).
+
+2003-05-29  Simon Josefsson <simon@josefsson.org>
+
+	* doc/Makefile.am: Drop src/ for now.
+
+2003-05-29  Simon Josefsson <simon@josefsson.org>
+
+	* THANKS: Fix.
+
+2003-05-29  Simon Josefsson <simon@josefsson.org>
+
+	* doc/gss.texi: Drop src/ for now.
+
+2003-05-29  Simon Josefsson <simon@josefsson.org>
+
+	* ANNOUNCE, README: Fix.
+
+2003-05-29  Simon Josefsson <simon@josefsson.org>
+
+	* configure.ac, Makefile.am: Drop src/ for now.
+
+2003-05-27  Simon Josefsson <simon@josefsson.org>
+
+	* doc/gss.texi: Fix pxref.
+
+2003-05-27  Simon Josefsson <simon@josefsson.org>
+
+	* doc/gss.texi: Drop licenses.	Add criticism todos.
+
+2003-05-27  Simon Josefsson <simon@josefsson.org>
+
+	* doc/gss.texi: Fix license.
+
+2003-05-27  Simon Josefsson <simon@josefsson.org>
+
+	* doc/gss.texi: Fix email.
+
+2003-05-27  Simon Josefsson <simon@josefsson.org>
+
+	* doc/gss.texi: Fix title.
+
+2003-05-27  Simon Josefsson <simon@josefsson.org>
+
+	* lib/krb5.c: Support mutual authentication (and other flags).	Fix
+	sequence number handling.  Works as client via GSASL against Cyrus
+	IMAP/SASL server.
+
+2003-05-26  Simon Josefsson <simon@josefsson.org>
+
+	* tests/Makefile.am: Don't build krb5.
+
+2003-05-26  Simon Josefsson <simon@josefsson.org>
+
+	* doc/gss.texi: Fix title.
+
+2003-05-25  Simon Josefsson <simon@josefsson.org>
+
+	* lib/krb5.c: Add. (GSASL using GSS is now able to log on to GNU
+	Mailutils imap4d linked to MIT GSSAPI.)
+
+2003-05-25  Simon Josefsson <simon@josefsson.org>
+
+	* lib/internal.h, lib/krb5.c: Only krb5.c includes shishi.
+
+2003-05-25  Simon Josefsson <simon@josefsson.org>
+
+	* lib/krb5.c: Add.
+
+2003-05-19  Simon Josefsson <simon@josefsson.org>
+
+	* Makefile.am: Dist TODO.
+
+2003-05-19  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS: Fix.
+
+2003-05-19  Simon Josefsson <simon@josefsson.org>
+
+	* lib/msg.c: Remove debug info.  Call krb5.
+
+2003-05-19  Simon Josefsson <simon@josefsson.org>
+
+	* lib/asn1.c, lib/internal.h, lib/krb5.c: Add.
+
+2003-05-18  Simon Josefsson <simon@josefsson.org>
+
+	* lib/obsolete.c: Typo fix.
+
+2003-05-18  Simon Josefsson <simon@josefsson.org>
+
+	* lib/context.c, lib/cred.c, lib/misc.c, lib/msg.c, lib/name.c:
+	Remove documentation.
+
+2003-05-18  Simon Josefsson <simon@josefsson.org>
+
+	* doc/Makefile.am: Fix man page name.
+
+2003-05-18  Simon Josefsson <simon@josefsson.org>
+
+	* doc/gdoc, doc/gdoc-error: Removed (not needed anymore).
+
+2003-05-18  Simon Josefsson <simon@josefsson.org>
+
+	* doc/gss.texi: Inline autogenerated API documentation.
+
+2003-05-18  Simon Josefsson <simon@josefsson.org>
+
+	* configure.ac: Perl not needed.
+
+2003-05-18  Simon Josefsson <simon@josefsson.org>
+
+	* doc/Makefile.am: Don't autogenerate API documentation.
+
+2003-05-18  Simon Josefsson <simon@josefsson.org>
+
+	* lib/gssapi.h: Fix implementation type names.
+
+2003-05-18  Simon Josefsson <simon@josefsson.org>
+
+	* lib/name.c: Fix.
+
+2003-05-18  Simon Josefsson <simon@josefsson.org>
+
+	* lib/misc.c: Add.
+
+2003-05-18  Simon Josefsson <simon@josefsson.org>
+
+	* lib/internal.h: Add. Fix.
+
+2003-05-18  Simon Josefsson <simon@josefsson.org>
+
+	* lib/krb5.c: Cleanup.
+
+2003-05-18  Simon Josefsson <simon@josefsson.org>
+
+	* lib/krb5.c: Cleanup.
+
+2003-05-18  Simon Josefsson <simon@josefsson.org>
+
+	* lib/misc.c: Add.
+
+2003-05-18  Simon Josefsson <simon@josefsson.org>
+
+	* lib/asn1.c: Cleanup.
+
+2003-05-18  Simon Josefsson <simon@josefsson.org>
+
+	* AUTHORS: Fix.
+
+2003-05-18  Simon Josefsson <simon@josefsson.org>
+
+	* README-alpha, README: Fix.
+
+2003-05-18  Simon Josefsson <simon@josefsson.org>
+
+	* lib/krb5.c: AP-REQ works.
+
+2003-05-18  Simon Josefsson <simon@josefsson.org>
+
+	* lib/msg.c: Add doc.  Print debug info.
+
+2003-05-18  Simon Josefsson <simon@josefsson.org>
+
+	* lib/asn1.c: Rewrite without libtasn1.
+
+2003-05-18  Simon Josefsson <simon@josefsson.org>
+
+	* lib/internal.h: Fix.
+
+2003-05-18  Simon Josefsson <simon@josefsson.org>
+
+	* lib/Makefile.am: Remove asn.1 stuff.
+
+2003-05-18  Simon Josefsson <simon@josefsson.org>
+
+	* TODO, lib/gss.asn1: Remove.
+
+2003-05-18  Simon Josefsson <simon@josefsson.org>
+
+	* configure.ac: Libtasn1 no longer required.
+
+2003-05-10  Simon Josefsson <simon@josefsson.org>
+
+	* lib/Makefile.am: Fix last commit.
+
+2003-05-10  Simon Josefsson <simon@josefsson.org>
+
+	* lib/Makefile.am: Dist gss_asn1_tab.c.
+
+2003-05-10  Simon Josefsson <simon@josefsson.org>
+
+	* lib/Makefile.am: Use @ASN1PARSER@.
+
+2003-05-09  Simon Josefsson <simon@josefsson.org>
+
+	* tests/Makefile.am: Build krb5.
+
+2003-05-09  Simon Josefsson <simon@josefsson.org>
+
+	* tests/krb5.c: Krb5 test.
+
+2003-05-09  Simon Josefsson <simon@josefsson.org>
+
+	* lib/krb5.c: Add.
+
+2003-05-09  Simon Josefsson <simon@josefsson.org>
+
+	* lib/internal.h: Add krb5 stuff.
+
+2003-05-09  Simon Josefsson <simon@josefsson.org>
+
+	* lib/context.c: Call krb5 for now.
+
+2003-05-09  Simon Josefsson <simon@josefsson.org>
+
+	* lib/asn1.c: Wrap tokens in ASN.1.
+
+2003-05-09  Simon Josefsson <simon@josefsson.org>
+
+	* lib/Makefile.am: Build asn1.c.  Link with shishi.
+
+2003-05-08  Simon Josefsson <simon@josefsson.org>
+
+	* ANNOUNCE, doc/gss.texi: Fix.
+
+2003-05-08  Simon Josefsson <simon@josefsson.org>
+
+	* lib/gss.h.in: Fix.
+
+2003-05-08  Simon Josefsson <simon@josefsson.org>
+
+	* TODO: Fix.
+
+2003-05-08  Simon Josefsson <simon@josefsson.org>
+
+	* TODO: Add.
+
+2003-05-08  Simon Josefsson <simon@josefsson.org>
+
+	* configure.ac: Look for asn1Parser.  Fix errors.
+
+2003-05-08  Simon Josefsson <simon@josefsson.org>
+
+	* configure.ac: Always require libtasn1.
+
+2003-05-08  Simon Josefsson <simon@josefsson.org>
+
+	* README: Add prereq's.
+
+2003-05-08  Simon Josefsson <simon@josefsson.org>
+
+	* tests/name.c: Fix.
+
+2003-05-08  Simon Josefsson <simon@josefsson.org>
+
+	* lib/Makefile.am: Add krb5.c.	Build gss_asn1_tab.c.
+
+2003-05-08  Simon Josefsson <simon@josefsson.org>
+
+	* lib/krb5.c: Add.
+
+2003-05-08  Simon Josefsson <simon@josefsson.org>
+
+	* lib/gss.asn1: Add.
+
+2003-05-08  Simon Josefsson <simon@josefsson.org>
+
+	* configure.ac: For kerberos 5 support, find libtasn1 too.
+
+2003-05-01  Simon Josefsson <simon@josefsson.org>
+
+	* doc/gss.texi: Add.
+
+2003-05-01  Simon Josefsson <simon@josefsson.org>
+
+	* tests/Makefile.am: Build name.
+
+2003-05-01  Simon Josefsson <simon@josefsson.org>
+
+	* tests/name.c: Typo.
+
+2003-05-01  Simon Josefsson <simon@josefsson.org>
+
+	* tests/utils.c, tests/name.c: Add.
+
+2003-05-01  Simon Josefsson <simon@josefsson.org>
+
+	* configure.ac: Test for Shishi.
+
+2003-05-01  Simon Josefsson <simon@josefsson.org>
+
+	* doc/gss.texi: Document non-standard functions.
+
+2003-05-01  Simon Josefsson <simon@josefsson.org>
+
+	* lib/internal.h, lib/Makefile.am: Rename ggssapi to gss.
+
+2003-05-01  Simon Josefsson <simon@josefsson.org>
+
+	* lib/version.c, configure.ac, lib/ggssapi.h.in, lib/gss.h.in:
+	Rename ggssapi to gss.
+
+2003-05-01  Simon Josefsson <simon@josefsson.org>
+
+	* lib/ggssapi.h.in: Add.
+
+2003-05-01  Simon Josefsson <simon@josefsson.org>
+
+	* doc/gss.texi: Fix.
+
+2003-05-01  Simon Josefsson <simon@josefsson.org>
+
+	* lib/error.c: Indent.
+
+2003-05-01  Simon Josefsson <simon@josefsson.org>
+
+	* configure.ac, doc/Makefile.am: Cleanup.
+
+2003-05-01  Simon Josefsson <simon@josefsson.org>
+
+	* doc/gss.texi: Rename ggssapi to gss.
+
+2003-05-01  Simon Josefsson <simon@josefsson.org>
+
+	* Makefile.am, README: Rename ggssapi to gss.
+
+2003-05-01  Simon Josefsson <simon@josefsson.org>
+
+	* doc/Makefile.am, configure.ac, ggssapi.pc.in, gss.pc.in,
+	ANNOUNCE: Rename ggssapi to gss.
+
+2003-05-01  Simon Josefsson <simon@josefsson.org>
+
+	* doc/gss.texi: Add.
+
+2003-05-01  Simon Josefsson <simon@josefsson.org>
+
+	* doc/ggssapi.texi, doc/gss.texi: Rename to gss.texi.
+
+2003-05-01  Simon Josefsson <simon@josefsson.org>
+
+	* tests/Makefile.am: Fix library name.
+
+2003-05-01  Simon Josefsson <simon@josefsson.org>
+
+	* lib/Makefile.am: Rename library to libgss.*.
+
+2003-05-01  Simon Josefsson <simon@josefsson.org>
+
+	* doc/Makefile.am: Typo.
+
+2003-05-01  Simon Josefsson <simon@josefsson.org>
+
+	* doc/gdoc: Escape { and }.
+
+2003-05-01  Simon Josefsson <simon@josefsson.org>
+
+	* lib/Makefile.am: Add deps.  Fix indent.
+
+2003-05-01  Simon Josefsson <simon@josefsson.org>
+
+	* lib/internal.h: Include inttypes/stdint.  Add hidden GSS
+	structures.
+
+2003-05-01  Simon Josefsson <simon@josefsson.org>
+
+	* lib/cred.c: Credential functions.
+
+2003-05-01  Simon Josefsson <simon@josefsson.org>
+
+	* lib/context.c: Context functions.
+
+2003-05-01  Simon Josefsson <simon@josefsson.org>
+
+	* lib/misc.c: Miscellaneous functions.
+
+2003-05-01  Simon Josefsson <simon@josefsson.org>
+
+	* lib/msg.c: Per-message functions.
+
+2003-05-01  Simon Josefsson <simon@josefsson.org>
+
+	* lib/name.c: Name manipulating functions.
+
+2003-05-01  Simon Josefsson <simon@josefsson.org>
+
+	* lib/oid.c: Static OID definitions.
+
+2003-05-01  Simon Josefsson <simon@josefsson.org>
+
+	* lib/obsolete.c: GSSAPI v1 bindings.
+
+2003-05-01  Simon Josefsson <simon@josefsson.org>
+
+	* lib/gssapi.h: Fix prototypes (RFC is buggy).	Indent.
+
+2003-05-01  Simon Josefsson <simon@josefsson.org>
+
+	* lib/Makefile.am, lib/error.c: Add.
+
+2003-04-30  Simon Josefsson <simon@josefsson.org>
+
+	* po/LINGUAS: Empty, until we have something to translate.
+
+2003-04-30  Simon Josefsson <simon@josefsson.org>
+
+	* lib/internal.h: Include gssapi.h too.
+
+2003-04-30  Simon Josefsson <simon@josefsson.org>
+
+	* lib/gssapi.h: Replace cvs log with referral to ChangeLog.
+
+2003-04-30  Simon Josefsson <simon@josefsson.org>
+
+	* lib/gssapi.h: Add CVS log to comment.
+
+2003-04-30  Simon Josefsson <simon@josefsson.org>
+
+	* lib/gssapi.h: Add copying conditions.  Include limits.h.
+
+2003-04-30  Simon Josefsson <simon@josefsson.org>
+
+	* lib/gssapi.h: Never use xom.h.  Define gss_ctx_id_t,
+	gss_cred_id_t, gss_name_t, and gss_uint32.  Fix routine errors.
+
+2003-04-30  Simon Josefsson <simon@josefsson.org>
+
+	* lib/gssapi.h: Verbatim from RFC.
+
+2003-04-30  Simon Josefsson <simon@josefsson.org>
+
+	* po/LINGUAS, po/Makevars, po/POTFILES.in, po/ggssapi.pot,
+	po/sv.po, lib/gettext.h, lib/ggssapi.h.in, lib/internal.h: Add.
+
+2003-04-30  Simon Josefsson <simon@josefsson.org>
+
+	* lib/Makefile.am: Add ggssapi.h.
+
+2003-04-30  Simon Josefsson <simon@josefsson.org>
+
+	* doc/ggssapi.texi: Add. Fix links.
+
+2003-04-30  Simon Josefsson <simon@josefsson.org>
+
+	* doc/Makefile.am: Add dep.
+
+2003-04-30  Simon Josefsson <simon@josefsson.org>
+
+	* configure.ac: Build lib/ggssapi.h.
+
+2003-04-30  Simon Josefsson <simon@josefsson.org>
+
+	* configure.ac: Don't build doc/reference/Makefile.
+
+2003-04-30  Simon Josefsson <simon@josefsson.org>
+
+	* m4/Makefile.am, COPYING: Add.
+
+2003-04-30  Simon Josefsson <simon@josefsson.org>
+
+	* configure.ac: Remove AC_REPLACE_FUNCS() until we know they are
+	required.
+
+2003-04-30  Simon Josefsson <simon@josefsson.org>
+
+	* ANNOUNCE, AUTHORS, Makefile.am, NEWS, README, README-alpha,
+	THANKS, configure.ac, ggssapi.pc.in, doc/Makefile.am, doc/fdl.texi,
+	doc/gdoc, doc/gdoc-error, doc/ggssapi.texi, doc/gpl.texi,
+	lib/Makefile.am, lib/gssapi.h, lib/version.c, tests/Makefile.am:
+	Initial import, empty dummy project.
+
