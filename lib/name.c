@@ -83,7 +83,7 @@ gss_compare_name (OM_uint32 * minor_status,
   if (!name1 || !name2)
     return GSS_S_BAD_NAME;
 
-  if (!gss_oid_equal (name1->type, name2->type))
+  if (!_gss_oid_equal (name1->type, name2->type))
     return GSS_S_BAD_NAMETYPE;
 
   name_equal == (name1->length == name2->length) &&
