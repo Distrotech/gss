@@ -38,6 +38,7 @@
  * {iso(1) member-body(2) United States(840) mit(113554) infosys(1)
  * gssapi(2) krb5(2)}
  */
+extern gss_OID_desc GSS_KRB5_static;
 extern gss_OID GSS_KRB5;
 
 /*
@@ -46,6 +47,7 @@ extern gss_OID GSS_KRB5;
  * gssapi(2) generic(1) user_name(1)}.  The recommended symbolic name
  * for this type is "GSS_KRB5_NT_USER_NAME".
  */
+extern gss_OID_desc GSS_KRB5_NT_USER_NAME_static;
 extern gss_OID GSS_KRB5_NT_USER_NAME;
 
 /*
@@ -56,6 +58,7 @@ extern gss_OID GSS_KRB5_NT_USER_NAME;
  * "GSS_KRB5_NT_HOSTBASED_SERVICE_NAME".  The currently preferred
  * symbolic name for this type is "GSS_C_NT_HOSTBASED_SERVICE".
  */
+extern gss_OID_desc GSS_KRB5_NT_HOSTBASED_SERVICE_NAME_static;
 extern gss_OID GSS_KRB5_NT_HOSTBASED_SERVICE_NAME;
 
 /*
@@ -64,6 +67,7 @@ extern gss_OID GSS_KRB5_NT_HOSTBASED_SERVICE_NAME;
  * gssapi(2) krb5(2) krb5_name(1)}.  The recommended symbolic name for
  * this type is "GSS_KRB5_NT_PRINCIPAL_NAME".
  */
+extern gss_OID_desc GSS_KRB5_NT_PRINCIPAL_NAME_static;
 extern gss_OID GSS_KRB5_NT_PRINCIPAL_NAME;
 
 /*
@@ -72,6 +76,7 @@ extern gss_OID GSS_KRB5_NT_PRINCIPAL_NAME;
  * gssapi(2) generic(1) string_uid_name(3)}.  The recommended symbolic
  * name for this type is "GSS_KRB5_NT_STRING_UID_NAME".
  */
+extern gss_OID_desc GSS_KRB5_NT_STRING_UID_NAME_static;
 extern gss_OID GSS_KRB5_NT_STRING_UID_NAME;
 
 extern OM_uint32

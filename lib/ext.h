@@ -42,4 +42,12 @@ gss_decapsulate_token (gss_buffer_t input_message,
 		       gss_OID token_oid,
 		       gss_buffer_t output_message);
 
+extern gss_OID_desc GSS_C_NT_USER_NAME_static;
+extern gss_OID_desc GSS_C_NT_MACHINE_UID_NAME_static;
+extern gss_OID_desc GSS_C_NT_STRING_UID_NAME_static;
+extern gss_OID_desc GSS_C_NT_HOSTBASED_SERVICE_X_static;
+extern gss_OID_desc GSS_C_NT_HOSTBASED_SERVICE_static;
+extern gss_OID_desc GSS_C_NT_ANONYMOUS_static;
+extern gss_OID_desc GSS_C_NT_EXPORT_NAME_static;
+
 #endif
