@@ -43,6 +43,7 @@ typedef struct _gss_krb5_ctx_struct
   int acceptseqnr;
   int initseqnr;
   OM_uint32 flags;
+  int reqdone;
   int repdone;
 } _gss_krb5_ctx_desc, *_gss_krb5_ctx_t;
 
