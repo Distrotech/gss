@@ -5,7 +5,11 @@ Changelog-URL: http://josefsson.org/cgi-bin/viewcvs.cgi/gss/ChangeLog?rev=HEAD&c
 BSD-Port-URL: http://www.freshports.org/security/gss/
 CVS-URL: http://josefsson.org/cgi-bin/viewcvs.cgi/gss/
 Mirror-Site-URL: http://josefsson.org/gss/
-Version: 0.0.13
-Release-Focus: Minor feature enhancements
+Version: 0.0.14
+Release-Focus: Minor bugfixes
 
-Revamp of gnulib compatibility files.  More translations.
+gss_import_name and gss_duplicate_name no longer clone the OID, to
+avoid memory leaks.  Fixed handling of sequence numbers in
+gss_accept_sec_context, for servers.  Fix crash in
+gss_accept_sec_context for NULL values of ret_flags.  Fix other memory
+leaks.  Sync with new Shishi 0.0.18 API.
