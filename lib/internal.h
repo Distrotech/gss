@@ -52,8 +52,8 @@
 #endif
 
 #include "gettext.h"
-#include "gss.h"
-#include "gssapi.h"
+#include "api.h"
+#include "ext.h"
 
 
 #define _(String) dgettext (PACKAGE, String)

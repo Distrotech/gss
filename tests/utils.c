@@ -30,7 +30,7 @@
 #include <ctype.h>
 #endif
 
-#include <gssapi.h>
+#include <gss.h>
 
 static int verbose = 0;
 static int debug = 0;

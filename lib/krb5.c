@@ -23,9 +23,8 @@
 
 #ifdef USE_KERBEROS5
 
-#include "krb5.h"
-
 #include <shishi.h>
+#include "krb5.h"
 
 typedef struct _gss_krb5_cred_struct
 {
