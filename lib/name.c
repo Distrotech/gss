@@ -193,8 +193,8 @@ gss_compare_name (OM_uint32 * minor_status,
  * @name: (gss_name_t, modify) The name to be deleted.
  *
  * Free GSSAPI-allocated storage associated with an internal-form
- * name.  Implementations are encouraged to set the name to
- * GSS_C_NO_NAME on successful completion of this call.
+ * name.  The name is set to GSS_C_NO_NAME on successful completion of
+ * this call.
  *
  * Valid return values and their meaning:
  *
