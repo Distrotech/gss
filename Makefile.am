@@ -29,18 +29,17 @@ ACLOCAL_AMFLAGS = -I m4
 
 # Maintainer targets
 
+indent:
+	(cd lib && make indent)
+	(cd tests && make indent)
+
 ChangeLog:
 	test ! -f .cvsusers || \
 	cvs2cl --FSF --usermap .cvsusers \
 		-I "ChangeLog|.cvs|autogen.sh|doc/specification"
 
-indent:
-	(cd lib && make indent)
-	(cd tests && make indent)
-
 tag = $(PACKAGE)-`echo $(VERSION) | sed 's/\./-/g'`
-shortname = gss
-htmldir = ../www-$(shortname)
+htmldir = ../www-$(PACKAGE)
 
 release:
 	cvs upd -p -r HEAD NEWS > /dev/null
@@ -52,8 +51,8 @@ release:
 	rm -f $(distdir).tar.gz.asc
 	gpg -a --sign --detach $(distdir).tar.gz
 	gpg --verify $(distdir).tar.gz.asc
-	scp $(distdir).tar.gz* josefsson.org:$(shortname)/
-	test -d $(htmldir) && cp -v doc/$(shortname).{ps,pdf,html} $(htmldir)/
+	scp $(distdir).tar.gz* josefsson.org:$(PACKAGE)/
+	test -d $(htmldir) && cp -v doc/$(PACKAGE).{ps,pdf,html} $(htmldir)/
 	test -d $(htmldir) && cd $(htmldir) && cvs commit -m "Update." \
-		$(shortname).{ps,pdf,html}
-	cvs rtag $(tag) $(shortname)
+		$(PACKAGE).{ps,pdf,html}
+	cvs rtag $(tag) $(PACKAGE)
