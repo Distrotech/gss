@@ -2,7 +2,7 @@ GSS NEWS -- History of user-visible changes.                    -*- outline -*-
 Copyright (C) 2003, 2004 Simon Josefsson
 See the end for copying conditions.
 
-* Version 0.0.15 (unreleased)
+* Version 0.0.15 (released 2004-11-22)
 
 ** Documentation improvements.
 For example, you can now browse the GSS manual using DevHelp.
