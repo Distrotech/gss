@@ -356,7 +356,7 @@ sub output_texinfo {
 	    print ", ";
 	}
     }
-    print ")\n";
+    print ")\n\n";
     foreach $parameter (@{$args{'parameterlist'}}) {
 	if ($args{'parameters'}{$parameter}) {
 	    open FH, ">tmp" or die "cannot open tmp";
