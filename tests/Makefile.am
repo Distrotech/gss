@@ -23,7 +23,7 @@ if KRB5
 AM_CPPFLAGS += -I$(top_srcdir)/lib/krb5
 endif
 AM_LDFLAGS = -no-install
-LDADD = ../lib/libgss.la
+LDADD = ../lib/libgss.la @LTLIBINTL@
 
 TESTS_ENVIRONMENT = SHISHI_KEYS=krb5context.key \
 	SHISHI_TICKETS=krb5context.tkt \
