@@ -234,8 +234,7 @@ gss_indicate_mechs (OM_uint32 * minor_status, gss_OID_set * mech_set)
   maj_stat = _gss_indicate_mechs1 (minor_status, mech_set);
   if (GSS_ERROR (maj_stat))
     {
-      OM_uint32 tmp_minor_status;
-      gss_release_oid_set (&tmp_minor_status, mech_set);
+      gss_release_oid_set (NULL, mech_set);
       return maj_stat;
     }
 
