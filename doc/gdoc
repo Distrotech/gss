@@ -328,7 +328,7 @@ sub output_texinfo {
 	}
     }
     foreach $section (@{$args{'sectionlist'}}) {
-	$args{'sections'}{$section} =~ s:([{@}]):\@\1:gs;
+	$args{'sections'}{$section} =~ s:([{}]):\@\1:gs;
 	output_highlight($args{'sections'}{$section});
     }
     print "\@end deftypefun\n\n";
