@@ -1,5 +1,5 @@
 ## Process this file with automake to produce Makefile.in
-# Copyright (C) 2003 Simon Josefsson.
+# Copyright (C) 2003, 2004 Simon Josefsson.
 #
 # This file is part of the Generic Security Service (GSS).
 #
@@ -53,6 +53,9 @@ release:
 	gpg --verify $(distdir).tar.gz.sig
 	echo "directory: $(PACKAGE)" > $(distdir).tar.gz.directive
 	gpg --clearsign $(distdir).tar.gz.directive
-	cd doc && ./gendocs.sh -o ../$(htmldir)/manual/ $(PACKAGE) "GNU Generic Security Service Library"
+	cd doc && ./gendocs.sh --html "--css-include=texinfo.css" \
+		 -o ../$(htmldir)/manual/ $(PACKAGE) \
+		"GNU Generic Security Service Library"
 	cd $(htmldir) && cvs commit -m "Update." manual/
-	ncftpput ftp-upload.gnu.org /incoming/alpha $(distdir).tar.gz{,.sig,.directive.asc}
+	ncftpput ftp-upload.gnu.org /incoming/alpha \
+		$(distdir).tar.gz{,.sig,.directive.asc}
