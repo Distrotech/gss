@@ -18,23 +18,12 @@
 # Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 # 02111-1307, USA.
 
-man_MANS = gss.1
-
-DISTCLEANFILES = $(man_MANS)
-
-EXTRA_DIST = $(man_MANS) gss.html gss.ps gss.pdf
+EXTRA_DIST = gss.html gss.ps gss.pdf
 
 info_TEXINFOS = gss.texi
 ps_TEXINFOS = gss.texi
 pdf_TEXINFOS = gss.texi
 gss_TEXINFOS = gpl.texi fdl.texi
-
-# Man page:
-
-gss.1: $(top_srcdir)/src/gss.c $(top_builddir)/src/gss
-	$(HELP2MAN) \
-		--name="Generic Security Service command line interface" \
-		--output=$@ $(top_builddir)/src/gss
 
 gss.html: gss.texi
 	$(MAKEINFO) --html --no-split --number-sections $<
