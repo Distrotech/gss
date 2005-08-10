@@ -6,6 +6,10 @@ See the end for copying conditions.
 
 ** Kinyarwanda translation added, by Steve Murphy.
 
+** The help-gss@gnu.org mailing list is now mentioned in documentation.
+
+** The license template in files were updated with the new FSF address.
+
 ** API and ABI modifications.
 gss_release_oid: REMOVED.  It seem it was the wrong thing to export
    this API, although the underlaying question (who is responsible for
