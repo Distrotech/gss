@@ -1,5 +1,5 @@
 ## Process this file with automake to produce Makefile.in
-# Copyright (C) 2003, 2004 Simon Josefsson.
+# Copyright (C) 2003, 2004, 2005 Simon Josefsson.
 #
 # This file is part of the Generic Security Service (GSS).
 #
@@ -15,7 +15,7 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with GSS; see the file COPYING.  If not, write to the Free
-# Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
+# Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 # 02111-1307, USA.
 
 DISTCHECK_CONFIGURE_FLAGS = --enable-gtk-doc

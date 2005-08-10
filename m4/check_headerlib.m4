@@ -1,5 +1,5 @@
 ## check_headerlib.m4 - Idom that combine AC_CHECK_HEADER and AC_CHECK_LIB.
-## Copyright (C) 2003 Simon Josefsson.                             -*-Autoconf-*-
+## Copyright (C) 2003, 2005 Simon Josefsson.                      -*-Autoconf-*-
 ##
 ## This program is free software; you can redistribute it and/or modify
 ## it under the terms of the GNU General Public License as published by
@@ -12,8 +12,9 @@
 ## General Public License for more details.
 ##
 ## You should have received a copy of the GNU General Public License
-## along with this program; if not, write to the Free Software
-## Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+## along with GSS; see the file COPYING.  If not, write to the Free
+## Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
+## 02111-1307, USA.
 
 # serial 1 sj_CHECK_HEADERLIB
 
