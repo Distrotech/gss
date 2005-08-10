@@ -16,8 +16,8 @@ dnl Process this file with autoconf to produce a configure script.
 #
 # You should have received a copy of the GNU General Public License
 # along with GSS; see the file COPYING.  If not, write to the Free
-# Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
-# 02111-1307, USA.
+# Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
+# MA 02110-1301, USA.
 
 AC_INIT([gss], [0.0.15], [bug-gss@gnu.org])
 
