@@ -16,7 +16,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gss 0.0.11\n"
 "Report-Msgid-Bugs-To: bug-gss@josefsson.org\n"
-"POT-Creation-Date: 2005-08-10 18:09+0200\n"
+"POT-Creation-Date: 2004-04-18 17:16+0200\n"
 "PO-Revision-Date: 2005-04-04 10:55-0700\n"
 "Last-Translator: Steven Michael Murphy <murf@e-tools.com>\n"
 "Language-Team: Kinyarwanda <translation-team-rw@lists.sourceforge.net>\n"
@@ -24,234 +24,230 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: lib/error.c:46
+#: lib/error.c:33
 #, fuzzy
 msgid "A required input parameter could not be read"
 msgstr "A Bya ngombwa Iyinjiza OYA Gusoma"
 
-#: lib/error.c:48
+#: lib/error.c:35
 #, fuzzy
 msgid "A required output parameter could not be written"
 msgstr "A Bya ngombwa Ibisohoka OYA"
 
-#: lib/error.c:50
+#: lib/error.c:37
 #, fuzzy
 msgid "A parameter was malformed"
 msgstr "A"
 
-#: lib/error.c:55
+#: lib/error.c:42
 msgid "An unsupported mechanism was requested"
 msgstr ""
 
-#: lib/error.c:57
+#: lib/error.c:44
 #, fuzzy
 msgid "An invalid name was supplied"
 msgstr "Sibyo Izina:"
 
-#: lib/error.c:59
+#: lib/error.c:46
 #, fuzzy
 msgid "A supplied name was of an unsupported type"
 msgstr "A Izina: Bya Ubwoko"
 
-#: lib/error.c:61
+#: lib/error.c:48
 #, fuzzy
 msgid "Incorrect channel bindings were supplied"
 msgstr "Ibyafataranyijwe"
 
-#: lib/error.c:63
+#: lib/error.c:50
 #, fuzzy
 msgid "An invalid status code was supplied"
 msgstr "Sibyo Imimerere ITEGEKONGENGA"
 
-#: lib/error.c:65
+#: lib/error.c:52
 #, fuzzy
 msgid "A token had an invalid MIC"
 msgstr "A Sibyo"
 
-#: lib/error.c:67
+#: lib/error.c:54
 #, fuzzy
-msgid ""
-"No credentials were supplied, or the credentials were unavailable or "
-"inaccessible"
+msgid "No credentials were supplied, or the credentials were unavailable or inaccessible"
 msgstr "Cyangwa i Cyangwa"
 
-#: lib/error.c:70
+#: lib/error.c:57
 #, fuzzy
 msgid "No context has been established"
 msgstr "Imvugiro"
 
-#: lib/error.c:72
+#: lib/error.c:59
 #, fuzzy
 msgid "A token was invalid"
 msgstr "A Sibyo"
 
-#: lib/error.c:74
+#: lib/error.c:61
 #, fuzzy
 msgid "A credential was invalid"
 msgstr "A Sibyo"
 
-#: lib/error.c:76
+#: lib/error.c:63
 #, fuzzy
 msgid "The referenced credentials have expired"
 msgstr "Byarengeje igihe"
 
-#: lib/error.c:78
+#: lib/error.c:65
 #, fuzzy
 msgid "The context has expired"
 msgstr "Imvugiro Byarengeje igihe"
 
-#: lib/error.c:80
+#: lib/error.c:67
 #, fuzzy
 msgid "Unspecified error in underlying mechanism"
 msgstr "Ikosa in"
 
-#: lib/error.c:82
+#: lib/error.c:69
 #, fuzzy
 msgid "The quality-of-protection requested could not be provided"
 msgstr "Ubwiza Bya Irinda OYA"
 
-#: lib/error.c:84
+#: lib/error.c:71
 #, fuzzy
 msgid "The operation is forbidden by local security policy"
 msgstr "ni ku Umutekano Itegeko"
 
-#: lib/error.c:86
+#: lib/error.c:73
 #, fuzzy
 msgid "The operation or option is unavailable"
 msgstr "Cyangwa Ihitamo ni"
 
-#: lib/error.c:88
+#: lib/error.c:75
 #, fuzzy
 msgid "The requested credential element already exists"
 msgstr "Ikigize:"
 
-#: lib/error.c:90
+#: lib/error.c:77
 #, fuzzy
 msgid "The provided name was not a mechanism name"
 msgstr "Izina: OYA a Izina:"
 
-#: lib/error.c:95
+#: lib/error.c:82
 #, fuzzy
-msgid ""
-"The gss_init_sec_context() or gss_accept_sec_context() function must be "
-"called again to complete its function"
+msgid "The gss_init_sec_context() or gss_accept_sec_context() function must be called again to complete its function"
 msgstr "Cyangwa Umumaro Kuri Byuzuye Umumaro"
 
-#: lib/error.c:98
+#: lib/error.c:85
 #, fuzzy
 msgid "The token was a duplicate of an earlier token"
 msgstr "a Gusubiramo Bya"
 
-#: lib/error.c:100
+#: lib/error.c:87
 #, fuzzy
 msgid "The token's validity period has expired"
 msgstr "Ukugira agaciro Igihe Byarengeje igihe"
 
-#: lib/error.c:102
+#: lib/error.c:89
 #, fuzzy
 msgid "A later token has already been processed"
 msgstr "A"
 
-#: lib/error.c:104
+#: lib/error.c:91
 #, fuzzy
 msgid "An expected per-message token was not received"
 msgstr "Ikitezwe: Ubutumwa OYA BYAKIRIWE"
 
-#: lib/error.c:301
+#: lib/error.c:288
 msgid "No error"
 msgstr "Nta kosa"
 
-#: lib/krb5/error.c:40
+#: lib/krb5/error.c:34
 #, fuzzy
 msgid "No @ in SERVICE-NAME name string"
 msgstr "in Izina: Ikurikiranyanyuguti"
 
-#: lib/krb5/error.c:42
+#: lib/krb5/error.c:36
 #, fuzzy
 msgid "STRING-UID-NAME contains nondigits"
 msgstr "Kirimo"
 
-#: lib/krb5/error.c:44
+#: lib/krb5/error.c:38
 #, fuzzy
 msgid "UID does not resolve to username"
 msgstr "OYA Kuri Izina ry'ukoresha"
 
-#: lib/krb5/error.c:46
+#: lib/krb5/error.c:40
 #, fuzzy
 msgid "Validation error"
 msgstr "Ikosa"
 
-#: lib/krb5/error.c:48
+#: lib/krb5/error.c:42
 #, fuzzy
 msgid "Couldn't allocate gss_buffer_t data"
 msgstr "Ibyatanzwe"
 
-#: lib/krb5/error.c:50
+#: lib/krb5/error.c:44
 #, fuzzy
 msgid "Message context invalid"
 msgstr "Imvugiro Sibyo"
 
-#: lib/krb5/error.c:52
+#: lib/krb5/error.c:46
 #, fuzzy
 msgid "Buffer is the wrong size"
 msgstr "ni i Ingano"
 
-#: lib/krb5/error.c:54
+#: lib/krb5/error.c:48
 #, fuzzy
 msgid "Credential usage type is unknown"
 msgstr "Ikoresha: Ubwoko ni Kitazwi"
 
-#: lib/krb5/error.c:56
+#: lib/krb5/error.c:50
 #, fuzzy
 msgid "Unknown quality of protection specified"
 msgstr "Ubwiza Bya Irinda"
 
-#: lib/krb5/error.c:59
+#: lib/krb5/error.c:53
 #, fuzzy
 msgid "Principal in credential cache does not match desired name"
 msgstr "in Ubwihisho OYA BIHUYE Izina:"
 
-#: lib/krb5/error.c:61
+#: lib/krb5/error.c:55
 #, fuzzy
 msgid "No principal in keytab matches desired name"
 msgstr "Umutahe in Izina:"
 
-#: lib/krb5/error.c:63
+#: lib/krb5/error.c:57
 #, fuzzy
 msgid "Credential cache has no TGT"
 msgstr "Ubwihisho Oya"
 
-#: lib/krb5/error.c:65
+#: lib/krb5/error.c:59
 #, fuzzy
 msgid "Authenticator has no subkey"
 msgstr "Oya"
 
-#: lib/krb5/error.c:67
+#: lib/krb5/error.c:61
 #, fuzzy
 msgid "Context is already fully established"
 msgstr "ni"
 
-#: lib/krb5/error.c:69
+#: lib/krb5/error.c:63
 #, fuzzy
 msgid "Unknown signature type in token"
 msgstr "Isinya Ubwoko in"
 
-#: lib/krb5/error.c:71
+#: lib/krb5/error.c:65
 #, fuzzy
 msgid "Invalid field length in token"
 msgstr "Umwanya Uburebure in"
 
-#: lib/krb5/error.c:73
+#: lib/krb5/error.c:67
 #, fuzzy
 msgid "Attempt to use incomplete security context"
 msgstr "Kuri Gukoresha Umutekano Imvugiro"
 
-#: lib/krb5/error.c:90
+#: lib/krb5/error.c:84
 #, fuzzy
 msgid "No krb5 error"
 msgstr "Ikosa"
 
-#: lib/krb5/error.c:119
+#: lib/krb5/error.c:113
 #, fuzzy
 msgid "Unknown krb5 error"
 msgstr "Ikosa"
@@ -289,8 +285,7 @@ msgid ""
 "   +-----------------+-----------------+---------------------------------+\n"
 "Bit 31            24  23            16  15                             0\n"
 "\n"
-msgstr ""
-"|+-----------------+-----------------+---------------------------------+15"
+msgstr "|+-----------------+-----------------+---------------------------------+15"
 
 #: src/gss.c:99
 #, fuzzy, c-format
