@@ -2,6 +2,11 @@ GSS NEWS -- History of user-visible changes.                    -*- outline -*-
 Copyright (C) 2003, 2004, 2005 Simon Josefsson
 See the end for copying conditions.
 
+* Version 0.0.17 (unreleased)
+
+** API and ABI modifications.
+No changes since last version.
+
 * Version 0.0.16 (released 2005-08-11)
 
 ** Kinyarwanda translation added, by Steve Murphy.
