@@ -5,9 +5,10 @@ Changelog-URL: http://josefsson.org/cgi-bin/viewcvs.cgi/gss/ChangeLog?rev=HEAD&c
 BSD-Port-URL: http://www.freshports.org/security/gss/
 CVS-URL: http://josefsson.org/cgi-bin/viewcvs.cgi/gss/
 Mirror-Site-URL: http://josefsson.org/gss/
-Version: 0.0.15
-Release-Focus: Minor feature enhancements
+Version: 0.0.16
+Release-Focus: Minor bugfixes
 
-Libtool's -export-symbols-regex is now used to only export official
-APIs.  Documentation improvements; for example, the API manual is
-available in DevHelp format.
+Kinyarwanda translation added, by Steve Murphy.  The help-gss@gnu.org
+mailing list is now mentioned in documentation.  The license template
+in files were updated with the new FSF address.  The gss_release_oid
+API was removed.
