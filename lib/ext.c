@@ -1,5 +1,5 @@
 /* ext.c --- Implementation of GSS specific extensions.
- * Copyright (C) 2003, 2004  Simon Josefsson
+ * Copyright (C) 2003, 2004, 2005  Simon Josefsson
  *
  * This file is part of the Generic Security Service (GSS).
  *
@@ -31,7 +31,7 @@
 void (*gss_alloc_fail_function) (void) = 0;
 
 void
-xalloc_die (void)
+gss_xalloc_die (void)
 {
   if (gss_alloc_fail_function)
     (*gss_alloc_fail_function) ();
