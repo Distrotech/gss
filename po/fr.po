@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GNU gss 0.0.11\n"
 "Report-Msgid-Bugs-To: bug-gss@josefsson.org\n"
-"POT-Creation-Date: 2005-08-11 12:53+0200\n"
+"POT-Creation-Date: 2004-04-18 17:16+0200\n"
 "PO-Revision-Date: 2004-04-21 08:00-0500\n"
 "Last-Translator: Michel Robitaille <robitail@IRO.UMontreal.CA>\n"
 "Language-Team: French <traduc@traduc.org>\n"
@@ -17,198 +17,187 @@ msgstr ""
 "Content-Transfer-Encoding: 8-bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: lib/error.c:46
+#: lib/error.c:33
 msgid "A required input parameter could not be read"
 msgstr "Un paramètre requis à l'entrée n'a pas pu être lu"
 
-#: lib/error.c:48
+#: lib/error.c:35
 msgid "A required output parameter could not be written"
 msgstr "Un paramètre requis à la sortie n'a pas pu être écrit"
 
-#: lib/error.c:50
+#: lib/error.c:37
 msgid "A parameter was malformed"
 msgstr "Un paramètre était mal composé"
 
-#: lib/error.c:55
+#: lib/error.c:42
 msgid "An unsupported mechanism was requested"
 msgstr "Un mécanisme non supporté était requis"
 
-#: lib/error.c:57
+#: lib/error.c:44
 msgid "An invalid name was supplied"
 msgstr "Un nom invalide a été fourni"
 
-#: lib/error.c:59
+#: lib/error.c:46
 msgid "A supplied name was of an unsupported type"
 msgstr "Un nom fourni était de type non supporté"
 
-#: lib/error.c:61
+#: lib/error.c:48
 msgid "Incorrect channel bindings were supplied"
 msgstr "La liaison incorrect de canal a été fournie"
 
-#: lib/error.c:63
+#: lib/error.c:50
 msgid "An invalid status code was supplied"
 msgstr "Un code d'état invalide a été fourni"
 
-#: lib/error.c:65
+#: lib/error.c:52
 msgid "A token had an invalid MIC"
 msgstr "Un jeton a un MIC invalide"
 
-#: lib/error.c:67
-msgid ""
-"No credentials were supplied, or the credentials were unavailable or "
-"inaccessible"
-msgstr ""
-"Aucune référence n'a été fournie ou les références n'étaient pas disponibles "
-"ou inaccessibles"
+#: lib/error.c:54
+msgid "No credentials were supplied, or the credentials were unavailable or inaccessible"
+msgstr "Aucune référence n'a été fournie ou les références n'étaient pas disponibles ou inaccessibles"
 
-#: lib/error.c:70
+#: lib/error.c:57
 msgid "No context has been established"
 msgstr "Aucun contexte n'a été établi"
 
-#: lib/error.c:72
+#: lib/error.c:59
 msgid "A token was invalid"
 msgstr "Une jeton était invalide"
 
-#: lib/error.c:74
+#: lib/error.c:61
 msgid "A credential was invalid"
 msgstr "Une référence était invalide"
 
-#: lib/error.c:76
+#: lib/error.c:63
 msgid "The referenced credentials have expired"
 msgstr "Les références fournies ont expirées"
 
-#: lib/error.c:78
+#: lib/error.c:65
 msgid "The context has expired"
 msgstr "Le contexte a expiré"
 
-#: lib/error.c:80
+#: lib/error.c:67
 msgid "Unspecified error in underlying mechanism"
 msgstr "Une erreur non spécifiée dans le mécanisme sous-jacent"
 
-#: lib/error.c:82
+#: lib/error.c:69
 msgid "The quality-of-protection requested could not be provided"
 msgstr "La qualité de protection requise ne peut être fournie"
 
-#: lib/error.c:84
+#: lib/error.c:71
 msgid "The operation is forbidden by local security policy"
 msgstr "L'opération est interdite par la politique locale de sécurité"
 
-#: lib/error.c:86
+#: lib/error.c:73
 msgid "The operation or option is unavailable"
 msgstr "L'opération ou l'option n'est pas disponible"
 
-#: lib/error.c:88
+#: lib/error.c:75
 msgid "The requested credential element already exists"
 msgstr "L'élément de référence requis existe déjà"
 
-#: lib/error.c:90
+#: lib/error.c:77
 msgid "The provided name was not a mechanism name"
 msgstr "Le nom fourni n'est pas un nom de mécanisme"
 
-#: lib/error.c:95
-msgid ""
-"The gss_init_sec_context() or gss_accept_sec_context() function must be "
-"called again to complete its function"
-msgstr ""
-"La fonction gss_init_sec_context() ou gss_accept_sec_context() doit être "
-"appellée à nous pour compléter la fonction"
+#: lib/error.c:82
+msgid "The gss_init_sec_context() or gss_accept_sec_context() function must be called again to complete its function"
+msgstr "La fonction gss_init_sec_context() ou gss_accept_sec_context() doit être appellée à nous pour compléter la fonction"
 
-#: lib/error.c:98
+#: lib/error.c:85
 msgid "The token was a duplicate of an earlier token"
 msgstr "Le jeton est le duplicata d'un jeton précédent"
 
-#: lib/error.c:100
+#: lib/error.c:87
 msgid "The token's validity period has expired"
 msgstr "La période de validité du jeton a expiré"
 
-#: lib/error.c:102
+#: lib/error.c:89
 msgid "A later token has already been processed"
 msgstr "Un jeton antérieur a déjà été traité"
 
-#: lib/error.c:104
+#: lib/error.c:91
 msgid "An expected per-message token was not received"
 msgstr "Un jeton attendu par message n'a pas été reçu"
 
-#: lib/error.c:301
+#: lib/error.c:288
 msgid "No error"
 msgstr "Aucune erreur"
 
-#: lib/krb5/error.c:40
+#: lib/krb5/error.c:34
 msgid "No @ in SERVICE-NAME name string"
 msgstr "Aucun @ dans la chaîne du nom SERVICE-NAME"
 
-#: lib/krb5/error.c:42
+#: lib/krb5/error.c:36
 msgid "STRING-UID-NAME contains nondigits"
 msgstr "STRING-UID-NAME ne contient aucun chiffre"
 
-#: lib/krb5/error.c:44
+#: lib/krb5/error.c:38
 msgid "UID does not resolve to username"
 msgstr "UID ne peut permettre d'identifier le nom d'usager"
 
-#: lib/krb5/error.c:46
+#: lib/krb5/error.c:40
 msgid "Validation error"
 msgstr "ERREUR de validation"
 
-#: lib/krb5/error.c:48
+#: lib/krb5/error.c:42
 msgid "Couldn't allocate gss_buffer_t data"
 msgstr "Ne peut allouer le tampon de données gss_buffer_t"
 
-#: lib/krb5/error.c:50
+#: lib/krb5/error.c:44
 msgid "Message context invalid"
 msgstr "Contxte de message invalide"
 
-#: lib/krb5/error.c:52
+#: lib/krb5/error.c:46
 msgid "Buffer is the wrong size"
 msgstr "Le tampon est de taille erronée"
 
-#: lib/krb5/error.c:54
+#: lib/krb5/error.c:48
 msgid "Credential usage type is unknown"
 msgstr "L'usage du type de référence est inconnu"
 
-#: lib/krb5/error.c:56
+#: lib/krb5/error.c:50
 msgid "Unknown quality of protection specified"
 msgstr "La qualité de protection spécifiée est inconnue"
 
-#: lib/krb5/error.c:59
+#: lib/krb5/error.c:53
 msgid "Principal in credential cache does not match desired name"
-msgstr ""
-"L'info principale dans la cache des références ne concorde pas avec le nom "
-"recherché"
+msgstr "L'info principale dans la cache des références ne concorde pas avec le nom recherché"
 
-#: lib/krb5/error.c:61
+#: lib/krb5/error.c:55
 msgid "No principal in keytab matches desired name"
-msgstr ""
-"Pas d'info principale dans la table des clés concorde avec le nom recherché"
+msgstr "Pas d'info principale dans la table des clés concorde avec le nom recherché"
 
-#: lib/krb5/error.c:63
+#: lib/krb5/error.c:57
 msgid "Credential cache has no TGT"
 msgstr "La cache des référence n'a pas de TGT"
 
-#: lib/krb5/error.c:65
+#: lib/krb5/error.c:59
 msgid "Authenticator has no subkey"
 msgstr "L'authentificateur n'a pas de sous-clé"
 
-#: lib/krb5/error.c:67
+#: lib/krb5/error.c:61
 msgid "Context is already fully established"
 msgstr "Le contexte est déjà complètement établi"
 
-#: lib/krb5/error.c:69
+#: lib/krb5/error.c:63
 msgid "Unknown signature type in token"
 msgstr "Type de signature inconnu dans le jeton"
 
-#: lib/krb5/error.c:71
+#: lib/krb5/error.c:65
 msgid "Invalid field length in token"
 msgstr "Longueur invalide du champ dans le jeton"
 
-#: lib/krb5/error.c:73
+#: lib/krb5/error.c:67
 msgid "Attempt to use incomplete security context"
 msgstr "Tentative d'utilisation d'un contexte incomplet de sécurité"
 
-#: lib/krb5/error.c:90
+#: lib/krb5/error.c:84
 msgid "No krb5 error"
 msgstr "Pas d'erreur KRB5"
 
-#: lib/krb5/error.c:119
+#: lib/krb5/error.c:113
 msgid "Unknown krb5 error"
 msgstr "ERREUR KRB5 inconnue"
 
@@ -275,8 +264,7 @@ msgstr "Masque d'erreur d'appel %ld (0x%lx) décalé dans %ld *(0x%lx):\n"
 #: src/gss.c:171
 #, c-format
 msgid "Masked supplementary info %ld (0x%lx) shifted into %ld (0x%lx):\n"
-msgstr ""
-"Masque des infos supplémentaires %ld (0x%lx) décalé dans %ld *(0x%lx):\n"
+msgstr "Masque des infos supplémentaires %ld (0x%lx) décalé dans %ld *(0x%lx):\n"
 
 #: src/gss.c:207
 #, c-format
