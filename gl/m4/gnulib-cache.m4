@@ -14,13 +14,13 @@
 
 
 # Specification in the form of a command-line invocation:
-#   gnulib-tool --import --dir=. --lib=libgnu --source-base=gl --m4-base=gl/m4/ --aux-dir=. --avoid=xalloc-die --libtool --macro-prefix=gl getopt xalloc xgethostname
+#   gnulib-tool --import --dir=. --lib=libgnu --source-base=gl --m4-base=gl/m4 --aux-dir=. --avoid=xalloc-die --libtool --macro-prefix=gl getopt xalloc xgethostname
 
 # Specification in the form of a few gnulib-tool.m4 macro invocations:
 gl_MODULES([getopt xalloc xgethostname])
 gl_AVOID([xalloc-die])
 gl_SOURCE_BASE([gl])
-gl_M4_BASE([gl/m4/])
+gl_M4_BASE([gl/m4])
 gl_TESTS_BASE([gl/tests])
 gl_LIB([libgnu])
 gl_LIBTOOL
