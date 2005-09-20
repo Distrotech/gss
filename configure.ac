@@ -48,13 +48,7 @@ AC_HEADER_STDC
 AC_CHECK_HEADERS(locale.h)
 
 # For gnulib stuff in gl/.
-gl_SOURCE_BASE(gl)
-gl_M4_BASE(gl/m4)
-gl_LIB(libgl)
-gl_MODULES(getopt xalloc xgethostname)
-gl_AVOID(xalloc-die)
 gl_INIT
-
 AC_DEFINE([xalloc_die], [gss_xalloc_die], [Fix namespace of xalloc_die.])
 
 # Test for Shishi.
