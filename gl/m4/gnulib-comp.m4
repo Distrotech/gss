@@ -24,6 +24,7 @@ AC_DEFUN([gl_EARLY],
 # "Check for header files, types and library functions".
 AC_DEFUN([gl_INIT],
 [
+AM_CONDITIONAL([GL_COND_LIBTOOL], [true])
   gl_FUNC_GETHOSTNAME
   gl_GETOPT
   gl_XALLOC
@@ -32,9 +33,10 @@ AC_DEFUN([gl_INIT],
 # This macro records the list of files which have been installed by
 # gnulib-tool and may be removed by future gnulib-tool invocations.
 AC_DEFUN([gl_FILE_LIST], [
+  build-aux/config.rpath
   lib/gethostname.c
-  lib/getopt1.c
   lib/getopt.c
+  lib/getopt1.c
   lib/getopt_.h
   lib/getopt_int.h
   lib/gettext.h
@@ -44,6 +46,9 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/xmalloc.c
   m4/gethostname.m4
   m4/getopt.m4
+  m4/lib-ld.m4
+  m4/lib-link.m4
+  m4/lib-prefix.m4
   m4/onceonly_2_57.m4
   m4/xalloc.m4
 ])
