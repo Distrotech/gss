@@ -52,15 +52,16 @@ gl_INIT
 AC_DEFINE([xalloc_die], [gss_xalloc_die], [Fix namespace of xalloc_die.])
 
 # Test for Shishi.
-sj_CHECK_HEADERLIB(shishi.h, shishi, shishi_check_version,
-	kerberos5=yes, kerberos5=no)
 AC_ARG_ENABLE(kerberos5,
-	AC_HELP_STRING([--disable-kerberos5],
-		[disable Kerberos V5 mechanism unconditionally]),
-	kerberos5=$enableval)
+  AC_HELP_STRING([--disable-kerberos5],
+    [disable Kerberos V5 mechanism unconditionally]),
+  kerberos5=$enableval)
 if test "$kerberos5" != "no" ; then
-	AC_DEFINE(USE_KERBEROS5, 1, [Define to 1 if you want Kerberos 5 mech.])
-	INCLUDE_GSS_KRB5='#include <gss/krb5.h>'
+  AC_LIB_HAVE_LINKFLAGS(shishi,, [#include <shishi.h>], [shishi ();])
+  if test "$ac_cv_libshishi" = yes; then
+    AC_DEFINE(USE_KERBEROS5, 1, [Define to 1 if you want Kerberos 5 mech.])
+    INCLUDE_GSS_KRB5='#include <gss/krb5.h>'
+  fi
 fi
 AC_MSG_CHECKING([if the Kerberos V5 mechanism should be supported])
 AC_MSG_RESULT($kerberos5)
