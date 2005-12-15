@@ -4,6 +4,10 @@ See the end for copying conditions.
 
 * Version 0.0.17 (unreleased)
 
+** The link test for Shishi was improved.
+
+** Gnulib files were updated.
+
 ** API and ABI modifications.
 No changes since last version.
 
