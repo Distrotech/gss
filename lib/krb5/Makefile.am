@@ -1,5 +1,5 @@
 ## Process this file with automake to produce Makefile.in
-# Copyright (C) 2003, 2004 Simon Josefsson.
+# Copyright (C) 2003, 2004, 2005 Simon Josefsson.
 #
 # This file is part of the Generic Security Service (GSS).
 #
@@ -25,7 +25,7 @@ noinst_LTLIBRARIES = libgss-shishi.la
 libgss_shishi_la_SOURCES = k5internal.h krb5.h protos.h \
 	context.c checksum.c checksum.h error.c name.c cred.c msg.c oid.c \
 	utils.c 
-libgss_shishi_la_LIBADD = @LTLIBINTL@
+libgss_shishi_la_LIBADD = @LTLIBINTL@ @LTLIBSHISHI@
 
 localedir = $(datadir)/locale
 DEFS = -DLOCALEDIR=\"$(localedir)\" @DEFS@
