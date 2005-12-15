@@ -61,6 +61,9 @@ if test "$kerberos5" != "no" ; then
   if test "$ac_cv_libshishi" = yes; then
     AC_DEFINE(USE_KERBEROS5, 1, [Define to 1 if you want Kerberos 5 mech.])
     INCLUDE_GSS_KRB5='#include <gss/krb5.h>'
+    kerberos5=yes
+  else
+    kerberos5=no
   fi
 fi
 AC_MSG_CHECKING([if the Kerberos V5 mechanism should be supported])
