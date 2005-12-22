@@ -1,0 +1,40 @@
+Source: gss
+Section: devel
+Priority: optional
+Maintainer: Simon Josefsson <simon@josefsson.org>
+Build-Depends: debhelper (>= 4.1.0), cdbs, autotools-dev, libshishi0-dev
+Standards-Version: 3.6.2
+
+Package: gss-doc
+Architecture: all
+Description: Documentation for Generic Security Services library (GSSLib)
+ The GNU Generic Security Service Library (GSSLib) is a free implementation
+ of the GSS-API security framework.  GSSLib uses Shishi to implement the
+ Kerberos V5 mechanism, but is flexible enough to support others.
+ .
+ This package includes documentation for GSS.
+
+Package: libgss0
+Section: libs
+Architecture: any
+Depends: ${shlibs:Depends}
+Suggests: shishi
+Description: Library for Generic Security Services
+ The GNU Generic Security Service Library (GSSLib) is a free implementation
+ of the GSS-API security framework.  GSSLib uses Shishi to implement the
+ Kerberos V5 mechanism, but is flexible enough to support others.
+ .
+ This package includes the GSS library.
+
+Package: libgss0-dev
+Section: devel
+Priority: extra
+Architecture: any
+Suggests: gss-doc
+Description: Development files for the Shishi library
+ The GNU Generic Security Service Library (GSSLib) is a free implementation
+ of the GSS-API security framework.  GSSLib uses Shishi to implement the
+ Kerberos V5 mechanism, but is flexible enough to support others.
+ .
+ This package contain all files necessary for developing programs with
+ GSS support.

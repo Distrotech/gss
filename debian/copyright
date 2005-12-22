@@ -1,0 +1,15 @@
+This package was debianized by Simon Josefsson <simon@josefsson.org> on
+Tue, 22 Dec 2005 10:16:27 +0100.
+
+It was downloaded from http://josefsson.org/gss/
+
+Copyright Holder: Simon Josefsson <simon@josefsson.org>
+
+License:
+
+The software is copyright (C) 2003-2005 by Simon Josefsson.
+
+You are free to distribute the libraries (include/* and lib/*) under
+the terms of the GNU Lesser General Public License.  On Debian
+systems, the complete text of the GNU Lesser General Public License
+can be found in the file `/usr/share/common-licenses/LGPL'.
