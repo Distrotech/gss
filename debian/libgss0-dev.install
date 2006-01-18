@@ -4,3 +4,4 @@ debian/tmp/usr/lib/libgss.la
 debian/tmp/usr/lib/libgss.a
 debian/tmp/usr/lib/libgss.so
 debian/tmp/usr/lib/pkgconfig/gss.pc
+debian/tmp/usr/share/man/man3/*
