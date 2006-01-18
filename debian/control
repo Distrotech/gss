@@ -2,7 +2,7 @@ Source: gss
 Section: devel
 Priority: optional
 Maintainer: Simon Josefsson <simon@josefsson.org>
-Build-Depends: debhelper (>= 4.1.0), cdbs, autotools-dev, libshishi0-dev
+Build-Depends: debhelper (>= 4.1.0), cdbs, autotools-dev, libshishi-dev
 Standards-Version: 3.6.2
 
 Package: libgss0
@@ -17,11 +17,10 @@ Description: Library for Generic Security Services
  .
  This package includes the GSS library.
 
-Package: libgss0-dev
+Package: libgss-dev
 Section: devel
 Priority: extra
 Architecture: any
-Suggests: gss-doc
 Description: Development files for the Shishi library
  The GNU Generic Security Service Library (GSSLib) is a free implementation
  of the GSS-API security framework.  GSSLib uses Shishi to implement the
