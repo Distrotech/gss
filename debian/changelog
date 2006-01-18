@@ -1,6 +1,6 @@
 gss (0.0.17-1) unstable; urgency=low
 
-  * Initial release.
+  * Initial release (closes: #344593)
 
  -- Simon Josefsson <simon@josefsson.org>  Tue, 22 Dec 2005 10:16:27 +0100
 
