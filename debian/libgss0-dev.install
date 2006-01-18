@@ -1,3 +1,4 @@
+debian/tmp/usr/bin/gss
 debian/tmp/usr/include/gss.h
 debian/tmp/usr/include/gss/*
 debian/tmp/usr/lib/libgss.la
