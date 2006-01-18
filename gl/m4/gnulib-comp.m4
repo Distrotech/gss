@@ -18,13 +18,14 @@
 # any checks for libraries, header files, types and library functions.
 AC_DEFUN([gl_EARLY],
 [
+  AC_REQUIRE([AC_PROG_RANLIB])
 ])
 
 # This macro should be invoked from ./configure.ac, in the section
 # "Check for header files, types and library functions".
 AC_DEFUN([gl_INIT],
 [
-AM_CONDITIONAL([GL_COND_LIBTOOL], [true])
+  AM_CONDITIONAL([GL_COND_LIBTOOL], [true])
   gl_FUNC_GETHOSTNAME
   gl_GETOPT
   gl_XALLOC
