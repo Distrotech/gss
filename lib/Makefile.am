@@ -1,5 +1,5 @@
 ## Process this file with automake to produce Makefile.in
-# Copyright (C) 2003, 2004, 2005 Simon Josefsson.
+# Copyright (C) 2003, 2004, 2005, 2006 Simon Josefsson.
 #
 # This file is part of the Generic Security Service (GSS).
 #
@@ -32,7 +32,7 @@ libgss_la_SOURCES = internal.h \
 	asn1.c ext.c version.c
 libgss_la_LIBADD = @LTLIBINTL@ $(top_builddir)/gl/libgnu.la
 libgss_la_LDFLAGS = -version-info $(LT_CURRENT):$(LT_REVISION):$(LT_AGE) \
-	-export-symbols-regex '^(gss|GSS).*' 
+	-export-symbols-regex '^(gss|GSS).*' -no-undefined
 
 if KRB5
 SUBDIRS = krb5
