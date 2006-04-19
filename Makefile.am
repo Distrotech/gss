@@ -32,7 +32,6 @@ ACLOCAL_AMFLAGS = -I m4 -I gl/m4
 update-po: refresh-po
 	cvs add `ls po/*.po | grep -v quot.po` || true && \
 	cvs commit -m "Sync with TP." po/LINGUAS `ls po/*.po | grep -v quot.po`
-	$(MAKE) -C lib update-po
 
 ChangeLog:
 	test ! -f .cvsusers || \
