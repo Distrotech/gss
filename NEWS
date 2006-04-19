@@ -4,6 +4,8 @@ See the end for copying conditions.
 
 * Version 0.0.17 (unreleased)
 
+** Debian packages are available from http://josefsson.org/gss/debian/
+
 ** The library is linked with -no-undefined, for mingw32 cross compiles.
 
 ** The link test for Shishi was improved.
