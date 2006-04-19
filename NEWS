@@ -1,8 +1,10 @@
 GSS NEWS -- History of user-visible changes.                    -*- outline -*-
-Copyright (C) 2003, 2004, 2005 Simon Josefsson
+Copyright (C) 2003, 2004, 2005, 2006 Simon Josefsson
 See the end for copying conditions.
 
 * Version 0.0.17 (unreleased)
+
+** The library is linked with -no-undefined, for mingw32 cross compiles.
 
 ** The link test for Shishi was improved.
 
