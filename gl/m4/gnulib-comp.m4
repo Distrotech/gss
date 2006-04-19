@@ -28,6 +28,7 @@ AC_DEFUN([gl_INIT],
   AM_CONDITIONAL([GL_COND_LIBTOOL], [true])
   gl_FUNC_GETHOSTNAME
   gl_GETOPT
+  gl_HEADER_UNISTD
   gl_XALLOC
 ])
 
@@ -53,5 +54,6 @@ AC_DEFUN([gl_FILE_LIST], [
   m4/lib-link.m4
   m4/lib-prefix.m4
   m4/onceonly_2_57.m4
+  m4/unistd_h.m4
   m4/xalloc.m4
 ])
