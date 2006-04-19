@@ -1,5 +1,5 @@
 ## Process this file with automake to produce Makefile.in
-# Copyright (C) 2003, 2004, 2006 Simon Josefsson.
+# Copyright (C) 2003, 2004 Simon Josefsson.
 #
 # This file is part of the Generic Security Service (GSS).
 #
@@ -23,7 +23,7 @@ if KRB5
 AM_CPPFLAGS += -I$(top_srcdir)/lib/krb5
 endif
 AM_LDFLAGS = -no-install
-LDADD = ../lib/libgss.la ../gl/libgl.la @LTLIBINTL@
+LDADD = ../lib/libgss.la ../gl/libgnu.la @LTLIBINTL@
 
 TESTS_ENVIRONMENT = SHISHI_KEYS=$(srcdir)/krb5context.key \
 	SHISHI_TICKETS=$(srcdir)/krb5context.tkt \
