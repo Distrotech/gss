@@ -1,5 +1,5 @@
 ## Process this file with automake to produce Makefile.in
-# Copyright (C) 2003, 2004 Simon Josefsson.
+# Copyright (C) 2003, 2004, 2006 Simon Josefsson.
 #
 # This file is part of the Generic Security Service (GSS).
 #
@@ -45,6 +45,3 @@ EXTRA_DIST = krb5context.key krb5context.tkt
 
 localedir = $(datadir)/locale
 DEFS = -DLOCALEDIR=\"$(localedir)\" @DEFS@
-
-indent:
-	indent $(SOURCES)

@@ -1,5 +1,5 @@
 ## Process this file with automake to produce Makefile.in
-# Copyright (C) 2003, 2004, 2005 Simon Josefsson.
+# Copyright (C) 2003, 2004, 2005, 2006 Simon Josefsson.
 #
 # This file is part of the Generic Security Service (GSS).
 #
@@ -28,11 +28,6 @@ SUBDIRS = po gl lib src tests doc
 ACLOCAL_AMFLAGS = -I m4 -I gl/m4
 
 # Maintainer targets
-
-indent:
-	(cd lib && make indent)
-	(cd src && make indent)
-	(cd tests && make indent)
 
 POURL = ftp://ftp.unex.es/pub/gnu-i18n/po/maint/$(PACKAGE)
 update-po:
