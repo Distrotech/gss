@@ -30,7 +30,7 @@ Documentation License''.
 
 @dircategory GNU Libraries
 @direntry
-* gss: (gss).			Generic Security Service API Library
+* libgss: (gss).		Generic Security Service API Library
 @end direntry
 
 @titlepage
