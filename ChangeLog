@@ -1,3 +1,182 @@
+2006-04-30  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS: Version 0.0.17.
+
+2006-04-30  Simon Josefsson <simon@josefsson.org>
+
+	* doc/gss.texi: Fix direntry.
+
+2006-04-26  Simon Josefsson <simon@josefsson.org>
+
+	* gl/Makefile.am: Update.
+
+2006-04-19  Simon Josefsson <simon@josefsson.org>
+
+	* po/Makevars: Use --no-location.
+
+2006-04-19  Simon Josefsson <simon@josefsson.org>
+
+	* po/fr.po, po/pl.po, po/ro.po, po/rw.po, po/sv.po, po/vi.po:
+	Update.
+
+2006-04-19  Simon Josefsson <simon@josefsson.org>
+
+	* Makefile.am: Fix.
+
+2006-04-19  Simon Josefsson <simon@josefsson.org>
+
+	* Makefile.am: Fix update-po.
+
+2006-04-19  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS: Add.
+
+2006-04-19  Simon Josefsson <simon@josefsson.org>
+
+	* doc/gss.texi: Fix @direntry.
+
+2006-04-19  Simon Josefsson <simon@josefsson.org>
+
+	* tests/Makefile.am: Fix libgnu path.
+
+2006-04-19  Simon Josefsson <simon@josefsson.org>
+
+	* doc/gss.texi: Fix license.
+
+2006-04-19  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS: Add.
+
+2006-04-19  Simon Josefsson <simon@josefsson.org>
+
+	* Makefile.am, lib/Makefile.am, lib/krb5/Makefile.am,
+	src/Makefile.am, tests/Makefile.am: Remove indent.
+
+2006-04-19  Simon Josefsson <simon@josefsson.org>
+
+	* po/fr.po, po/pl.po, po/ro.po, po/sv.po, po/vi.po: Sync with TP.
+
+2006-04-19  Simon Josefsson <simon@josefsson.org>
+
+	* gl/Makefile.am, gl/m4/gnulib-comp.m4, gl/m4/unistd_h.m4,
+	maint.mk: Update.
+
+2006-03-22  Simon Josefsson <simon@josefsson.org>
+
+	* po/fr.po, po/pl.po, po/ro.po, po/rw.po, po/sv.po, po/vi.po: Sync
+	with TP.
+
+2006-03-22  Simon Josefsson <simon@josefsson.org>
+
+	* doc/Makefile.am: Fix copyright years.
+
+2006-03-07  Simon Josefsson <simon@josefsson.org>
+
+	* lib/Makefile.am: Add -no-undefined, required to produce DLLs on
+	mingw32.
+
+2006-02-16  Simon Josefsson <simon@josefsson.org>
+
+	* maint.mk: Update.
+
+2006-02-14  Simon Josefsson <simon@josefsson.org>
+
+	* GNUmakefile, Makefile.cfg, Makefile.maint, maint-cfg.mk,
+	maint.mk, gl/m4/gnulib-comp.m4: Rename.
+
+2006-02-14  Simon Josefsson <simon@josefsson.org>
+
+	* GNUmakefile, Makefile.maint, gl/Makefile.am, gl/getopt.c,
+	gl/m4/getopt.m4, gl/m4/gnulib-cache.m4, gl/m4/gnulib-comp.m4,
+	gl/m4/gnulib-tool.m4: Update.
+
+2006-02-14  Simon Josefsson <simon@josefsson.org>
+
+	* Makefile.cfg: Add.
+
+2006-01-18  Simon Josefsson <simon@josefsson.org>
+
+	* gl/Makefile.am, gl/m4/gnulib-comp.m4, gl/m4/gnulib-tool.m4:
+	Update.
+
+2005-12-15  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS: Add.
+
+2005-12-15  Simon Josefsson <simon@josefsson.org>
+
+	* lib/krb5/Makefile.am: Link to Shishi.
+
+2005-12-15  Simon Josefsson <simon@josefsson.org>
+
+	* configure.ac: Fix.
+
+2005-10-23  Simon Josefsson <simon@josefsson.org>
+
+	* configure.ac, m4/check_headerlib.m4: Improve check for Shishi.
+
+2005-10-23  Simon Josefsson <simon@josefsson.org>
+
+	* gl/Makefile.am, gl/getopt_.h, gl/xgethostname.c,
+	gl/m4/gnulib-cache.m4, gl/m4/gnulib-comp.m4, gl/m4/lib-ld.m4,
+	gl/m4/lib-link.m4, gl/m4/lib-prefix.m4: Update.
+
+2005-10-23  Simon Josefsson <simon@josefsson.org>
+
+	* AUTHORS: Update PGP key.
+
+2005-09-20  Simon Josefsson <simon@josefsson.org>
+
+	* Makefile.am: Fix call to wget.
+
+2005-09-20  Simon Josefsson <simon@josefsson.org>
+
+	* po/fr.po, po/pl.po, po/ro.po, po/sv.po, po/vi.po, po/rw.po: Sync
+	with TP.
+
+2005-09-20  Simon Josefsson <simon@josefsson.org>
+
+	* src/Makefile.am: Fix gnulib library name.
+
+2005-09-20  Simon Josefsson <simon@josefsson.org>
+
+	* doc/reference/tmpl/gss-unused.sgml: Add.
+
+2005-09-20  Simon Josefsson <simon@josefsson.org>
+
+	* gl/Makefile.am, gl/m4/gnulib-cache.m4: Update.
+
+2005-09-20  Simon Josefsson <simon@josefsson.org>
+
+	* gl/m4/gnulib-cache.m4: Fix.
+
+2005-09-20  Simon Josefsson <simon@josefsson.org>
+
+	* configure.ac: Update gnulib code.
+
+2005-09-20  Simon Josefsson <simon@josefsson.org>
+
+	* lib/Makefile.am: Change gnulib library name.
+
+2005-09-20  Simon Josefsson <simon@josefsson.org>
+
+	* gl/Makefile.am, gl/getopt1.c, gl/xmalloc.c, gl/m4/getopt.m4,
+	gl/m4/gnulib-cache.m4, gl/m4/gnulib-comp.m4, gl/m4/gnulib-tool.m4,
+	gl/m4/gnulib.m4: Update.
+
+2005-08-22  Simon Josefsson <simon@josefsson.org>
+
+	* po/fr.po, po/pl.po, po/ro.po, po/rw.po, po/sv.po, po/vi.po: Sync
+	with TP.
+
+2005-08-11  Simon Josefsson <simon@josefsson.org>
+
+	* gss.fms: Update.
+
+2005-08-11  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS, configure.ac: Bump versions.
+
 2005-08-11  Simon Josefsson <simon@josefsson.org>
 
 	* NEWS: Version 0.0.16.
