@@ -39,6 +39,7 @@ AC_DEFUN([gl_FILE_LIST], [
   build-aux/GNUmakefile
   build-aux/config.rpath
   build-aux/maint.mk
+  doc/fdl.texi
   lib/gethostname.c
   lib/getopt.c
   lib/getopt1.c
