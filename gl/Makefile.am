@@ -15,12 +15,13 @@ AUTOMAKE_OPTIONS = 1.5 gnits no-dependencies
 noinst_LTLIBRARIES = libgnu.la
 
 libgnu_la_SOURCES =
-libgnu_la_LIBADD = @LTLIBOBJS@
+libgnu_la_LIBADD = $(LTLIBOBJS)
+libgnu_la_LDFLAGS = $(AM_LDFLAGS)
 noinst_HEADERS =
 EXTRA_DIST =
 BUILT_SOURCES =
 SUFFIXES =
-MOSTLYCLEANFILES =
+MOSTLYCLEANFILES = core *.stackdump
 MOSTLYCLEANDIRS =
 CLEANFILES =
 DISTCLEANFILES =
@@ -36,8 +37,8 @@ EXTRA_DIST += getopt_.h getopt_int.h
 # We need the following in order to create <getopt.h> when the system
 # doesn't have one that works with the given compiler.
 getopt.h: getopt_.h
-	cp $(srcdir)/getopt_.h $@-t
-	mv $@-t $@
+	cp -f $(srcdir)/getopt_.h $@-t
+	mv -f $@-t $@
 MOSTLYCLEANFILES += getopt.h getopt.h-t
 
 ## end   gnulib module getopt
@@ -60,6 +61,12 @@ MOSTLYCLEANFILES += unistd.h
 
 ## end   gnulib module unistd
 
+## begin gnulib module xalloc
+
+EXTRA_DIST += xalloc.h
+
+## end   gnulib module xalloc
+
 ## begin gnulib module xgethostname
 
 libgnu_la_SOURCES += xgethostname.h xgethostname.c
@@ -67,12 +74,10 @@ libgnu_la_SOURCES += xgethostname.h xgethostname.c
 ## end   gnulib module xgethostname
 
 
-mostlyclean-local:
+mostlyclean-local: mostlyclean-generic
 	@test -z "$(MOSTLYCLEANDIRS)" || \
 	  for dir in $(MOSTLYCLEANDIRS); do \
 	    if test -d $$dir; then \
 	      echo "rmdir $$dir"; rmdir $$dir; \
 	    fi; \
 	  done
-
-# Makefile.am ends here

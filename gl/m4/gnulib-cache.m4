@@ -18,12 +18,14 @@
 #   gnulib-tool --import --dir=. --lib=libgnu --source-base=gl --m4-base=gl/m4 --doc-base=doc --aux-dir=. --avoid=xalloc-die --libtool --macro-prefix=gl fdl getopt havelib maintainer-makefile xalloc xgethostname
 
 # Specification in the form of a few gnulib-tool.m4 macro invocations:
+gl_LOCAL_DIR([])
 gl_MODULES([fdl getopt havelib maintainer-makefile xalloc xgethostname])
 gl_AVOID([xalloc-die])
 gl_SOURCE_BASE([gl])
 gl_M4_BASE([gl/m4])
-gl_TESTS_BASE([gl/tests])
 gl_DOC_BASE([doc])
+gl_TESTS_BASE([gl/tests])
 gl_LIB([libgnu])
+gl_MAKEFILE_NAME([])
 gl_LIBTOOL
 gl_MACRO_PREFIX([gl])
