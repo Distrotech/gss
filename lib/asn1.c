@@ -1,5 +1,5 @@
 /* asn1.c	Wrapper around pseudo-ASN.1 token format.
- * Copyright (C) 2003, 2004  Simon Josefsson
+ * Copyright (C) 2003, 2004, 2006  Simon Josefsson
  *
  * This file is part of the Generic Security Service (GSS).
  *
@@ -59,25 +59,43 @@ _gss_asn1_length_der (size_t len, unsigned char *ans, size_t * ans_len)
 }
 
 static size_t
-_gss_asn1_get_length_der (const char *der, int *len)
+_gss_asn1_get_length_der (const char *der, size_t der_len, size_t *len)
 {
   size_t ans;
-  int k, punt;
+  size_t k, punt;
+
+  *len = 0;
+  if (der_len <= 0)
+    return 0;
 
   if (!(der[0] & 128))
     {
       /* short form */
       *len = 1;
-      return (unsigned char) der[0];
+      return der[0];
     }
   else
     {
       /* Long form */
-      k = (unsigned char) der[0] & 0x7F;
+      k = der[0] & 0x7F;
       punt = 1;
-      ans = 0;
-      while (punt <= k && punt < *len)
-	ans = ans * 256 + (unsigned char) der[punt++];
+      if (k)
+	{			/* definite length method */
+	  ans = 0;
+	  while (punt <= k && punt < der_len)
+	    {
+	      size_t last = ans;
+
+	      ans = ans * 256 + der[punt++];
+	      if (ans < last)
+		/* we wrapped around, no bignum support... */
+		return -2;
+	    }
+	}
+      else
+	{			/* indefinite length method */
+	  ans = -1;
+	}
 
       *len = punt;
       return ans;
@@ -166,7 +184,7 @@ _gss_decapsulate_token (const char *in, size_t inlen,
     return 0;
 
   i = inlen;
-  asn1lenlen = _gss_asn1_get_length_der (in, &i);
+  asn1lenlen = _gss_asn1_get_length_der (in, inlen, &i);
   if (inlen < i)
     return 0;
 
@@ -182,7 +200,7 @@ _gss_decapsulate_token (const char *in, size_t inlen,
     return 0;
 
   i = inlen;
-  asn1lenlen = _gss_asn1_get_length_der (in, &i);
+  asn1lenlen = _gss_asn1_get_length_der (in, inlen, &i);
   if (inlen < i)
     return 0;
 
