@@ -75,8 +75,11 @@ AC_DEFUN([gl_REPLACE_FUNCS],
 AC_DEFUN([gl_FILE_LIST], [
   build-aux/GNUmakefile
   build-aux/config.rpath
+  build-aux/gendocs.sh
+  build-aux/gnupload
   build-aux/maint.mk
   doc/fdl.texi
+  doc/gendocs_template
   lib/gethostname.c
   lib/getopt.c
   lib/getopt1.c
