@@ -1,3 +1,107 @@
+2006-11-06  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS: Version 0.0.18.
+
+2006-11-06  Simon Josefsson <simon@josefsson.org>
+
+	* po/fr.po, po/pl.po, po/ro.po, po/rw.po, po/sv.po, po/vi.po: Sync
+	with TP.
+
+2006-11-06  Simon Josefsson <simon@josefsson.org>
+
+	* doc/gpl.texi, doc/gss.texi, gl/Makefile.am,
+	gl/m4/gnulib-cache.m4, gl/m4/gnulib-comp.m4,
+	gl/override/doc/gpl.texi.diff, po/fr.po, po/pl.po, po/ro.po,
+	po/rw.po, po/sv.po, po/vi.po: Fix license in manual.
+
+2006-11-06  Simon Josefsson <simon@josefsson.org>
+
+	* gl/xalloc.h, gl/xmalloc.c, gl/m4/xalloc.m4: Update.
+
+2006-11-06  Simon Josefsson <simon@josefsson.org>
+
+	* tests/krb5context.tkt: Cosmetics.
+
+2006-11-06  Simon Josefsson <simon@josefsson.org>
+
+	* lib/asn1.c: Fix 'invalid MIC' due to signed badness.
+
+2006-11-06  Simon Josefsson <simon@josefsson.org>
+
+	* lib/asn1.c:
+	(_gss_asn1_get_length_der): Sync with latest libtasn1.  Update
+	callers.
+
+2006-11-06  Simon Josefsson <simon@josefsson.org>
+
+	* lib/version.c: Fix typo.
+
+2006-11-06  Simon Josefsson <simon@josefsson.org>
+
+	* Makefile.am, gendocs.sh, gnupload, doc/gendocs.sh,
+	doc/gendocs_template, gl/Makefile.am, gl/m4/gnulib-cache.m4,
+	gl/m4/gnulib-comp.m4, gl/override/doc/gendocs_template: Use gendocs
+	and gnupload.
+
+2006-11-06  Simon Josefsson <simon@josefsson.org>
+
+	* configure.ac: Require gettext 0.15.
+
+2006-11-06  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS: Add.
+
+2006-11-06  Simon Josefsson <simon@josefsson.org>
+
+	* lib/krb5/cred.c: Don't require that credential is in default
+	realm when searching for hostkeys (broke self-tests with Shishi
+	0.0.30).
+
+2006-11-06  Simon Josefsson <simon@josefsson.org>
+
+	* gl/Makefile.am, gl/strverscmp.c, gl/strverscmp.h,
+	gl/m4/gnulib-cache.m4, gl/m4/gnulib-comp.m4, gl/m4/strverscmp.m4:
+	Add strverscmp.
+
+2006-11-06  Simon Josefsson <simon@josefsson.org>
+
+	* lib/version.c: Use strverscmp.
+
+2006-11-06  Simon Josefsson <simon@josefsson.org>
+
+	* gl/Makefile.am, gl/getopt_.h, gl/gettext.h, gl/xalloc.h,
+	gl/m4/gnulib-comp.m4, gl/m4/lib-link.m4: Update.
+
+2006-09-22  Simon Josefsson <simon@josefsson.org>
+
+	* doc/fdl.texi, gl/Makefile.am, gl/gethostname.c, gl/getopt.c,
+	gl/getopt1.c, gl/gettext.h, gl/xgethostname.c, gl/xmalloc.c,
+	gl/m4/gnulib-cache.m4, gl/m4/gnulib-comp.m4, gl/m4/lib-link.m4,
+	gl/m4/xalloc.m4: Update.
+
+2006-09-22  Simon Josefsson <simon@josefsson.org>
+
+	* configure.ac: Bump versions.
+
+2006-07-11  Simon Josefsson <simon@josefsson.org>
+
+	* gl/Makefile.am, gl/m4/gnulib-cache.m4, gl/m4/gnulib-comp.m4:
+	Update.
+
+2006-07-10  Simon Josefsson <simon@josefsson.org>
+
+	* gl/Makefile.am, gl/getopt.c, gl/m4/getopt.m4,
+	gl/m4/gnulib-cache.m4, gl/m4/gnulib-comp.m4,
+	gl/m4/onceonly_2_57.m4: Update.
+
+2006-06-22  Simon Josefsson <simon@josefsson.org>
+
+	* configure.ac: Make portable to mingw.
+
+2006-05-04  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS, configure.ac: Bump versions.
+
 2006-04-30  Simon Josefsson <simon@josefsson.org>
 
 	* NEWS: Version 0.0.17.
