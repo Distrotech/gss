@@ -25,6 +25,7 @@ AC_DEFUN([gl_EARLY],
   m4_pattern_allow([^gl_LIBOBJS$])dnl a variable
   m4_pattern_allow([^gl_LTLIBOBJS$])dnl a variable
   AC_REQUIRE([AC_PROG_RANLIB])
+  AC_REQUIRE([AC_GNU_SOURCE])
 ])
 
 # This macro should be invoked from ./configure.ac, in the section
@@ -38,6 +39,7 @@ AC_DEFUN([gl_INIT],
   gl_source_base='gl'
   gl_FUNC_GETHOSTNAME
   gl_GETOPT
+  gl_FUNC_STRVERSCMP
   gl_HEADER_UNISTD
   gl_XALLOC
   m4_popdef([AC_REPLACE_FUNCS])
@@ -81,6 +83,8 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/getopt_.h
   lib/getopt_int.h
   lib/gettext.h
+  lib/strverscmp.c
+  lib/strverscmp.h
   lib/xalloc.h
   lib/xgethostname.c
   lib/xgethostname.h
@@ -90,6 +94,7 @@ AC_DEFUN([gl_FILE_LIST], [
   m4/lib-ld.m4
   m4/lib-link.m4
   m4/lib-prefix.m4
+  m4/strverscmp.m4
   m4/unistd_h.m4
   m4/xalloc.m4
 ])
