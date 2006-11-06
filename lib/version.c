@@ -38,7 +38,7 @@
  *   check is done and only the version string is returned.
  **/
 const char *
-shishi_check_version (const char *req_version)
+gss_check_version (const char *req_version)
 {
   if (!req_version || strverscmp (req_version, PACKAGE_VERSION) <= 0)
     return PACKAGE_VERSION;
