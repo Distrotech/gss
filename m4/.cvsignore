@@ -26,3 +26,7 @@ ulonglong.m4
 wchar_t.m4
 wint_t.m4
 xsize.m4
+glibc2.m4
+inttypes-h.m4
+lock.m4
+visibility.m4
