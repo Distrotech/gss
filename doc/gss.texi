@@ -61,7 +61,7 @@ Documentation License''.
 Appendices
 
 * Criticism of GSS::            Why you maybe shouldn't use GSS.
-* Copying This Manual::         How you can copy and share this manual.
+* Copying Information::         How you can copy and share GSS.
 
 Indices
 
@@ -1715,14 +1715,16 @@ portable and interoperable interface into the Kerberos 5 system.  If
 your project needs to use Kerberos 5 specifically, we do recommend you
 to use GSS instead of the Kerberos 5 implementation specific APIs.
 
-@node Copying This Manual
-@appendix Copying This Manual
+@node Copying Information
+@appendix Copying Information
 
 @menu
-* GNU Free Documentation License::  License for copying this manual.
+* GNU Free Documentation License::   License for copying this manual.
+* GNU GPL::                          License for copying the programs.
 @end menu
 
 @include fdl.texi
+@include gpl.texi
 
 @node Concept Index
 @unnumbered Concept Index

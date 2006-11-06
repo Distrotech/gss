@@ -80,6 +80,7 @@ AC_DEFUN([gl_FILE_LIST], [
   build-aux/maint.mk
   doc/fdl.texi
   doc/gendocs_template
+  doc/gpl.texi
   lib/gethostname.c
   lib/getopt.c
   lib/getopt1.c
