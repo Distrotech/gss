@@ -1,5 +1,5 @@
 /* krb5/cred.c --- Kerberos 5 GSS-API credential management functions.
- * Copyright (C) 2003, 2004  Simon Josefsson
+ * Copyright (C) 2003, 2004, 2006  Simon Josefsson
  *
  * This file is part of the Generic Security Service (GSS).
  *
@@ -67,8 +67,8 @@ acquire_cred1 (OM_uint32 * minor_status,
     memcpy (p, k5->peerptr->value, k5->peerptr->length);
     p[k5->peerptr->length] = 0;
 
-    k5->key = shishi_hostkeys_for_serverrealm (k5->sh, p,
-					       shishi_realm_default (k5->sh));
+    k5->key = shishi_hostkeys_for_serverrealm (k5->sh, p, NULL);
+
     free (p);
   }
 
