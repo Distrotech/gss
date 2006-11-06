@@ -1,6 +1,5 @@
-/* version.c	version handling
- * Copyright (C) 2003, 2004  Simon Josefsson
- * Copyright (C) 1998, 1999, 2000, 2001, 2002 Free Software Foundation, Inc.
+/* version.c --- Version handling.
+ * Copyright (C) 2002, 2003, 2004, 2005, 2006  Simon Josefsson
  *
  * This file is part of the Generic Security Service (GSS).
  *
@@ -16,93 +15,33 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with GSS; if not, write to the Free Software Foundation,
- * Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+ * Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
  *
  */
 
-/* This file is based on src/global.c in libgcrypt */
-
 #include "internal.h"
 
-static const char *
-_gss_parse_version_number (const char *s, int *number)
-{
-  int val = 0;
-
-  if (*s == '0' && isdigit (s[1]))
-    return NULL;		/* leading zeros are not allowed */
-  for (; isdigit (*s); s++)
-    {
-      val *= 10;
-      val += *s - '0';
-    }
-  *number = val;
-  return val < 0 ? NULL : s;
-}
-
-
-static const char *
-_gss_parse_version_string (const char *s, int *major, int *minor, int *micro)
-{
-  s = _gss_parse_version_number (s, major);
-  if (!s || *s != '.')
-    return NULL;
-  s++;
-  s = _gss_parse_version_number (s, minor);
-  if (!s || *s != '.')
-    return NULL;
-  s++;
-  s = _gss_parse_version_number (s, micro);
-  if (!s)
-    return NULL;
-  return s;			/* patchlevel */
-}
+#include <strverscmp.h>
 
 /**
  * gss_check_version:
  * @req_version: version string to compare with, or NULL
  *
- * Check library version.
+ * Check that the the version of the library is at minimum the one
+ * given as a string in @req_version.
  *
  * WARNING: This function is a GNU GSS specific extension, and is not
  * part of the official GSS API.
  *
- * Return value: Check that the the version of the library is at
- * minimum the one given as a string in @req_version and return the
- * actual version string of the library; return NULL if the condition
- * is not met.  If %NULL is passed to this function no check is done
- * and only the version string is returned.  It is a pretty good idea
- * to run this function as soon as possible, because it may also
- * intializes some subsystems.  In a multithreaded environment if
- * should be called before any more threads are created.
+ * Return value: The actual version string of the library; NULL if the
+ *   condition is not met.  If %NULL is passed to this function no
+ *   check is done and only the version string is returned.
  **/
 const char *
-gss_check_version (const char *req_version)
+shishi_check_version (const char *req_version)
 {
-  const char *ver = VERSION;
-  int my_major, my_minor, my_micro;
-  int rq_major, rq_minor, rq_micro;
-  const char *my_plvl, *rq_plvl;
+  if (!req_version || strverscmp (req_version, PACKAGE_VERSION) <= 0)
+    return PACKAGE_VERSION;
 
-  if (!req_version)
-    return ver;
-
-  my_plvl = _gss_parse_version_string (ver, &my_major, &my_minor, &my_micro);
-  if (!my_plvl)
-    return NULL;		/* very strange our own version is bogus */
-  rq_plvl = _gss_parse_version_string (req_version, &rq_major, &rq_minor,
-				       &rq_micro);
-  if (!rq_plvl)
-    return NULL;		/* req version string is invalid */
-
-  if (my_major > rq_major
-      || (my_major == rq_major && my_minor > rq_minor)
-      || (my_major == rq_major && my_minor == rq_minor
-	  && my_micro > rq_micro)
-      || (my_major == rq_major && my_minor == rq_minor
-	  && my_micro == rq_micro && strcmp (my_plvl, rq_plvl) >= 0))
-    {
-      return ver;
-    }
   return NULL;
 }
