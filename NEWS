@@ -4,6 +4,15 @@ See the end for copying conditions.
 
 * Version 0.0.18 (unreleased)
 
+** Kerberos V5 gss_acquire_cred doesn't use the default realm when looking
+** for hostkeys.
+This was the reason that 'make check' failed earlier.
+
+** Gnulib file update, including a rewrite of `gss_check_version'.
+
+** API and ABI modifications.
+No changes since last version.
+
 * Version 0.0.17 (released 2006-04-30)
 
 ** Debian packages are available from http://josefsson.org/gss/debian/
