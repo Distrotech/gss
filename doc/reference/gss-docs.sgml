@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" 
+               "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
+<book id="index" xmlns:xi="http://www.w3.org/2003/XInclude">
+  <bookinfo>
+    <title>GNU Generic Security Service (GSS) API Reference Manual</title>
+  </bookinfo>
+
+  <chapter>
+    <title>GNU Generic Security Service (GSS) API Reference Manual</title>
+
+    <para>
+      GSS is an implementation of the Generic Security Service
+      Application Program Interface (GSS-API).  GSS-API is used by
+      network servers to provide security services, e.g., to
+      authenticate SMTP/IMAP clients against SMTP/IMAP servers.  GSS
+      consists of a library and a manual.
+    </para>
+
+    <para>
+      GSS is developed for the GNU/Linux system, but runs on over 20
+      platforms including most major Unix platforms and Windows, and
+      many kind of devices including iPAQ handhelds and S/390
+      mainframes.
+    </para>
+
+    <para>
+      GSS is a GNU project, and is licensed under the GNU General
+      Public License.
+    </para>
+
+    <xi:include href="xml/gss.xml"/>
+  </chapter>
+</book>
