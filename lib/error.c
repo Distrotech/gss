@@ -1,5 +1,5 @@
 /* error.c --- Error handling functionality.
- * Copyright (C) 2003, 2004  Simon Josefsson
+ * Copyright (C) 2003, 2004, 2006  Simon Josefsson
  *
  * This file is part of the Generic Security Service (GSS).
  *
@@ -18,6 +18,8 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
  */
+
+#include "internal.h"
 
 /* Get i18n. */
 #include <gettext.h>
