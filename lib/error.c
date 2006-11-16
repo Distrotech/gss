@@ -27,12 +27,6 @@
 #define gettext_noop(String) String
 #define N_(String) gettext_noop (String)
 
-/* Get strlen. */
-#include <string.h>
-
-/* Get xmalloc etc. */
-#include "xalloc.h"
-
 /* _gss_find_mech */
 #include "meta.h"
 
