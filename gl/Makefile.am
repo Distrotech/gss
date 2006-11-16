@@ -18,6 +18,7 @@ noinst_LTLIBRARIES = libgnu.la
 libgnu_la_SOURCES =
 libgnu_la_LIBADD = $(gl_LTLIBOBJS)
 libgnu_la_DEPENDENCIES = $(gl_LTLIBOBJS)
+EXTRA_libgnu_la_SOURCES =
 libgnu_la_LDFLAGS = $(AM_LDFLAGS)
 noinst_HEADERS =
 EXTRA_DIST =
@@ -36,6 +37,8 @@ AM_CPPFLAGS =
 
 EXTRA_DIST += gethostname.c
 
+EXTRA_libgnu_la_SOURCES += gethostname.c
+
 ## end   gnulib module gethostname
 
 ## begin gnulib module getopt
@@ -53,6 +56,8 @@ MOSTLYCLEANFILES += getopt.h getopt.h-t
 
 EXTRA_DIST += getopt.c getopt1.c getopt_.h getopt_int.h
 
+EXTRA_libgnu_la_SOURCES += getopt.c getopt1.c
+
 ## end   gnulib module getopt
 
 ## begin gnulib module gettext-h
@@ -65,6 +70,8 @@ libgnu_la_SOURCES += gettext.h
 
 
 EXTRA_DIST += strverscmp.c strverscmp.h
+
+EXTRA_libgnu_la_SOURCES += strverscmp.c
 
 ## end   gnulib module strverscmp
 
@@ -86,6 +93,8 @@ MOSTLYCLEANFILES += unistd.h
 
 
 EXTRA_DIST += xalloc.h xmalloc.c
+
+EXTRA_libgnu_la_SOURCES += xmalloc.c
 
 ## end   gnulib module xalloc
 

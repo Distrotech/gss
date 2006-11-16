@@ -34,14 +34,17 @@ AC_DEFUN([gl_INIT],
 [
   m4_pushdef([AC_LIBOBJ], m4_defn([gl_LIBOBJ]))
   m4_pushdef([AC_REPLACE_FUNCS], m4_defn([gl_REPLACE_FUNCS]))
+  m4_pushdef([AC_LIBSOURCES], m4_defn([gl_LIBSOURCES]))
   AM_CONDITIONAL([GL_COND_LIBTOOL], [true])
   gl_cond_libtool=true
   gl_source_base='gl'
   gl_FUNC_GETHOSTNAME
   gl_GETOPT
+  gl_INLINE
   gl_FUNC_STRVERSCMP
   gl_HEADER_UNISTD
   gl_XALLOC
+  m4_popdef([AC_LIBSOURCES])
   m4_popdef([AC_REPLACE_FUNCS])
   m4_popdef([AC_LIBOBJ])
   AC_CONFIG_COMMANDS_PRE([
@@ -70,6 +73,11 @@ AC_DEFUN([gl_LIBOBJ],
 AC_DEFUN([gl_REPLACE_FUNCS],
   [AC_CHECK_FUNCS([$1], , [gl_LIBOBJ($ac_func)])])
 
+# Like AC_LIBSOURCES, except that it does nothing.
+# We rely on EXTRA_lib..._SOURCES instead.
+AC_DEFUN([gl_LIBSOURCES],
+  [])
+
 # This macro records the list of files which have been installed by
 # gnulib-tool and may be removed by future gnulib-tool invocations.
 AC_DEFUN([gl_FILE_LIST], [
@@ -95,6 +103,7 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/xmalloc.c
   m4/gethostname.m4
   m4/getopt.m4
+  m4/inline.m4
   m4/lib-ld.m4
   m4/lib-link.m4
   m4/lib-prefix.m4
