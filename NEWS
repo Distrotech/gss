@@ -4,7 +4,7 @@ See the end for copying conditions.
 
 * Version 0.0.19 (unreleased)
 
-** Corrected year in copyright notices.
+** Corrected years in copyright notices.
 
 ** Fixed a 64-bit bug in asn1.c:gss_decapsulate_token().
 The bug resulted in 'make check' failures on AMD64 systems.  Reported
