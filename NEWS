@@ -10,6 +10,8 @@ See the end for copying conditions.
 The bug resulted in 'make check' failures on AMD64 systems.  Reported
 by Kurt Roeckx <kurt@roeckx.be>.
 
+** Now autoconf 2.61, automake 1.10, and gettext 0.16 is required.
+
 ** Gnulib file update.
 
 ** API and ABI modifications.
