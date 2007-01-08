@@ -1,8 +1,12 @@
 GSS NEWS -- History of user-visible changes.                    -*- outline -*-
-Copyright (C) 2003, 2004, 2005, 2006 Simon Josefsson
+Copyright (C) 2003, 2004, 2005, 2006, 2007 Simon Josefsson
 See the end for copying conditions.
 
 * Version 0.0.19 (unreleased)
+
+** Fixed a 64-bit bug in asn1.c:gss_decapsulate_token().
+The bug resulted in 'make check' failures on AMD64 systems.  Reported
+by Kurt Roeckx <kurt@roeckx.be>.
 
 ** Gnulib file update.
 
