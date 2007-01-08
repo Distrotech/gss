@@ -1,5 +1,4 @@
 # List of source files containing translatable strings for GSS.
-# Copyright (c) 2003, 2004 by Simon Josefsson
 lib/error.c
 lib/krb5/error.c
 src/gss.c
