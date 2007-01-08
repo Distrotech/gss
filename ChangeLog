@@ -1,3 +1,95 @@
+2007-01-09  Simon Josefsson <simon@josefsson.org>
+
+	* po/fr.po, po/pl.po, po/ro.po, po/rw.po, po/sv.po, po/vi.po:
+	Generated.
+
+2007-01-09  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS: Version 0.0.19.
+
+2007-01-09  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS: Fix.
+
+2007-01-09  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS: Add.
+
+2007-01-09  Simon Josefsson <simon@josefsson.org>
+
+	* configure.ac: Bump autoconf/automake/gettext version.
+
+2007-01-09  Simon Josefsson <simon@josefsson.org>
+
+	* Makefile.am, NEWS, README, README-alpha, THANKS, configure.ac,
+	gss.pc.in, maint-cfg.mk, doc/Makefile.am, doc/Makefile.gdoci,
+	doc/gdoc, doc/gss.texi, lib/Makefile.am, lib/api.h, lib/asn1.c,
+	lib/context.c, lib/cred.c, lib/error.c, lib/ext.c, lib/ext.h,
+	lib/gss.h.in, lib/internal.h, lib/meta.c, lib/meta.h, lib/misc.c,
+	lib/msg.c, lib/name.c, lib/obsolete.c, lib/oid.c, lib/version.c,
+	lib/krb5/Makefile.am, lib/krb5/checksum.c, lib/krb5/checksum.h,
+	lib/krb5/context.c, lib/krb5/cred.c, lib/krb5/error.c,
+	lib/krb5/k5internal.h, lib/krb5/krb5.h, lib/krb5/msg.c,
+	lib/krb5/name.c, lib/krb5/oid.c, lib/krb5/protos.h,
+	lib/krb5/utils.c, po/POTFILES.in, src/Makefile.am, src/gss.c,
+	src/gss.ggo, tests/Makefile.am, tests/basic.c, tests/krb5context.c,
+	tests/threadsafety: Bump copyright years.
+
+2007-01-09  Simon Josefsson <simon@josefsson.org>
+
+	* AUTHORS: Update PGP key.
+
+2007-01-09  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS: Add.
+
+2007-01-09  Simon Josefsson <simon@josefsson.org>
+
+	* gl/Makefile.am, gl/gettext.h, gl/m4/gnulib-cache.m4,
+	gl/m4/gnulib-comp.m4, gl/m4/lib-link.m4: Update.
+
+2007-01-09  Simon Josefsson <simon@josefsson.org>
+
+	* lib/asn1.c:
+	(_gss_decapsulate_token): Use size_t for temporary variable, not
+	int.  For some reason, this broke 'make check' on amd64, see
+	<http://bugs.debian.org/404739> for details.  Reported by Kurt
+	Roeckx <kurt@roeckx.be>.
+
+2006-11-16  Simon Josefsson <simon@josefsson.org>
+
+	* lib/error.c: Remove (in internal.h).
+
+2006-11-16  Simon Josefsson <simon@josefsson.org>
+
+	* lib/error.c: Need internal.h, for PACKAGE.
+
+2006-11-16  Simon Josefsson <simon@josefsson.org>
+
+	* configure.ac: Bump versions.
+
+2006-11-16  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS: Add.
+
+2006-11-16  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS: Bump version.
+
+2006-11-16  Simon Josefsson <simon@josefsson.org>
+
+	* gnupload, gl/Makefile.am, gl/gettext.h, gl/xalloc.h,
+	gl/xmalloc.c, gl/m4/gnulib-comp.m4, gl/m4/inline.m4,
+	gl/m4/lib-link.m4, gl/m4/xalloc.m4: Update.
+
+2006-11-07  Simon Josefsson <simon@josefsson.org>
+
+	* doc/reference/gss-docs.tmpl: Remove.
+
+2006-11-07  Simon Josefsson <simon@josefsson.org>
+
+	* doc/reference/gss-docs.sgml: Add.
+
 2006-11-06  Simon Josefsson <simon@josefsson.org>
 
 	* NEWS: Version 0.0.18.
@@ -3922,7 +4014,7 @@
 	project.
 
 ----------------------------------------------------------------------
-  Copyright 2003  Simon Josefsson
+  Copyright 2003, 2004, 2005, 2006, 2007  Simon Josefsson
  Copying and distribution of this file, with or without modification,
  are permitted in any medium without royalty provided the copyright
  notice and this notice are preserved.

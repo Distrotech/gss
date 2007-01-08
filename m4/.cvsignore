@@ -30,3 +30,5 @@ glibc2.m4
 inttypes-h.m4
 lock.m4
 visibility.m4
+intl.m4
+intldir.m4
