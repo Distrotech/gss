@@ -1,5 +1,5 @@
 # DO NOT EDIT! GENERATED AUTOMATICALLY!
-# Copyright (C) 2004-2006 Free Software Foundation, Inc.
+# Copyright (C) 2004-2007 Free Software Foundation, Inc.
 #
 # This file is free software, distributed under the terms of the GNU
 # General Public License.  As a special exception to the GNU General
@@ -38,12 +38,40 @@ AC_DEFUN([gl_INIT],
   AM_CONDITIONAL([GL_COND_LIBTOOL], [true])
   gl_cond_libtool=true
   gl_source_base='gl'
+    AC_DEFINE([GNULIB_FDL], [1],
+      [Define to 1 when using the gnulib module fdl.])
+    AC_DEFINE([GNULIB_GENDOCS], [1],
+      [Define to 1 when using the gnulib module gendocs.])
   gl_FUNC_GETHOSTNAME
+    AC_DEFINE([GNULIB_GETHOSTNAME], [1],
+      [Define to 1 when using the gnulib module gethostname.])
   gl_GETOPT
+    AC_DEFINE([GNULIB_GETOPT], [1],
+      [Define to 1 when using the gnulib module getopt.])
+    AC_DEFINE([GNULIB_GETTEXT_H], [1],
+      [Define to 1 when using the gnulib module gettext-h.])
+    AC_DEFINE([GNULIB_GNUPLOAD], [1],
+      [Define to 1 when using the gnulib module gnupload.])
+    AC_DEFINE([GNULIB_GPL], [1],
+      [Define to 1 when using the gnulib module gpl.])
+    AC_DEFINE([GNULIB_HAVELIB], [1],
+      [Define to 1 when using the gnulib module havelib.])
   gl_INLINE
+    AC_DEFINE([GNULIB_INLINE], [1],
+      [Define to 1 when using the gnulib module inline.])
+    AC_DEFINE([GNULIB_MAINTAINER_MAKEFILE], [1],
+      [Define to 1 when using the gnulib module maintainer-makefile.])
   gl_FUNC_STRVERSCMP
+    AC_DEFINE([GNULIB_STRVERSCMP], [1],
+      [Define to 1 when using the gnulib module strverscmp.])
   gl_HEADER_UNISTD
+    AC_DEFINE([GNULIB_UNISTD], [1],
+      [Define to 1 when using the gnulib module unistd.])
   gl_XALLOC
+    AC_DEFINE([GNULIB_XALLOC], [1],
+      [Define to 1 when using the gnulib module xalloc.])
+    AC_DEFINE([GNULIB_XGETHOSTNAME], [1],
+      [Define to 1 when using the gnulib module xgethostname.])
   m4_popdef([AC_LIBSOURCES])
   m4_popdef([AC_REPLACE_FUNCS])
   m4_popdef([AC_LIBOBJ])
