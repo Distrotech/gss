@@ -29,6 +29,9 @@ gtk-doc.make:
 doc/Makefile.gdoc:
 	printf "gdoc_MANS =\ngdoc_TEXINFOS =\n" > doc/Makefile.gdoc
 
-bootstrap: gtk-doc.make doc/Makefile.gdoc
+autoreconf: gtk-doc.make doc/Makefile.gdoc
 	test -f ./configure || autoreconf --install
+	mv build-aux/config.rpath{-,}
+
+bootstrap: autoreconf
 	./configure $(CFGFLAGS)
