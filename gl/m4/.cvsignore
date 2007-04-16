@@ -1,2 +1,4 @@
 Makefile
 Makefile.in
+absolute-header.m4
+gnulib-common.m4

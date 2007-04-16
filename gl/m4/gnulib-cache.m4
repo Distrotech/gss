@@ -15,7 +15,7 @@
 
 
 # Specification in the form of a command-line invocation:
-#   gnulib-tool --import --dir=. --local-dir=gl/override --lib=libgnu --source-base=gl --m4-base=gl/m4 --doc-base=doc --aux-dir=. --avoid=xalloc-die --libtool --macro-prefix=gl fdl gendocs getopt gnupload gpl havelib maintainer-makefile strverscmp xalloc xgethostname
+#   gnulib-tool --import --dir=. --local-dir=gl/override --lib=libgnu --source-base=gl --m4-base=gl/m4 --doc-base=doc --aux-dir=build-aux --avoid=xalloc-die --libtool --macro-prefix=gl fdl gendocs getopt gnupload gpl havelib maintainer-makefile strverscmp xalloc xgethostname
 
 # Specification in the form of a few gnulib-tool.m4 macro invocations:
 gl_LOCAL_DIR([gl/override])
