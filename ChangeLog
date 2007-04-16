@@ -1,3 +1,39 @@
+2007-04-16  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS, configure.ac: Version 0.0.20.
+
+2007-04-16  Simon Josefsson <simon@josefsson.org>
+
+	* gl/m4/gnulib-common.m4: Update.
+
+2007-04-16  Simon Josefsson <simon@josefsson.org>
+
+	* maint-cfg.mk: Fix.
+
+2007-04-16  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS: Add.
+
+2007-04-16  Simon Josefsson <simon@josefsson.org>
+
+	* gendocs.sh, gnupload, maint.mk: UPdate.
+
+2007-04-16  Simon Josefsson <simon@josefsson.org>
+
+	* GNUmakefile: Rewrite.
+
+2007-04-16  Simon Josefsson <simon@josefsson.org>
+
+	* build-aux/GNUmakefile, build-aux/config.rpath,
+	build-aux/gendocs.sh, build-aux/gnupload, build-aux/link-warning.h,
+	build-aux/maint.mk, gl/Makefile.am, gl/getopt_.h, gl/unistd_.h,
+	gl/xalloc.h, gl/m4/absolute-header.m4, gl/m4/gnulib-cache.m4,
+	gl/m4/gnulib-comp.m4, gl/m4/lib-link.m4, gl/m4/unistd_h.m4: Update.
+
+2007-04-16  Simon Josefsson <simon@josefsson.org>
+
+	* configure.ac: Use build-aux/.
+
 2007-01-09  Simon Josefsson <simon@josefsson.org>
 
 	* po/fr.po, po/pl.po, po/ro.po, po/rw.po, po/sv.po, po/vi.po:
