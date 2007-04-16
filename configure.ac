@@ -19,7 +19,9 @@ dnl Process this file with autoconf to produce a configure script.
 # Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 # MA 02110-1301, USA.
 
+AC_PREREQ(2.61)
 AC_INIT([gss], [0.0.19], [bug-gss@gnu.org])
+AC_CONFIG_AUX_DIR([build-aux])
 
 # Library code modified:                              REVISION++
 # Interfaces changed/added/removed:   CURRENT++       REVISION=0
@@ -29,7 +31,6 @@ AC_SUBST(LT_CURRENT, 0)
 AC_SUBST(LT_REVISION, 19)
 AC_SUBST(LT_AGE, 0)
 
-AC_PREREQ(2.61)
 AM_INIT_AUTOMAKE([1.10 gnits])
 AC_CONFIG_HEADERS(config.h)
 AB_INIT
