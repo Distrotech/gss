@@ -4,6 +4,11 @@ See the end for copying conditions.
 
 * Version 0.0.21 (unreleased)
 
+** Fix 'make distclean'.
+Now src/gss_cmd.c and src/gss_cmd.h is only removed by 'make
+maintainer-clean'.  Thanks to Bernd Zeimetz <bernd@bzed.de> and Russ
+Allbery <rra@stanford.edu>.
+
 ** Gnulib file update.
 
 ** API and ABI modifications.
