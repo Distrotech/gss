@@ -51,10 +51,10 @@ release:
 	$(MAKE) ChangeLog distcheck
 	cvs commit -m "" ChangeLog
 	cvs rtag $(tag) $(PACKAGE)
-	cd doc && ../gendocs.sh --html "--css-include=texinfo.css" \
+	cd doc && ../build-aux/gendocs.sh --html "--css-include=texinfo.css" \
 		-o ../$(htmldir)/manual/ $(PACKAGE) \
 		"GNU Generic Security Service Library"
-	./gnupload --to alpha.gnu.org:gss $(distdir).tar.gz
+	build-aux/gnupload --to alpha.gnu.org:gss $(distdir).tar.gz
 	cp -v $(distdir).tar.gz{,.sig} $(htmldir)/releases/
 	cp -v doc/reference/html/*.{html,png,devhelp,css} $(htmldir)/reference/
 	cd $(htmldir) && cvs add -kb releases/$(distdir).tar.gz{,.sig} && \
