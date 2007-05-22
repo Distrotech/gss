@@ -2,6 +2,13 @@ GSS NEWS -- History of user-visible changes.                    -*- outline -*-
 Copyright (C) 2003, 2004, 2005, 2006, 2007 Simon Josefsson
 See the end for copying conditions.
 
+* Version 0.0.21 (unreleased)
+
+** Gnulib file update.
+
+** API and ABI modifications.
+No changes since last version.
+
 * Version 0.0.20 (released 2007-04-16)
 
 ** Gnulib file update.
