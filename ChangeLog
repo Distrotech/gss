@@ -1,3 +1,30 @@
+2007-05-22  Simon Josefsson <simon@josefsson.org>
+
+	* po/fr.po, po/pl.po, po/ro.po, po/rw.po, po/sv.po, po/vi.po: Sync
+	with TP.
+
+2007-05-22  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS: Version 0.0.21.
+
+2007-05-22  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS: Fix.
+
+2007-05-22  Simon Josefsson <simon@josefsson.org>
+
+	* configure.ac, NEWS: Bump versions.
+
+2007-05-22  Simon Josefsson <simon@josefsson.org>
+
+	* src/Makefile.am: Don't remove gss_cmd.c and gss_cmd.h on 'make
+	distclean'.  Reported by Bernd Zeimetz <bernd@bzed.de>, solution
+	suggested by Russ Allbery <rra@stanford.edu>.
+
+2007-05-22  Simon Josefsson <simon@josefsson.org>
+
+	* gl/Makefile.am, gl/unistd_.h, gl/m4/unistd_h.m4: Update,.
+
 2007-04-16  Simon Josefsson <simon@josefsson.org>
 
 	* NEWS, configure.ac: Version 0.0.20.
