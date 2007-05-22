@@ -2,7 +2,7 @@ GSS NEWS -- History of user-visible changes.                    -*- outline -*-
 Copyright (C) 2003, 2004, 2005, 2006, 2007 Simon Josefsson
 See the end for copying conditions.
 
-* Version 0.0.21 (unreleased)
+* Version 0.0.21 (released 2007-05-22)
 
 ** Fix 'make distclean'.
 Now src/gss_cmd.c and src/gss_cmd.h is only removed by 'make
