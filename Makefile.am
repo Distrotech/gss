@@ -30,27 +30,22 @@ ACLOCAL_AMFLAGS = -I m4 -I gl/m4
 # Maintainer targets
 
 update-po: refresh-po
-	cvs add `ls po/*.po | grep -v quot.po` || true && \
-	cvs commit -m "Sync with TP." po/LINGUAS `ls po/*.po | grep -v quot.po`
+	-cg-add `ls po/*.po | grep -v quot.po`
+	cg-commit -m "Sync with TP." po/LINGUAS `ls po/*.po | grep -v quot.po`
 
 ChangeLog:
-	test ! -f .cvsusers || \
-	(cvs2cl --fsf --FSF --usermap .cvsusers \
-		-I "ChangeLog|.cvs|autogen.sh|doc/specification" && \
-	cat .cvscopying >> ChangeLog)
+	git log --pretty --numstat --summary | git2cl > ChangeLog
+	cat .cvscopying >> ChangeLog
 
 tag = $(PACKAGE)-`echo $(VERSION) | sed 's/\./-/g'`
 htmldir = ../www-$(PACKAGE)
 
 release:
-	cvs upd -p -r HEAD NEWS > /dev/null
-	if cvs upd -p -r $(tag) NEWS > /dev/null; then false else true; fi
-	rm -f ChangeLog && cvs upd ChangeLog
-	cvs commit
+	! git-tag -l $(tag) > /dev/null
 	rm -f ChangeLog
 	$(MAKE) ChangeLog distcheck
-	cvs commit -m "" ChangeLog
-	cvs rtag $(tag) $(PACKAGE)
+	git commit -m Generated. ChangeLog
+	git-tag -u b565716f! -m $(VERSION) $(tag)
 	cd doc && ../build-aux/gendocs.sh --html "--css-include=texinfo.css" \
 		-o ../$(htmldir)/manual/ $(PACKAGE) \
 		"GNU Generic Security Service Library"
