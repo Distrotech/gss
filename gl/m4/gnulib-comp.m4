@@ -105,10 +105,10 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/xgethostname.c
   lib/xgethostname.h
   lib/xmalloc.c
-  m4/absolute-header.m4
   m4/gethostname.m4
   m4/getopt.m4
   m4/gnulib-common.m4
+  m4/include_next.m4
   m4/inline.m4
   m4/lib-ld.m4
   m4/lib-link.m4
