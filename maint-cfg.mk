@@ -31,7 +31,6 @@ doc/Makefile.gdoc:
 
 autoreconf: gtk-doc.make doc/Makefile.gdoc
 	test -f ./configure || autoreconf --install
-	mv build-aux/config.rpath{-,}
 
 bootstrap: autoreconf
 	./configure $(CFGFLAGS)
