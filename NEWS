@@ -6,6 +6,8 @@ See the end for copying conditions.
 
 ** Use gettext 0.17.
 
+** Update gnulib files.
+
 ** API and ABI modifications.
 No changes since last version.
 
