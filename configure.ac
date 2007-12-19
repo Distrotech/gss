@@ -36,14 +36,16 @@ AC_CONFIG_HEADERS(config.h)
 AB_INIT
 
 # Checks for programs.
-AM_GNU_GETTEXT(external)
-AM_GNU_GETTEXT_VERSION(0.16)
 AC_PROG_CC
 gl_EARLY
 AC_LIBTOOL_WIN32_DLL
 AC_PROG_LIBTOOL
 AM_MISSING_PROG(PERL, perl, $missing_dir)
 AM_MISSING_PROG(HELP2MAN, help2man, $missing_dir)
+
+# Internationalization.
+AM_GNU_GETTEXT(external)
+AM_GNU_GETTEXT_VERSION(0.17)
 
 # Checks for header files.
 AC_HEADER_STDC
