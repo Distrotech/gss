@@ -41,11 +41,13 @@ tag = $(PACKAGE)-`echo $(VERSION) | sed 's/\./-/g'`
 htmldir = ../www-$(PACKAGE)
 
 release:
-	! git-tag -l $(tag) > /dev/null
+	! git-tag -l $(tag) | grep $(PACKAGE) > /dev/null
 	rm -f ChangeLog
 	$(MAKE) ChangeLog distcheck
 	git commit -m Generated. ChangeLog
 	git-tag -u b565716f! -m $(VERSION) $(tag)
+	git-push
+	git-push --tags
 	cd doc && ../build-aux/gendocs.sh --html "--css-include=texinfo.css" \
 		-o ../$(htmldir)/manual/ $(PACKAGE) \
 		"GNU Generic Security Service Library"
