@@ -1,3 +1,85 @@
+2007-12-19  Simon Josefsson <simon@josefsson.org>
+
+	* doc/reference/Makefile.am: Sync with libidn.
+
+2007-12-19  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS: Version 0.0.23.
+
+2007-12-19  Simon Josefsson <simon@josefsson.org>
+
+	* Makefile.am: Fix release target.
+
+2007-12-19  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS: Add.
+
+2007-12-19  Simon Josefsson <simon@josefsson.org>
+
+	* doc/gendocs_template: Fix gendocs_template file.
+
+2007-12-19  Simon Josefsson <simon@josefsson.org>
+
+	* gl/override/doc/gendocs_template: Fix gendocs_template file.
+
+2007-12-19  Simon Josefsson <simon@josefsson.org>
+
+	* gl/override/doc/gendocs_template.diff,
+	gl/override/doc/gpl.texi.diff: Fix gendocs_template file.
+
+2007-12-19  Simon Josefsson <simon@josefsson.org>
+
+	* doc/Makefile.am: Use gpl-3.0.texi instead of gpl.texi.
+
+2007-12-19  Simon Josefsson <simon@josefsson.org>
+
+	* doc/gss.texi: Fix gpl/fdl includes.
+
+2007-12-19  Simon Josefsson <simon@josefsson.org>
+
+	* build-aux/GNUmakefile, build-aux/gendocs.sh, build-aux/gnupload,
+	build-aux/maint.mk, doc/fdl.texi, gl/Makefile.am, gl/gethostname.c,
+	gl/getopt.c, gl/getopt1.c, gl/getopt_int.h, gl/gettext.h,
+	gl/m4/gnulib-cache.m4, gl/m4/gnulib-common.m4,
+	gl/m4/gnulib-comp.m4, gl/m4/include_next.m4, gl/m4/lib-link.m4,
+	gl/m4/strverscmp.m4, gl/m4/unistd_h.m4, gl/strverscmp.c,
+	gl/strverscmp.h, gl/xalloc.h, gl/xgethostname.c, gl/xmalloc.c: 
+	Update gnulib files.
+
+2007-12-19  Simon Josefsson <simon@josefsson.org>
+
+	* gl/getopt.in.h, gl/m4/extensions.m4, gl/unistd.in.h: Update gnulib
+	files.
+
+2007-12-19  Simon Josefsson <simon@josefsson.org>
+
+	* doc/gpl-3.0.texi, doc/gpl.texi, gl/getopt_.h, gl/unistd_.h: Update
+	gnulib files.
+
+2007-12-19  Simon Josefsson <simon@josefsson.org>
+
+	* GNUmakefile, maint-cfg.mk: Revert config.rpath hack.
+
+2007-12-19  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS, configure.ac: Use gettext 0.17.
+
+2007-12-19  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS, configure.ac: Bump versions.
+
+2007-08-31  Simon Josefsson <simon@josefsson.org>
+
+	* configure.ac: Drop gnits mode.
+
+2007-08-07  Simon Josefsson <simon@josefsson.org>
+
+	* doc/specification/draft-ietf-kitten-rfc2853bis-03.txt: Add.
+
+2007-06-29  Simon Josefsson <simon@josefsson.org>
+
+	* ChangeLog: Generated.
+
 2007-06-29  Simon Josefsson <simon@josefsson.org>
 
 	* NEWS: Version 0.0.22.
@@ -199,7 +281,7 @@
 2007-01-08  Simon Josefsson <simon@josefsson.org>
 
 	* lib/asn1.c: (_gss_decapsulate_token): Use size_t for temporary variable, not
-	int. For some reason, this broke 'make check' on amd64, see
+	int.  For some reason, this broke 'make check' on amd64, see
 	<http://bugs.debian.org/404739> for details.  Reported by Kurt
 	Roeckx <kurt@roeckx.be>.
 
@@ -498,7 +580,6 @@
 
 	* doc/specification/rfc4401.txt, doc/specification/rfc4402.txt: Add.
 
-
 2006-02-01  Simon Josefsson <simon@josefsson.org>
 
 	* doc/specification/draft-ietf-kitten-rfc2853bis-01.txt: Add.
@@ -523,7 +604,6 @@
 
 	* debian/gss-doc.doc-base, debian/gss-doc.info,
 	debian/gss-doc.manpages, debian/libgss0-dev.install: Remove gss-doc.
-
 
 2006-01-18  Simon Josefsson <simon@josefsson.org>
 
@@ -802,7 +882,6 @@
 
 	* doc/gss.texi: Typos, reported by Mike Castle <dalgoda@gmail.com>.
 
-
 2005-03-14  Simon Josefsson <simon@josefsson.org>
 
 	* doc/gss.texi: Typo.
@@ -982,7 +1061,7 @@
 
 2004-11-08  Simon Josefsson <simon@josefsson.org>
 
-	* doc/specification/ietf61-kitten.pdf: Add.
+	* : Add.
 
 2004-11-07  Simon Josefsson <simon@josefsson.org>
 
@@ -991,7 +1070,6 @@
 2004-11-07  Simon Josefsson <simon@josefsson.org>
 
 	* po/LINGUAS, po/fr.po, po/pl.po, po/ro.po, po/sv.po: Sync with TP.
-
 
 2004-11-07  Simon Josefsson <simon@josefsson.org>
 
@@ -1134,14 +1212,13 @@
 
 2004-10-14  Simon Josefsson <simon@josefsson.org>
 
-	* tests/krb5context.c: Enable debug by default. Remove --verbose.
+	* tests/krb5context.c: Enable debug by default.  Remove --verbose.
 	Indent.
 
 2004-10-05  Simon Josefsson <simon@josefsson.org>
 
 	* gl/Makefile.am, gl/m4/gnulib.m4, gl/m4/xalloc.m4, gl/xalloc.h,
-	gl/xmalloc.c, gl/xstrdup.c, lib/name.c: Update Gnulib. Fix callers.
-
+	gl/xmalloc.c, gl/xstrdup.c, lib/name.c: Update Gnulib.  Fix callers.
 
 2004-09-17  Simon Josefsson <simon@josefsson.org>
 
@@ -1250,7 +1327,7 @@
 
 	* configure.ac, gl/Makefile.am, gl/m4/gnulib.m4, gl/m4/xalloc.m4,
 	gl/xalloc.h, gl/xmalloc.c, gl/xstrdup.c, lib/ext.c, lib/ext.h: Use
-	new xmalloc interface. Gnulib update.
+	new xmalloc interface.  Gnulib update.
 
 2004-08-08  Simon Josefsson <simon@josefsson.org>
 
@@ -1356,16 +1433,11 @@
 
 2004-08-03  Simon Josefsson <simon@josefsson.org>
 
-	* doc/specification/ietf60-kitten-agenda-charter.pdf,
-	doc/specification/ietf60-kitten-gss-ggf-ext.pdf,
-	doc/specification/ietf60-kitten-hartman.pdf,
-	doc/specification/ietf60-kitten-oncbindings.pdf,
-	doc/specification/ietf60-kitten-spnego.pdf,
-	doc/specification/ietf60-kitten-stackable.pdf: Add.
+	* : Add.
 
 2004-08-02  Simon Josefsson <simon@josefsson.org>
 
-	* doc/specification/GFD-E.024.pdf: Add.
+	* : Add.
 
 2004-08-02  Simon Josefsson <simon@josefsson.org>
 
@@ -1595,8 +1667,7 @@
 
 2004-04-21  Simon Josefsson <simon@josefsson.org>
 
-	* lib/asn1.c, lib/ext.h, lib/krb5/context.c, lib/krb5/msg.c: (gss_decapsulate_token_check): Remove. (gss_decapsulate_token):
-	Modify.  Update callers.
+	* lib/asn1.c, lib/ext.h, lib/krb5/context.c, lib/krb5/msg.c: (gss_decapsulate_token_check): Remove.  (gss_decapsulate_token): Modify.  Update callers.
 
 2004-04-21  Simon Josefsson <simon@josefsson.org>
 
@@ -1753,7 +1824,6 @@
 2004-04-18  Simon Josefsson <simon@josefsson.org>
 
 	* lib/asn1.c, lib/error.c, lib/internal.h, lib/misc.c: Fix warnings.
-
 
 2004-04-18  Simon Josefsson <simon@josefsson.org>
 
@@ -2032,7 +2102,7 @@
 
 2004-01-21  Simon Josefsson <simon@josefsson.org>
 
-	* lib/krb5/context.c: Fix. Doc fix.
+	* lib/krb5/context.c: Fix.  Doc fix.
 
 2004-01-21  Simon Josefsson <simon@josefsson.org>
 
@@ -2068,12 +2138,11 @@
 
 2004-01-19  Simon Josefsson <simon@josefsson.org>
 
-	* doc/specification/draft-ggf-gsa-gss-extensions.pdf: Add.
+	* : Add.
 
 2004-01-19  Simon Josefsson <simon@josefsson.org>
 
-	* doc/specification/draft-ggf-gss-extensions-07.pdf,
-	doc/specification/draft-ggf-gss-extensions-08.pdf: Add.
+	* : Add.
 
 2004-01-19  Simon Josefsson <simon@josefsson.org>
 
@@ -2240,7 +2309,7 @@
 
 	* Makefile.am, configure.ac, gl/Makefile.am, gl/getopt.c,
 	gl/getopt.h, gl/getopt1.c, src/Makefile.am, src/gss.c, src/gss.ggo: 
-	Add command line tool in src/. Add getopt in gl/, for gengetopt
+	Add command line tool in src/.  Add getopt in gl/, for gengetopt
 	parser in src/.
 
 2004-01-15  Simon Josefsson <simon@josefsson.org>
@@ -2425,7 +2494,7 @@
 
 2004-01-12  Simon Josefsson <simon@josefsson.org>
 
-	* lib/context.c: Error handling. Fix.
+	* lib/context.c: Error handling.  Fix.
 
 2004-01-12  Simon Josefsson <simon@josefsson.org>
 
@@ -2462,13 +2531,11 @@
 
 2004-01-12  Simon Josefsson <simon@josefsson.org>
 
-	* lib/internal.h: (_gss_mech_api_struct): Add inquire_cred_by_mech. (_gss_find_mech):
-	Use const for OID.
+	* lib/internal.h: (_gss_mech_api_struct): Add inquire_cred_by_mech.  (_gss_find_mech): Use const for OID.
 
 2004-01-12  Simon Josefsson <simon@josefsson.org>
 
-	* lib/meta.c: (_gss_mech_apis): Add gss_krb5_inquire_cred_by_mech.
-	(_gss_find_mech): Use const for OID.
+	* lib/meta.c: (_gss_mech_apis): Add gss_krb5_inquire_cred_by_mech.  (_gss_find_mech): Use const for OID.
 
 2004-01-12  Simon Josefsson <simon@josefsson.org>
 
@@ -2520,8 +2587,7 @@
 
 2004-01-11  Simon Josefsson <simon@josefsson.org>
 
-	* lib/internal.h: (gss_name_struct): Use size_t. (_gss_mech_api_struct): Add
-	export_name.
+	* lib/internal.h: (gss_name_struct): Use size_t.  (_gss_mech_api_struct): Add export_name.
 
 2004-01-11  Simon Josefsson <simon@josefsson.org>
 
@@ -2541,14 +2607,12 @@
 
 2004-01-11  Simon Josefsson <simon@josefsson.org>
 
-	* lib/krb5/cred.c: (gss_krb5_release_cred): Add. (gss_krb5_inquire_cred): Support
-	cred_handle == GSS_C_NO_CREDENTIAL. (gss_krb5_acquire_cred): Don't
-	allocate output_cred_handle (new API).
+	* lib/krb5/cred.c: (gss_krb5_release_cred): Add.  (gss_krb5_inquire_cred): Support cred_handle == GSS_C_NO_CREDENTIAL.  (gss_krb5_acquire_cred): Don't allocate output_cred_handle (new
+	API).
 
 2004-01-11  Simon Josefsson <simon@josefsson.org>
 
-	* lib/cred.c: (gss_acquire_cred): Allocate output_cred_handle. (gss_release_cred):
-	Deallocate cred_handle.  Call backend.
+	* lib/cred.c: (gss_acquire_cred): Allocate output_cred_handle.  (gss_release_cred): Deallocate cred_handle.  Call backend.
 
 2004-01-11  Simon Josefsson <simon@josefsson.org>
 
@@ -2576,7 +2640,7 @@
 
 2004-01-11  Simon Josefsson <simon@josefsson.org>
 
-	* lib/meta.c: Remove dummy stuff. Add _gss_indicate_mechs1.
+	* lib/meta.c: Remove dummy stuff.  Add _gss_indicate_mechs1.
 
 2004-01-11  Simon Josefsson <simon@josefsson.org>
 
@@ -2655,7 +2719,7 @@
 
 2004-01-11  Simon Josefsson <simon@josefsson.org>
 
-	* lib/api.h: Full prototypes (mostly for GTK-DOC). Indent.
+	* lib/api.h: Full prototypes (mostly for GTK-DOC).  Indent.
 
 2004-01-11  Simon Josefsson <simon@josefsson.org>
 
@@ -2738,7 +2802,7 @@
 
 2004-01-11  Simon Josefsson <simon@josefsson.org>
 
-	* lib/misc.c: Add gss_release_oid. Error fixes. Doc fix.
+	* lib/misc.c: Add gss_release_oid.  Error fixes.  Doc fix.
 
 2004-01-11  Simon Josefsson <simon@josefsson.org>
 
@@ -2924,8 +2988,8 @@
 
 2004-01-10  Simon Josefsson <simon@josefsson.org>
 
-	* lib/internal.h: Add delete_sec_context. Remove xstrdup.h. Indent.
-
+	* lib/internal.h: Add delete_sec_context.  Remove xstrdup.h.
+	Indent.
 
 2004-01-10  Simon Josefsson <simon@josefsson.org>
 
@@ -3220,8 +3284,8 @@
 
 2003-11-22  Simon Josefsson <simon@josefsson.org>
 
-	* configure.ac: Fix bug e-mail. Move libtool check. Use
-	sj_CHECK_HEADERLIB for Shishi test. Add '#include <gss/krb5.h>'
+	* configure.ac: Fix bug e-mail.  Move libtool check.  Use
+	sj_CHECK_HEADERLIB for Shishi test.  Add '#include <gss/krb5.h>'
 	substitution, for gss.h.
 
 2003-11-22  Simon Josefsson <simon@josefsson.org>
@@ -3276,7 +3340,7 @@
 2003-10-26  Simon Josefsson <simon@josefsson.org>
 
 	* doc/gdoc: Revert texinfo highlighting (texinfo @ interpolated by
-	perl). Rewrite interpolate handling to make it more debuggable.
+	perl).  Rewrite interpolate handling to make it more debuggable.
 
 2003-10-26  Simon Josefsson <simon@josefsson.org>
 
@@ -3293,8 +3357,8 @@
 2003-10-26  Simon Josefsson <simon@josefsson.org>
 
 	* doc/gdoc: Fix 'section' regexp to require initial upper case,
-	unless it start with [@&$%]. Before the following line was regarded
-	as a section heading. following restrictions apply to the output
+	unless it start with [@&$%].  Before the following line was regarded
+	as a section heading.  following restrictions apply to the output
 	parameters:
 
 2003-10-26  Simon Josefsson <simon@josefsson.org>
@@ -3311,11 +3375,10 @@
 
 2003-10-26  Simon Josefsson <simon@josefsson.org>
 
-	* doc/gdoc: Add -listfunc output mode. Add -sourceversion,
+	* doc/gdoc: Add -listfunc output mode.  Add -sourceversion,
 	-includefuncprefix, -bugsto, -seeinfo, -copyright, -verbatimcopying
-	for man pages. Translate { into @{ and } into @} in texinfo mode.
-	White space fix for texinfo. Man page output mode mostly rewritten.
-
+	for man pages.  Translate { into @{ and } into @} in texinfo mode.
+	White space fix for texinfo.  Man page output mode mostly rewritten.
 
 2003-10-26  Simon Josefsson <simon@josefsson.org>
 
@@ -3331,7 +3394,7 @@
 
 2003-10-07  Simon Josefsson <simon@josefsson.org>
 
-	* doc/specification/816-1331.pdf: Add.
+	* : Add.
 
 2003-09-27  Simon Josefsson <simon@josefsson.org>
 
@@ -3441,7 +3504,7 @@
 
 2003-08-12  Simon Josefsson <simon@josefsson.org>
 
-	* configure.ac: Remove help2man, texipdf checks (not used). Make
+	* configure.ac: Remove help2man, texipdf checks (not used).  Make
 	shishi test work without pkg-config.
 
 2003-08-09  Simon Josefsson <simon@josefsson.org>
@@ -3482,7 +3545,7 @@
 
 2003-08-09  Simon Josefsson <simon@josefsson.org>
 
-	* lib/krb5.c: Set oid in cred struct. Add unfinished inquire_cred.
+	* lib/krb5.c: Set oid in cred struct.  Add unfinished inquire_cred.
 
 2003-08-09  Simon Josefsson <simon@josefsson.org>
 
@@ -3490,7 +3553,7 @@
 
 2003-08-09  Simon Josefsson <simon@josefsson.org>
 
-	* lib/internal.h: Add mech OID to cred struct. Add inquire_cred to
+	* lib/internal.h: Add mech OID to cred struct.  Add inquire_cred to
 	meta structure.
 
 2003-08-09  Simon Josefsson <simon@josefsson.org>
@@ -3752,7 +3815,6 @@
 	m4/stdint_h.m4, m4/strerror_r.m4, m4/uintmax_t.m4, m4/ulonglong.m4,
 	m4/unlocked-io.m4, m4/xalloc.m4: Add xalloc (with deps) from gnulib.
 
-
 2003-06-28  Simon Josefsson <simon@josefsson.org>
 
 	* NEWS: Add.
@@ -3767,7 +3829,7 @@
 
 2003-06-28  Simon Josefsson <simon@josefsson.org>
 
-	* lib/krb5.c: Add accept_sec_context, acquire_cred. Fixes. (GSASL
+	* lib/krb5.c: Add accept_sec_context, acquire_cred.  Fixes.  (GSASL
 	via GSS can connect to Mailutils IMAP server via native GSS.)
 
 2003-06-28  Simon Josefsson <simon@josefsson.org>
@@ -3814,7 +3876,6 @@
 2003-06-12  Simon Josefsson <simon@josefsson.org>
 
 	* lib/error.c, lib/krb5.c, po/gss.pot, po/sv.po: Translation fixes.
-
 
 2003-06-12  Simon Josefsson <simon@josefsson.org>
 
@@ -3948,7 +4009,7 @@
 
 2003-06-09  Simon Josefsson <simon@josefsson.org>
 
-	* lib/krb5.c: Add oids. Add display_status. Fixes.
+	* lib/krb5.c: Add oids.  Add display_status.  Fixes.
 
 2003-06-09  Simon Josefsson <simon@josefsson.org>
 
@@ -3972,7 +4033,7 @@
 
 2003-06-09  Simon Josefsson <simon@josefsson.org>
 
-	* lib/Makefile.am: Make krb5 conditional. Remove old -I../intl.
+	* lib/Makefile.am: Make krb5 conditional.  Remove old -I../intl.
 
 2003-06-09  Simon Josefsson <simon@josefsson.org>
 
@@ -4227,7 +4288,7 @@
 2003-05-29  Simon Josefsson <simon@josefsson.org>
 
 	* lib/Makefile.am: Install api.h (former gssapi.h) and krb5.h in
-	$(includedir)/gss/. Fix indents.
+	$(includedir)/gss/.  Fix indents.
 
 2003-05-29  Simon Josefsson <simon@josefsson.org>
 
@@ -4273,7 +4334,7 @@
 
 2003-05-27  Simon Josefsson <simon@josefsson.org>
 
-	* doc/gss.texi: Drop licenses. Add criticism todos.
+	* doc/gss.texi: Drop licenses.  Add criticism todos.
 
 2003-05-27  Simon Josefsson <simon@josefsson.org>
 
@@ -4289,8 +4350,8 @@
 
 2003-05-26  Simon Josefsson <simon@josefsson.org>
 
-	* lib/krb5.c: Support mutual authentication (and other flags). Fix
-	sequence number handling. Works as client via GSASL against Cyrus
+	* lib/krb5.c: Support mutual authentication (and other flags).  Fix
+	sequence number handling.  Works as client via GSASL against Cyrus
 	IMAP/SASL server.
 
 2003-05-26  Simon Josefsson <simon@josefsson.org>
@@ -4413,7 +4474,7 @@
 
 2003-05-18  Simon Josefsson <simon@josefsson.org>
 
-	* lib/msg.c: Add doc. Print debug info.
+	* lib/msg.c: Add doc.  Print debug info.
 
 2003-05-17  Simon Josefsson <simon@josefsson.org>
 
@@ -4477,7 +4538,7 @@
 
 2003-05-08  Simon Josefsson <simon@josefsson.org>
 
-	* lib/Makefile.am: Build asn1.c. Link with shishi.
+	* lib/Makefile.am: Build asn1.c.  Link with shishi.
 
 2003-05-08  Simon Josefsson <simon@josefsson.org>
 
@@ -4501,7 +4562,7 @@
 
 2003-05-08  Simon Josefsson <simon@josefsson.org>
 
-	* configure.ac: Look for asn1Parser. Fix errors.
+	* configure.ac: Look for asn1Parser.  Fix errors.
 
 2003-05-08  Simon Josefsson <simon@josefsson.org>
 
@@ -4517,7 +4578,7 @@
 
 2003-05-08  Simon Josefsson <simon@josefsson.org>
 
-	* lib/Makefile.am: Add krb5.c. Build gss_asn1_tab.c.
+	* lib/Makefile.am: Add krb5.c.  Build gss_asn1_tab.c.
 
 2003-05-08  Simon Josefsson <simon@josefsson.org>
 
@@ -4660,11 +4721,11 @@
 
 2003-05-01  Simon Josefsson <simon@josefsson.org>
 
-	* lib/Makefile.am: Add deps. Fix indent.
+	* lib/Makefile.am: Add deps.  Fix indent.
 
 2003-05-01  Simon Josefsson <simon@josefsson.org>
 
-	* lib/internal.h: Include inttypes/stdint. Add hidden GSS
+	* lib/internal.h: Include inttypes/stdint.  Add hidden GSS
 	structures.
 
 2003-05-01  Simon Josefsson <simon@josefsson.org>
@@ -4697,7 +4758,7 @@
 
 2003-05-01  Simon Josefsson <simon@josefsson.org>
 
-	* lib/gssapi.h: Fix prototypes (RFC is buggy). Indent.
+	* lib/gssapi.h: Fix prototypes (RFC is buggy).  Indent.
 
 2003-04-30  Simon Josefsson <simon@josefsson.org>
 
@@ -4729,12 +4790,12 @@
 
 2003-04-30  Simon Josefsson <simon@josefsson.org>
 
-	* lib/gssapi.h: Add copying conditions. Include limits.h.
+	* lib/gssapi.h: Add copying conditions.  Include limits.h.
 
 2003-04-30  Simon Josefsson <simon@josefsson.org>
 
-	* lib/gssapi.h: Never use xom.h. Define gss_ctx_id_t, gss_cred_id_t,
-	gss_name_t, and gss_uint32. Fix routine errors.
+	* lib/gssapi.h: Never use xom.h.  Define gss_ctx_id_t,
+	gss_cred_id_t, gss_name_t, and gss_uint32.  Fix routine errors.
 
 2003-04-30  Simon Josefsson <simon@josefsson.org>
 
