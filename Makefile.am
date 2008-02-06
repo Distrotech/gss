@@ -1,5 +1,5 @@
 ## Process this file with automake to produce Makefile.in
-# Copyright (C) 2003, 2004, 2005, 2006, 2007 Simon Josefsson.
+# Copyright (C) 2003, 2004, 2005, 2006, 2007, 2008 Simon Josefsson.
 #
 # This file is part of the Generic Security Service (GSS).
 #
@@ -52,7 +52,9 @@ release:
 		-o ../$(htmldir)/manual/ $(PACKAGE) \
 		"GNU Generic Security Service Library"
 	build-aux/gnupload --to alpha.gnu.org:gss $(distdir).tar.gz
-	cp -v $(distdir).tar.gz{,.sig} $(htmldir)/releases/
-	cp -v doc/reference/html/*.{html,png,devhelp,css} $(htmldir)/reference/
-	cd $(htmldir) && cvs add -kb releases/$(distdir).tar.gz{,.sig} && \
+	cp -v $(distdir).tar.gz $(distdir).tar.gz.sig $(htmldir)/releases/
+	cp -v doc/reference/html/*.html doc/reference/html/*.png doc/reference/html/*.devhelp doc/reference/html/*.css $(htmldir)/reference/
+	cd $(htmldir) && \
+		cvs add -kb releases/$(distdir).tar.gz \
+			releases/$(distdir).tar.gz.sig && \
 		cvs commit -m "Update." manual/ reference/ releases/
