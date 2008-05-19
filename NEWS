@@ -12,6 +12,9 @@ See the end for copying conditions.
 This allows us to avoid use of --no-location which makes the
 translation teams happier.
 
+** API and ABI modifications.
+No changes since last version.
+
 * Version 0.0.23 (released 2007-12-19)
 
 ** Use gettext 0.17.
