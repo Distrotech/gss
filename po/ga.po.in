@@ -1,0 +1,216 @@
+# Irish translations for gss.
+# Copyright (C) 2007 Free Software Foundation, Inc.
+# This file is distributed under the same license as the gss package.
+# Kevin Scannell <kscanne@gmail.com>, 2007.
+msgid ""
+msgstr ""
+"Project-Id-Version: gss 0.0.22\n"
+"Report-Msgid-Bugs-To: bug-gss@josefsson.org\n"
+"POT-Creation-Date: 2007-06-29 17:37+0200\n"
+"PO-Revision-Date: 2007-09-17 11:04-0500\n"
+"Last-Translator: Kevin Scannell <kscanne@gmail.com>\n"
+"Language-Team: Irish <gaeilge-gnulinux@lists.sourceforge.net>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "A required input parameter could not be read"
+msgstr "Níorbh fhéidir paraiméadar riachtanach ionchurtha a léamh"
+
+msgid "A required output parameter could not be written"
+msgstr "Níorbh fhéidir paraiméadar riachtanach aschurtha a scríobh"
+
+msgid "A parameter was malformed"
+msgstr "Paraiméadar míchumtha"
+
+msgid "An unsupported mechanism was requested"
+msgstr "Iarratas ar mheicníocht gan tacaíocht"
+
+msgid "An invalid name was supplied"
+msgstr "Ainm neamhbhailí"
+
+msgid "A supplied name was of an unsupported type"
+msgstr "Ainm de chineál nach dtacaítear leis"
+
+msgid "Incorrect channel bindings were supplied"
+msgstr "Ceangail mhíchearta chainéil"
+
+msgid "An invalid status code was supplied"
+msgstr "Cód neamhbhailí stádais"
+
+msgid "A token had an invalid MIC"
+msgstr "Bhí MIC neamhbhailí ag ceadchomhartha"
+
+msgid "No credentials were supplied, or the credentials were unavailable or inaccessible"
+msgstr "Ní raibh aon dintiúir, bhí na dintiúir dofhaighte, nó bhíodar dorochtana"
+
+msgid "No context has been established"
+msgstr "Níor bunaíodh aon chomhthéacs"
+
+msgid "A token was invalid"
+msgstr "Ceadchomhartha neamhbhailí"
+
+msgid "A credential was invalid"
+msgstr "Dintiúr neamhbhailí"
+
+msgid "The referenced credentials have expired"
+msgstr "Chuaigh na dintiúir tagartha as feidhm"
+
+msgid "The context has expired"
+msgstr "Tá an comhthéacs as dáta"
+
+msgid "Unspecified error in underlying mechanism"
+msgstr "Earráid gan sonrú sa bhunmheicníocht"
+
+msgid "The quality-of-protection requested could not be provided"
+msgstr "Níorbh fhéidir an cháilíocht cosanta iarrtha a sholáthar"
+
+msgid "The operation is forbidden by local security policy"
+msgstr "Ní cheadaítear an oibríocht de bharr polasaí logánta slándála"
+
+msgid "The operation or option is unavailable"
+msgstr "Níl aon fháil ar an oibríocht nó ar an rogha"
+
+msgid "The requested credential element already exists"
+msgstr "Tá an dintiúr iarrtha ann cheana"
+
+msgid "The provided name was not a mechanism name"
+msgstr "Ní ainm meicníochta é an t-ainm a tugadh"
+
+msgid "The gss_init_sec_context() or gss_accept_sec_context() function must be called again to complete its function"
+msgstr "Caithfear gss_init_sec_context() nó gss_accept_sec_context() a glaoch chun a fheidhm a chur i gcrích"
+
+msgid "The token was a duplicate of an earlier token"
+msgstr "Cóip den cheadchomhartha roimhe seo an ceadchomhartha seo"
+
+msgid "The token's validity period has expired"
+msgstr "Tá tréimhse bhailíochta an cheadchomhartha thart"
+
+msgid "A later token has already been processed"
+msgstr "Próiseáladh ceadchomhartha níos nuaí cheana"
+
+msgid "An expected per-message token was not received"
+msgstr "Bhíothas súil le ceadchomhartha sa teachtaireacht agus ní bhfuarthas é"
+
+msgid "No error"
+msgstr "Ní raibh aon earráid"
+
+msgid "No @ in SERVICE-NAME name string"
+msgstr "@ ar iarraidh san ainm SERVICE-NAME"
+
+msgid "STRING-UID-NAME contains nondigits"
+msgstr "Tá carachtair neamhuimhriúla i STRING-UID-NAME"
+
+msgid "UID does not resolve to username"
+msgstr "Ní féidir an t-aitheantas úsáideora a réiteach mar ainm"
+
+msgid "Validation error"
+msgstr "Earráid le linn deimhnithe"
+
+msgid "Couldn't allocate gss_buffer_t data"
+msgstr "Níorbh fhéidir gss_buffer_t a dháileadh"
+
+msgid "Message context invalid"
+msgstr "Tá comhthéacs na teachtaireachta neamhbhailí"
+
+msgid "Buffer is the wrong size"
+msgstr "Méid mhícheart ar an maolán"
+
+msgid "Credential usage type is unknown"
+msgstr "Cineál úsáide dintiúir nach bhfuil eolas air"
+
+msgid "Unknown quality of protection specified"
+msgstr "Sonraíodh cáilíocht cosanta nach bhfuil eolas uirthi"
+
+msgid "Principal in credential cache does not match desired name"
+msgstr "Ní mheaitseálann an príomhaí i dtaisce na ndintiúr leis an ainm iarrtha"
+
+msgid "No principal in keytab matches desired name"
+msgstr "Níl aon phríomhaí i keytab a mheaitseálann an t-ainm iarrtha"
+
+msgid "Credential cache has no TGT"
+msgstr "Níl TGT ag taisce na ndintiúr"
+
+msgid "Authenticator has no subkey"
+msgstr "Níl fo-eochair ag an bhfíordheimhneoir"
+
+msgid "Context is already fully established"
+msgstr "Socraíodh an comhthéacs go hiomlán cheana féin"
+
+msgid "Unknown signature type in token"
+msgstr "Cineál anaithnid sínithe sa cheadchomhartha"
+
+msgid "Invalid field length in token"
+msgstr "Fad neamhbhailí réimse sa cheadchomhartha"
+
+msgid "Attempt to use incomplete security context"
+msgstr "Rinneadh iarracht ar chomhthéacs neamhiomlán slándála a úsáid"
+
+msgid "No krb5 error"
+msgstr "Gan earráid krb5"
+
+msgid "Unknown krb5 error"
+msgstr "Earráid anaithnid krb5"
+
+#, c-format
+msgid "%s: missing parameter\n"
+msgstr "%s: paraiméadar ar iarraidh\n"
+
+#, c-format
+msgid "Try `%s --help' for more information.\n"
+msgstr "Bain triail as `%s --help' chun tuilleadh eolais a fháil.\n"
+
+#, c-format
+msgid ""
+"GSS-API major status code %ld (0x%lx).\n"
+"\n"
+msgstr ""
+"Mórchód stádais GSS-API %ld (0x%lx).\n"
+"\n"
+
+#, c-format
+msgid ""
+"   MSB                                                                 LSB\n"
+"   +-----------------+-----------------+---------------------------------+\n"
+"   |  Calling Error  |  Routine Error  |       Supplementary Info        |\n"
+"   | "
+msgstr ""
+"     GMS                                                                 GLS\n"
+"     +-----------------+-----------------+---------------------------------+\n"
+"     | Earráid Glaoite | Earráid Gnáthamh|     Eolas Forlíontach           |\n"
+"     | "
+
+#, c-format
+msgid ""
+"|\n"
+"   +-----------------+-----------------+---------------------------------+\n"
+"Bit 31            24  23            16  15                             0\n"
+"\n"
+msgstr ""
+"|\n"
+"     +-----------------+-----------------+---------------------------------+\n"
+"Giotán31            24  23            16  15                             0\n"
+"\n"
+
+#, c-format
+msgid "Masked routine error %ld (0x%lx) shifted into %ld (0x%lx):\n"
+msgstr "Aistríodh earráid mhasctha ghnáthaimh %ld (0x%lx) go %ld (0x%lx):\n"
+
+#, c-format
+msgid "%s: displaying status code failed\n"
+msgstr "%s: níorbh fhéidir an cód stádais a thaispeáint\n"
+
+#, c-format
+msgid "Masked calling error %ld (0x%lx) shifted into %ld (0x%lx):\n"
+msgstr "Aistríodh earráid mhasctha ghlaoite %ld (0x%lx) go %ld (0x%lx):\n"
+
+#, c-format
+msgid "Masked supplementary info %ld (0x%lx) shifted into %ld (0x%lx):\n"
+msgstr "Aistríodh eolas masctha forlíontach %ld (0x%lx) go %ld (0x%lx):\n"
+
+#, c-format
+msgid "No error\n"
+msgstr "Ní raibh aon earráid\n"
+
+#~ msgid "called again to complete its function"
+#~ msgstr "glaoch arís chun a fheidhm a chur i gcrích"

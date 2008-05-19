@@ -1,174 +1,172 @@
-# Swedish translation of GSS.
-# Copyright (C) 2008 Free Software Foundation, Inc.
+# Translation of gss package to Slovak.
+# Copyright (C) 2007 Free Software Foundation, Inc.
 # This file is distributed under the same license as the gss package.
-# Simon Josefsson <simon@josefsson.org>, 2004-2007.
-# Christer Andersson <klamm@comhem.se>, 2008.
+# Ivan Masár <helix84@centrum.sk>, 2007.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gss 0.0.22\n"
 "Report-Msgid-Bugs-To: bug-gss@josefsson.org\n"
 "POT-Creation-Date: 2007-06-29 17:37+0200\n"
-"PO-Revision-Date: 2008-01-17 08:19+0100\n"
-"Last-Translator: Christer Andersson <klamm@comhem.se>\n"
-"Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
+"PO-Revision-Date: 2007-09-14 23:40+0100\n"
+"Last-Translator: Ivan Masár <helix84@centrum.sk>\n"
+"Language-Team: Slovak <sk-i18n@lists.linux.sk>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=ISO-8859-1\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 msgid "A required input parameter could not be read"
-msgstr "N�dv�ndig indata kunde ej l�sas"
+msgstr "Požadovaný vstupný parameter nebolo možné načítať"
 
 msgid "A required output parameter could not be written"
-msgstr "N�dv�ndig utdata kunde ej skrivas"
+msgstr "Požadovaný výstupný parameter nebolo možné zapísať"
 
 msgid "A parameter was malformed"
-msgstr "Parameter felaktig"
+msgstr "Formát parametra bol chybný"
 
 msgid "An unsupported mechanism was requested"
-msgstr "Efterfr�gad mekanism st�ds ej"
+msgstr "Bol vyžiadaný nepodporovaný mechanizmus"
 
 msgid "An invalid name was supplied"
-msgstr "Felaktigt namn angiven"
+msgstr "Bol dodaný neplatný názov"
 
 msgid "A supplied name was of an unsupported type"
-msgstr "Typen p� angivet namn st�ds ej"
+msgstr "Dodaný názov bol nepodporovaného typu"
 
 msgid "Incorrect channel bindings were supplied"
-msgstr "Ogiltig kanalbindning angiven"
+msgstr "Boli dodané nesprávne väzby na kanál"
 
 msgid "An invalid status code was supplied"
-msgstr "Felaktig statuskod angiven"
+msgstr "Bol dodaný neplatný stavový kód"
 
 msgid "A token had an invalid MIC"
-msgstr "Meddelande har felaktig integritetskontroll"
+msgstr "Token mal nesprávny MIC"
 
 msgid "No credentials were supplied, or the credentials were unavailable or inaccessible"
-msgstr "Ingen credential tillg�nglig, eller s� var angiven credential otillg�nglig"
+msgstr "Poverenie nebolo dodané, dostupné alebo prístupné"
 
 msgid "No context has been established"
-msgstr "Ingen s�kerhetskontext har uppr�ttats"
+msgstr "Nebol zavedený kontext"
 
 msgid "A token was invalid"
-msgstr "Meddelande felaktig"
+msgstr "Token bol neplatný"
 
 msgid "A credential was invalid"
-msgstr "Credential felaktig"
+msgstr "Poverenie bolo neplatné"
 
 msgid "The referenced credentials have expired"
-msgstr "Angiven credential har g�tt ut"
+msgstr "Poverenie, na ktoré bolo odkazované, vypršalo"
 
 msgid "The context has expired"
-msgstr "Giltighetstiden f�r s�kerhetskontext har g�tt ut"
+msgstr "Kontext vypršal"
 
 msgid "Unspecified error in underlying mechanism"
-msgstr "Ok�nt fel i underliggande mekanism"
+msgstr "Nešpecifikovaná chyba v použitom mechanizme"
 
 msgid "The quality-of-protection requested could not be provided"
-msgstr "Efterfr�gad skyddsniv� kan inte tillhandah�llas"
+msgstr "Nebolo možné poskytnúť požadovanú kvalitu-ochrany (quality-of-protection)"
 
 msgid "The operation is forbidden by local security policy"
-msgstr "Funktionen f�rbjuden av lokal s�kerhetspolicy"
+msgstr "Operáciu zakazuje lokálna bezpečnostná politika"
 
 msgid "The operation or option is unavailable"
-msgstr "Funktion eller parameter �r inte tillg�nglig"
+msgstr "Operácia alebo voľba nie je dostupná"
 
 msgid "The requested credential element already exists"
-msgstr "Efterfr�gad credential existerar redan"
+msgstr "Požadovaný prvok poverenia už existuje"
 
 msgid "The provided name was not a mechanism name"
-msgstr "Givet namn �r inte ett mekanism-namn"
+msgstr "Poskytnutý názov nebol názvom mechanizmu"
 
 msgid "The gss_init_sec_context() or gss_accept_sec_context() function must be called again to complete its function"
-msgstr "Funktionerna gss_init_sec_context() eller gss_accept_sec_context() m�ste anropas igen f�r att fullf�lja operationen"
+msgstr "Funkciu gss_init_sec_context() alebo gss_accept_sec_context() je potrebné zavolať znova, aby dokončila svoju úlohu"
 
 msgid "The token was a duplicate of an earlier token"
-msgstr "Meddelandet �r en dubblett"
+msgstr "Token bol duplikátom skoršieho tokenu"
 
 msgid "The token's validity period has expired"
-msgstr "Meddelandets giltighetstid har g�tt ut"
+msgstr "Platnosť tokenu vypršala"
 
 msgid "A later token has already been processed"
-msgstr "Senare meddelande redan behandlat"
+msgstr "Už bol spracovaný neskorší token"
 
 msgid "An expected per-message token was not received"
-msgstr "Tidigare meddelande inte mottaget"
+msgstr "Očakávaný token-na-správu nebol obdržaný"
 
 msgid "No error"
-msgstr "Inget fel"
+msgstr "Žiadna chyba"
 
 msgid "No @ in SERVICE-NAME name string"
-msgstr "Tecknet @ saknas i SERVICE-NAME namnstr�ng"
+msgstr "V reťazci SERVICE-NAME chýba @"
 
 msgid "STRING-UID-NAME contains nondigits"
-msgstr "STRING-UID-NAME inneh�ller ickesiffror"
+msgstr "STRING-UID-NAME obsahuje znaky, ktoré nie sú číslice"
 
 msgid "UID does not resolve to username"
-msgstr "UID identifierar inget anv�ndarnamn"
+msgstr "UID nie je možné preložiť na používateľské meno"
 
 msgid "Validation error"
-msgstr "Valideringsfel"
+msgstr "Chyba pri overovaní"
 
 msgid "Couldn't allocate gss_buffer_t data"
-msgstr "Kan inte allokera gss_buffer_t data"
+msgstr "Nebolo možné alokovať údaje gss_buffer_t"
 
 msgid "Message context invalid"
-msgstr "Ogiltig Meddelandekontext"
+msgstr "Neplatný kontext správy"
 
 msgid "Buffer is the wrong size"
-msgstr "Buffer har fel storlek"
+msgstr "CHybná veľkosť bufera"
 
 msgid "Credential usage type is unknown"
-msgstr "Credential har ok�nd typ"
+msgstr "Typ použitia oprávnenia je neznámy"
 
 msgid "Unknown quality of protection specified"
-msgstr "Ok�nd skyddsniv� beg�rd"
+msgstr "Bola zadaná neznáma kvalita ochrany"
 
 msgid "Principal in credential cache does not match desired name"
-msgstr "Namn p� credential matchar inte beg�rt namn"
+msgstr "Zmocniteľ vo vyrovnávacej pamäti oprávnení sa nezhoduje s požadovaným menom"
 
 msgid "No principal in keytab matches desired name"
-msgstr "Inget namn i nyckelfil matchar beg�rt namn"
+msgstr "Zmocniteľ v keytab sa zhoduje s požadovaným menom"
 
 msgid "Credential cache has no TGT"
-msgstr "Credential-cache har ingen TGT"
+msgstr "Vyrovnávacia pamäť oprávnení nemá TGT"
 
 msgid "Authenticator has no subkey"
-msgstr "Autenticerare har ingen nyckel"
+msgstr "Autentifikátor nemá podkľúč"
 
 msgid "Context is already fully established"
-msgstr "Ingen s�kerhetskontext har uppr�ttats"
+msgstr "Kontext je už úplne zavedený"
 
 msgid "Unknown signature type in token"
-msgstr "Ok�nd signaturtyp i token"
+msgstr "Neplatný typ podpisu v tokene"
 
 msgid "Invalid field length in token"
-msgstr "Felaktigt l�ngdf�lt i token"
+msgstr "Neplatná dĺžka poľa v tokene"
 
 msgid "Attempt to use incomplete security context"
-msgstr "F�rs�kte anv�nda ofullst�ndig s�kerhetskontext"
+msgstr "Pokus o použitie neúplného bezpečnostného kontextu"
 
 msgid "No krb5 error"
-msgstr "Inget krb5 fel"
+msgstr "Žiadna chyba krb5"
 
 msgid "Unknown krb5 error"
-msgstr "Ok�nt krb5 fel"
+msgstr "Neznáma chyba krb5"
 
 #, c-format
 msgid "%s: missing parameter\n"
-msgstr "%s: parameter saknas\n"
+msgstr "%s: chýba parameter\n"
 
 #, c-format
 msgid "Try `%s --help' for more information.\n"
-msgstr "F�rs�k med `%s --help' f�r mer information.\n"
+msgstr "Skúste viac informácií pomocou „%s --help“.\n"
 
 #, c-format
 msgid ""
 "GSS-API major status code %ld (0x%lx).\n"
 "\n"
 msgstr ""
-"GSS-API huvudstatuskod %ld (0x%lx).\n"
+"GSS-API hlavné, stavový kód %ld (0x%lx).\n"
 "\n"
 
 #, c-format
@@ -180,7 +178,7 @@ msgid ""
 msgstr ""
 "   MSB                                                                 LSB\n"
 "   +-----------------+-----------------+---------------------------------+\n"
-"   |    Anropsfel    |   Funktionsfel  |       Till�ggsinformation       |\n"
+"   |  Chyba volania  |  Chyba rutiny   |     Doplňujúce informácie       |\n"
 "   | "
 
 #, c-format
@@ -197,20 +195,20 @@ msgstr ""
 
 #, c-format
 msgid "Masked routine error %ld (0x%lx) shifted into %ld (0x%lx):\n"
-msgstr "Maskat funktionsfel %ld (0x%lx) skiftad till %ld (0x%lx):\n"
+msgstr "Maskovaná chyba rutiny %ld (0x%lx) posunutá na %ld (0x%lx):\n"
 
 #, c-format
 msgid "%s: displaying status code failed\n"
-msgstr "%s: visning av statuskod misslyckades\n"
+msgstr "%s: zobrazenie stavového kódu zlyhalo\n"
 
 #, c-format
 msgid "Masked calling error %ld (0x%lx) shifted into %ld (0x%lx):\n"
-msgstr "Maskat anropsfel %ld (0x%lx) skiftad till %ld (0x%lx):\n"
+msgstr "Maskovaná chyba volania %ld (0x%lx) posunutá na %ld (0x%lx):\n"
 
 #, c-format
 msgid "Masked supplementary info %ld (0x%lx) shifted into %ld (0x%lx):\n"
-msgstr "Maskad till�gssinformation %ld (0x%lx) skiftad till %ld (0x%lx):\n"
+msgstr "Maskované doplňujúce informácie %ld (0x%lx) posunuté na %ld (0x%lx):\n"
 
 #, c-format
 msgid "No error\n"
-msgstr "Inget fel\n"
+msgstr "Žiadna chyba\n"
