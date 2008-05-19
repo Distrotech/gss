@@ -20,6 +20,8 @@
 
 DISTCHECK_CONFIGURE_FLAGS = --enable-gtk-doc
 
+EXTRA_DIST = cfg.mk maint.mk .clcopying
+
 pkgconfigdir = $(libdir)/pkgconfig
 pkgconfig_DATA = gss.pc
 
@@ -35,7 +37,7 @@ update-po: refresh-po
 
 ChangeLog:
 	git log --pretty --numstat --summary | git2cl > ChangeLog
-	cat .cvscopying >> ChangeLog
+	cat .clcopying >> ChangeLog
 
 tag = $(PACKAGE)-`echo $(VERSION) | sed 's/\./-/g'`
 htmldir = ../www-$(PACKAGE)
