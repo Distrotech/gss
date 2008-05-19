@@ -8,6 +8,10 @@ See the end for copying conditions.
 
 ** Update gnulib files.
 
+** Translations files not stored directly in git to avoid merge conflicts.
+This allows us to avoid use of --no-location which makes the
+translation teams happier.
+
 * Version 0.0.23 (released 2007-12-19)
 
 ** Use gettext 0.17.
