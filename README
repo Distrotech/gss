@@ -1,5 +1,5 @@
 GSS README -- Important introductory notes.
-Copyright (C) 2003, 2004, 2005, 2006, 2007 Simon Josefsson
+Copyright (C) 2003, 2004, 2005, 2006, 2007, 2008 Simon Josefsson
 See the end for copying conditions.
 
 This directory holds the Generic Security Service Library (GSSLib).
@@ -7,8 +7,8 @@ See INSTALL for installation instructions, and doc/gss.{info,ps,pdf}
 for the manual.
 
 Unless you want to use this library to implement a new GSS mechanism,
-you will need to first install Shishi <http://josefsson.org/shishi/>,
-as it currently is the only supported mechanism.
+you will need to first install Shishi, as it is the only supported
+mechanism right now.  See <http://www.gnu.org/software/shishi/>
 
 The GSS library (lib/) and test suite (tests/) are licensed under the
 GNU General Public License license (see COPYING), and the
