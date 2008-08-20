@@ -16,7 +16,7 @@
 This manual is last updated @value{UPDATED} for version
 @value{VERSION} of GNU GSS.
 
-Copyright @copyright{} 2003, 2004, 2005, 2006, 2007 Simon Josefsson.
+Copyright @copyright{} 2003, 2004, 2005, 2006, 2007, 2008 Simon Josefsson.
 
 @quotation
 Permission is granted to copy, distribute and/or modify this document
@@ -378,7 +378,7 @@ be mentioned here, contact the author (@pxref{Bug Reports}).
 
 The package can be downloaded from several places, including:
 
-@url{http://josefsson.org/gss/releases/}
+@url{ftp://alpha.gnu.org/pub/gnu/gss/}
 
 The latest version is stored in a file, e.g.,
 @samp{gss-@value{VERSION}.tar.gz} where the @samp{@value{VERSION}}
@@ -394,7 +394,7 @@ and install the package.  You will need a few basic tools, such as
 @samp{sh}, @samp{make} and @samp{cc}.
 
 @example
-$ wget -q http://josefsson.org/gss/releases/gss-@value{VERSION}.tar.gz
+$ wget -q ftp://alpha.gnu.org/pub/gnu/gss/gss-@value{VERSION}.tar.gz
 $ tar xfz gss-@value{VERSION}.tar.gz
 $ cd gss-@value{VERSION}/
 $ ./configure
@@ -446,7 +446,7 @@ note.
 
 Send your bug report to:
 
-@center @samp{bug-gss@@josefsson.org}
+@center @samp{bug-gss@@gnu.org}
 
 @node Contributing
 @section Contributing
