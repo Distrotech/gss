@@ -50,9 +50,5 @@ release:
 		-o ../$(htmldir)/manual/ $(PACKAGE) \
 		"GNU Generic Security Service Library"
 	build-aux/gnupload --to alpha.gnu.org:gss $(distdir).tar.gz
-	cp -v $(distdir).tar.gz $(distdir).tar.gz.sig $(htmldir)/releases/
 	cp -v doc/reference/html/*.html doc/reference/html/*.png doc/reference/html/*.devhelp doc/reference/html/*.css $(htmldir)/reference/
-	cd $(htmldir) && \
-		cvs add -kb releases/$(distdir).tar.gz \
-			releases/$(distdir).tar.gz.sig && \
-		cvs commit -m "Update." manual/ reference/ releases/
+	cd $(htmldir) && cvs commit -m "Update." manual/ reference/
