@@ -58,7 +58,9 @@ AC_DEFUN([gl_INIT],
         [AC_CONFIG_LINKS([$GNUmakefile:$GNUmakefile], [],
   	[GNUmakefile=$GNUmakefile])])
   gl_INLINE
+  gl_HEADER_STRING_H
   gl_FUNC_STRVERSCMP
+  gl_STRING_MODULE_INDICATOR([strverscmp])
   gl_UNISTD_H
   gl_XALLOC
   m4_ifval(gl_LIBSOURCES_LIST, [
@@ -202,8 +204,8 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/getopt1.c
   lib/getopt_int.h
   lib/gettext.h
+  lib/string.in.h
   lib/strverscmp.c
-  lib/strverscmp.h
   lib/unistd.in.h
   lib/xalloc.h
   lib/xgethostname.c
@@ -219,6 +221,7 @@ AC_DEFUN([gl_FILE_LIST], [
   m4/lib-ld.m4
   m4/lib-link.m4
   m4/lib-prefix.m4
+  m4/string_h.m4
   m4/strverscmp.m4
   m4/unistd_h.m4
   m4/xalloc.m4
