@@ -1,5 +1,5 @@
 /* name.c --- Implementation of GSS-API Name Manipulation functions.
- * Copyright (C) 2003, 2004, 2005, 2006, 2007  Simon Josefsson
+ * Copyright (C) 2003, 2004, 2005, 2006, 2007, 2008  Simon Josefsson
  *
  * This file is part of the Generic Security Service (GSS).
  *
@@ -64,8 +64,6 @@ gss_import_name (OM_uint32 * minor_status,
 		 const gss_buffer_t input_name_buffer,
 		 const gss_OID input_name_type, gss_name_t * output_name)
 {
-  OM_uint32 major_stat;
-
   if (!output_name)
     {
       if (minor_status)
@@ -547,8 +545,6 @@ OM_uint32
 gss_duplicate_name (OM_uint32 * minor_status,
 		    const gss_name_t src_name, gss_name_t * dest_name)
 {
-  OM_uint32 maj_stat;
-
   if (src_name == GSS_C_NO_NAME)
     {
       if (minor_status)
