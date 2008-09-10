@@ -18,7 +18,8 @@
 # the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 # Boston, MA 02110-1301, USA.
 
-DISTCHECK_CONFIGURE_FLAGS = --enable-gtk-doc
+DISTCHECK_CONFIGURE_FLAGS = --enable-gtk-doc \
+	CFLAGS="-Werror -Wall"
 
 EXTRA_DIST = cfg.mk maint.mk .clcopying
 
