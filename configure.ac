@@ -20,7 +20,7 @@ dnl Process this file with autoconf to produce a configure script.
 # Boston, MA 02110-1301, USA.
 
 AC_PREREQ(2.61)
-AC_INIT([gss], [0.0.24], [bug-gss@gnu.org])
+AC_INIT([GSS], [0.0.24], [bug-gss@gnu.org])
 AC_CONFIG_AUX_DIR([build-aux])
 
 # Library code modified:                              REVISION++
