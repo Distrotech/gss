@@ -1,3 +1,311 @@
+2008-09-10  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS: Version 0.0.24.
+
+2008-09-10  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS: Add.
+
+2008-09-10  Simon Josefsson <simon@josefsson.org>
+
+	* AUTHORS: Update PGP key.
+
+2008-09-10  Simon Josefsson <simon@josefsson.org>
+
+	* .cvsignore, build-aux/.cvsignore, doc/.cvsignore,
+	doc/reference/.cvsignore, doc/reference/tmpl/.cvsignore,
+	doc/reference/tmpl/gss-unused.sgml, gl/.cvsignore,
+	gl/m4/.cvsignore, lib/.cvsignore, lib/krb5/.cvsignore,
+	m4/.cvsignore, po/.cvsignore, src/.cvsignore, tests/.cvsignore: 
+	Remove unused.
+
+2008-09-10  Simon Josefsson <simon@josefsson.org>
+
+	* doc/reference/Makefile.am: Update to modern gtk-doc makefile.
+
+2008-09-10  Simon Josefsson <simon@josefsson.org>
+
+	* doc/reference/gss-docs.sgml: Sync with gss.texi.
+
+2008-09-10  Simon Josefsson <simon@josefsson.org>
+
+	* doc/gss.texi: Fix license version.
+
+2008-09-10  Simon Josefsson <simon@josefsson.org>
+
+	* gss.fms: Remove unused gss.fms.
+
+2008-09-10  Simon Josefsson <simon@josefsson.org>
+
+	* lib/meta.c: Fix warning.
+
+2008-09-10  Simon Josefsson <simon@josefsson.org>
+
+	* Makefile.am: Run distcheck with -Werror to catch regressions.
+
+2008-09-10  Simon Josefsson <simon@josefsson.org>
+
+	* configure.ac: Fix project name.
+
+2008-09-10  Simon Josefsson <simon@josefsson.org>
+
+	* lib/asn1.c, lib/name.c: Fix warnings.
+
+2008-09-10  Simon Josefsson <simon@josefsson.org>
+
+	* Makefile.am, cfg.mk: Move release target to cfg.mk and update it.
+
+2008-09-10  Simon Josefsson <simon@josefsson.org>
+
+	* .clcopying: Use liberal license.
+
+2008-09-10  Simon Josefsson <simon@josefsson.org>
+
+	* doc/specification/draft-hartman-gss-naming-00.txt,
+	doc/specification/draft-hartman-gss-naming-01.txt,
+	doc/specification/draft-ietf-cat-gss-conv-00.txt,
+	doc/specification/draft-ietf-cat-gsseasy-01.txt,
+	doc/specification/draft-ietf-cat-gssv2-cbind-04.txt,
+	doc/specification/draft-ietf-cat-krb5gss-mech2-00.txt,
+	doc/specification/draft-ietf-cat-krb5gss-mech2-01.txt,
+	doc/specification/draft-ietf-cat-krb5gss-mech2-02.txt,
+	doc/specification/draft-ietf-cat-krb5gss-mech2-03.txt,
+	doc/specification/draft-ietf-kitten-2478bis-00.txt,
+	doc/specification/draft-ietf-kitten-2478bis-01.txt,
+	doc/specification/draft-ietf-kitten-2478bis-02.txt,
+	doc/specification/draft-ietf-kitten-2478bis-03.txt,
+	doc/specification/draft-ietf-kitten-2478bis-04.txt,
+	doc/specification/draft-ietf-kitten-2478bis-05.txt,
+	doc/specification/draft-ietf-kitten-extended-mech-inquiry-00.txt,
+	doc/specification/draft-ietf-kitten-extended-mech-inquiry-01.txt,
+	doc/specification/draft-ietf-kitten-extended-mech-inquiry-02.txt,
+	doc/specification/draft-ietf-kitten-extended-mech-inquiry-03.txt,
+	doc/specification/draft-ietf-kitten-gss-naming-00.txt,
+	doc/specification/draft-ietf-kitten-gss-naming-01.txt,
+	doc/specification/draft-ietf-kitten-gss-naming-02.txt,
+	doc/specification/draft-ietf-kitten-gss-naming-03.txt,
+	doc/specification/draft-ietf-kitten-gss-naming-04.txt,
+	doc/specification/draft-ietf-kitten-gss-naming-05.txt,
+	doc/specification/draft-ietf-kitten-gssapi-channel-bindings-00.txt,
+	doc/specification/draft-ietf-kitten-gssapi-channel-bindings-01.txt,
+	doc/specification/draft-ietf-kitten-gssapi-channel-bindings-02.txt,
+	doc/specification/draft-ietf-kitten-gssapi-channel-bindings-03.txt,
+	doc/specification/draft-ietf-kitten-gssapi-csharp-bindings-00.txt,
+	doc/specification/draft-ietf-kitten-gssapi-domain-based-names-00.tx
+	t,
+	doc/specification/draft-ietf-kitten-gssapi-domain-based-names-01.tx
+	t,
+	doc/specification/draft-ietf-kitten-gssapi-domain-based-names-02.tx
+	t,
+	doc/specification/draft-ietf-kitten-gssapi-domain-based-names-03.tx
+	t,
+	doc/specification/draft-ietf-kitten-gssapi-domain-based-names-05.tx
+	t,
+	doc/specification/draft-ietf-kitten-gssapi-extensions-iana-00.txt,
+	doc/specification/draft-ietf-kitten-gssapi-extensions-iana-01.txt,
+	doc/specification/draft-ietf-kitten-gssapi-extensions-iana-02.txt,
+	doc/specification/draft-ietf-kitten-gssapi-naming-exts-00.txt,
+	doc/specification/draft-ietf-kitten-gssapi-naming-exts-01.txt,
+	doc/specification/draft-ietf-kitten-gssapi-naming-exts-02.txt,
+	doc/specification/draft-ietf-kitten-gssapi-prf-00.txt,
+	doc/specification/draft-ietf-kitten-gssapi-prf-01.txt,
+	doc/specification/draft-ietf-kitten-gssapi-prf-02.txt,
+	doc/specification/draft-ietf-kitten-gssapi-prf-03.txt,
+	doc/specification/draft-ietf-kitten-gssapi-prf-04.txt,
+	doc/specification/draft-ietf-kitten-gssapi-prf-06.txt,
+	doc/specification/draft-ietf-kitten-gssapi-prf-07.txt,
+	doc/specification/draft-ietf-kitten-gssapi-rfc2853-update-for-cshar
+	p-00.txt,
+	doc/specification/draft-ietf-kitten-gssapi-store-cred-00.txt,
+	doc/specification/draft-ietf-kitten-gssapi-store-cred-01.txt,
+	doc/specification/draft-ietf-kitten-gssapi-store-cred-02.txt,
+	doc/specification/draft-ietf-kitten-gssapi-v3-guide-to-00.txt,
+	doc/specification/draft-ietf-kitten-gssapi-v3-guide-to-01.txt,
+	doc/specification/draft-ietf-kitten-krb5-gssapi-domain-based-names-
+	00.txt,
+	doc/specification/draft-ietf-kitten-krb5-gssapi-domain-based-names-
+	02.txt,
+	doc/specification/draft-ietf-kitten-krb5-gssapi-domain-based-names-
+	03.txt, doc/specification/draft-ietf-kitten-krb5-gssapi-prf-00.txt,
+	doc/specification/draft-ietf-kitten-krb5-gssapi-prf-01.txt,
+	doc/specification/draft-ietf-kitten-krb5-gssapi-prf-02.txt,
+	doc/specification/draft-ietf-kitten-krb5-gssapi-prf-03.txt,
+	doc/specification/draft-ietf-kitten-krb5-gssapi-prf-04.txt,
+	doc/specification/draft-ietf-kitten-rfc2853bis-00.txt,
+	doc/specification/draft-ietf-kitten-rfc2853bis-01.txt,
+	doc/specification/draft-ietf-kitten-rfc2853bis-03.txt,
+	doc/specification/draft-ietf-kitten-stackable-pseudo-mechs-00.txt,
+	doc/specification/draft-ietf-kitten-stackable-pseudo-mechs-01.txt,
+	doc/specification/draft-ietf-kitten-stackable-pseudo-mechs-02.txt,
+	doc/specification/draft-ietf-krb-wg-gss-cb-hash-agility-00.txt,
+	doc/specification/draft-ietf-krb-wg-gss-crypto-00.txt,
+	doc/specification/draft-ietf-krb-wg-gssapi-cfx-00.txt,
+	doc/specification/draft-ietf-krb-wg-gssapi-cfx-01.txt,
+	doc/specification/draft-ietf-krb-wg-gssapi-cfx-02.txt,
+	doc/specification/draft-ietf-krb-wg-gssapi-cfx-03.txt,
+	doc/specification/draft-ietf-krb-wg-gssapi-cfx-04.txt,
+	doc/specification/draft-ietf-krb-wg-gssapi-cfx-05.txt,
+	doc/specification/draft-ietf-krb-wg-gssapi-cfx-06.txt,
+	doc/specification/draft-ietf-krb-wg-gssapi-cfx-07.txt,
+	doc/specification/draft-ietf-nfsv4-ccm-03.txt,
+	doc/specification/draft-ietf-nfsv4-channel-bindings-02.txt,
+	doc/specification/draft-ietf-nfsv4-channel-bindings-04.txt,
+	doc/specification/draft-ietf-secsh-gsskeyex-09.txt,
+	doc/specification/draft-johansson-http-gss-00.txt,
+	doc/specification/draft-johansson-http-gss-01.txt,
+	doc/specification/draft-morris-java-gssapi-update-for-csharp-00.txt
+	, doc/specification/draft-raeburn-cat-gssapi-krb5-3des-00.txt,
+	doc/specification/draft-raeburn-krb-gssapi-krb5-3des-01.txt,
+	doc/specification/draft-williams-gssapi-channel-bindings-00.txt,
+	doc/specification/draft-williams-gssapi-cred-store-00.txt,
+	doc/specification/draft-williams-gssapi-domain-based-names-00.txt,
+	doc/specification/draft-williams-gssapi-prf-00.txt,
+	doc/specification/draft-williams-gssapi-stackable-pseudo-mechs-00.t
+	xt,
+	doc/specification/draft-williams-gssapi-store-deleg-creds-00.txt,
+	doc/specification/draft-williams-gssapi-store-deleg-creds-01.txt,
+	doc/specification/draft-williams-gssapi-v3-guide-to-00.txt,
+	doc/specification/draft-williams-krb5-gssapi-domain-based-names-00.
+	txt, doc/specification/draft-williams-krb5-gssapi-prf-00.txt,
+	doc/specification/draft-zhu-spnego-2478bis-00.txt,
+	doc/specification/draft-zhu-spnego-2478bis-01.txt,
+	doc/specification/gssapi-service-names,
+	doc/specification/rfc1508.txt, doc/specification/rfc1509.txt,
+	doc/specification/rfc1961.txt, doc/specification/rfc1964.txt,
+	doc/specification/rfc2025.txt, doc/specification/rfc2078.txt,
+	doc/specification/rfc2203.txt, doc/specification/rfc2478.txt,
+	doc/specification/rfc2479.txt, doc/specification/rfc2743.txt,
+	doc/specification/rfc2744.txt, doc/specification/rfc2853.txt,
+	doc/specification/rfc4121.txt, doc/specification/rfc4178.txt,
+	doc/specification/rfc4401.txt, doc/specification/rfc4402.txt,
+	doc/specification/rfc4768.txt: Remove.
+
+2008-09-10  Simon Josefsson <simon@josefsson.org>
+
+	* GNUmakefile, build-aux/config.rpath, gl/Makefile.am,
+	gl/m4/include_next.m4, gl/m4/lib-link.m4, gl/m4/lib-prefix.m4,
+	gl/string.in.h, gl/unistd.in.h, maint.mk: Update gnulib files.
+
+2008-08-21  Simon Josefsson <simon@josefsson.org>
+
+	* gl/Makefile.am, gl/m4/autobuild.m4, gl/m4/gnulib-comp.m4,
+	gl/m4/string_h.m4, gl/m4/strverscmp.m4, gl/string.in.h,
+	gl/strverscmp.h, lib/version.c: Update gnulib files.
+
+2008-08-20  Simon Josefsson <simon@josefsson.org>
+
+	* Makefile.am: Don't copy archive to www directory.
+
+2008-08-20  Simon Josefsson <simon@josefsson.org>
+
+	* configure.ac: Uses autobuild from gnulib.
+
+2008-08-20  Simon Josefsson <simon@josefsson.org>
+
+	* GNUmakefile, build-aux/gnupload, doc/gendocs_template,
+	gl/Makefile.am, gl/m4/autobuild.m4, gl/m4/gnulib-cache.m4,
+	gl/m4/gnulib-comp.m4, gl/m4/gnulib-tool.m4, gl/xalloc.h,
+	m4/autobuild.m4, maint.mk: Update gnulib files.
+
+2008-08-20  Simon Josefsson <simon@josefsson.org>
+
+	* po/LINGUAS, po/id.po.in, po/zh_CN.po.in: Sync with TP.
+
+2008-08-20  Simon Josefsson <simon@josefsson.org>
+
+	* README: Fix URLs.
+
+2008-08-20  Simon Josefsson <simon@josefsson.org>
+
+	* doc/gss.texi: Fix URLs.
+
+2008-05-20  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS: Add.
+
+2008-05-20  Simon Josefsson <simon@josefsson.org>
+
+	* doc/Makefile.am: Fix copyright year.
+
+2008-05-20  Simon Josefsson <simon@josefsson.org>
+
+	* po/LINGUAS, po/ga.po.in, po/sk.po.in, po/sv.po.in, po/vi.po.in: 
+	Sync with TP.
+
+2008-05-20  Simon Josefsson <simon@josefsson.org>
+
+	* Makefile.am, NEWS, cfg.mk, po/Makevars, po/fr.po, po/fr.po.in,
+	po/pl.po, po/pl.po.in, po/ro.po, po/ro.po.in, po/rw.po,
+	po/rw.po.in, po/sv.po, po/sv.po.in, po/vi.po, po/vi.po.in: Don't use
+	gettext --no-location.
+
+2008-05-20  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS: Add.
+
+2008-05-20  Simon Josefsson <simon@josefsson.org>
+
+	* .clcopying, .cvscopying, Makefile.am: Rename .cvscopying to
+	.clcopying.
+
+2008-05-20  Simon Josefsson <simon@josefsson.org>
+
+	* GNUmakefile, build-aux/gendocs.sh, build-aux/gnupload,
+	gl/m4/extensions.m4, gl/m4/getopt.m4, gl/m4/gnulib-common.m4,
+	gl/m4/gnulib-comp.m4, gl/m4/include_next.m4, gl/xalloc.h,
+	gl/xmalloc.c: Update gnulib files.
+
+2008-04-01  Simon Josefsson <simon@josefsson.org>
+
+	* gl/Makefile.am: Update gnulib files.
+
+2008-03-25  Simon Josefsson <simon@josefsson.org>
+
+	* GNUmakefile, build-aux/GNUmakefile, build-aux/gendocs.sh,
+	build-aux/maint.mk, cfg.mk, gl/Makefile.am, gl/getopt.c,
+	gl/m4/gnulib-cache.m4, gl/m4/gnulib-comp.m4, gl/m4/include_next.m4,
+	gl/m4/lib-link.m4, gl/m4/unistd_h.m4, gl/unistd.in.h, maint-cfg.mk,
+	maint.mk: Update gnulib files.
+
+2008-02-25  Simon Josefsson <simon@josefsson.org>
+
+	* doc/specification/draft-ietf-kitten-extended-mech-inquiry-03.txt,
+	doc/specification/draft-ietf-kitten-gssapi-channel-bindings-03.txt,
+	doc/specification/draft-ietf-kitten-gssapi-extensions-iana-02.txt: 
+	Add.
+
+2008-02-06  Simon Josefsson <simon@josefsson.org>
+
+	* configure.ac: Bump versions.
+
+2008-02-06  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS: Add.
+
+2008-02-06  Simon Josefsson <simon@josefsson.org>
+
+	* GNUmakefile, maint-cfg.mk: Need config.rpath workaround.
+
+2008-02-06  Simon Josefsson <simon@josefsson.org>
+
+	* build-aux/config.rpath, build-aux/gendocs.sh, build-aux/gnupload,
+	gl/Makefile.am, gl/gethostname.c, gl/m4/unistd_h.m4,
+	gl/unistd.in.h, gl/xalloc.h: Update gnulib files.
+
+2008-02-06  Simon Josefsson <simon@josefsson.org>
+
+	* Makefile.am: Brace expansion is not POSIX portable.
+
+2007-12-26  Simon Josefsson <simon@josefsson.org>
+
+	*
+	doc/specification/draft-ietf-kitten-gssapi-domain-based-names-05.tx
+	t: Add.
+
+2007-12-19  Simon Josefsson <simon@josefsson.org>
+
+	* ChangeLog: Generated.
+
 2007-12-19  Simon Josefsson <simon@josefsson.org>
 
 	* doc/reference/Makefile.am: Sync with libidn.
@@ -4840,22 +5148,10 @@
 
 	* Initial import, empty dummy project.
 
+	-----
 
-    Copyright (C) 2003, 2004, 2005, 2006, 2007 Simon Josefsson
+	Copyright (C) 2003, 2004, 2005, 2006, 2007, 2008 Simon Josefsson
 
-  This file is part of GSS.
- 
-  GSS is free software; you can redistribute it and/or modify it under
-  the terms of the GNU General Public License as published by the Free
-  Software Foundation; either version 3 of the License, or (at your
-  option) any later version.
-
-  GSS is distributed in the hope that it will be useful, but WITHOUT
-  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
-  or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public
-  License for more details.
-
-  You should have received a copy of the GNU General Public License
-  along with GSS; if not, see http://www.gnu.org/licenses or write to
-  the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
-  Boston, MA 02110-1301, USA.
+	Copying and distribution of this file, with or without
+	modification, are permitted provided the copyright notice
+	and this notice are preserved.
