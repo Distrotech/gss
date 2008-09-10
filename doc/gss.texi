@@ -85,7 +85,7 @@ platforms including most major Unix platforms and Windows, and many
 kind of devices including iPAQ handhelds and S/390 mainframes.
 
 GSS is a GNU project, and is licensed under the GNU General Public
-License.
+License version 3 or later.
 
 @menu
 * Getting Started::
@@ -128,7 +128,7 @@ similar job.
 @table @asis
 @item It's Free Software
 Anybody can use, modify, and redistribute it under the terms of the
-GNU General Public License.
+GNU General Public License version 3 or later.
 
 @item It's thread-safe
 No global variables are used and multiple library handles and session
