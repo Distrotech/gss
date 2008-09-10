@@ -28,33 +28,57 @@
 # include "krb5/protos.h"
 #endif
 
-static _gss_mech_api_desc _gss_mech_apis[] = {
-#ifdef USE_KERBEROS5
+static _gss_mech_api_desc _gss_mech_apis[] =
   {
-   &GSS_KRB5_static,
-   {
-    /* Mandatory name-types. */
-    &GSS_KRB5_NT_PRINCIPAL_NAME_static,
-    &GSS_C_NT_HOSTBASED_SERVICE_static,
-    &GSS_C_NT_EXPORT_NAME_static},
-   gss_krb5_init_sec_context,
-   gss_krb5_canonicalize_name,
-   gss_krb5_export_name,
-   gss_krb5_wrap,
-   gss_krb5_unwrap,
-   gss_krb5_get_mic,
-   gss_krb5_verify_mic,
-   gss_krb5_display_status,
-   gss_krb5_acquire_cred,
-   gss_krb5_release_cred,
-   gss_krb5_accept_sec_context,
-   gss_krb5_delete_sec_context,
-   gss_krb5_context_time,
-   gss_krb5_inquire_cred,
-   gss_krb5_inquire_cred_by_mech},
+#ifdef USE_KERBEROS5
+    {
+      &GSS_KRB5_static,
+      {
+	/* Mandatory name-types. */
+	&GSS_KRB5_NT_PRINCIPAL_NAME_static,
+	&GSS_C_NT_HOSTBASED_SERVICE_static,
+	&GSS_C_NT_EXPORT_NAME_static
+      },
+      gss_krb5_init_sec_context,
+      gss_krb5_canonicalize_name,
+      gss_krb5_export_name,
+      gss_krb5_wrap,
+      gss_krb5_unwrap,
+      gss_krb5_get_mic,
+      gss_krb5_verify_mic,
+      gss_krb5_display_status,
+      gss_krb5_acquire_cred,
+      gss_krb5_release_cred,
+      gss_krb5_accept_sec_context,
+      gss_krb5_delete_sec_context,
+      gss_krb5_context_time,
+      gss_krb5_inquire_cred,
+      gss_krb5_inquire_cred_by_mech},
 #endif
-  {NULL}
-};
+    {
+      NULL,
+      {
+	NULL,
+	NULL,
+	NULL
+      },
+      NULL,
+      NULL,
+      NULL,
+      NULL,
+      NULL,
+      NULL,
+      NULL,
+      NULL,
+      NULL,
+      NULL,
+      NULL,
+      NULL,
+      NULL,
+      NULL,
+      NULL
+    }
+  };
 
 _gss_mech_api_t
 _gss_find_mech (const gss_OID oid)
