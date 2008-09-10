@@ -26,7 +26,7 @@
 
     <para>
       GSS is a GNU project, and is licensed under the GNU General
-      Public License.
+      Public License version 3 or later.
     </para>
 
     <xi:include href="xml/gss.xml"/>
