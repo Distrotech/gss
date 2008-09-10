@@ -28,27 +28,3 @@ pkgconfig_DATA = gss.pc
 SUBDIRS = po gl lib src tests doc
 
 ACLOCAL_AMFLAGS = -I m4 -I gl/m4
-
-# Maintainer targets
-
-ChangeLog:
-	git log --pretty --numstat --summary | git2cl > ChangeLog
-	cat .clcopying >> ChangeLog
-
-tag = $(PACKAGE)-`echo $(VERSION) | sed 's/\./-/g'`
-htmldir = ../www-$(PACKAGE)
-
-release:
-	! git-tag -l $(tag) | grep $(PACKAGE) > /dev/null
-	rm -f ChangeLog
-	$(MAKE) ChangeLog distcheck
-	git commit -m Generated. ChangeLog
-	git-tag -u b565716f! -m $(VERSION) $(tag)
-	git-push
-	git-push --tags
-	cd doc && ../build-aux/gendocs.sh --html "--css-include=texinfo.css" \
-		-o ../$(htmldir)/manual/ $(PACKAGE) \
-		"GNU Generic Security Service Library"
-	build-aux/gnupload --to alpha.gnu.org:gss $(distdir).tar.gz
-	cp -v doc/reference/html/*.html doc/reference/html/*.png doc/reference/html/*.devhelp doc/reference/html/*.css $(htmldir)/reference/
-	cd $(htmldir) && cvs commit -m "Update." manual/ reference/

@@ -46,3 +46,36 @@ update-po: refresh-po
 
 bootstrap: autoreconf
 	./configure $(CFGFLAGS)
+
+# Maintainer targets
+
+ChangeLog:
+	git2cl > ChangeLog
+	cat .clcopying >> ChangeLog
+
+tag = $(PACKAGE)-`echo $(VERSION) | sed 's/\./-/g'`
+htmldir = ../www-$(PACKAGE)
+
+release: prepare upload web upload-web
+
+prepare:
+	! git-tag -l $(tag) | grep $(PACKAGE) > /dev/null
+	rm -f ChangeLog
+	$(MAKE) ChangeLog distcheck
+	git commit -m Generated. ChangeLog
+	git-tag -u b565716f! -m $(VERSION) $(tag)
+	cp $(distdir).tar.gz $(distdir).tar.gz.sig ../releases/$(PACKAGE)/
+
+upload:
+	git-push
+	git-push --tags
+	build-aux/gnupload --to alpha.gnu.org:gss $(distdir).tar.gz
+
+web:
+	cd doc && ../build-aux/gendocs.sh --html "--css-include=texinfo.css" \
+		-o ../$(htmldir)/manual/ $(PACKAGE) \
+		"GNU Generic Security Service Library"
+	cp -v doc/reference/html/*.html doc/reference/html/*.png doc/reference/html/*.devhelp doc/reference/html/*.css $(htmldir)/reference/
+
+upload-web:
+	cd $(htmldir) && cvs commit -m "Update." manual/ reference/
