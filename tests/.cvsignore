@@ -1,7 +1,0 @@
-.deps
-.libs
-Makefile
-Makefile.in
-basic
-krb5context
-krb5context.tkt
