@@ -47,7 +47,26 @@ update-po: refresh-po
 bootstrap: autoreconf
 	./configure $(CFGFLAGS)
 
-# Maintainer targets
+# Code Coverage
+
+web-coverage:
+	rm -fv `find $(htmldir)/coverage -type f | grep -v CVS`
+	cp -rv doc/coverage/* $(htmldir)/coverage/
+
+upload-web-coverage:
+	cd $(htmldir) && \
+		cvs commit -m "Update." coverage
+
+# Mingw32
+
+W32ROOT ?= $(HOME)/gnutls4win/inst
+
+mingw32: autoreconf 
+	./configure $(CFGFLAGS) --host=i586-mingw32msvc --build=`build-aux/config.guess` --with-libtasn1-prefix=$(W32ROOT) --with-libgcrypt-prefix=$(W32ROOT) --prefix $(W32ROOT)
+
+.PHONY: bootstrap autoreconf mingw32
+
+# Release
 
 ChangeLog:
 	git2cl > ChangeLog
