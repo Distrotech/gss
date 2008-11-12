@@ -21,7 +21,6 @@ dnl Process this file with autoconf to produce a configure script.
 
 AC_PREREQ(2.61)
 AC_INIT([GSS], [0.0.25], [bug-gss@gnu.org])
-AC_CONFIG_AUX_DIR([build-aux])
 
 # Library code modified:                              REVISION++
 # Interfaces changed/added/removed:   CURRENT++       REVISION=0
@@ -31,7 +30,9 @@ AC_SUBST(LT_CURRENT, 0)
 AC_SUBST(LT_REVISION, 25)
 AC_SUBST(LT_AGE, 0)
 
-AM_INIT_AUTOMAKE([1.10])
+AC_CONFIG_AUX_DIR([build-aux])
+AC_CONFIG_MACRO_DIR([m4])
+AM_INIT_AUTOMAKE([1.10 -Wall -Werror -Wno-override])
 AC_CONFIG_HEADERS(config.h)
 
 # Checks for programs.
@@ -79,7 +80,6 @@ GTK_DOC_CHECK(1.1)
 
 gl_WARN_ADD([-Wall])
 
-# We are done.
 AC_CONFIG_FILES([
   Makefile
   gss.pc
