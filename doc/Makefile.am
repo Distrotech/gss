@@ -26,7 +26,7 @@ EXTRA_DIST = gss.html gss.ps gss.pdf \
 	gdoc asciidoc asciidoc.conf texinfo.conf texinfo.css
 
 info_TEXINFOS = gss.texi
-gss_TEXINFOS = gpl-3.0.texi fdl.texi $(gdoc_TEXINFOS)
+gss_TEXINFOS = gpl-3.0.texi fdl-1.3.texi $(gdoc_TEXINFOS)
 
 AM_MAKEINFOHTMLFLAGS = --no-split --number-sections --css-include=texinfo.css
 

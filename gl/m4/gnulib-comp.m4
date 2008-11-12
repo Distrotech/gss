@@ -44,6 +44,7 @@ AC_DEFUN([gl_INIT],
   gl_COMMON
   gl_source_base='gl'
   gl_FUNC_GETHOSTNAME
+  gl_UNISTD_MODULE_INDICATOR([gethostname])
   gl_GETOPT
   AC_SUBST([LIBINTL])
   AC_SUBST([LTLIBINTL])
@@ -62,6 +63,7 @@ AC_DEFUN([gl_INIT],
   gl_FUNC_STRVERSCMP
   gl_STRING_MODULE_INDICATOR([strverscmp])
   gl_UNISTD_H
+  AC_SUBST([WARN_CFLAGS])
   gl_XALLOC
   m4_ifval(gl_LIBSOURCES_LIST, [
     m4_syscmd([test ! -d ]m4_defn([gl_LIBSOURCES_DIR])[ ||
@@ -195,7 +197,7 @@ AC_DEFUN([gl_FILE_LIST], [
   build-aux/gendocs.sh
   build-aux/gnupload
   build-aux/link-warning.h
-  doc/fdl.texi
+  doc/fdl-1.3.texi
   doc/gendocs_template
   doc/gpl-3.0.texi
   lib/gethostname.c
@@ -223,7 +225,9 @@ AC_DEFUN([gl_FILE_LIST], [
   m4/lib-prefix.m4
   m4/string_h.m4
   m4/strverscmp.m4
+  m4/sys_socket_h.m4
   m4/unistd_h.m4
+  m4/warnings.m4
   m4/xalloc.m4
   top/GNUmakefile
   top/maint.mk

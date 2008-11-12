@@ -77,9 +77,30 @@ AC_SUBST(INCLUDE_GSS_KRB5)
 # Check for gtk-doc.
 GTK_DOC_CHECK(1.1)
 
+gl_WARN_ADD([-Wall])
+
 # We are done.
-AC_CONFIG_FILES(Makefile gss.pc lib/gss.h po/Makefile.in \
-		doc/Makefile doc/reference/Makefile \
-		gl/Makefile lib/Makefile src/Makefile tests/Makefile \
-		lib/krb5/Makefile)
+AC_CONFIG_FILES([
+  Makefile
+  gss.pc
+  doc/Makefile
+  doc/reference/Makefile
+  gl/Makefile
+  lib/Makefile
+  lib/gss.h
+  lib/krb5/Makefile
+  po/Makefile.in
+  src/Makefile
+  tests/Makefile
+])
 AC_OUTPUT
+
+AC_MSG_NOTICE([summary of build options:
+
+  version:          ${VERSION} shared $LT_CURRENT:$LT_REVISION:$LT_AGE
+  Host type:        ${host}
+  Install prefix:   ${prefix}
+  Compiler:         ${CC}
+  Warning flags:    ${WARN_CFLAGS}
+  Library types:    Shared=${enable_shared}, Static=${enable_static}
+])
