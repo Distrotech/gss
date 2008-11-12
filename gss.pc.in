@@ -1,5 +1,5 @@
 # Process this file with autoconf to produce a pkg-config metadata file.
-# Copyright 2003, 2004, 2005, 2006, 2007  Simon Josefsson
+# Copyright 2003, 2004, 2005, 2006, 2007, 2008  Simon Josefsson
 # 
 # Copying and distribution of this file, with or without modification,
 # are permitted in any medium without royalty provided the copyright
@@ -12,6 +12,7 @@ includedir=@includedir@
 
 Name: libgss
 Description: Generic Security Service API Library.
+URL: http://www.gnu.org/software/gss/
 Version: @VERSION@
 Libs: -L${libdir} -lgss
 Cflags: -I${includedir}
