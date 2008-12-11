@@ -1,5 +1,5 @@
 /* krb5/context.c --- Implementation of Kerberos 5 GSS Context functions.
- * Copyright (C) 2003, 2004, 2005, 2006, 2007  Simon Josefsson
+ * Copyright (C) 2003, 2004, 2005, 2006, 2007, 2008  Simon Josefsson
  *
  * This file is part of the Generic Security Service (GSS).
  *
@@ -294,7 +294,6 @@ gss_krb5_accept_sec_context (OM_uint32 * minor_status,
   gss_ctx_id_t cx;
   _gss_krb5_ctx_t cxk5;
   _gss_krb5_cred_t crk5;
-  OM_uint32 maj_stat;
   int rc;
 
   if (minor_status)

@@ -223,6 +223,7 @@ AC_DEFUN([gl_FILE_LIST], [
   m4/lib-ld.m4
   m4/lib-link.m4
   m4/lib-prefix.m4
+  m4/manywarnings.m4
   m4/string_h.m4
   m4/strverscmp.m4
   m4/sys_socket_h.m4

@@ -1,5 +1,5 @@
 /* obsolete.c --- Obsolete GSS-API v1 compatibility mappings.
- * Copyright (C) 2003, 2004, 2005, 2006, 2007  Simon Josefsson
+ * Copyright (C) 2003, 2004, 2005, 2006, 2007, 2008  Simon Josefsson
  *
  * This file is part of the Generic Security Service (GSS).
  *
@@ -29,7 +29,7 @@ gss_sign (OM_uint32 * minor_status,
 	  gss_buffer_t message_buffer, gss_buffer_t message_token)
 {
   return gss_get_mic (minor_status, context_handle,
-		      qop_req, message_buffer, message_token);
+		      (gss_qop_t)qop_req, message_buffer, message_token);
 }
 
 
@@ -51,7 +51,8 @@ gss_seal (OM_uint32 * minor_status,
 	  gss_buffer_t input_message_buffer,
 	  int *conf_state, gss_buffer_t output_message_buffer)
 {
-  return gss_wrap (minor_status, context_handle, conf_req_flag, qop_req,
+  return gss_wrap (minor_status, context_handle, conf_req_flag,
+		   (gss_qop_t) qop_req,
 		   input_message_buffer, conf_state, output_message_buffer);
 }
 

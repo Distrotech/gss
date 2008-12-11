@@ -1,5 +1,5 @@
 /* misc.c --- Implementation of GSS-API Miscellaneous functions.
- * Copyright (C) 2003, 2004, 2005, 2006, 2007  Simon Josefsson
+ * Copyright (C) 2003, 2004, 2005, 2006, 2007, 2008  Simon Josefsson
  *
  * This file is part of the Generic Security Service (GSS).
  *
@@ -151,8 +151,8 @@ gss_test_oid_set_member (OM_uint32 * minor_status,
 			 const gss_OID member,
 			 const gss_OID_set set, int *present)
 {
-  int i;
   gss_OID cur;
+  size_t i;
 
   if (minor_status)
     *minor_status = 0;
@@ -197,8 +197,8 @@ gss_test_oid_set_member (OM_uint32 * minor_status,
 OM_uint32
 gss_release_oid_set (OM_uint32 * minor_status, gss_OID_set * set)
 {
-  int i;
   gss_OID cur;
+  size_t i;
 
   if (minor_status)
     *minor_status = 0;
