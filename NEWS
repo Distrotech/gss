@@ -6,6 +6,8 @@ See the end for copying conditions.
 
 ** doc: Change license on the manual to GFDLv1.3+.
 
+** More compiler warnings enabled, and many warnings fixed.
+
 ** API and ABI modifications.
 No changes since last version.
 
