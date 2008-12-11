@@ -1,5 +1,5 @@
 /* krb5context.c --- Kerberos 5 security context self tests.
- * Copyright (C) 2003, 2004, 2005, 2006, 2007  Simon Josefsson
+ * Copyright (C) 2003, 2004, 2005, 2006, 2007, 2008  Simon Josefsson
  *
  * This file is part of the Generic Security Service (GSS).
  *
@@ -46,7 +46,19 @@
 /* Get Shishi prototypes. */
 #include <shishi.h>
 
-static int debug = 1;
+#ifndef __attribute__
+/* This feature is available in gcc versions 2.5 and later.  */
+# if __GNUC__ < 2 || (__GNUC__ == 2 && __GNUC_MINOR__ < 5)
+#  define __attribute__(Spec)	/* empty */
+# endif
+#endif
+
+static void fail (const char *format, ...)
+  __attribute__ ((format (printf, 1, 2)));
+static void success (const char *format, ...)
+  __attribute__ ((format (printf, 1, 2)));
+
+static int debug = 0;
 static int error_count = 0;
 static int break_on_error = 0;
 
@@ -69,12 +81,13 @@ success (const char *format, ...)
   va_list arg_ptr;
 
   va_start (arg_ptr, format);
-  vfprintf (stdout, format, arg_ptr);
+  if (debug)
+    vfprintf (stdout, format, arg_ptr);
   va_end (arg_ptr);
 }
 
 static void
-display_status_1 (char *m, OM_uint32 code, int type)
+display_status_1 (const char *m, OM_uint32 code, int type)
 {
   OM_uint32 maj_stat, min_stat;
   gss_buffer_desc msg;
@@ -101,7 +114,7 @@ display_status_1 (char *m, OM_uint32 code, int type)
 }
 
 static void
-display_status (char *msg, OM_uint32 maj_stat, OM_uint32 min_stat)
+display_status (const char *msg, OM_uint32 maj_stat, OM_uint32 min_stat)
 {
   display_status_1 (msg, maj_stat, GSS_C_GSS_CODE);
   display_status_1 (msg, min_stat, GSS_C_MECH_CODE);
@@ -110,13 +123,12 @@ display_status (char *msg, OM_uint32 maj_stat, OM_uint32 min_stat)
 int
 main (int argc, char *argv[])
 {
-  gss_uint32 maj_stat, min_stat, msgctx, ret_flags, time_rec;
+  gss_uint32 maj_stat, min_stat, ret_flags, time_rec;
   gss_buffer_desc bufdesc, bufdesc2;
   gss_name_t servername = GSS_C_NO_NAME, name;
-  gss_OID_set oids;
   gss_ctx_id_t cctx = GSS_C_NO_CONTEXT;
   gss_ctx_id_t sctx = GSS_C_NO_CONTEXT;
-  gss_cred_id_t cred_handle, server_creds;
+  gss_cred_id_t server_creds;
   Shishi *handle;
   size_t i;
 
@@ -124,8 +136,8 @@ main (int argc, char *argv[])
   bindtextdomain (PACKAGE, LOCALEDIR);
 
   do
-    if (strcmp (argv[argc - 1], "-d") == 0 ||
-	strcmp (argv[argc - 1], "--debug") == 0)
+    if (strcmp (argv[argc - 1], "-v") == 0 ||
+	strcmp (argv[argc - 1], "--verbose") == 0)
       debug = 1;
     else if (strcmp (argv[argc - 1], "-b") == 0 ||
 	     strcmp (argv[argc - 1], "--break-on-error") == 0)
@@ -134,8 +146,8 @@ main (int argc, char *argv[])
 	     strcmp (argv[argc - 1], "-?") == 0 ||
 	     strcmp (argv[argc - 1], "--help") == 0)
       {
-	printf ("Usage: %s [-vdbh?] [--debug] "
-		"[--break-on-error] [--help]\n", argv[0]);
+	printf ("Usage: %s [-vbh?] [--verbose] [--break-on-error] [--help]\n",
+		argv[0]);
 	return 1;
       }
   while (argc-- > 1);
@@ -144,7 +156,7 @@ main (int argc, char *argv[])
 
   /* Name of service. */
 
-  bufdesc.value = "host@latte.josefsson.org";
+  bufdesc.value = (char*) "host@latte.josefsson.org";
   bufdesc.length = strlen (bufdesc.value);
 
   maj_stat = gss_import_name (&min_stat, &bufdesc,
@@ -225,6 +237,10 @@ main (int argc, char *argv[])
 	  if (maj_stat != GSS_S_COMPLETE)
 	    fail ("loop 1 init failure\n");
 	  break;
+
+	default:
+	  fail ("default?!\n");
+	  break;
 	}
       if (GSS_ERROR (maj_stat))
 	{
@@ -234,8 +250,9 @@ main (int argc, char *argv[])
 
       if (debug)
 	{
+	  char *p = bufdesc2.value;
 	  Shishi_asn1 apreq = shishi_der2asn1_apreq (handle,
-						     bufdesc2.value + 17,
+						     p + 17,
 						     bufdesc2.length - 17);
 	  printf ("\nClient AP-REQ:\n\n");
 	  shishi_apreq_print (handle, stdout, apreq);
@@ -282,9 +299,9 @@ main (int argc, char *argv[])
 
       if (debug)
 	{
+	  char *p = bufdesc2.value;
 	  Shishi_asn1 aprep =
-	    shishi_der2asn1_aprep (handle, bufdesc.value + 15,
-				   bufdesc.length - 15);
+	    shishi_der2asn1_aprep (handle, p + 15, bufdesc.length - 15);
 	  printf ("\nServer AP-REP:\n\n");
 	  shishi_aprep_print (handle, stdout, aprep);
 	}
@@ -327,6 +344,9 @@ main (int argc, char *argv[])
 	  break;
 
 	  /* No case 2. */
+
+	default:
+	  break;
 	}
       if (GSS_ERROR (maj_stat))
 	{

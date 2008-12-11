@@ -45,7 +45,18 @@
 # include "krb5.h"
 #endif
 
-static int verbose = 0;
+#ifndef __attribute__
+/* This feature is available in gcc versions 2.5 and later.  */
+# if __GNUC__ < 2 || (__GNUC__ == 2 && __GNUC_MINOR__ < 5)
+#  define __attribute__(Spec)	/* empty */
+# endif
+#endif
+
+static void fail (const char *format, ...)
+  __attribute__ ((format (printf, 1, 2)));
+static void success (const char *format, ...)
+  __attribute__ ((format (printf, 1, 2)));
+
 static int debug = 0;
 static int error_count = 0;
 static int break_on_error = 0;
@@ -69,73 +80,9 @@ success (const char *format, ...)
   va_list arg_ptr;
 
   va_start (arg_ptr, format);
-  if (verbose)
+  if (debug)
     vfprintf (stdout, format, arg_ptr);
   va_end (arg_ptr);
-}
-
-static void
-escapeprint (const unsigned char *str, int len)
-{
-  int i;
-
-  if (!str || !len)
-    return;
-
-  printf ("\t ;; `");
-  for (i = 0; i < len; i++)
-    if ((str[i] >= 'A' && str[i] <= 'Z') ||
-	(str[i] >= 'a' && str[i] <= 'z') ||
-	(str[i] >= '0' && str[i] <= '9') || str[i] == '.')
-      printf ("%c", str[i]);
-    else
-      printf ("\\x%02x", str[i]);
-  printf ("' (length %d bytes)\n", len);
-}
-
-static void
-hexprint (const unsigned char *str, int len)
-{
-  int i;
-
-  if (!str || !len)
-    return;
-
-  printf ("\t ;; ");
-  for (i = 0; i < len; i++)
-    {
-      printf ("%02x ", str[i]);
-      if ((i + 1) % 8 == 0)
-	printf (" ");
-      if ((i + 1) % 16 == 0 && i + 1 < len)
-	printf ("\n\t ;; ");
-    }
-}
-
-static void
-binprint (const unsigned char *str, int len)
-{
-  int i;
-
-  if (!str || !len)
-    return;
-
-  printf ("\t ;; ");
-  for (i = 0; i < len; i++)
-    {
-      printf ("%d%d%d%d%d%d%d%d ",
-	      str[i] & 0x80 ? 1 : 0,
-	      str[i] & 0x40 ? 1 : 0,
-	      str[i] & 0x20 ? 1 : 0,
-	      str[i] & 0x10 ? 1 : 0,
-	      str[i] & 0x08 ? 1 : 0,
-	      str[i] & 0x04 ? 1 : 0,
-	      str[i] & 0x02 ? 1 : 0, str[i] & 0x01 ? 1 : 0);
-      if ((i + 1) % 3 == 0)
-	printf (" ");
-      if ((i + 1) % 6 == 0 && i + 1 < len)
-	printf ("\n\t ;; ");
-    }
 }
 
 int
@@ -153,9 +100,6 @@ main (int argc, char *argv[])
   do
     if (strcmp (argv[argc - 1], "-v") == 0 ||
 	strcmp (argv[argc - 1], "--verbose") == 0)
-      verbose = 1;
-    else if (strcmp (argv[argc - 1], "-d") == 0 ||
-	     strcmp (argv[argc - 1], "--debug") == 0)
       debug = 1;
     else if (strcmp (argv[argc - 1], "-b") == 0 ||
 	     strcmp (argv[argc - 1], "--break-on-error") == 0)
@@ -164,15 +108,11 @@ main (int argc, char *argv[])
 	     strcmp (argv[argc - 1], "-?") == 0 ||
 	     strcmp (argv[argc - 1], "--help") == 0)
       {
-	printf ("Usage: %s [-vdbh?] [--verbose] [--debug] "
-		"[--break-on-error] [--help]\n", argv[0]);
+	printf ("Usage: %s [-vbh?] [--verbose] [--break-on-error] [--help]\n",
+		argv[0]);
 	return 1;
       }
   while (argc-- > 1);
-
-  escapeprint (NULL, 0);
-  hexprint (NULL, 0);
-  binprint (NULL, 0);
 
   /* OID set tests */
   oids = GSS_C_NO_OID_SET;
@@ -371,7 +311,7 @@ main (int argc, char *argv[])
 
   /* Check name */
   service = NULL;
-  bufdesc.value = "imap@server.example.org@FOO";
+  bufdesc.value = (char*) "imap@server.example.org@FOO";
   bufdesc.length = strlen (bufdesc.value);
 
   maj_stat = gss_import_name (&min_stat, &bufdesc, GSS_C_NT_HOSTBASED_SERVICE,
@@ -451,7 +391,7 @@ main (int argc, char *argv[])
     printf ("    Display status for GSS_S_COMPLETE => %*s\n",
 	    bufdesc.length, (char *) bufdesc.value);
 
-  if (verbose)
+  if (debug)
     printf ("Basic self tests done with %d errors\n", error_count);
 
   return error_count ? 1 : 0;

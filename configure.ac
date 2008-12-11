@@ -85,6 +85,7 @@ nw="$nw -Wconversion"                # Too many warnings for now
 nw="$nw -Wsign-conversion"           # Too many warnings for now
 nw="$nw -Wcast-qual"                 # Too many warnings for now
 nw="$nw -Wtraditional"               # Warns on #elif which we use often
+nw="$nw -Wunreachable-code"          # False positive on strcmp
 gl_MANYWARN_ALL_GCC([ws])
 gl_MANYWARN_COMPLEMENT(ws, [$ws], [$nw])
 for w in $ws; do

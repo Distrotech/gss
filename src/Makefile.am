@@ -1,5 +1,5 @@
 ## Process this file with automake to produce Makefile.in
-# Copyright (C) 2003, 2004, 2005, 2006, 2007 Simon Josefsson.
+# Copyright (C) 2003, 2004, 2005, 2006, 2007, 2008 Simon Josefsson.
 #
 # This file is part of the Generic Security Service (GSS).
 #
@@ -18,20 +18,26 @@
 # the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 # Boston, MA 02110-1301, USA.
 
+AM_CFLAGS = $(WARN_CFLAGS)
 AM_CPPFLAGS = -I$(top_srcdir)/gl -I$(top_srcdir)/lib
 
 bin_PROGRAMS = gss
 
 BUILT_SOURCES = gss_cmd.c gss_cmd.h
-gss_SOURCES = gss.c $(BUILT_SOURCES) gss.ggo
 MAINTAINERCLEANFILES = $(BUILT_SOURCES)
-gss_LDADD = ../lib/libgss.la ../gl/libgnu.la @LTLIBINTL@
+
+noinst_LTLIBRARIES = libcmd-gss.la
+libcmd_gss_la_CFLAGS =
+libcmd_gss_la_SOURCES = gss.ggo $(BUILT_SOURCES)
+
+gss_SOURCES = gss.c
+gss_LDADD = ../lib/libgss.la ../gl/libgnu.la @LTLIBINTL@ libcmd-gss.la
 
 gss.c: $(BUILT_SOURCES)
 
 $(BUILT_SOURCES): gss.ggo
-	gengetopt --input $^ --file-name gss_cmd || \
-		test -f gss_cmd.h -a -f gss_cmd.c || \
+	gengetopt --input $^ --file-name gss_cmd ||		\
+		test -f gss_cmd.h -a -f gss_cmd.c ||		\
 		cp $(srcdir)/gss_cmd.h $(srcdir)/gss_cmd.h .
 
 # For gettext.
