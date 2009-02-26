@@ -21,7 +21,8 @@
 SUBDIRS = gl
 
 AM_CFLAGS = $(WARN_CFLAGS)
-AM_CPPFLAGS = -I$(top_srcdir)/gl -I$(top_srcdir)/lib
+AM_CPPFLAGS = -I$(top_srcdir)/gl -I$(top_srcdir)/lib \
+	-I$(top_srcdir)/src/gl -I$(top_builddir)/src/gl
 
 bin_PROGRAMS = gss
 
@@ -33,7 +34,7 @@ libcmd_gss_la_CFLAGS =
 libcmd_gss_la_SOURCES = gss.ggo $(BUILT_SOURCES)
 
 gss_SOURCES = gss.c
-gss_LDADD = ../lib/libgss.la ../gl/libgnu.la @LTLIBINTL@ libcmd-gss.la
+gss_LDADD = ../lib/libgss.la gl/libgnu.la @LTLIBINTL@ libcmd-gss.la
 
 gss.c: $(BUILT_SOURCES)
 
