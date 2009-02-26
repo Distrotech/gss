@@ -37,8 +37,8 @@
 #include <gettext.h>
 #define _(String) gettext (String)
 
-/* Get GSS header.  Cannot use gss.h because of bad paths. */
-#include <api.h>
+/* Get GSS header. */
+#include <gss.h>
 
 /* Command line parameter parser via gengetopt. */
 #include "gss_cmd.h"

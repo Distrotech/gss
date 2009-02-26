@@ -21,7 +21,7 @@
 SUBDIRS = gl
 
 AM_CFLAGS = $(WARN_CFLAGS)
-AM_CPPFLAGS = -I$(top_srcdir)/gl -I$(top_srcdir)/lib \
+AM_CPPFLAGS = -I$(top_srcdir)/gl -I$(top_srcdir)/lib/headers \
 	-I$(top_srcdir)/src/gl -I$(top_builddir)/src/gl
 
 bin_PROGRAMS = gss

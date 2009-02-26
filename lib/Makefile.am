@@ -19,7 +19,8 @@
 # Boston, MA 02110-1301, USA.
 
 AM_CFLAGS = $(WARN_CFLAGS)
-AM_CPPFLAGS = -I$(top_srcdir)/gl
+AM_CPPFLAGS = -I$(top_srcdir)/gl \
+	-I$(top_srcdir)/lib/headers -I$(top_builddir)/lib/headers
 
 lib_LTLIBRARIES = libgss.la
 include_HEADERS = headers/gss.h
