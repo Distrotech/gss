@@ -1,5 +1,5 @@
 ## Process this file with automake to produce Makefile.in
-# Copyright (C) 2003, 2004, 2005, 2006, 2007, 2008 Simon Josefsson.
+# Copyright (C) 2003, 2004, 2005, 2006, 2007, 2008, 2009 Simon Josefsson
 #
 # This file is part of the Generic Security Service (GSS).
 #
@@ -22,10 +22,10 @@ AM_CFLAGS = $(WARN_CFLAGS)
 AM_CPPFLAGS = -I$(top_srcdir)/gl
 
 lib_LTLIBRARIES = libgss.la
-include_HEADERS = gss.h
+include_HEADERS = headers/gss.h
 
 gssincludedir=$(includedir)/gss
-gssinclude_HEADERS = api.h ext.h
+gssinclude_HEADERS = headers/gss/api.h headers/gss/ext.h
 
 libgss_la_SOURCES = internal.h \
 	meta.h meta.c \
@@ -37,7 +37,7 @@ libgss_la_LDFLAGS = -version-info $(LT_CURRENT):$(LT_REVISION):$(LT_AGE) \
 
 if KRB5
 SUBDIRS = krb5
-gssinclude_HEADERS += krb5/krb5.h
+gssinclude_HEADERS += headers/gss/krb5.h
 libgss_la_LIBADD += krb5/libgss-shishi.la
 endif
 

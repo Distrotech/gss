@@ -103,7 +103,7 @@ AC_CONFIG_FILES([
   doc/reference/Makefile
   gl/Makefile
   lib/Makefile
-  lib/gss.h
+  lib/headers/gss.h
   lib/krb5/Makefile
   po/Makefile.in
   src/Makefile
