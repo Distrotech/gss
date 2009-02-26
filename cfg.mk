@@ -1,4 +1,4 @@
-# Copyright (C) 2006, 2007, 2008 Simon Josefsson.
+# Copyright (C) 2006, 2007, 2008, 2009 Simon Josefsson.
 #
 # This file is part of the Generic Security Service (GSS).
 #
@@ -83,17 +83,16 @@ prepare:
 	$(MAKE) ChangeLog distcheck
 	git commit -m Generated. ChangeLog
 	git-tag -u b565716f! -m $(VERSION) $(tag)
-	cp $(distdir).tar.gz $(distdir).tar.gz.sig ../releases/$(PACKAGE)/
 
 upload:
 	git-push
 	git-push --tags
 	build-aux/gnupload --to alpha.gnu.org:gss $(distdir).tar.gz
+	cp $(distdir).tar.gz $(distdir).tar.gz.sig ../releases/$(PACKAGE)/
 
 web:
 	cd doc && ../build-aux/gendocs.sh --html "--css-include=texinfo.css" \
-		-o ../$(htmldir)/manual/ $(PACKAGE) \
-		"GNU Generic Security Service Library"
+		-o ../$(htmldir)/manual/ $(PACKAGE) "$(PACKAGE_NAME)"
 	cp -v doc/reference/html/*.html doc/reference/html/*.png doc/reference/html/*.devhelp doc/reference/html/*.css $(htmldir)/reference/
 
 upload-web:
