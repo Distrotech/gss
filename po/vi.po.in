@@ -1,168 +1,218 @@
 # Vietnamese Translation for GSS.
-# Copyright © 2007 Free Software Foundation, Inc.
-# Copyright © 2007 Simon Josefsson (msgid)
-# Clytie Siddall <clytie@riverland.net.au>, 2005-2007.
+# Copyright © 2008 Free Software Foundation, Inc.
+# Copyright © 2008 Simon Josefsson (msgid)
+# This file is distributed under the same license as the gss package.
+# Clytie Siddall <clytie@riverland.net.au>, 2005-2008.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gss 0.0.22\n"
+"Project-Id-Version: gss 0.0.24\n"
 "Report-Msgid-Bugs-To: bug-gss@josefsson.org\n"
-"POT-Creation-Date: 2007-06-29 17:37+0200\n"
-"PO-Revision-Date: 2007-09-14 18:47+0930\n"
+"POT-Creation-Date: 2008-09-10 13:16+0200\n"
+"PO-Revision-Date: 2008-09-22 19:00+0930\n"
 "Last-Translator: Clytie Siddall <clytie@riverland.net.au>\n"
-"Language-Team: Vietnamese <vi-VN@googlegroups.com> \n"
+"Language-Team: Vietnamese <vi-VN@googlegroups.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: LocFactoryEditor 1.7b1\n"
+"X-Generator: LocFactoryEditor 1.7b3\n"
 
+#: lib/error.c:43
 msgid "A required input parameter could not be read"
 msgstr "Một tham số nhập cần thiết không thể đọc được"
 
+#: lib/error.c:45
 msgid "A required output parameter could not be written"
-msgstr "Một tham số nhập cần thiết không thể ghi được"
+msgstr "Một tham số xuất cần thiết không thể ghi được"
 
+#: lib/error.c:47
 msgid "A parameter was malformed"
 msgstr "Có một tham số dạng sai"
 
+#: lib/error.c:52
 msgid "An unsupported mechanism was requested"
-msgstr "Đã yêu cầu cơ chế không được hỗ trợ"
+msgstr "Đã yêu cầu một cơ chế không được hỗ trợ"
 
+#: lib/error.c:54
 msgid "An invalid name was supplied"
 msgstr "Đã cung cấp một tên không hợp lệ"
 
+#: lib/error.c:56
 msgid "A supplied name was of an unsupported type"
 msgstr "Đã cung cấp một tên có kiểu không được hỗ trợ"
 
+#: lib/error.c:58
 msgid "Incorrect channel bindings were supplied"
 msgstr "Đã cung cấp các tổ hợp kênh không đúng"
 
+#: lib/error.c:60
 msgid "An invalid status code was supplied"
-msgstr "Đã cung cấp mã trạng thái không hợp lệ"
+msgstr "Đã cung cấp một mã trạng thái không hợp lệ"
 
+#: lib/error.c:62
 msgid "A token had an invalid MIC"
 msgstr "Có một hiệu bài với MIC không hợp lệ"
 
+#: lib/error.c:64
 msgid "No credentials were supplied, or the credentials were unavailable or inaccessible"
-msgstr "Chưa cung cấp thông tin xác thức, hoặc thông tin xác thức chưa sẵn sàng, hoặc không thể được truy cập"
+msgstr "Chưa cung cấp thông tin xác thực, hoặc thông tin xác thực chưa sẵn sàng, hoặc không thể được truy cập"
 
+#: lib/error.c:67
 msgid "No context has been established"
 msgstr "Chưa thiết lập ngữ cảnh"
 
+#: lib/error.c:69
 msgid "A token was invalid"
 msgstr "Có một hiệu bài không hợp lệ"
 
+#: lib/error.c:71
 msgid "A credential was invalid"
-msgstr "Có thông tin xác thức không hợp lệ"
+msgstr "Có thông tin xác thực không hợp lệ"
 
+#: lib/error.c:73
 msgid "The referenced credentials have expired"
-msgstr "Đã tham chiếu đến thông tin xác thức đã hết hạn"
+msgstr "Đã tham chiếu đến thông tin xác thực đã hết hạn"
 
+#: lib/error.c:75
 msgid "The context has expired"
 msgstr "Ngữ cảnh đã hết hạn"
 
+#: lib/error.c:77
 msgid "Unspecified error in underlying mechanism"
-msgstr "Có lỗi không rõ trong cơ chế cơ sở"
+msgstr "Lỗi không rõ trong cơ chế cơ sở"
 
+#: lib/error.c:79
 msgid "The quality-of-protection requested could not be provided"
-msgstr "Không thể cung cấp mức bảo vệ (quality-of-protection) đã yêu cầu"
+msgstr "Không thể cung cấp mức bảo vệ (quality-of-protection) yêu cầu"
 
+#: lib/error.c:81
 msgid "The operation is forbidden by local security policy"
-msgstr "Thao tác bị cấm do chính sách bảo mật cục bộ"
+msgstr "Thao tác bị chính sách bảo mật cục bộ cấm"
 
+#: lib/error.c:83
 msgid "The operation or option is unavailable"
 msgstr "Thao tác hay tùy chọn không sẵn sàng"
 
+#: lib/error.c:85
 msgid "The requested credential element already exists"
-msgstr "Đã yêu cầu một yếu tố thông tin xác thức đã tồn tại"
+msgstr "Đã yêu cầu một phần tử thông tin xác thực đã có"
 
+#: lib/error.c:87
 msgid "The provided name was not a mechanism name"
 msgstr "Đã cung cấp một tên không phải tên cơ chế"
 
+#: lib/error.c:92
 msgid "The gss_init_sec_context() or gss_accept_sec_context() function must be called again to complete its function"
-msgstr "Hàm « gss_init_sec_context() » hay « gss_accept_sec_context() » phải được gọi lần nữa để làm xong chức năng"
+msgstr "Hàm « gss_init_sec_context() » hay « gss_accept_sec_context() » phải được gọi lần nữa để hoàn tất chức năng"
 
+#: lib/error.c:95
 msgid "The token was a duplicate of an earlier token"
-msgstr "Hiệu bài là bản sao của một hiệu bài trước"
+msgstr "Hiệu bài là bản sao của một hiệu bài nằm trước"
 
+#: lib/error.c:97
 msgid "The token's validity period has expired"
 msgstr "Thời gian hợp lệ của hiệu bài đã hết hạn"
 
+#: lib/error.c:99
 msgid "A later token has already been processed"
-msgstr "Một hiệu bài sau đã được xử lý"
+msgstr "Một hiệu bài nằm sau đã được xử lý"
 
+#: lib/error.c:101
 msgid "An expected per-message token was not received"
 msgstr "Chưa nhận một hiệu bài từng thông điệp mong đợi"
 
+#: lib/error.c:298
 msgid "No error"
 msgstr "Không có lỗi"
 
+#: lib/krb5/error.c:41
 msgid "No @ in SERVICE-NAME name string"
 msgstr "Không có dấu @ trong chuỗi SERVICE-NAME (tên dịch vụ)"
 
+#: lib/krb5/error.c:43
 msgid "STRING-UID-NAME contains nondigits"
-msgstr "STRING-UID-NAME (chuỗi-tên-UID) chứa ký tự không phải chữ số"
+msgstr "STRING-UID-NAME (chuỗi-tên-UID) chứa ký tự khác chữ số"
 
+#: lib/krb5/error.c:45
 msgid "UID does not resolve to username"
 msgstr "UID không giải quyết thành tên người dùng"
 
+#: lib/krb5/error.c:47
 msgid "Validation error"
 msgstr "Lỗi hợp lệ hoá"
 
+#: lib/krb5/error.c:49
 msgid "Couldn't allocate gss_buffer_t data"
 msgstr "Không thể phân cấp dữ liệu « gss_buffer_t »"
 
+#: lib/krb5/error.c:51
 msgid "Message context invalid"
 msgstr "Ngữ cảnh thông điệp không hợp lệ"
 
+#: lib/krb5/error.c:53
 msgid "Buffer is the wrong size"
 msgstr "Vùng đệm kích cỡ sai"
 
+#: lib/krb5/error.c:55
 msgid "Credential usage type is unknown"
-msgstr "Không rõ kiểu sử dụng thông tin xác thức"
+msgstr "Không rõ kiểu sử dụng thông tin xác thực"
 
+#: lib/krb5/error.c:57
 msgid "Unknown quality of protection specified"
 msgstr "Đã ghi rõ mức bảo vệ không rõ"
 
+#: lib/krb5/error.c:60
 msgid "Principal in credential cache does not match desired name"
-msgstr "Điều chính trong bộ nhớ tạm thông tin xác thức không tương ứng với tên đã yêu cầu"
+msgstr "Điều chính trong bộ nhớ tạm thông tin xác thực không tương ứng với tên yêu cầu"
 
+#: lib/krb5/error.c:62
 msgid "No principal in keytab matches desired name"
-msgstr "Không có điều chính trong keytab tương ứng với tên đã yêu cầu"
+msgstr "Không có điều chính trong keytab mà tương ứng với tên yêu cầu"
 
+#: lib/krb5/error.c:64
 msgid "Credential cache has no TGT"
-msgstr "Bộ nhớ tạm thông tin xác thức không có TGT"
+msgstr "Bộ nhớ tạm thông tin xác thực không có TGT"
 
+#: lib/krb5/error.c:66
 msgid "Authenticator has no subkey"
-msgstr "Nhà xác thức không có khóa phụ"
+msgstr "Nhà xác thực không có khoá phụ"
 
+#: lib/krb5/error.c:68
 msgid "Context is already fully established"
 msgstr "Ngữ cảnh đã được thiết lập đầy đủ"
 
+#: lib/krb5/error.c:70
 msgid "Unknown signature type in token"
 msgstr "Không rõ kiểu chữ ký trong hiệu bài"
 
+#: lib/krb5/error.c:72
 msgid "Invalid field length in token"
 msgstr "Chiều dài trường không hợp lệ trong hiệu bài"
 
+#: lib/krb5/error.c:74
 msgid "Attempt to use incomplete security context"
-msgstr "Đã thử sử dụng ngữ cảnh bảo mật không hoàn tất"
+msgstr "Đã thử sử dụng ngữ cảnh bảo mật chưa hoàn tất"
 
+#: lib/krb5/error.c:91
 msgid "No krb5 error"
 msgstr "Không có lỗi krb5"
 
+#: lib/krb5/error.c:120
 msgid "Unknown krb5 error"
 msgstr "Lỗi krb5 không rõ"
 
+#: src/gss.c:65
 #, c-format
 msgid "%s: missing parameter\n"
 msgstr "%s: thiếu tham số\n"
 
+#: src/gss.c:66
 #, c-format
 msgid "Try `%s --help' for more information.\n"
-msgstr "Hãy thử lệnh trợ giúp `%s --help' để tìm thêm thông tin.\n"
+msgstr "Hãy thử câu lệnh trợ giúp « %s --help » để tìm thêm thông tin.\n"
 
+#: src/gss.c:73
 #, c-format
 msgid ""
 "GSS-API major status code %ld (0x%lx).\n"
@@ -171,6 +221,7 @@ msgstr ""
 "GSS-API mã trạng thái chính %ld (0x%lx).\n"
 "\n"
 
+#: src/gss.c:76
 #, c-format
 msgid ""
 "   MSB                                                                 LSB\n"
@@ -180,9 +231,10 @@ msgid ""
 msgstr ""
 "   MSB                                                                 LSB\n"
 "   +-----------------+-----------------+---------------------------------+\n"
-"   |    Lỗi gọi    |  Lỗi hàm  |       Thông tin thêm       |\n"
+"   |    Lỗi gọi    |  Lỗi hàm  |       Thông tin bổ sung       |\n"
 "   | "
 
+#: src/gss.c:90
 #, c-format
 msgid ""
 "|\n"
@@ -195,22 +247,27 @@ msgstr ""
 "Bit 31            24  23            16  15                             0\n"
 "\n"
 
+#: src/gss.c:100
 #, c-format
 msgid "Masked routine error %ld (0x%lx) shifted into %ld (0x%lx):\n"
 msgstr "Lỗi hàm có mặt nạ %ld (0x%lx) đã rời vào %ld (0x%lx):\n"
 
+#: src/gss.c:117 src/gss.c:152 src/gss.c:190
 #, c-format
 msgid "%s: displaying status code failed\n"
 msgstr "%s: lỗi hiển thị mã trạng thái\n"
 
+#: src/gss.c:138
 #, c-format
 msgid "Masked calling error %ld (0x%lx) shifted into %ld (0x%lx):\n"
 msgstr "Lỗi gói có mặt nạ %ld (0x%lx) đã rời vào %ld (0x%lx):\n"
 
+#: src/gss.c:172
 #, c-format
 msgid "Masked supplementary info %ld (0x%lx) shifted into %ld (0x%lx):\n"
-msgstr "Thông tin thêm có mặt nạ %ld (0x%lx) đã rời vào %ld (0x%lx):\n"
+msgstr "Thông tin bổ sung có mặt nạ %ld (0x%lx) đã rời vào %ld (0x%lx):\n"
 
+#: src/gss.c:208
 #, c-format
 msgid "No error\n"
 msgstr "Không có lỗi\n"
