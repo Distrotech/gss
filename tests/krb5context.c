@@ -1,5 +1,5 @@
 /* krb5context.c --- Kerberos 5 security context self tests.
- * Copyright (C) 2003, 2004, 2005, 2006, 2007, 2008  Simon Josefsson
+ * Copyright (C) 2003, 2004, 2005, 2006, 2007, 2008, 2009  Simon Josefsson
  *
  * This file is part of the Generic Security Service (GSS).
  *
@@ -39,9 +39,7 @@
 #include <gettext.h>
 
 /* Get GSS prototypes. */
-#include "api.h"
-#include "ext.h"
-#include "krb5.h"
+#include <gss.h>
 
 /* Get Shishi prototypes. */
 #include <shishi.h>

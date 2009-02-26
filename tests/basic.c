@@ -1,5 +1,5 @@
 /* basic.c --- Basic GSS self tests.
- * Copyright (C) 2003, 2004, 2005, 2006, 2007  Simon Josefsson
+ * Copyright (C) 2003, 2004, 2005, 2006, 2007, 2009  Simon Josefsson
  *
  * This file is part of the Generic Security Service (GSS).
  *
@@ -39,11 +39,7 @@
 #include "gettext.h"
 
 /* Get GSS prototypes. */
-#include "api.h"
-#include "ext.h"
-#ifdef USE_KERBEROS5
-# include "krb5.h"
-#endif
+#include <gss.h>
 
 #ifndef __attribute__
 /* This feature is available in gcc versions 2.5 and later.  */

@@ -1,5 +1,5 @@
 ## Process this file with automake to produce Makefile.in
-# Copyright (C) 2003, 2004, 2005, 2006, 2007, 2008 Simon Josefsson.
+# Copyright (C) 2003, 2004, 2005, 2006, 2007, 2008, 2009 Simon Josefsson
 #
 # This file is part of the Generic Security Service (GSS).
 #
@@ -19,10 +19,8 @@
 # Boston, MA 02110-1301, USA.
 
 AM_CFLAGS = $(WARN_CFLAGS)
-AM_CPPFLAGS = -I$(top_srcdir)/gl -I$(top_srcdir)/lib
-if KRB5
-AM_CPPFLAGS += -I$(top_srcdir)/lib/krb5
-endif
+AM_CPPFLAGS = -I$(top_srcdir)/gl \
+	-I$(top_srcdir)/lib/headers -I$(top_builddir)/lib/headers
 AM_LDFLAGS = -no-install
 LDADD = ../lib/libgss.la ../gl/libgnu.la @LTLIBINTL@
 
