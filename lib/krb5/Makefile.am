@@ -24,7 +24,7 @@ AM_CPPFLAGS = -I$(top_srcdir)/gl \
 
 noinst_LTLIBRARIES = libgss-shishi.la
 
-libgss_shishi_la_SOURCES = k5internal.h krb5.h protos.h \
+libgss_shishi_la_SOURCES = k5internal.h protos.h \
 	context.c checksum.c checksum.h error.c name.c cred.c msg.c oid.c \
 	utils.c 
 libgss_shishi_la_LIBADD = @LTLIBINTL@ @LTLIBSHISHI@
