@@ -1,5 +1,5 @@
 # DO NOT EDIT! GENERATED AUTOMATICALLY!
-# Copyright (C) 2002-2008 Free Software Foundation, Inc.
+# Copyright (C) 2002-2009 Free Software Foundation, Inc.
 #
 # This file is free software, distributed under the terms of the GNU
 # General Public License.  As a special exception to the GNU General
@@ -25,7 +25,6 @@ AC_DEFUN([gl_EARLY],
   m4_pattern_allow([^gl_LIBOBJS$])dnl a variable
   m4_pattern_allow([^gl_LTLIBOBJS$])dnl a variable
   AC_REQUIRE([AC_PROG_RANLIB])
-  AC_REQUIRE([AC_GNU_SOURCE])
   AB_INIT
   AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
 ])
@@ -213,6 +212,7 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/xgethostname.c
   lib/xgethostname.h
   lib/xmalloc.c
+  m4/00gnulib.m4
   m4/autobuild.m4
   m4/extensions.m4
   m4/gethostname.m4
