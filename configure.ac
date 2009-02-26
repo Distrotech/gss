@@ -1,6 +1,6 @@
 dnl Process this file with autoconf to produce a configure script.
 
-# Copyright (C) 2003, 2004, 2005, 2006, 2007, 2008 Simon Josefsson.
+# Copyright (C) 2003, 2004, 2005, 2006, 2007, 2008, 2009 Simon Josefsson.
 #
 # This file is part of the Generic Security Service (GSS).
 #
@@ -20,7 +20,7 @@ dnl Process this file with autoconf to produce a configure script.
 # Boston, MA 02110-1301, USA.
 
 AC_PREREQ(2.61)
-AC_INIT([GSS], [0.0.25], [bug-gss@gnu.org])
+AC_INIT([GNU Generic Security Service], [0.0.25], [bug-gss@gnu.org])
 
 # Library code modified:                              REVISION++
 # Interfaces changed/added/removed:   CURRENT++       REVISION=0

@@ -1,5 +1,5 @@
 /* gss.c --- Command line tool for GSS.
- * Copyright (C) 2004, 2005, 2006, 2007  Simon Josefsson
+ * Copyright (C) 2004, 2005, 2006, 2007, 2008, 2009  Simon Josefsson
  *
  * This file is part of the Generic Security Service (GSS).
  *
@@ -43,6 +43,45 @@
 /* Command line parameter parser via gengetopt. */
 #include "gss_cmd.h"
 
+/* Gnulib utils. */
+#include "progname.h"
+#include "version-etc.h"
+
+const char version_etc_copyright[] =
+  /* Do *not* mark this string for translation.  %s is a copyright
+     symbol suitable for this locale, and %d is the copyright
+     year.  */
+  "Copyright %s %d Simon Josefsson.";
+
+static void
+usage (int status)
+{
+  if (status != EXIT_SUCCESS)
+    fprintf (stderr, _("Try `%s --help' for more information.\n"),
+	     program_name);
+  else
+    {
+      printf (_("\
+Usage: %s OPTIONS...\n\
+"), program_name);
+      fputs (_("\
+Command line interface to GSS, used to explain error codes.\n\
+\n\
+"), stdout);
+      fputs (_("\
+Mandatory arguments to long options are mandatory for short options too.\n\
+"), stdout);
+      fputs (_("\
+  -h, --help        Print help and exit\n\
+  -V, --version     Print version and exit\n\
+  -m, --major=LONG  Describe a `major status' error code vaue in plain text.\n\
+  -q, --quiet       Silent operation  (default=off)\n\
+"), stdout);
+      emit_bug_reporting_address ();
+    }
+  exit (status);
+}
+
 int
 main (int argc, char *argv[])
 {
@@ -54,19 +93,22 @@ main (int argc, char *argv[])
   size_t i;
 
   setlocale (LC_ALL, "");
+  set_program_name (argv[0]);
   bindtextdomain (PACKAGE, LOCALEDIR);
   textdomain (PACKAGE);
 
   if (cmdline_parser (argc, argv, &args) != 0)
     return 1;
 
-  if (!args.major_given)
+  if (args.version_given)
     {
-      fprintf (stderr, _("%s: missing parameter\n"), argv[0]);
-      fprintf (stderr, _("Try `%s --help' for more information.\n"), argv[0]);
-      cmdline_parser_print_help ();
-      return 1;
+      version_etc (stdout, "gss", PACKAGE_NAME, VERSION,
+		   "Simon Josefsson", (char *) NULL);
+      return EXIT_SUCCESS;
     }
+
+  if (args.help_given || !args.major_given)
+    usage (EXIT_SUCCESS);
 
   if (!args.quiet_given)
     {

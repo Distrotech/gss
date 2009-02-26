@@ -1,5 +1,5 @@
 ## Process this file with automake to produce Makefile.in
-# Copyright (C) 2003, 2004, 2005, 2006, 2007, 2008 Simon Josefsson.
+# Copyright (C) 2003, 2004, 2005, 2006, 2007, 2008, 2009 Simon Josefsson.
 #
 # This file is part of the Generic Security Service (GSS).
 #
@@ -36,7 +36,8 @@ gss_LDADD = ../lib/libgss.la ../gl/libgnu.la @LTLIBINTL@ libcmd-gss.la
 gss.c: $(BUILT_SOURCES)
 
 $(BUILT_SOURCES): gss.ggo
-	gengetopt --input $^ --file-name gss_cmd ||		\
+	gengetopt --no-handle-help --no-handle-version \
+			--input $^ --file-name gss_cmd ||	\
 		test -f gss_cmd.h -a -f gss_cmd.c ||		\
 		cp $(srcdir)/gss_cmd.h $(srcdir)/gss_cmd.h .
 
