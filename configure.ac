@@ -20,7 +20,7 @@ dnl Process this file with autoconf to produce a configure script.
 # Boston, MA 02110-1301, USA.
 
 AC_PREREQ(2.61)
-AC_INIT([GNU Generic Security Service], [0.0.25], [bug-gss@gnu.org])
+AC_INIT([GNU Generic Security Service], [0.0.25], [bug-gss@gnu.org], [gss])
 
 # Library code modified:                              REVISION++
 # Interfaces changed/added/removed:   CURRENT++       REVISION=0
