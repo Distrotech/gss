@@ -1,5 +1,5 @@
 ## Process this file with automake to produce Makefile.in
-# Copyright (C) 2003, 2004, 2005, 2006, 2007, 2008 Simon Josefsson.
+# Copyright (C) 2003, 2004, 2005, 2006, 2007, 2008, 2009 Simon Josefsson.
 #
 # This file is part of the Generic Security Service (GSS).
 #
@@ -27,4 +27,4 @@ pkgconfig_DATA = gss.pc
 
 SUBDIRS = po gl lib src tests doc
 
-ACLOCAL_AMFLAGS = -I m4 -I gl/m4
+ACLOCAL_AMFLAGS = -I m4 -I gl/m4 -I src/gl/m4

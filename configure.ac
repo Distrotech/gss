@@ -38,6 +38,7 @@ AC_CONFIG_HEADERS(config.h)
 # Checks for programs.
 AC_PROG_CC
 gl_EARLY
+srcgl_EARLY
 AC_LIBTOOL_WIN32_DLL
 AC_PROG_LIBTOOL
 AM_MISSING_PROG(PERL, perl, $missing_dir)
@@ -53,6 +54,7 @@ AC_CHECK_HEADERS(locale.h)
 
 # For gnulib stuff in gl/.
 gl_INIT
+srcgl_INIT
 AC_DEFINE([xalloc_die], [gss_xalloc_die], [Fix namespace of xalloc_die.])
 
 # Test for Shishi.
@@ -105,6 +107,7 @@ AC_CONFIG_FILES([
   lib/krb5/Makefile
   po/Makefile.in
   src/Makefile
+  src/gl/Makefile
   tests/Makefile
 ])
 AC_OUTPUT

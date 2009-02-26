@@ -15,34 +15,24 @@
 
 
 # Specification in the form of a command-line invocation:
-#   gnulib-tool --import --dir=. --local-dir=gl/override --lib=libgnu --source-base=gl --m4-base=gl/m4 --doc-base=doc --tests-base=gl/tests --aux-dir=build-aux --avoid=xalloc-die --libtool --macro-prefix=gl --no-vc-files autobuild fdl-1.3 gendocs getopt gnupload gpl-3.0 havelib maintainer-makefile manywarnings strverscmp warnings xalloc xgethostname
+#   gnulib-tool --import --dir=. --local-dir=src/gl/override --lib=libgnu --source-base=src/gl --m4-base=src/gl/m4 --doc-base=doc --tests-base=src/gl/tests --aux-dir=build-aux --with-tests --libtool --macro-prefix=srcgl --no-vc-files progname version-etc
 
 # Specification in the form of a few gnulib-tool.m4 macro invocations:
-gl_LOCAL_DIR([gl/override])
+gl_LOCAL_DIR([src/gl/override])
 gl_MODULES([
-  autobuild
-  fdl-1.3
-  gendocs
-  getopt
-  gnupload
-  gpl-3.0
-  havelib
-  maintainer-makefile
-  manywarnings
-  strverscmp
-  warnings
-  xalloc
-  xgethostname
+  progname
+  version-etc
 ])
-gl_AVOID([xalloc-die])
-gl_SOURCE_BASE([gl])
-gl_M4_BASE([gl/m4])
+gl_AVOID([])
+gl_SOURCE_BASE([src/gl])
+gl_M4_BASE([src/gl/m4])
 gl_PO_BASE([])
 gl_DOC_BASE([doc])
-gl_TESTS_BASE([gl/tests])
+gl_TESTS_BASE([src/gl/tests])
+gl_WITH_TESTS
 gl_LIB([libgnu])
 gl_MAKEFILE_NAME([])
 gl_LIBTOOL
-gl_MACRO_PREFIX([gl])
+gl_MACRO_PREFIX([srcgl])
 gl_PO_DOMAIN([])
 gl_VC_FILES([false])
