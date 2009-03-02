@@ -1,5 +1,5 @@
 /* error.c --- Error handling functionality.
- * Copyright (C) 2003, 2004, 2005, 2006, 2007  Simon Josefsson
+ * Copyright (C) 2003, 2004, 2005, 2006, 2007, 2009  Simon Josefsson
  *
  * This file is part of the Generic Security Service (GSS).
  *
@@ -38,7 +38,7 @@ struct gss_status_codes
   const char *text;
 };
 
-struct gss_status_codes gss_calling_errors[] = {
+static struct gss_status_codes gss_calling_errors[] = {
   {GSS_S_CALL_INACCESSIBLE_READ, "GSS_S_CALL_INACCESSIBLE_READ",
    N_("A required input parameter could not be read")},
   {GSS_S_CALL_INACCESSIBLE_WRITE, "GSS_S_CALL_INACCESSIBLE_WRITE",
@@ -47,7 +47,7 @@ struct gss_status_codes gss_calling_errors[] = {
    N_("A parameter was malformed")}
 };
 
-struct gss_status_codes gss_routine_errors[] = {
+static struct gss_status_codes gss_routine_errors[] = {
   {GSS_S_BAD_MECH, "GSS_S_BAD_MECH",
    N_("An unsupported mechanism was requested")},
   {GSS_S_BAD_NAME, "GSS_S_BAD_NAME",
@@ -87,7 +87,7 @@ struct gss_status_codes gss_routine_errors[] = {
    N_("The provided name was not a mechanism name")}
 };
 
-struct gss_status_codes gss_supplementary_errors[] = {
+static struct gss_status_codes gss_supplementary_errors[] = {
   {GSS_S_CONTINUE_NEEDED, "GSS_S_CONTINUE_NEEDED",
    N_("The gss_init_sec_context() or gss_accept_sec_context() function "
       "must be called again to complete its function")},
