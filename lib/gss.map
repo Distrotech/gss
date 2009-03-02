@@ -1,0 +1,119 @@
+# Copyright (C) 2009 Simon Josefsson
+#
+# This file is part of the Generic Security Service (GSS).
+#
+# GSS is free software; you can redistribute it and/or modify it under
+# the terms of the GNU General Public License as published by the Free
+# Software Foundation; either version 3 of the License, or (at your
+# option) any later version.
+#
+# GSS is distributed in the hope that it will be useful, but WITHOUT
+# ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+# or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public
+# License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with GSS; if not, see http://www.gnu.org/licenses or write to
+# the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
+# Boston, MA 02110-1301, USA.
+
+GSS_1.0 {
+  global:
+
+# Standard interfaces:
+    GSS_C_NT_ANONYMOUS;
+    GSS_C_NT_EXPORT_NAME;
+    GSS_C_NT_HOSTBASED_SERVICE;
+    GSS_C_NT_HOSTBASED_SERVICE_X;
+    GSS_C_NT_MACHINE_UID_NAME;
+    GSS_C_NT_STRING_UID_NAME;
+    GSS_C_NT_USER_NAME;
+    gss_accept_sec_context;
+    gss_acquire_cred;
+    gss_add_cred;
+    gss_add_oid_set_member;
+    gss_canonicalize_name;
+    gss_compare_name;
+    gss_context_time;
+    gss_create_empty_oid_set;
+    gss_delete_sec_context;
+    gss_display_name;
+    gss_display_status;
+    gss_duplicate_name;
+    gss_export_name;
+    gss_export_sec_context;
+    gss_get_mic;
+    gss_import_name;
+    gss_import_sec_context;
+    gss_indicate_mechs;
+    gss_init_sec_context;
+    gss_inquire_context;
+    gss_inquire_cred;
+    gss_inquire_cred_by_mech;
+    gss_inquire_mechs_for_name;
+    gss_inquire_names_for_mech;
+    gss_process_context_token;
+    gss_release_buffer;
+    gss_release_cred;
+    gss_release_name;
+    gss_release_oid_set;
+    gss_seal;
+    gss_sign;
+    gss_test_oid_set_member;
+    gss_unseal;
+    gss_unwrap;
+    gss_verify;
+    gss_verify_mic;
+    gss_wrap;
+    gss_wrap_size_limit;
+
+# Extensions:
+    GSS_C_NT_ANONYMOUS_static;
+    GSS_C_NT_EXPORT_NAME_static;
+    GSS_C_NT_HOSTBASED_SERVICE_X_static;
+    GSS_C_NT_HOSTBASED_SERVICE_static;
+    GSS_C_NT_MACHINE_UID_NAME_static;
+    GSS_C_NT_STRING_UID_NAME_static;
+    GSS_C_NT_USER_NAME_static;
+    gss_alloc_fail_function;
+    gss_check_version;
+    gss_copy_oid;
+    gss_decapsulate_token;
+    gss_duplicate_oid;
+    gss_encapsulate_token;
+    gss_encapsulate_token_prefix;
+    gss_oid_equal;
+    gss_userok;
+    gss_xalloc_die;
+
+# Kerberos V5 mechanism API:
+    GSS_KRB5;
+    GSS_KRB5_NT_HOSTBASED_SERVICE_NAME;
+    GSS_KRB5_NT_PRINCIPAL_NAME;
+    GSS_KRB5_NT_PRINCIPAL_NAME_static
+    GSS_KRB5_NT_STRING_UID_NAME;
+    GSS_KRB5_NT_STRING_UID_NAME_static
+    GSS_KRB5_NT_USER_NAME;
+    GSS_KRB5_NT_USER_NAME_static
+    GSS_KRB5_static
+    gss_krb5_accept_sec_context;
+    gss_krb5_acquire_cred;
+    gss_krb5_canonicalize_name;
+    gss_krb5_context_time;
+    gss_krb5_delete_sec_context;
+    gss_krb5_display_status;
+    gss_krb5_errors;
+    gss_krb5_export_name;
+    gss_krb5_get_mic;
+    gss_krb5_init_sec_context;
+    gss_krb5_inquire_cred;
+    gss_krb5_inquire_cred_by_mech;
+    gss_krb5_release_cred;
+    gss_krb5_tktlifetime;
+    gss_krb5_unwrap;
+    gss_krb5_verify_mic;
+    gss_krb5_wrap;
+
+  local:
+    *;
+};
