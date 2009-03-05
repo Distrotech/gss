@@ -1,5 +1,5 @@
 /* krb5/checksum.c --- (Un)pack checksum fields in Krb5 GSS contexts.
- * Copyright (C) 2003, 2004, 2005, 2006, 2007  Simon Josefsson
+ * Copyright (C) 2003, 2004, 2005, 2006, 2007, 2009  Simon Josefsson
  *
  * This file is part of the Generic Security Service (GSS).
  *
@@ -28,14 +28,21 @@
 
 /* Create the checksum value field from input parameters. */
 OM_uint32
-_gss_krb5_checksum_pack (const gss_cred_id_t initiator_cred_handle,
+_gss_krb5_checksum_pack (OM_uint32 *minor_status,
+			 const gss_cred_id_t initiator_cred_handle,
 			 const gss_channel_bindings_t input_chan_bindings,
 			 OM_uint32 req_flags, char **data, size_t * datalen)
 {
   char *p;
 
   *datalen = 24;
-  p = *data = xmalloc (*datalen);
+  p = *data = malloc (*datalen);
+  if (!p)
+    {
+      if (minor_status)
+	*minor_status = ENOMEM;
+      return GSS_S_FAILURE;
+    }
 
   /*
    * RFC 1964 / gssapi-cfx:

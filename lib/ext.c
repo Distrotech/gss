@@ -1,5 +1,5 @@
 /* ext.c --- Implementation of GSS specific extensions.
- * Copyright (C) 2003, 2004, 2005, 2006, 2007  Simon Josefsson
+ * Copyright (C) 2003, 2004, 2005, 2006, 2007, 2009  Simon Josefsson
  *
  * This file is part of the Generic Security Service (GSS).
  *
@@ -100,7 +100,13 @@ gss_copy_oid (OM_uint32 * minor_status,
     return GSS_S_FAILURE | GSS_S_CALL_BAD_STRUCTURE;
 
   dest_oid->length = src_oid->length;
-  dest_oid->elements = xmalloc (src_oid->length);
+  dest_oid->elements = malloc (src_oid->length);
+  if (!dest_oid->elements)
+    {
+      if (minor_status)
+	*minor_status = ENOMEM;
+      return GSS_S_FAILURE;
+    }
   memcpy (dest_oid->elements, src_oid->elements, src_oid->length);
 
   return GSS_S_COMPLETE;
@@ -141,7 +147,13 @@ gss_duplicate_oid (OM_uint32 * minor_status,
   if (src_oid->length == 0 || src_oid->elements == NULL)
     return GSS_S_FAILURE | GSS_S_CALL_BAD_STRUCTURE;
 
-  *dest_oid = xmalloc (sizeof (**dest_oid));
+  *dest_oid = malloc (sizeof (**dest_oid));
+  if (!*dest_oid)
+    {
+      if (minor_status)
+	*minor_status = ENOMEM;
+      return GSS_S_FAILURE;
+    }
 
   maj_stat = gss_copy_oid (minor_status, src_oid, *dest_oid);
   if (GSS_ERROR (maj_stat))

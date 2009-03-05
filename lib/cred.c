@@ -1,5 +1,5 @@
 /* cred.c --- Implementation of GSS-API Credential Management functions.
- * Copyright (C) 2003, 2004, 2005, 2006, 2007  Simon Josefsson
+ * Copyright (C) 2003, 2004, 2005, 2006, 2007, 2009  Simon Josefsson
  *
  * This file is part of the Generic Security Service (GSS).
  *
@@ -155,7 +155,13 @@ gss_acquire_cred (OM_uint32 * minor_status,
       return GSS_S_BAD_MECH;
     }
 
-  *output_cred_handle = xcalloc (sizeof (**output_cred_handle), 1);
+  *output_cred_handle = calloc (sizeof (**output_cred_handle), 1);
+  if (!*output_cred_handle)
+    {
+      if (minor_status)
+	*minor_status = ENOMEM;
+      return GSS_S_FAILURE;
+    }
   (*output_cred_handle)->mech = mech->mech;
 
   maj_stat = mech->acquire_cred (minor_status,

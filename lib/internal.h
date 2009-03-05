@@ -33,6 +33,7 @@
 #include <ctype.h>
 #include <string.h>
 #include <time.h>
+#include <errno.h>
 
 /* Get specification. */
 #include <gss/api.h>

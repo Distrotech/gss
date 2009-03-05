@@ -1,5 +1,5 @@
 /* krb5/context.c --- Implementation of Kerberos 5 GSS Context functions.
- * Copyright (C) 2003, 2004, 2005, 2006, 2007, 2008  Simon Josefsson
+ * Copyright (C) 2003, 2004, 2005, 2006, 2007, 2008, 2009  Simon Josefsson
  *
  * This file is part of the Generic Security Service (GSS).
  *
@@ -75,7 +75,7 @@ init_request (OM_uint32 * minor_status,
     }
 
   /* Create Authenticator checksum field. */
-  maj_stat = _gss_krb5_checksum_pack (initiator_cred_handle,
+  maj_stat = _gss_krb5_checksum_pack (minor_status, initiator_cred_handle,
 				      input_chan_bindings, req_flags,
 				      &cksum, &cksumlen);
   if (GSS_ERROR (maj_stat))
@@ -205,7 +205,13 @@ gss_krb5_init_sec_context (OM_uint32 * minor_status,
 
   if (k5 == NULL)
     {
-      k5 = ctx->krb5 = xcalloc (sizeof (*k5), 1);
+      k5 = ctx->krb5 = calloc (sizeof (*k5), 1);
+      if (!k5)
+	{
+	  if (minor_status)
+	    *minor_status = ENOMEM;
+	  return GSS_S_FAILURE;
+	}
 
       rc = shishi_init (&k5->sh);
       if (rc != SHISHI_OK)
@@ -315,8 +321,23 @@ gss_krb5_accept_sec_context (OM_uint32 * minor_status,
 
   crk5 = acceptor_cred_handle->krb5;
 
-  cx = xcalloc (sizeof (*cx), 1);
-  cxk5 = xcalloc (sizeof (*cxk5), 1);
+  cx = calloc (sizeof (*cx), 1);
+  if (!cx)
+    {
+      if (minor_status)
+	*minor_status = ENOMEM;
+      return GSS_S_FAILURE;
+    }
+
+  cxk5 = calloc (sizeof (*cxk5), 1);
+  if (!cxk5)
+    {
+      free (cx);
+      if (minor_status)
+	*minor_status = ENOMEM;
+      return GSS_S_FAILURE;
+    }
+
   cx->mech = GSS_KRB5;
   cx->krb5 = cxk5;
   /* XXX cx->peer?? */
@@ -419,7 +440,13 @@ gss_krb5_accept_sec_context (OM_uint32 * minor_status,
     {
       gss_name_t p;
 
-      p = xmalloc (sizeof (*p));
+      p = malloc (sizeof (*p));
+      if (!p)
+	{
+	  if (minor_status)
+	    *minor_status = ENOMEM;
+	  return GSS_S_FAILURE;
+	}
 
       rc = shishi_encticketpart_client (cxk5->sh,
 					shishi_tkt_encticketpart (cxk5->tkt),

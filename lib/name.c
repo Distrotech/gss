@@ -1,5 +1,5 @@
 /* name.c --- Implementation of GSS-API Name Manipulation functions.
- * Copyright (C) 2003, 2004, 2005, 2006, 2007, 2008  Simon Josefsson
+ * Copyright (C) 2003, 2004, 2005, 2006, 2007, 2008, 2009  Simon Josefsson
  *
  * This file is part of the Generic Security Service (GSS).
  *
@@ -71,10 +71,25 @@ gss_import_name (OM_uint32 * minor_status,
       return GSS_S_BAD_NAME | GSS_S_CALL_INACCESSIBLE_WRITE;
     }
 
-  *output_name = xmalloc (sizeof (**output_name));
+  *output_name = malloc (sizeof (**output_name));
+  if (!*output_name)
+    {
+      if (minor_status)
+	*minor_status = ENOMEM;
+      return GSS_S_FAILURE;
+    }
   (*output_name)->length = input_name_buffer->length;
-  (*output_name)->value = xmemdup (input_name_buffer->value,
-				   input_name_buffer->length);
+  (*output_name)->value = malloc (input_name_buffer->length);
+  if (!(*output_name)->value)
+    {
+      free (*output_name);
+      if (minor_status)
+	*minor_status = ENOMEM;
+      return GSS_S_FAILURE;
+    }
+  memcpy ((*output_name)->value,
+	  input_name_buffer->value,
+	  input_name_buffer->length);
 
   (*output_name)->type = input_name_type;
 
@@ -130,7 +145,13 @@ gss_display_name (OM_uint32 * minor_status,
     }
 
   output_name_buffer->length = input_name->length;
-  output_name_buffer->value = xmalloc (input_name->length + 1);
+  output_name_buffer->value = malloc (input_name->length + 1);
+  if (!output_name_buffer->value)
+    {
+      if (minor_status)
+	*minor_status = ENOMEM;
+      return GSS_S_FAILURE;
+    }
   if (input_name->value)
     memcpy (output_name_buffer->value, input_name->value, input_name->length);
 
@@ -559,10 +580,23 @@ gss_duplicate_name (OM_uint32 * minor_status,
       return GSS_S_FAILURE | GSS_S_CALL_INACCESSIBLE_WRITE;
     }
 
-  *dest_name = xmalloc (sizeof (**dest_name));
+  *dest_name = malloc (sizeof (**dest_name));
+  if (!*dest_name)
+    {
+      if (minor_status)
+	*minor_status = ENOMEM;
+      return GSS_S_FAILURE;
+    }
   (*dest_name)->type = src_name->type;
   (*dest_name)->length = src_name->length;
-  (*dest_name)->value = xmalloc (src_name->length + 1);
+  (*dest_name)->value = malloc (src_name->length + 1);
+  if (!(*dest_name)->value)
+    {
+      free (*dest_name);
+      if (minor_status)
+	*minor_status = ENOMEM;
+      return GSS_S_FAILURE;
+    }
   memcpy ((*dest_name)->value, src_name->value, src_name->length);
   (*dest_name)->value[src_name->length] = '\0';
 

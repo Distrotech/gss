@@ -1,5 +1,5 @@
 /* misc.c --- Implementation of GSS-API Miscellaneous functions.
- * Copyright (C) 2003, 2004, 2005, 2006, 2007, 2008  Simon Josefsson
+ * Copyright (C) 2003, 2004, 2005, 2006, 2007, 2008, 2009  Simon Josefsson
  *
  * This file is part of the Generic Security Service (GSS).
  *
@@ -49,7 +49,13 @@ gss_create_empty_oid_set (OM_uint32 * minor_status, gss_OID_set * oid_set)
   if (minor_status)
     *minor_status = 0;
 
-  *oid_set = xmalloc (sizeof (**oid_set));
+  *oid_set = malloc (sizeof (**oid_set));
+  if (!*oid_set)
+    {
+      if (minor_status)
+	*minor_status = ENOMEM;
+      return GSS_S_FAILURE;
+    }
   (*oid_set)->count = 0;
   (*oid_set)->elements = NULL;
 
@@ -115,9 +121,20 @@ gss_add_oid_set_member (OM_uint32 * minor_status,
     }
 
   (*oid_set)->count++;
-  (*oid_set)->elements = xrealloc ((*oid_set)->elements,
-				   (*oid_set)->count *
-				   sizeof (*(*oid_set)->elements));
+  {
+    gss_OID tmp;
+
+    tmp = realloc ((*oid_set)->elements, (*oid_set)->count *
+		   sizeof (*(*oid_set)->elements));
+    if (!tmp)
+      {
+	if (minor_status)
+	  *minor_status = ENOMEM;
+	return GSS_S_FAILURE;
+      }
+
+    (*oid_set)->elements = tmp;
+  }
 
   major_stat = gss_copy_oid (minor_status, member_oid,
 			     (*oid_set)->elements + ((*oid_set)->count - 1));

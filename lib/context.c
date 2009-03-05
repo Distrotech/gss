@@ -1,5 +1,5 @@
 /* context.c --- Implementation of GSS-API Context functions.
- * Copyright (C) 2003, 2004, 2005, 2006, 2007  Simon Josefsson
+ * Copyright (C) 2003, 2004, 2005, 2006, 2007, 2009  Simon Josefsson
  *
  * This file is part of the Generic Security Service (GSS).
  *
@@ -397,7 +397,13 @@ gss_init_sec_context (OM_uint32 * minor_status,
 
   if (*context_handle == GSS_C_NO_CONTEXT)
     {
-      *context_handle = xcalloc (sizeof (**context_handle), 1);
+      *context_handle = calloc (sizeof (**context_handle), 1);
+      if (!*context_handle)
+	{
+	  if (minor_status)
+	    *minor_status = ENOMEM;
+	  return GSS_S_FAILURE;
+	}
       (*context_handle)->mech = mech->mech;
       freecontext = 1;
     }
