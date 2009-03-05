@@ -57,13 +57,11 @@ AC_DEFUN([gl_INIT],
   	m4_defn([m4_PACKAGE_VERSION])), [1], [],
         [AC_CONFIG_LINKS([$GNUmakefile:$GNUmakefile], [],
   	[GNUmakefile=$GNUmakefile])])
-  gl_INLINE
   gl_HEADER_STRING_H
   gl_FUNC_STRVERSCMP
   gl_STRING_MODULE_INDICATOR([strverscmp])
   gl_UNISTD_H
   AC_SUBST([WARN_CFLAGS])
-  gl_XALLOC
   m4_ifval(gl_LIBSOURCES_LIST, [
     m4_syscmd([test ! -d ]m4_defn([gl_LIBSOURCES_DIR])[ ||
       for gl_file in ]gl_LIBSOURCES_LIST[ ; do
@@ -199,6 +197,7 @@ AC_DEFUN([gl_FILE_LIST], [
   doc/fdl-1.3.texi
   doc/gendocs_template
   doc/gpl-3.0.texi
+  lib/dummy.c
   lib/gethostname.c
   lib/getopt.c
   lib/getopt.in.h
@@ -208,10 +207,6 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/string.in.h
   lib/strverscmp.c
   lib/unistd.in.h
-  lib/xalloc.h
-  lib/xgethostname.c
-  lib/xgethostname.h
-  lib/xmalloc.c
   m4/00gnulib.m4
   m4/autobuild.m4
   m4/extensions.m4
@@ -219,7 +214,6 @@ AC_DEFUN([gl_FILE_LIST], [
   m4/getopt.m4
   m4/gnulib-common.m4
   m4/include_next.m4
-  m4/inline.m4
   m4/lib-ld.m4
   m4/lib-link.m4
   m4/lib-prefix.m4
@@ -229,7 +223,6 @@ AC_DEFUN([gl_FILE_LIST], [
   m4/sys_socket_h.m4
   m4/unistd_h.m4
   m4/warnings.m4
-  m4/xalloc.m4
   top/GNUmakefile
   top/maint.mk
 ])
