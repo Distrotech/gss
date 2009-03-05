@@ -1,5 +1,5 @@
 /* krb5/name.c --- Implementation of Kerberos 5 GSS-API Name functions.
- * Copyright (C) 2003, 2004, 2005, 2006, 2007, 2008  Simon Josefsson
+ * Copyright (C) 2003, 2004, 2005, 2006, 2007, 2008, 2009  Simon Josefsson
  *
  * This file is part of the Generic Security Service (GSS).
  *
@@ -43,10 +43,23 @@ gss_krb5_canonicalize_name (OM_uint32 * minor_status,
     {
       if (input_name->length > 15)
 	{
-	  *output_name = xmalloc (sizeof (**output_name));
+	  *output_name = malloc (sizeof (**output_name));
+	  if (!*output_name)
+	    {
+	      if (minor_status)
+		*minor_status = ENOMEM;
+	      return GSS_S_FAILURE;
+	    }
 	  (*output_name)->type = GSS_KRB5_NT_PRINCIPAL_NAME;
 	  (*output_name)->length = input_name->length - 15;
-	  (*output_name)->value = xmalloc ((*output_name)->length + 1);
+	  (*output_name)->value = malloc ((*output_name)->length + 1);
+	  if (!(*output_name)->value)
+	    {
+	      free (*output_name);
+	      if (minor_status)
+		*minor_status = ENOMEM;
+	      return GSS_S_FAILURE;
+	    }
 	  memcpy ((*output_name)->value, input_name->value + 15,
 		  (*output_name)->length);
 	  (*output_name)->value[(*output_name)->length] = '\0';
@@ -77,8 +90,14 @@ gss_krb5_canonicalize_name (OM_uint32 * minor_status,
 	  size_t hostlen = strlen (hostname);
 	  size_t oldlen = (*output_name)->length;
 	  size_t newlen = oldlen + 1 + hostlen;
-	  (*output_name)->value =
-	    xrealloc ((*output_name)->value, newlen + 1);
+	  char *tmp = realloc ((*output_name)->value, newlen + 1);
+	  if (!tmp)
+	    {
+	      if (minor_status)
+		*minor_status = ENOMEM;
+	      return GSS_S_FAILURE;
+	    }
+	  (*output_name)->value = tmp;
 	  (*output_name)->value[oldlen] = '/';
 	  memcpy ((*output_name)->value + 1 + oldlen, hostname, hostlen);
 	  (*output_name)->length = newlen;
@@ -116,7 +135,13 @@ gss_krb5_export_name (OM_uint32 * minor_status,
   char *p;
 
   exported_name->length = len;
-  p = exported_name->value = xmalloc (len);
+  p = exported_name->value = malloc (len);
+  if (!p)
+    {
+      if (minor_status)
+	*minor_status = ENOMEM;
+      return GSS_S_FAILURE;
+    }
 
   sprintf (p, "\x04\x01\x01\x0B\x06\x09%s", (char *) GSS_KRB5->elements);
   p[2] = '\0';

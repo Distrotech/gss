@@ -1,5 +1,5 @@
 /* krb5/msg.c --- Implementation of Kerberos 5 GSS-API Per-Message functions.
- * Copyright (C) 2003, 2004, 2005, 2006, 2007, 2008  Simon Josefsson
+ * Copyright (C) 2003, 2004, 2005, 2006, 2007, 2008, 2009  Simon Josefsson
  *
  * This file is part of the Generic Security Service (GSS).
  *
@@ -88,7 +88,13 @@ gss_krb5_wrap (OM_uint32 * minor_status,
 	 */
 	padlength = 8 - input_message_buffer->length % 8;
 	data.length = 4 * 8 + input_message_buffer->length + padlength;
-	p = xmalloc (data.length);
+	p = malloc (data.length);
+	if (!p)
+	  {
+	    if (minor_status)
+	      *minor_status = ENOMEM;
+	    return GSS_S_FAILURE;
+	  }
 
 	/* XXX encrypt data iff confidential option chosen */
 
@@ -173,7 +179,13 @@ gss_krb5_wrap (OM_uint32 * minor_status,
 	padlength = 8 - input_message_buffer->length % 8;
 	data.length = 8 + 8 + 20 + 8 + input_message_buffer->length
 	  + padlength;
-	p = xmalloc (data.length);
+	p = malloc (data.length);
+	if (!p)
+	  {
+	    if (minor_status)
+	      *minor_status = ENOMEM;
+	    return GSS_S_FAILURE;
+	  }
 
 	/* XXX encrypt data iff confidential option chosen */
 
@@ -380,8 +392,14 @@ gss_krb5_unwrap (OM_uint32 * minor_status,
 
 	/* Copy output data */
 	output_message_buffer->length = datalen - 8 - 8 - 8 - 8 - padlen;
-	output_message_buffer->value =
-	  xmalloc (output_message_buffer->length);
+	output_message_buffer->value = malloc (output_message_buffer->length);
+	if (!output_message_buffer->value)
+	  {
+	    if (minor_status)
+	      *minor_status = ENOMEM;
+	    return GSS_S_FAILURE;
+	  }
+
 	memcpy (output_message_buffer->value, pt, datalen - 4 * 8 - padlen);
       }
       break;
@@ -454,8 +472,13 @@ gss_krb5_unwrap (OM_uint32 * minor_status,
 
 	/* Copy output data */
 	output_message_buffer->length = datalen - 8 - 20 - 8 - 8 - padlen;
-	output_message_buffer->value =
-	  xmalloc (output_message_buffer->length);
+	output_message_buffer->value = malloc (output_message_buffer->length);
+	if (!output_message_buffer->value)
+	  {
+	    if (minor_status)
+	      *minor_status = ENOMEM;
+	    return GSS_S_FAILURE;
+	  }
 	memcpy (output_message_buffer->value, data + 20 + 8 + 8 + 8,
 		datalen - 20 - 8 - 8 - 8 - padlen);
       }

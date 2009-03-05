@@ -235,9 +235,15 @@ gss_display_status (OM_uint32 * minor_status,
 	case GSS_S_DUPLICATE_ELEMENT:
 	case GSS_S_NAME_NOT_MN:
 	  status_string->value =
-	    xstrdup (_(gss_routine_errors
-		       [(GSS_ROUTINE_ERROR (status_value) >>
-			 GSS_C_ROUTINE_ERROR_OFFSET) - 1].text));
+	    strdup (_(gss_routine_errors
+		      [(GSS_ROUTINE_ERROR (status_value) >>
+			GSS_C_ROUTINE_ERROR_OFFSET) - 1].text));
+	  if (!status_string->value)
+	    {
+	      if (minor_status)
+		*minor_status = ENOMEM;
+	      return GSS_S_FAILURE;
+	    }
 	  status_string->length = strlen (status_string->value);
 	  return GSS_S_COMPLETE;
 	  break;
@@ -264,9 +270,15 @@ gss_display_status (OM_uint32 * minor_status,
 	case GSS_S_CALL_INACCESSIBLE_WRITE:
 	case GSS_S_CALL_BAD_STRUCTURE:
 	  status_string->value =
-	    xstrdup (_(gss_calling_errors
-		       [(GSS_CALLING_ERROR (status_value) >>
-			 GSS_C_CALLING_ERROR_OFFSET) - 1].text));
+	    strdup (_(gss_calling_errors
+		      [(GSS_CALLING_ERROR (status_value) >>
+			GSS_C_CALLING_ERROR_OFFSET) - 1].text));
+	  if (!status_string->value)
+	    {
+	      if (minor_status)
+		*minor_status = ENOMEM;
+	      return GSS_S_FAILURE;
+	    }
 	  status_string->length = strlen (status_string->value);
 	  return GSS_S_COMPLETE;
 	  break;
@@ -282,7 +294,13 @@ gss_display_status (OM_uint32 * minor_status,
 	    GSS_SUPPLEMENTARY_INFO (status_value))
 	  {
 	    status_string->value =
-	      xstrdup (_(gss_supplementary_errors[i].text));
+	      strdup (_(gss_supplementary_errors[i].text));
+	    if (!status_string->value)
+	      {
+		if (minor_status)
+		  *minor_status = ENOMEM;
+		return GSS_S_FAILURE;
+	      }
 	    status_string->length = strlen (status_string->value);
 	    *message_context |= gss_supplementary_errors[i].err;
 	    if ((status_value & ~*message_context) == 0)
@@ -295,7 +313,13 @@ gss_display_status (OM_uint32 * minor_status,
 
       if (message_context)
 	*message_context = 0;
-      status_string->value = xstrdup (_("No error"));
+      status_string->value = strdup (_("No error"));
+      if (!status_string->value)
+	{
+	  if (minor_status)
+	    *minor_status = ENOMEM;
+	  return GSS_S_FAILURE;
+	}
       status_string->length = strlen (status_string->value);
       break;
 

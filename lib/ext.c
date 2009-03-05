@@ -31,6 +31,16 @@
 /* If non-NULL, call this function when memory is exhausted. */
 void (*gss_alloc_fail_function) (void) = 0;
 
+#ifndef __attribute__
+/* This feature is available in gcc versions 2.5 and later.  */
+# if __GNUC__ < 2 || (__GNUC__ == 2 && __GNUC_MINOR__ < 5)
+#  define __attribute__(Spec)	/* empty */
+# endif
+#endif
+
+extern void gss_xalloc_die (void)
+  __attribute__ ((__noreturn__));
+
 void
 gss_xalloc_die (void)
 {

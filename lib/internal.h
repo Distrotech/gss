@@ -39,9 +39,6 @@
 #include <gss/api.h>
 #include <gss/ext.h>
 
-/* Get xmalloc etc. */
-#include "xalloc.h"
-
 typedef struct gss_name_struct
 {
   size_t length;

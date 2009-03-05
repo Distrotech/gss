@@ -1,5 +1,5 @@
 /* krb5/error.c --- Kerberos 5 GSS-API error handling functionality.
- * Copyright (C) 2003, 2004, 2005, 2006, 2007, 2008  Simon Josefsson
+ * Copyright (C) 2003, 2004, 2005, 2006, 2007, 2008, 2009  Simon Josefsson
  *
  * This file is part of the Generic Security Service (GSS).
  *
@@ -89,7 +89,13 @@ gss_krb5_display_status (OM_uint32 * minor_status,
   switch (status_value)
     {
     case 0:
-      status_string->value = xstrdup (_("No krb5 error"));
+      status_string->value = strdup (_("No krb5 error"));
+      if (!status_string->value)
+	{
+	  if (minor_status)
+	    *minor_status = ENOMEM;
+	  return GSS_S_FAILURE;
+	}
       status_string->length = strlen (status_string->value);
       break;
 
@@ -113,12 +119,24 @@ gss_krb5_display_status (OM_uint32 * minor_status,
     case GSS_KRB5_S_KG_BAD_LENGTH:
     case GSS_KRB5_S_KG_CTX_INCOMPLETE:
       status_string->value =
-	xstrdup (_(gss_krb5_errors[status_value - 1].text));
+	strdup (_(gss_krb5_errors[status_value - 1].text));
+      if (!status_string->value)
+	{
+	  if (minor_status)
+	    *minor_status = ENOMEM;
+	  return GSS_S_FAILURE;
+	}
       status_string->length = strlen (status_string->value);
       break;
 
     default:
-      status_string->value = xstrdup (_("Unknown krb5 error"));
+      status_string->value = strdup (_("Unknown krb5 error"));
+      if (!status_string->value)
+	{
+	  if (minor_status)
+	    *minor_status = ENOMEM;
+	  return GSS_S_FAILURE;
+	}
       status_string->length = strlen (status_string->value);
       break;
     }
