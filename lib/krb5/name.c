@@ -23,8 +23,8 @@
 /* Get specification. */
 #include "k5internal.h"
 
-/* Get xgethostname. */
-#include "xgethostname.h"
+/* Get gethostname. */
+#include <unistd.h>
 
 OM_uint32
 gss_krb5_canonicalize_name (OM_uint32 * minor_status,
@@ -86,17 +86,29 @@ gss_krb5_canonicalize_name (OM_uint32 * minor_status,
 	}
       else
 	{
-	  char *hostname = xgethostname ();
-	  size_t hostlen = strlen (hostname);
-	  size_t oldlen = (*output_name)->length;
-	  size_t newlen = oldlen + 1 + hostlen;
-	  char *tmp = realloc ((*output_name)->value, newlen + 1);
+	  char hostname[HOST_NAME_MAX];
+	  size_t hostlen, oldlen, newlen;
+	  char *tmp;
+
+	  if (!gethostname (hostname, sizeof (hostname)))
+	    {
+	      if (minor_status)
+		*minor_status = errno;
+	      return GSS_S_FAILURE;
+	    }
+
+	  hostlen = strlen (hostname);
+	  oldlen = (*output_name)->length;
+	  newlen = oldlen + 1 + hostlen;
+
+	  tmp = realloc ((*output_name)->value, newlen + 1);
 	  if (!tmp)
 	    {
 	      if (minor_status)
 		*minor_status = ENOMEM;
 	      return GSS_S_FAILURE;
 	    }
+
 	  (*output_name)->value = tmp;
 	  (*output_name)->value[oldlen] = '/';
 	  memcpy ((*output_name)->value + 1 + oldlen, hostname, hostlen);
