@@ -48,10 +48,6 @@ AM_MISSING_PROG(HELP2MAN, help2man, $missing_dir)
 AM_GNU_GETTEXT(external)
 AM_GNU_GETTEXT_VERSION(0.17)
 
-# Checks for header files.
-AC_HEADER_STDC
-AC_CHECK_HEADERS(locale.h)
-
 # For gnulib stuff in gl/.
 gl_INIT
 srcgl_INIT

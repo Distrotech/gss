@@ -29,11 +29,7 @@
 #include <string.h>
 
 /* For gettext. */
-#ifdef HAVE_LOCALE_H
-# include <locale.h>
-#else
-# define setlocale(Category, Locale)	/* empty */
-#endif
+#include <locale.h>
 #include <gettext.h>
 #define _(String) gettext (String)
 
