@@ -55,7 +55,6 @@ AC_CHECK_HEADERS(locale.h)
 # For gnulib stuff in gl/.
 gl_INIT
 srcgl_INIT
-AC_DEFINE([xalloc_die], [gss_xalloc_die], [Fix namespace of xalloc_die.])
 
 # Test for Shishi.
 AC_ARG_ENABLE(kerberos5,
