@@ -2,7 +2,7 @@ GSS NEWS -- History of user-visible changes.                    -*- outline -*-
 Copyright (C) 2003, 2004, 2005, 2006, 2007, 2008, 2009 Simon Josefsson
 See the end for copying conditions.
 
-* Version 0.0.26 (unreleased)
+* Version 0.0.26 (released 2009-03-27)
 
 ** libgss: The library will now return error codes when out of memory.
 The gss_alloc_fail_function variable is no longer declared, but is
