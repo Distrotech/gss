@@ -64,6 +64,7 @@ if test "$kerberos5" != "no" ; then
   if test "$ac_cv_libshishi" = yes; then
     AC_DEFINE(USE_KERBEROS5, 1, [Define to 1 if you want Kerberos 5 mech.])
     INCLUDE_GSS_KRB5='#include <gss/krb5.h>'
+    INCLUDE_GSS_KRB5_EXT='#include <gss/krb5-ext.h>'
     kerberos5=yes
   else
     kerberos5=no
@@ -73,6 +74,7 @@ AC_MSG_CHECKING([if the Kerberos V5 mechanism should be supported])
 AC_MSG_RESULT($kerberos5)
 AM_CONDITIONAL(KRB5, test "$kerberos5" = "yes")
 AC_SUBST(INCLUDE_GSS_KRB5)
+AC_SUBST(INCLUDE_GSS_KRB5_EXT)
 
 # Check for gtk-doc.
 GTK_DOC_CHECK(1.1)

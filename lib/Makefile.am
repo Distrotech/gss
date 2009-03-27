@@ -47,7 +47,7 @@ endif
 
 if KRB5
 SUBDIRS += krb5
-gssinclude_HEADERS += headers/gss/krb5.h
+gssinclude_HEADERS += headers/gss/krb5.h headers/gss/krb5-ext.h
 libgss_la_LIBADD += krb5/libgss-shishi.la
 endif
 

@@ -1,4 +1,4 @@
-/* gss.h --- Header file for GSSLib.                                  -*- c -*-
+/* gss/krb5-ext.h --- Header file for Kerberos 5 GSS-API mechanism.
  * Copyright (C) 2003, 2004, 2005, 2006, 2007, 2008, 2009  Simon Josefsson
  *
  * This file is part of the Generic Security Service (GSS).
@@ -20,22 +20,23 @@
  *
  */
 
-#ifndef _GSS_H
-#define _GSS_H
+/*
+ * This file contains GNU GSS specific Kerberos V5 related GSS-API
+ * mechanism prototypes.  See gss/krb5.h for official prototypes.
+ *
+ */
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+#ifndef GSS_KRB5_EXT_H
+# define GSS_KRB5_EXT_H
 
-#define GSS_VERSION "@VERSION@"
+extern gss_OID GSS_KRB5;
 
-#include <gss/api.h>
-#include <gss/ext.h>
-@INCLUDE_GSS_KRB5@
-@INCLUDE_GSS_KRB5_EXT@
+/* Static symbols for other gss_OID types.  These are useful in static
+   declarations. */
+extern gss_OID_desc GSS_KRB5_static;
+extern gss_OID_desc GSS_KRB5_NT_USER_NAME_static;
+extern gss_OID_desc GSS_KRB5_NT_HOSTBASED_SERVICE_NAME_static;
+extern gss_OID_desc GSS_KRB5_NT_PRINCIPAL_NAME_static;
+extern gss_OID_desc GSS_KRB5_NT_STRING_UID_NAME_static;
 
-#ifdef __cplusplus
-}
-#endif
-
-#endif /* _GSS_H */
+#endif /* GSS_KRB5_EXT_H */

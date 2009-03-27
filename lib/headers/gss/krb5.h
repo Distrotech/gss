@@ -1,5 +1,5 @@
-/* krb5/krb5.h --- Header file for Kerberos 5 GSS-API mechanism.
- * Copyright (C) 2003, 2004, 2005, 2006, 2007  Simon Josefsson
+/* gss/krb5.h --- Header file for Kerberos 5 GSS-API mechanism.
+ * Copyright (C) 2003, 2004, 2005, 2006, 2007, 2009  Simon Josefsson
  *
  * This file is part of the Generic Security Service (GSS).
  *
@@ -20,8 +20,15 @@
  *
  */
 
-#ifndef GSS_KRB5_H_
-#define GSS_KRB5_H_
+/*
+ * This file contains official Kerberos V5 GSS-API mechanism related
+ * prototypes defined as in RFC 1964 and RFC 4121.  For GNU GSS
+ * specific extensions, see gss/krb5-ext.h.
+ *
+ */
+
+#ifndef GSS_KRB5_H
+# define GSS_KRB5_H
 
 /* 4.1.1. Non-Kerberos-specific codes */
 
@@ -64,31 +71,11 @@
 /* "Attempt to use incomplete security context" */
 
 /*
- * To support ongoing experimentation, testing, and evolution of the
- * specification, the Kerberos V5 GSS-API mechanism as defined in this
- * and any successor memos will be identified with the following
- * Object Identifier, as defined in RFC-1510, until the specification
- * is advanced to the level of Proposed Standard RFC:
- *
- * {iso(1), org(3), dod(5), internet(1), security(5), kerberosv5(2)}
- *
- * Upon advancement to the level of Proposed Standard RFC, the
- * Kerberos V5 GSS-API mechanism will be identified by an Object
- * Identifier having the value:
- *
- * {iso(1) member-body(2) United States(840) mit(113554) infosys(1)
- * gssapi(2) krb5(2)}
- */
-extern gss_OID_desc GSS_KRB5_static;
-extern gss_OID GSS_KRB5;
-
-/*
  * This name form shall be represented by the Object Identifier
  * {iso(1) member-body(2) United States(840) mit(113554) infosys(1)
  * gssapi(2) generic(1) user_name(1)}.  The recommended symbolic name
  * for this type is "GSS_KRB5_NT_USER_NAME".
  */
-extern gss_OID_desc GSS_KRB5_NT_USER_NAME_static;
 extern gss_OID GSS_KRB5_NT_USER_NAME;
 
 /*
@@ -99,7 +86,6 @@ extern gss_OID GSS_KRB5_NT_USER_NAME;
  * "GSS_KRB5_NT_HOSTBASED_SERVICE_NAME".  The currently preferred
  * symbolic name for this type is "GSS_C_NT_HOSTBASED_SERVICE".
  */
-extern gss_OID_desc GSS_KRB5_NT_HOSTBASED_SERVICE_NAME_static;
 extern gss_OID GSS_KRB5_NT_HOSTBASED_SERVICE_NAME;
 
 /*
@@ -108,8 +94,15 @@ extern gss_OID GSS_KRB5_NT_HOSTBASED_SERVICE_NAME;
  * gssapi(2) krb5(2) krb5_name(1)}.  The recommended symbolic name for
  * this type is "GSS_KRB5_NT_PRINCIPAL_NAME".
  */
-extern gss_OID_desc GSS_KRB5_NT_PRINCIPAL_NAME_static;
 extern gss_OID GSS_KRB5_NT_PRINCIPAL_NAME;
+
+/*
+ * This name form shall be represented by the Object Identifier
+ * {iso(1) member-body(2) United States(840) mit(113554) infosys(1)
+ * gssapi(2) generic(1) machine_uid_name(2)}.  The recommended
+ * symbolic name for this type is "GSS_KRB5_NT_MACHINE_UID_NAME".
+ */
+extern gss_OID GSS_KRB5_NT_MACHINE_UID_NAME;
 
 /*
  * This name form shall be represented by the Object Identifier
@@ -117,7 +110,6 @@ extern gss_OID GSS_KRB5_NT_PRINCIPAL_NAME;
  * gssapi(2) generic(1) string_uid_name(3)}.  The recommended symbolic
  * name for this type is "GSS_KRB5_NT_STRING_UID_NAME".
  */
-extern gss_OID_desc GSS_KRB5_NT_STRING_UID_NAME_static;
 extern gss_OID GSS_KRB5_NT_STRING_UID_NAME;
 
-#endif /* GSS_KRB5_H_ */
+#endif /* GSS_KRB5_H */

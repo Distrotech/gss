@@ -4,9 +4,19 @@ See the end for copying conditions.
 
 * Version 0.0.27 (unreleased)
 
+** Add GSS_KRB5_NT_MACHINE_UID_NAME and GSS_KRB5_NT_MACHINE_UID_NAME_static.
+Defined in RFC 1964.
+
+** New header file gss/krb5-ext.h used for GNU GSS specific extensions.
+Before gss/krb5.h was used for both offical and GNU GSS prototypes.
+
 ** Fix compilation error with Sun Studio related to missing getopt.
 Reported by Dagobert Michelsen <dam@opencsw.org> in
 <http://permalink.gmane.org/gmane.comp.gnu.gss.general/142>.
+
+** API and ABI modifications.
+GSS_KRB5_NT_MACHINE_UID_NAME: ADDED
+GSS_KRB5_NT_MACHINE_UID_NAME_static: ADDED
 
 * Version 0.0.26 (released 2009-03-27)
 
