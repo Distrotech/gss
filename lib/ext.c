@@ -22,35 +22,6 @@
 
 #include "internal.h"
 
-#include <stdio.h>
-
-/* Get i18n. */
-#include <gettext.h>
-#define _(String) dgettext (PACKAGE, String)
-
-/* If non-NULL, call this function when memory is exhausted. */
-void (*gss_alloc_fail_function) (void) = 0;
-
-#ifndef __attribute__
-/* This feature is available in gcc versions 2.5 and later.  */
-# if __GNUC__ < 2 || (__GNUC__ == 2 && __GNUC_MINOR__ < 5)
-#  define __attribute__(Spec)	/* empty */
-# endif
-#endif
-
-extern void gss_xalloc_die (void)
-  __attribute__ ((__noreturn__));
-
-void
-gss_xalloc_die (void)
-{
-  if (gss_alloc_fail_function)
-    (*gss_alloc_fail_function) ();
-  fflush (stdout);
-  fprintf (stderr, _("%s: Memory allocation failed\n"), PACKAGE);
-  abort ();
-}
-
 /**
  * gss_oid_equal:
  * @first_oid: (Object ID, read) First Object identifier.
