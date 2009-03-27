@@ -32,6 +32,7 @@ MAINTAINERCLEANFILES = $(BUILT_SOURCES)
 noinst_LTLIBRARIES = libcmd-gss.la
 libcmd_gss_la_CFLAGS =
 libcmd_gss_la_SOURCES = gss.ggo $(BUILT_SOURCES)
+libcmd_gss_la_LIBADD = gl/libgnu.la
 
 gss_SOURCES = gss.c
 gss_LDADD = ../lib/libgss.la gl/libgnu.la @LTLIBINTL@ libcmd-gss.la
