@@ -17,7 +17,7 @@
 # the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 # Boston, MA 02110-1301, USA.
 
-GSS_1.0 {
+GSS_0.1.0 {
   global:
 
 # Standard interfaces:
