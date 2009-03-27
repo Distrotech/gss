@@ -20,6 +20,11 @@ Defined in RFC 1964.
 ** libgss: New header file gss/krb5-ext.h used for GNU GSS specific extensions.
 Before gss/krb5.h was used for both offical and GNU GSS prototypes.
 
+** libgss: The version script version is now GSS_0.1.0 instead of GSS_1.0.
+The use of GSS_1.0 in the last release was unfortunate, and by making
+a rapid follow-up release we hope to mitigate the consequences.
+Please don't use version 0.0.26.
+
 ** doc: The GTK-DOC manual is now built properly.
 
 ** Fix compilation error with Sun Studio related to missing getopt.
