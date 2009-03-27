@@ -17,8 +17,10 @@ any header file.
 ** libgss: Add GSS_KRB5_NT_MACHINE_UID_NAME{,_static}.
 Defined in RFC 1964.
 
-** New header file gss/krb5-ext.h used for GNU GSS specific extensions.
+** libgss: New header file gss/krb5-ext.h used for GNU GSS specific extensions.
 Before gss/krb5.h was used for both offical and GNU GSS prototypes.
+
+** doc: The GTK-DOC manual is now built properly.
 
 ** Fix compilation error with Sun Studio related to missing getopt.
 Reported by Dagobert Michelsen <dam@opencsw.org> in
