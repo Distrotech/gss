@@ -19,10 +19,9 @@
 # Boston, MA 02110-1301, USA.
 
 AM_CFLAGS = $(WARN_CFLAGS)
-AM_CPPFLAGS = -I$(top_srcdir)/gl \
-	-I$(top_srcdir)/lib/headers -I$(top_builddir)/lib/headers
+AM_CPPFLAGS = -I$(top_srcdir)/lib/headers -I$(top_builddir)/lib/headers
 AM_LDFLAGS = -no-install
-LDADD = ../lib/libgss.la ../gl/libgnu.la @LTLIBINTL@
+LDADD = ../lib/libgss.la @LTLIBINTL@
 
 TESTS_ENVIRONMENT = SHISHI_KEYS=$(srcdir)/krb5context.key \
 	SHISHI_TICKETS=$(srcdir)/krb5context.tkt \

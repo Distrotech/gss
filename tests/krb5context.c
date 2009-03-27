@@ -30,10 +30,6 @@
 #include <ctype.h>
 #include <string.h>
 
-/* i18n. */
-#include <locale.h>
-#include <gettext.h>
-
 /* Get GSS prototypes. */
 #include <gss.h>
 
@@ -125,9 +121,6 @@ main (int argc, char *argv[])
   gss_cred_id_t server_creds;
   Shishi *handle;
   size_t i;
-
-  setlocale (LC_ALL, "");
-  bindtextdomain (PACKAGE, LOCALEDIR);
 
   do
     if (strcmp (argv[argc - 1], "-v") == 0 ||
