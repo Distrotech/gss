@@ -35,6 +35,15 @@ AM_CPPFLAGS = \
 
 LDADD = ../../../src/gl/libgnu.la
 
+## begin gnulib module unistd-tests
+
+TESTS += test-unistd
+check_PROGRAMS += test-unistd
+
+EXTRA_DIST += test-unistd.c
+
+## end   gnulib module unistd-tests
+
 # Clean up after Solaris cc.
 clean-local:
 	rm -rf SunWS_cache

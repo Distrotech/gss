@@ -4,6 +4,10 @@ See the end for copying conditions.
 
 * Version 0.0.27 (unreleased)
 
+** Fix compilation error with Sun Studio related to missing getopt.
+Reported by Dagobert Michelsen <dam@opencsw.org> in
+<http://permalink.gmane.org/gmane.comp.gnu.gss.general/142>.
+
 * Version 0.0.26 (released 2009-03-27)
 
 ** libgss: The library will now return error codes when out of memory.
