@@ -94,23 +94,6 @@ GSS_1.0 {
     GSS_KRB5_NT_PRINCIPAL_NAME;
     GSS_KRB5_NT_MACHINE_UID_NAME;
     GSS_KRB5_NT_STRING_UID_NAME;
-    gss_krb5_accept_sec_context;
-    gss_krb5_acquire_cred;
-    gss_krb5_canonicalize_name;
-    gss_krb5_context_time;
-    gss_krb5_delete_sec_context;
-    gss_krb5_display_status;
-    gss_krb5_errors;
-    gss_krb5_export_name;
-    gss_krb5_get_mic;
-    gss_krb5_init_sec_context;
-    gss_krb5_inquire_cred;
-    gss_krb5_inquire_cred_by_mech;
-    gss_krb5_release_cred;
-    gss_krb5_tktlifetime;
-    gss_krb5_unwrap;
-    gss_krb5_verify_mic;
-    gss_krb5_wrap;
 
 # Kerberos V5 extension:
     GSS_KRB5;
