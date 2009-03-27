@@ -36,7 +36,7 @@ struct gss_status_codes
   const char *text;
 };
 
-struct gss_status_codes gss_krb5_errors[] = {
+static struct gss_status_codes gss_krb5_errors[] = {
   /* 4.1.1. Non-Kerberos-specific codes */
   {GSS_KRB5_S_G_BAD_SERVICE_NAME, "GSS_KRB5_S_G_BAD_SERVICE_NAME",
    N_("No @ in SERVICE-NAME name string")},
