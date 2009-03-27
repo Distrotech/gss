@@ -30,5 +30,9 @@
     </para>
 
     <xi:include href="xml/gss.xml"/>
+    <xi:include href="xml/api.xml"/>
+    <xi:include href="xml/ext.xml"/>
+    <xi:include href="xml/krb5.xml"/>
+    <xi:include href="xml/krb5-ext.xml"/>
   </chapter>
 </book>
