@@ -5,7 +5,8 @@ See the end for copying conditions.
 * Version 0.1.0 (unreleased)
 
 ** libgss: Shared library version is incremented.
-The library is backwards compatible on source code level.
+The library is backwards compatible on source code level if you don't
+use the gss_krb5* functions or the gss_alloc_fail_function variable.
 
 ** libgss: Removed Kerberos V5 function symbols gss_krb5*.
 They were never intended to be exported and have never been part of
