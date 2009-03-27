@@ -1,5 +1,5 @@
 /* ext.h --- Header file for non-standard GSS-API functions.
- * Copyright (C) 2003, 2004, 2005, 2006, 2007  Simon Josefsson
+ * Copyright (C) 2003, 2004, 2005, 2006, 2007, 2009  Simon Josefsson
  *
  * This file is part of the Generic Security Service (GSS).
  *
@@ -25,9 +25,6 @@
 
 /* Get size_t. */
 #include <stddef.h>
-
-/* If non-NULL, call this function when memory is exhausted. */
-extern void (*gss_alloc_fail_function) (void);
 
 /* See version.c. */
 extern const char *gss_check_version (const char *req_version);

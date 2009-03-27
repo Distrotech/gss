@@ -4,8 +4,12 @@ See the end for copying conditions.
 
 * Version 0.0.26 (unreleased)
 
+** The library will now return error codes when out of memory.
+The gss_alloc_fail_function variable is no longer declared, but is
+still available in the library for ABI compatibility.
+
 ** API and ABI modifications.
-No changes since last version.
+gss_alloc_fail_function: No longer declared in header file.
 
 * Version 0.0.25 (released 2009-02-26)
 
