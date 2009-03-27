@@ -30,7 +30,8 @@ include_HEADERS = headers/gss.h
 gssincludedir=$(includedir)/gss
 gssinclude_HEADERS = headers/gss/api.h headers/gss/ext.h
 
-libgss_la_SOURCES = internal.h \
+libgss_la_SOURCES = libgss.map \
+	internal.h \
 	meta.h meta.c \
 	context.c cred.c error.c misc.c msg.c name.c obsolete.c oid.c \
 	asn1.c ext.c version.c
