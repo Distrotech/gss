@@ -18,8 +18,10 @@
 # the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 # Boston, MA 02110-1301, USA.
 
+SUBDIRS = po
+
 AM_CFLAGS = $(WARN_CFLAGS)
-AM_CPPFLAGS = -I$(top_srcdir)/gl \
+AM_CPPFLAGS = -I$(top_srcdir)/lib/gl \
 	-I$(top_srcdir)/lib/headers -I$(top_builddir)/lib/headers
 
 lib_LTLIBRARIES = libgss.la
@@ -32,12 +34,12 @@ libgss_la_SOURCES = internal.h \
 	meta.h meta.c \
 	context.c cred.c error.c misc.c msg.c name.c obsolete.c oid.c \
 	asn1.c ext.c version.c
-libgss_la_LIBADD = @LTLIBINTL@ $(top_builddir)/gl/libgnu.la
+libgss_la_LIBADD = @LTLIBINTL@ gl/libgnu.la
 libgss_la_LDFLAGS = -version-info $(LT_CURRENT):$(LT_REVISION):$(LT_AGE) \
 	-export-symbols-regex '^(gss|GSS).*' -no-undefined
 
 if KRB5
-SUBDIRS = krb5
+SUBDIRS += krb5
 gssinclude_HEADERS += headers/gss/krb5.h
 libgss_la_LIBADD += krb5/libgss-shishi.la
 endif

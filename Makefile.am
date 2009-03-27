@@ -25,6 +25,6 @@ EXTRA_DIST = cfg.mk maint.mk .clcopying
 pkgconfigdir = $(libdir)/pkgconfig
 pkgconfig_DATA = gss.pc
 
-SUBDIRS = po gl lib src tests doc
+SUBDIRS = po lib src tests doc
 
-ACLOCAL_AMFLAGS = -I m4 -I gl/m4 -I src/gl/m4
+ACLOCAL_AMFLAGS = -I m4 -I gl/m4 -I lib/gl/m4 -I src/gl/m4

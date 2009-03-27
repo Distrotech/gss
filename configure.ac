@@ -38,6 +38,7 @@ AC_CONFIG_HEADERS(config.h)
 # Checks for programs.
 AC_PROG_CC
 gl_EARLY
+libgl_EARLY
 srcgl_EARLY
 AC_LIBTOOL_WIN32_DLL
 AC_PROG_LIBTOOL
@@ -48,8 +49,9 @@ AM_MISSING_PROG(HELP2MAN, help2man, $missing_dir)
 AM_GNU_GETTEXT(external)
 AM_GNU_GETTEXT_VERSION(0.17)
 
-# For gnulib stuff in gl/.
+# For gnulib stuff.
 gl_INIT
+libgl_INIT
 srcgl_INIT
 
 # Test for Shishi.
@@ -96,8 +98,8 @@ AC_CONFIG_FILES([
   gss.pc
   doc/Makefile
   doc/reference/Makefile
-  gl/Makefile
   lib/Makefile
+  lib/gl/Makefile
   lib/headers/gss.h
   lib/krb5/Makefile
   po/Makefile.in
