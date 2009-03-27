@@ -35,8 +35,14 @@ libgss_la_SOURCES = internal.h \
 	context.c cred.c error.c misc.c msg.c name.c obsolete.c oid.c \
 	asn1.c ext.c version.c
 libgss_la_LIBADD = @LTLIBINTL@ gl/libgnu.la
-libgss_la_LDFLAGS = -version-info $(LT_CURRENT):$(LT_REVISION):$(LT_AGE) \
-	-export-symbols-regex '^(gss|GSS).*' -no-undefined
+libgss_la_LDFLAGS = -no-undefined \
+	-version-info $(LT_CURRENT):$(LT_REVISION):$(LT_AGE)
+
+if HAVE_LD_VERSION_SCRIPT
+libgss_la_LDFLAGS += -Wl,--version-script=$(srcdir)/libgss.map
+else
+libgss_la_LDFLAGS += -export-symbols-regex '^(gss|GSS).*'
+endif
 
 if KRB5
 SUBDIRS += krb5

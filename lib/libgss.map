@@ -92,12 +92,12 @@ GSS_1.0 {
     GSS_KRB5;
     GSS_KRB5_NT_HOSTBASED_SERVICE_NAME;
     GSS_KRB5_NT_PRINCIPAL_NAME;
-    GSS_KRB5_NT_PRINCIPAL_NAME_static
+    GSS_KRB5_NT_PRINCIPAL_NAME_static;
     GSS_KRB5_NT_STRING_UID_NAME;
-    GSS_KRB5_NT_STRING_UID_NAME_static
+    GSS_KRB5_NT_STRING_UID_NAME_static;
     GSS_KRB5_NT_USER_NAME;
-    GSS_KRB5_NT_USER_NAME_static
-    GSS_KRB5_static
+    GSS_KRB5_NT_USER_NAME_static;
+    GSS_KRB5_static;
     gss_krb5_accept_sec_context;
     gss_krb5_acquire_cred;
     gss_krb5_canonicalize_name;

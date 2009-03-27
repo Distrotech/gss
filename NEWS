@@ -4,9 +4,16 @@ See the end for copying conditions.
 
 * Version 0.0.26 (unreleased)
 
-** The library will now return error codes when out of memory.
+** libgss: The library will now return error codes when out of memory.
 The gss_alloc_fail_function variable is no longer declared, but is
 still available in the library for ABI compatibility.
+
+** libgss: Use a LD version script on platforms where it is supported.
+Currently only GNU LD and the Solaris linker supports it.  This helps
+Debian package tools to produce better dependencies.  Before we used
+Libtool -export-symbols-regex that created an anonymous version tag.
+We use -export-symbols-regex when the system does not support LD
+version scripts, but that only affect symbol visibility.
 
 ** API and ABI modifications.
 gss_alloc_fail_function: No longer declared in header file.
