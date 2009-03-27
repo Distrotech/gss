@@ -37,6 +37,7 @@ extern gss_OID_desc GSS_KRB5_static;
 extern gss_OID_desc GSS_KRB5_NT_USER_NAME_static;
 extern gss_OID_desc GSS_KRB5_NT_HOSTBASED_SERVICE_NAME_static;
 extern gss_OID_desc GSS_KRB5_NT_PRINCIPAL_NAME_static;
+extern gss_OID_desc GSS_KRB5_NT_MACHINE_UID_NAME_static;
 extern gss_OID_desc GSS_KRB5_NT_STRING_UID_NAME_static;
 
 #endif /* GSS_KRB5_EXT_H */

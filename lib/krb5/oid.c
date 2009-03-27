@@ -75,7 +75,7 @@ gss_OID GSS_KRB5_NT_PRINCIPAL_NAME = &GSS_KRB5_NT_PRINCIPAL_NAME_static;
  * gssapi(2) generic(1) machine_uid_name(2)}.  The recommended
  * symbolic name for this type is "GSS_KRB5_NT_MACHINE_UID_NAME".
  */
-gss_OID_desc GSS_KRB5_NT_MACHINE_UID_static = {
+gss_OID_desc GSS_KRB5_NT_MACHINE_UID_NAME_static = {
   10, (void *) "\x2a\x86\x48\x86\xf7\x12\x01\x02\x02\x02"
 };
 gss_OID GSS_KRB5_NT_MACHINE_UID_NAME = &GSS_KRB5_NT_MACHINE_UID_NAME_static;

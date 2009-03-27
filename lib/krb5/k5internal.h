@@ -22,7 +22,6 @@
 
 #include "internal.h"
 #include "protos.h"
-#include <gss/krb5.h>
 
 #include <shishi.h>
 

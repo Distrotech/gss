@@ -36,8 +36,7 @@
 #include <errno.h>
 
 /* Get specification. */
-#include <gss/api.h>
-#include <gss/ext.h>
+#include <gss.h>
 
 typedef struct gss_name_struct
 {
