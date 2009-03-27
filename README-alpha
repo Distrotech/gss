@@ -1,5 +1,5 @@
 GSS README-alpha -- Important introductory notes for alpha releases.
-Copyright (C) 2003, 2004, 2005, 2006, 2007 Simon Josefsson
+Copyright (C) 2003, 2004, 2005, 2006, 2007, 2008, 2009 Simon Josefsson
 See the end for copying conditions.
 
 GSS is unstable.  You should expect it to not work.  You should expect
@@ -16,16 +16,9 @@ It will not become stable without help.  Donate time or money.
 To compile from CVS, you need texinfo, tex, libtool, automake, and
 autoconf.  Bootstrap the build environment with:
 
-  $ ./autogen.sh
+  $ make
 
-Then run ./configure etc as usual.
-
-A note to binary package builders: please build using --disable-shared
-because during the development phase, only the so revision will be
-bumped on releases.  If you build shared libraries, other packages
-that link to them may stop working when a new release of the library
-is installed.  The reason for this is simply that the package is not
-mature enough to warrant proper shared object versioning.
+Then run make again to build it.
 
 ----------------------------------------------------------------------
 Copying and distribution of this file, with or without modification,
