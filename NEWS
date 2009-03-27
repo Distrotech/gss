@@ -11,6 +11,8 @@ The library is backwards compatible on source code level.
 They were never intended to be exported and have never been part of
 any header file.
 
+** libgss: Removed obsolete gss_xalloc_die and gss_alloc_fail_function.
+
 ** libgss: Add GSS_KRB5_NT_MACHINE_UID_NAME{,_static}.
 Defined in RFC 1964.
 
@@ -24,6 +26,7 @@ Reported by Dagobert Michelsen <dam@opencsw.org> in
 ** API and ABI modifications.
 GSS_KRB5_NT_MACHINE_UID_NAME: ADDED
 GSS_KRB5_NT_MACHINE_UID_NAME_static: ADDED
+gss_alloc_fail_function: REMOVED
 
 * Version 0.0.26 (released 2009-03-27)
 
