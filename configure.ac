@@ -20,14 +20,14 @@ dnl Process this file with autoconf to produce a configure script.
 # Boston, MA 02110-1301, USA.
 
 AC_PREREQ(2.61)
-AC_INIT([GNU Generic Security Service], [0.1.0], [bug-gss@gnu.org], [gss])
+AC_INIT([GNU Generic Security Service], [0.0.27], [bug-gss@gnu.org], [gss])
 
 # Library code modified:                              REVISION++
 # Interfaces changed/added/removed:   CURRENT++       REVISION=0
 # Interfaces added:                             AGE++
 # Interfaces removed:                           AGE=0
-AC_SUBST(LT_CURRENT, 1)
-AC_SUBST(LT_REVISION, 0)
+AC_SUBST(LT_CURRENT, 0)
+AC_SUBST(LT_REVISION, 27)
 AC_SUBST(LT_AGE, 0)
 
 AC_CONFIG_AUX_DIR([build-aux])

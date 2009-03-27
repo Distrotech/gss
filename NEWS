@@ -2,26 +2,11 @@ GSS NEWS -- History of user-visible changes.                    -*- outline -*-
 Copyright (C) 2003, 2004, 2005, 2006, 2007, 2008, 2009 Simon Josefsson
 See the end for copying conditions.
 
-* Version 0.1.0 (unreleased)
-
-** Shared library version is incremented because of API/ABI changes.
-
-** libgss: Remove Kerberos V5 prototypes from gss.h.
-The symbols are GSS_KRB5_static, GSS_KRB5_NT_USER_NAME_static,
-GSS_KRB5_NT_HOSTBASED_SERVICE_NAME_static,
-GSS_KRB5_NT_PRINCIPAL_NAME_static, and
-GSS_KRB5_NT_STRING_UID_NAME_static.
+* Version 0.0.27 (unreleased)
 
 ** Fix compilation error with Sun Studio related to missing getopt.
 Reported by Dagobert Michelsen <dam@opencsw.org> in
 <http://permalink.gmane.org/gmane.comp.gnu.gss.general/142>.
-
-** API and ABI modifications.
-GSS_KRB5_static: REMOVED
-GSS_KRB5_NT_USER_NAME_static: REMOVED
-GSS_KRB5_NT_HOSTBASED_SERVICE_NAME_static: REMOVED
-GSS_KRB5_NT_PRINCIPAL_NAME_static: REMOVED
-GSS_KRB5_NT_STRING_UID_NAME_static: REMOVED
 
 * Version 0.0.26 (released 2009-03-27)
 
