@@ -43,6 +43,8 @@ AC_DEFUN([libgl_INIT],
   gl_source_base='lib/gl'
   gl_FUNC_GETHOSTNAME
   gl_UNISTD_MODULE_INDICATOR([gethostname])
+  AC_SUBST([LIBINTL])
+  AC_SUBST([LTLIBINTL])
   gl_HEADER_STRING_H
   gl_FUNC_STRVERSCMP
   gl_STRING_MODULE_INDICATOR([strverscmp])
@@ -178,6 +180,7 @@ AC_DEFUN([libgl_FILE_LIST], [
   build-aux/link-warning.h
   lib/dummy.c
   lib/gethostname.c
+  lib/gettext.h
   lib/string.in.h
   lib/strverscmp.c
   lib/unistd.in.h
