@@ -98,6 +98,7 @@ AC_CONFIG_FILES([
   gss.pc
   doc/Makefile
   doc/reference/Makefile
+  gl/Makefile
   lib/Makefile
   lib/gl/Makefile
   lib/headers/gss.h
