@@ -1,3 +1,178 @@
+2009-03-27  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS: Version 0.0.26.
+
+2009-03-27  Simon Josefsson <simon@josefsson.org>
+
+	* lib/Makefile.am: Dist libgss.map.
+
+2009-03-27  Simon Josefsson <simon@josefsson.org>
+
+	* configure.ac: More debug output.
+
+2009-03-27  Simon Josefsson <simon@josefsson.org>
+
+	* Makefile.am, configure.ac: Fix distcheck.
+
+2009-03-27  Simon Josefsson <simon@josefsson.org>
+
+	* THANKS: Add.
+
+2009-03-27  Simon Josefsson <simon@josefsson.org>
+
+	* AUTHORS: Update PGP key.
+
+2009-03-27  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS, gl/Makefile.am, gl/Makefile.am~, gl/m4/gnulib-cache.m4,
+	gl/m4/gnulib-cache.m4~, gl/m4/gnulib-comp.m4,
+	gl/m4/gnulib-comp.m4~, gl/m4/ld-version-script.m4, lib/Makefile.am,
+	lib/libgss.map: Use library version script.
+
+2009-03-27  Simon Josefsson <simon@josefsson.org>
+
+	* README-alpha: Fix.
+
+2009-03-27  Simon Josefsson <simon@josefsson.org>
+
+	* tests/Makefile.am, tests/basic.c, tests/krb5context.c: Make
+	self-tests compile.
+
+2009-03-27  Simon Josefsson <simon@josefsson.org>
+
+	* doc/reference/Makefile.am: Update.
+
+2009-03-27  Simon Josefsson <simon@josefsson.org>
+
+	* doc/reference/Makefile.am: Ignore more.
+
+2009-03-27  Simon Josefsson <simon@josefsson.org>
+
+	* lib/gl/Makefile.am, lib/gl/gettext.h, lib/gl/m4/gnulib-cache.m4,
+	lib/gl/m4/gnulib-comp.m4: Update gnulib files.
+
+2009-03-27  Simon Josefsson <simon@josefsson.org>
+
+	* lib/Makefile.am, lib/gl/Makefile.am, lib/gl/getopt.c,
+	lib/gl/getopt.in.h, lib/gl/getopt1.c, lib/gl/getopt_int.h,
+	lib/gl/gettext.h, lib/gl/m4/getopt.m4, lib/gl/m4/gnulib-cache.m4,
+	lib/gl/m4/gnulib-comp.m4: Update gnulib files.
+
+2009-03-27  Simon Josefsson <simon@josefsson.org>
+
+	* Makefile.am, configure.ac, gl/Makefile.am, gl/Makefile.am~,
+	gl/gethostname.c, gl/getopt.c, gl/getopt.in.h, gl/getopt1.c,
+	gl/getopt_int.h, gl/gettext.h, gl/m4/extensions.m4,
+	gl/m4/gethostname.m4, gl/m4/getopt.m4, gl/m4/gnulib-cache.m4,
+	gl/m4/gnulib-cache.m4~, gl/m4/gnulib-comp.m4,
+	gl/m4/gnulib-comp.m4~, gl/m4/include_next.m4, gl/m4/string_h.m4,
+	gl/m4/strverscmp.m4, gl/m4/sys_socket_h.m4, gl/m4/unistd_h.m4,
+	gl/override/lib/gettext.h.diff, gl/string.in.h, gl/strverscmp.c,
+	gl/unistd.in.h, lib/Makefile.am, lib/gl/Makefile.am,
+	lib/gl/dummy.c, lib/gl/gethostname.c, lib/gl/getopt.c,
+	lib/gl/getopt.in.h, lib/gl/getopt1.c, lib/gl/getopt_int.h,
+	lib/gl/gettext.h, lib/gl/m4/00gnulib.m4, lib/gl/m4/extensions.m4,
+	lib/gl/m4/gethostname.m4, lib/gl/m4/getopt.m4,
+	lib/gl/m4/gnulib-cache.m4, lib/gl/m4/gnulib-common.m4,
+	lib/gl/m4/gnulib-comp.m4, lib/gl/m4/gnulib-tool.m4,
+	lib/gl/m4/include_next.m4, lib/gl/m4/string_h.m4,
+	lib/gl/m4/strverscmp.m4, lib/gl/m4/sys_socket_h.m4,
+	lib/gl/m4/unistd_h.m4, lib/gl/override/lib/gettext.h.diff,
+	lib/gl/string.in.h, lib/gl/strverscmp.c, lib/gl/unistd.in.h,
+	lib/krb5/Makefile.am: Separate library gnulib files from top-level
+	gnulib files.
+
+2009-03-27  Simon Josefsson <simon@josefsson.org>
+
+	* lib/libgss.map: Add comment about obsolete symbols.
+
+2009-03-27  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS, doc/gss.texi, lib/headers/gss/ext.h: Drop
+	gss_alloc_fail_function.
+
+2009-03-27  Simon Josefsson <simon@josefsson.org>
+
+	* gl/unistd.in.h: Update gnulib files.
+
+2009-03-19  Simon Josefsson <simon@josefsson.org>
+
+	* configure.ac, src/gss.c, tests/basic.c, tests/krb5context.c: 
+	Assume standard header files.
+
+2009-03-19  Simon Josefsson <simon@josefsson.org>
+
+	* configure.ac: Drop unused.
+
+2009-03-19  Simon Josefsson <simon@josefsson.org>
+
+	* GNUmakefile, build-aux/gnupload, maint.mk: Update gnulib files.
+
+2009-03-05  Simon Josefsson <simon@josefsson.org>
+
+	* build-aux/gnupload: Update gnulib files.
+
+2009-03-05  Simon Josefsson <simon@josefsson.org>
+
+	* lib/krb5/name.c: Avoid xgethostname.
+
+2009-03-05  Simon Josefsson <simon@josefsson.org>
+
+	* gl/Makefile.am, gl/dummy.c, gl/m4/gnulib-cache.m4,
+	gl/m4/gnulib-comp.m4, gl/m4/inline.m4, gl/m4/xalloc.m4,
+	gl/xalloc.h, gl/xgethostname.c, gl/xgethostname.h, gl/xmalloc.c: 
+	Drop xalloc.
+
+2009-03-05  Simon Josefsson <simon@josefsson.org>
+
+	* lib/asn1.c, lib/error.c, lib/ext.c, lib/internal.h,
+	lib/krb5/cred.c, lib/krb5/error.c, lib/krb5/msg.c, lib/krb5/name.c: 
+	Reduce xalloc usage further.
+
+2009-03-05  Simon Josefsson <simon@josefsson.org>
+
+	* lib/context.c, lib/cred.c, lib/ext.c, lib/internal.h,
+	lib/krb5/checksum.c, lib/krb5/checksum.h, lib/krb5/context.c,
+	lib/misc.c, lib/name.c: Reduce xalloc usage.
+
+2009-03-04  Simon Josefsson <simon@josefsson.org>
+
+	* gl/Makefile.am, gl/m4/gnulib-common.m4, src/gl/Makefile.am,
+	src/gl/m4/gnulib-common.m4, src/gl/m4/stdarg.m4: Update gnulib
+	files.
+
+2009-03-02  Simon Josefsson <simon@josefsson.org>
+
+	* lib/gss.map, lib/libgss.map: Rename.
+
+2009-03-02  Simon Josefsson <simon@josefsson.org>
+
+	* lib/gss.map: Add.
+
+2009-03-02  Simon Josefsson <simon@josefsson.org>
+
+	* lib/error.c: Use static on error constant arrays.
+
+2009-02-26  Simon Josefsson <simon@josefsson.org>
+
+	* doc/gss.texi: Bump copyright year.
+
+2009-02-26  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS, doc/Makefile.am, doc/gdoc: Update gdoc.
+
+2009-02-26  Simon Josefsson <simon@josefsson.org>
+
+	* configure.ac: Bump versions.
+
+2009-02-26  Simon Josefsson <simon@josefsson.org>
+
+	* cfg.mk: Fix release rules.
+
+2009-02-26  Simon Josefsson <simon@josefsson.org>
+
+	* ChangeLog: Generated.
+
 2009-02-26  Simon Josefsson <simon@josefsson.org>
 
 	* NEWS: Version 0.0.25.
