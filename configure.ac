@@ -78,20 +78,22 @@ AC_SUBST(INCLUDE_GSS_KRB5)
 GTK_DOC_CHECK(1.1)
 
 # Add many warnings, except some...
-nw="$nw -Wsystem-headers"            # Ignore errors in system headers
-nw="$nw -Wc++-compat"                # We don't care much about C++ compilers
-nw="$nw -Wconversion"                # Too many warnings for now
-nw="$nw -Wsign-conversion"           # Too many warnings for now
-nw="$nw -Wcast-qual"                 # Too many warnings for now
-nw="$nw -Wtraditional"               # Warns on #elif which we use often
-nw="$nw -Wunreachable-code"          # False positive on strcmp
-gl_MANYWARN_ALL_GCC([ws])
-gl_MANYWARN_COMPLEMENT(ws, [$ws], [$nw])
-for w in $ws; do
-  gl_WARN_ADD([$w])
-done
-gl_WARN_ADD([-Wno-unused-parameter])
-gl_WARN_ADD([-fdiagnostics-show-option])
+if test "$GCC" = "yes"; then
+  nw="$nw -Wsystem-headers"            # Ignore errors in system headers
+  nw="$nw -Wc++-compat"                # We don't care much about C++ compilers
+  nw="$nw -Wconversion"                # Too many warnings for now
+  nw="$nw -Wsign-conversion"           # Too many warnings for now
+  nw="$nw -Wcast-qual"                 # Too many warnings for now
+  nw="$nw -Wtraditional"               # Warns on #elif which we use often
+  nw="$nw -Wunreachable-code"          # False positive on strcmp
+  gl_MANYWARN_ALL_GCC([ws])
+  gl_MANYWARN_COMPLEMENT(ws, [$ws], [$nw])
+  for w in $ws; do
+    gl_WARN_ADD([$w])
+  done
+  gl_WARN_ADD([-Wno-unused-parameter])
+  gl_WARN_ADD([-fdiagnostics-show-option])
+fi
 
 AC_CONFIG_FILES([
   Makefile
