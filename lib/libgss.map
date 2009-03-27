@@ -75,7 +75,6 @@ GSS_1.0 {
     GSS_C_NT_MACHINE_UID_NAME_static;
     GSS_C_NT_STRING_UID_NAME_static;
     GSS_C_NT_USER_NAME_static;
-    gss_alloc_fail_function;
     gss_check_version;
     gss_copy_oid;
     gss_decapsulate_token;
@@ -84,6 +83,9 @@ GSS_1.0 {
     gss_encapsulate_token_prefix;
     gss_oid_equal;
     gss_userok;
+
+# Obsolete:
+    gss_alloc_fail_function;
     gss_xalloc_die;
 
 # Kerberos V5 mechanism API:
