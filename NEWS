@@ -25,6 +25,10 @@ The use of GSS_1.0 in the last release was unfortunate, and by making
 a rapid follow-up release we hope to mitigate the consequences.
 Please don't use version 0.0.26.
 
+** libgss: Added version integer symbols to header file.
+The symbols are GSS_VERSION_MAJOR, GSS_VERSION_MINOR,
+GSS_VERSION_PATCH, and GSS_VERSION_NUMBER.
+
 ** doc: The GTK-DOC manual is now built properly.
 
 ** Fix compilation error with Sun Studio related to missing getopt.
@@ -36,6 +40,10 @@ GSS_KRB5_NT_MACHINE_UID_NAME: ADDED
 GSS_KRB5_NT_MACHINE_UID_NAME_static: ADDED
 gss_alloc_fail_function: REMOVED
 gss_krb5*: REMOVED
+GSS_VERSION_MAJOR: ADDED
+GSS_VERSION_MINOR: ADDED
+GSS_VERSION_PATCH: ADDED
+GSS_VERSION_NUMBER: ADDED
 
 * Version 0.0.26 (released 2009-03-27)
 

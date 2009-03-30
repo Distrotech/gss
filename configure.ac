@@ -54,6 +54,16 @@ gl_INIT
 libgl_INIT
 srcgl_INIT
 
+# For gss.h.
+VERSION_MAJOR=`echo $PACKAGE_VERSION | sed 's/\(.*\)\..*\..*/\1/g'`
+VERSION_MINOR=`echo $PACKAGE_VERSION | sed 's/.*\.\(.*\)\..*/\1/g'`
+VERSION_PATCH=`echo $PACKAGE_VERSION | sed 's/.*\..*\.\(.*\)/\1/g'`
+AC_SUBST(VERSION_MAJOR)
+AC_SUBST(VERSION_MINOR)
+AC_SUBST(VERSION_PATCH)
+VERSION_NUMBER=`printf "0x%02x%02x%02x" $VERSION_MAJOR $VERSION_MINOR $VERSION_PATCH`
+AC_SUBST(VERSION_NUMBER)
+
 # Test for Shishi.
 AC_ARG_ENABLE(kerberos5,
   AC_HELP_STRING([--disable-kerberos5],
@@ -63,8 +73,8 @@ if test "$kerberos5" != "no" ; then
   AC_LIB_HAVE_LINKFLAGS(shishi,, [#include <shishi.h>], [shishi ();])
   if test "$ac_cv_libshishi" = yes; then
     AC_DEFINE(USE_KERBEROS5, 1, [Define to 1 if you want Kerberos 5 mech.])
-    INCLUDE_GSS_KRB5='#include <gss/krb5.h>'
-    INCLUDE_GSS_KRB5_EXT='#include <gss/krb5-ext.h>'
+    INCLUDE_GSS_KRB5='# include <gss/krb5.h>'
+    INCLUDE_GSS_KRB5_EXT='# include <gss/krb5-ext.h>'
     kerberos5=yes
   else
     kerberos5=no
