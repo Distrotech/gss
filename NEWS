@@ -2,7 +2,7 @@ GSS NEWS -- History of user-visible changes.                    -*- outline -*-
 Copyright (C) 2003, 2004, 2005, 2006, 2007, 2008, 2009 Simon Josefsson
 See the end for copying conditions.
 
-* Version 0.1.0 (unreleased)
+* Version 0.1.0 (released 2009-03-30)
 
 ** libgss: Shared library version is incremented.
 The library is backwards compatible on source code level if you don't
