@@ -21,9 +21,7 @@ Defined in RFC 1964.
 Before gss/krb5.h was used for both offical and GNU GSS prototypes.
 
 ** libgss: The version script version is now GSS_0.1.0 instead of GSS_1.0.
-The use of GSS_1.0 in the last release was unfortunate, and by making
-a rapid follow-up release we hope to mitigate the consequences.
-Please don't use version 0.0.26.
+The use of GSS_1.0 in the last release was a mistake.
 
 ** libgss: Added version integer symbols to header file.
 The symbols are GSS_VERSION_MAJOR, GSS_VERSION_MINOR,
