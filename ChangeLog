@@ -1,3 +1,129 @@
+2009-03-30  Simon Josefsson <simon@josefsson.org>
+
+	* doc/texinfo.css: Update texinfo css.
+
+2009-03-30  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS: Version 0.1.0.
+
+2009-03-30  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS: Fix.
+
+2009-03-30  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS, configure.ac, doc/reference/gss-docs.sgml,
+	lib/headers/gss.h.in: Add GSS_VERSION_MAJOR, GSS_VERSION_MINOR,
+	GSS_VERSION_PATCH, and GSS_VERSION_NUMBER.
+
+2009-03-27  Simon Josefsson <simon@josefsson.org>
+
+	* src/Makefile.am: Link libcmd-gss to gnulib.
+
+2009-03-27  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS: Add.
+
+2009-03-27  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS: Fix.
+
+2009-03-27  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS: Add.
+
+2009-03-27  Simon Josefsson <simon@josefsson.org>
+
+	* lib/libgss.map: Use better shared library version name.
+
+2009-03-27  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS: Add.
+
+2009-03-27  Simon Josefsson <simon@josefsson.org>
+
+	* doc/reference/gss-docs.sgml: Fix gtk-doc manual.
+
+2009-03-27  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS: Fix.
+
+2009-03-27  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS: Add.
+
+2009-03-27  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS, configure.ac, lib/headers/gss/krb5.h: Bump version.
+
+2009-03-27  Simon Josefsson <simon@josefsson.org>
+
+	* lib/ext.c, lib/libgss.map: Remove obsolete functions.
+
+2009-03-27  Simon Josefsson <simon@josefsson.org>
+
+	* lib/libgss.map: Don't export krb5 functions.
+
+2009-03-27  Simon Josefsson <simon@josefsson.org>
+
+	* lib/libgss.map: Separate official/inofficial krb5.
+
+2009-03-27  Simon Josefsson <simon@josefsson.org>
+
+	* lib/headers/gss/krb5-ext.h, lib/internal.h,
+	lib/krb5/k5internal.h, lib/krb5/oid.c: Fix compilation.
+
+2009-03-27  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS, configure.ac, lib/Makefile.am, lib/headers/gss.h.in,
+	lib/headers/gss/krb5-ext.h, lib/headers/gss/krb5.h, lib/krb5/oid.c: 
+	Add GSS_KRB5_NT_MACHINE_UID_NAME*.  Add gss/krb5-ext.h.
+
+2009-03-27  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS, configure.ac, lib/headers/gss/krb5.h, lib/libgss.map: Revert
+	"Drop GSS_KRB5*_static symbols." This reverts commit 6f67203f18eb78151d959b7985a1afd53b49909d.
+
+2009-03-27  Simon Josefsson <simon@josefsson.org>
+
+	* lib/krb5/oid.c: Revert "Fix krb5 OID implementation." This reverts commit eca0ae5c9ec8226918ee46d3f734ab06d7292ae7.
+
+2009-03-27  Simon Josefsson <simon@josefsson.org>
+
+	* lib/krb5/oid.c: Fix krb5 OID implementation.
+
+2009-03-27  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS, configure.ac, lib/headers/gss/krb5.h, lib/libgss.map: Drop
+	GSS_KRB5*_static symbols.
+
+2009-03-27  Simon Josefsson <simon@josefsson.org>
+
+	* lib/krb5/error.c: Use static on internal symbols.
+
+2009-03-27  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS, THANKS, src/gl/Makefile.am, src/gl/getopt.c,
+	src/gl/getopt.in.h, src/gl/getopt1.c, src/gl/getopt_int.h,
+	src/gl/m4/getopt.m4, src/gl/m4/gnulib-cache.m4,
+	src/gl/m4/gnulib-comp.m4, src/gl/m4/unistd_h.m4,
+	src/gl/tests/Makefile.am, src/gl/tests/test-unistd.c,
+	src/gl/unistd.in.h: Add getopt gnulib module to src/gl/.  Reported
+	by Dagobert Michelsen <dam@opencsw.org> in
+	<http://permalink.gmane.org/gmane.comp.gnu.gss.general/142>.
+
+2009-03-27  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS, configure.ac: Bump versions.
+
+2009-03-27  Simon Josefsson <simon@josefsson.org>
+
+	* configure.ac: Only test warning parmeters when using GCC.
+
+2009-03-27  Simon Josefsson <simon@josefsson.org>
+
+	* ChangeLog: Generated.
+
 2009-03-27  Simon Josefsson <simon@josefsson.org>
 
 	* NEWS: Version 0.0.26.
