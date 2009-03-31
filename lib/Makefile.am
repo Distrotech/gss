@@ -49,7 +49,7 @@ if HAVE_LD_OUTPUT_DEF
 libgss_la_LDFLAGS += -Wl,--output-def,libgss-$(SOVERSION).def
 defexecdir = $(bindir)
 defexec_DATA = libgss-$(SOVERSION).def
-DISTCLEANFILES += $(defexec_DATA)
+DISTCLEANFILES = $(defexec_DATA)
 endif
 
 if KRB5
