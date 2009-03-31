@@ -8,6 +8,7 @@ AC_DEFUN([GTK_DOC_CHECK],
 [
   AC_BEFORE([AC_PROG_LIBTOOL],[$0])dnl setup libtool first
   AC_BEFORE([AM_PROG_LIBTOOL],[$0])dnl setup libtool first
+
   dnl for overriding the documentation installation directory
   AC_ARG_WITH([html-dir],
     AS_HELP_STRING([--with-html-dir=PATH], [path to installed docs]),,
@@ -26,14 +27,17 @@ AC_DEFUN([GTK_DOC_CHECK],
       [PKG_CHECK_EXISTS([gtk-doc],,
                         AC_MSG_ERROR([gtk-doc not installed and --enable-gtk-doc requested]))],
       [PKG_CHECK_EXISTS([gtk-doc >= $1],,
-                        AC_MSG_ERROR([You need to have gtk-doc >= $1 installed to build gtk-doc]))])
+                        AC_MSG_ERROR([You need to have gtk-doc >= $1 installed to build $PACKAGE_NAME]))])
   fi
 
   AC_MSG_CHECKING([whether to build gtk-doc documentation])
   AC_MSG_RESULT($enable_gtk_doc)
 
-  AC_PATH_PROGS(GTKDOC_CHECK,gtkdoc-check,)
+  dnl check for tools we added during development
+  AC_PATH_PROG([GTKDOC_CHECK],[gtkdoc-check])
+  AC_PATH_PROGS([GTKDOC_REBASE],[gtkdoc-rebase],[true])
 
   AM_CONDITIONAL([ENABLE_GTK_DOC], [test x$enable_gtk_doc = xyes])
   AM_CONDITIONAL([GTK_DOC_USE_LIBTOOL], [test -n "$LIBTOOL"])
+  AM_CONDITIONAL([GTK_DOC_USE_REBASE], [test -n "$GTKDOC_REBASE"])
 ])
