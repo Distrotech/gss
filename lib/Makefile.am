@@ -45,6 +45,13 @@ else
 libgss_la_LDFLAGS += -export-symbols-regex '^(gss|GSS).*'
 endif
 
+if HAVE_LD_OUTPUT_DEF
+libgss_la_LDFLAGS += -Wl,--output-def,libgss-$(SOVERSION).def
+defexecdir = $(bindir)
+defexec_DATA = libgss-$(SOVERSION).def
+DISTCLEANFILES += $(defexec_DATA)
+endif
+
 if KRB5
 SUBDIRS += krb5
 gssinclude_HEADERS += headers/gss/krb5.h headers/gss/krb5-ext.h

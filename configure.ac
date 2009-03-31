@@ -30,6 +30,10 @@ AC_SUBST(LT_CURRENT, 1)
 AC_SUBST(LT_REVISION, 1)
 AC_SUBST(LT_AGE, 0)
 
+# Used when creating libgss-XX.def.
+SOVERSION=`expr ${LT_CURRENT} - ${LT_AGE}`
+AC_SUBST(SOVERSION)
+
 AC_CONFIG_AUX_DIR([build-aux])
 AC_CONFIG_MACRO_DIR([m4])
 AM_INIT_AUTOMAKE([1.10 -Wall -Werror -Wno-override])
@@ -88,6 +92,8 @@ AC_SUBST(INCLUDE_GSS_KRB5_EXT)
 
 # Check for gtk-doc.
 GTK_DOC_CHECK(1.1)
+
+sj_OUTPUT_DEF
 
 # Add many warnings, except some...
 if test "$GCC" = "yes"; then

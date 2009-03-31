@@ -4,6 +4,8 @@ See the end for copying conditions.
 
 * Version 0.1.1 (unreleased)
 
+** Install a libgss-*.def file when building under MinGW.
+
 ** API and ABI modifications.
 No changes since last version.
 
