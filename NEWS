@@ -6,6 +6,9 @@ See the end for copying conditions.
 
 ** Install a libgss-*.def file when building under MinGW.
 
+** Build fixes for MinGW.
+The krb5 mechanism now builds under MinGW as well.
+
 ** API and ABI modifications.
 No changes since last version.
 
