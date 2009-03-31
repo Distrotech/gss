@@ -20,7 +20,8 @@
 
 AM_CFLAGS = $(WARN_CFLAGS)
 AM_CPPFLAGS = -I$(top_srcdir)/lib/gl \
-	-I$(top_srcdir)/lib -I$(top_srcdir)/lib/headers
+	-I$(top_srcdir)/lib \
+	-I$(top_builddir)/lib/headers -I$(top_srcdir)/lib/headers
 
 noinst_LTLIBRARIES = libgss-shishi.la
 

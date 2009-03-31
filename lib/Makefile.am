@@ -22,7 +22,7 @@ SUBDIRS = gl
 
 AM_CFLAGS = $(WARN_CFLAGS)
 AM_CPPFLAGS = -I$(top_srcdir)/lib/gl \
-	-I$(top_srcdir)/lib/headers -I$(top_builddir)/lib/headers
+	-I$(top_builddir)/lib/headers -I$(top_srcdir)/lib/headers
 
 lib_LTLIBRARIES = libgss.la
 include_HEADERS = headers/gss.h

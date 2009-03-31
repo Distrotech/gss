@@ -19,7 +19,7 @@
 # Boston, MA 02110-1301, USA.
 
 AM_CFLAGS = $(WARN_CFLAGS)
-AM_CPPFLAGS = -I$(top_srcdir)/lib/headers -I$(top_builddir)/lib/headers
+AM_CPPFLAGS = -I$(top_builddir)/lib/headers -I$(top_srcdir)/lib/headers
 AM_LDFLAGS = -no-install
 LDADD = ../lib/libgss.la @LTLIBINTL@
 
