@@ -30,7 +30,7 @@
 /* Windows doesn't provide this symbol.  According to
    <http://msdn.microsoft.com/en-us/library/ms738527.aspx> a buffer
    size of 256 will always be sufficient.  FIXME: use gnulib */
-# if !((defined _WIN32 || defined __WIN32__) && !defined __CYGWIN__)
+# if (defined _WIN32 || defined __WIN32__) && !defined __CYGWIN__
 #  define HOST_NAME_MAX 256
 # endif
 #endif
