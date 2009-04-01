@@ -26,6 +26,15 @@
 /* Get gethostname. */
 #include <unistd.h>
 
+#ifndef HOST_NAME_MAX
+/* Windows doesn't provide this symbol.  According to
+   <http://msdn.microsoft.com/en-us/library/ms738527.aspx> a buffer
+   size of 256 will always be sufficient.  FIXME: use gnulib */
+# if !((defined _WIN32 || defined __WIN32__) && !defined __CYGWIN__)
+#  define HOST_NAME_MAX 256
+# endif
+#endif
+
 OM_uint32
 gss_krb5_canonicalize_name (OM_uint32 * minor_status,
 			    const gss_name_t input_name,
