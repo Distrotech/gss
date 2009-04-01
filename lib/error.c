@@ -194,6 +194,8 @@ gss_display_status (OM_uint32 * minor_status,
 {
   size_t i;
 
+  bindtextdomain (PACKAGE, LOCALEDIR);
+
   if (minor_status)
     *minor_status = 0;
 
