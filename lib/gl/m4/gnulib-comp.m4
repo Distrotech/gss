@@ -41,17 +41,11 @@ AC_DEFUN([libgl_INIT],
   m4_pushdef([libgl_LIBSOURCES_DIR], [])
   gl_COMMON
   gl_source_base='lib/gl'
-  AC_REQUIRE([gl_HEADER_ERRNO_H])
-  gl_FUNC_GETHOSTNAME
-  gl_UNISTD_MODULE_INDICATOR([gethostname])
   AC_SUBST([LIBINTL])
   AC_SUBST([LTLIBINTL])
   gl_HEADER_STRING_H
   gl_FUNC_STRVERSCMP
   gl_STRING_MODULE_INDICATOR([strverscmp])
-  gl_HEADER_SYS_SOCKET
-  AC_PROG_MKDIR_P
-  gl_UNISTD_H
   m4_ifval(libgl_LIBSOURCES_LIST, [
     m4_syscmd([test ! -d ]m4_defn([libgl_LIBSOURCES_DIR])[ ||
       for gl_file in ]libgl_LIBSOURCES_LIST[ ; do
@@ -182,23 +176,13 @@ AC_DEFUN([libgltests_LIBSOURCES], [
 AC_DEFUN([libgl_FILE_LIST], [
   build-aux/link-warning.h
   lib/dummy.c
-  lib/errno.in.h
-  lib/gethostname.c
   lib/gettext.h
   lib/string.in.h
   lib/strverscmp.c
-  lib/sys_socket.in.h
-  lib/unistd.in.h
-  lib/w32sock.h
   m4/00gnulib.m4
-  m4/errno_h.m4
   m4/extensions.m4
-  m4/gethostname.m4
   m4/gnulib-common.m4
   m4/include_next.m4
-  m4/sockpfaf.m4
   m4/string_h.m4
   m4/strverscmp.m4
-  m4/sys_socket_h.m4
-  m4/unistd_h.m4
 ])
