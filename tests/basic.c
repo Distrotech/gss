@@ -313,8 +313,8 @@ main (int argc, char *argv[])
     fail ("gss_display_name() failed (%d,%d)\n", maj_stat, min_stat);
 
   if (debug)
-    printf ("    display_name() => %d: %s\n", bufdesc2.length,
-	    (char *) bufdesc2.value);
+    printf ("    display_name() => %d: %.*s\n", bufdesc2.length,
+	    bufdesc2.length, (char *) bufdesc2.value);
 
 #ifdef USE_KERBEROS5
   /* NB: "service" resused from previous test */
