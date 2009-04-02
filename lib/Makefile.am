@@ -46,9 +46,9 @@ libgss_la_LDFLAGS += -export-symbols-regex '^(gss|GSS).*'
 endif
 
 if HAVE_LD_OUTPUT_DEF
-libgss_la_LDFLAGS += -Wl,--output-def,libgss-$(SOVERSION).def
+libgss_la_LDFLAGS += -Wl,--output-def,libgss-$(DLL_VERSION).def
 defexecdir = $(bindir)
-defexec_DATA = libgss-$(SOVERSION).def
+defexec_DATA = libgss-$(DLL_VERSION).def
 DISTCLEANFILES = $(defexec_DATA)
 endif
 
