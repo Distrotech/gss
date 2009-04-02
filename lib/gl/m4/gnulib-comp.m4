@@ -43,6 +43,7 @@ AC_DEFUN([libgl_INIT],
   gl_source_base='lib/gl'
   AC_SUBST([LIBINTL])
   AC_SUBST([LTLIBINTL])
+  gl_LD_OUTPUT_DEF
   gl_HEADER_STRING_H
   gl_FUNC_STRVERSCMP
   gl_STRING_MODULE_INDICATOR([strverscmp])
@@ -183,6 +184,7 @@ AC_DEFUN([libgl_FILE_LIST], [
   m4/extensions.m4
   m4/gnulib-common.m4
   m4/include_next.m4
+  m4/ld-output-def.m4
   m4/string_h.m4
   m4/strverscmp.m4
 ])
