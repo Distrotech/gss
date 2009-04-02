@@ -93,7 +93,6 @@ AC_SUBST(INCLUDE_GSS_KRB5_EXT)
 # Check for gtk-doc.
 GTK_DOC_CHECK(1.1)
 
-sj_OUTPUT_DEF
 sj_VALGRIND
 
 # Add many warnings, except some...
