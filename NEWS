@@ -4,6 +4,13 @@ See the end for copying conditions.
 
 * Version 0.1.1 (unreleased)
 
+** libgss krb5: no longer supports service names without hostname.
+The function gss_canonicalize_name will return a
+GSS_KRB5_S_G_BAD_SERVICE_NAME minor status code if you pass it a
+service name without a @hostname part.  The reason is that there is no
+secure way to find a canonical hostname for the local host inside the
+library.  Instead, the application must provide one.
+
 ** Install a libgss-*.def file when building under MinGW.
 
 ** Build fixes for MinGW.

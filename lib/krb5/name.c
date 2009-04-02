@@ -23,18 +23,6 @@
 /* Get specification. */
 #include "k5internal.h"
 
-/* Get gethostname. */
-#include <unistd.h>
-
-#ifndef HOST_NAME_MAX
-/* Windows doesn't provide this symbol.  According to
-   <http://msdn.microsoft.com/en-us/library/ms738527.aspx> a buffer
-   size of 256 will always be sufficient.  FIXME: use gnulib */
-# if (defined _WIN32 || defined __WIN32__) && !defined __CYGWIN__
-#  define HOST_NAME_MAX 256
-# endif
-#endif
-
 OM_uint32
 gss_krb5_canonicalize_name (OM_uint32 * minor_status,
 			    const gss_name_t input_name,
@@ -82,48 +70,27 @@ gss_krb5_canonicalize_name (OM_uint32 * minor_status,
     {
       char *p;
 
-      /* XXX we don't do DNS name canoncalization, it may be insecure */
+      /* We don't support service-names without hostname part because
+	 we can't compute a canonicalized name of the local host.
+	 Calling gethostname does not give a canonicalized name. */
+      if (!memchr (input_name->value, '@', input_name->length))
+	{
+	  *minor_status = GSS_KRB5_S_G_BAD_SERVICE_NAME;
+	  return GSS_S_COMPLETE;
+	}
+
+      /* We don't do DNS name canoncalization since that is
+	 insecure. */
 
       maj_stat = gss_duplicate_name (minor_status, input_name, output_name);
       if (GSS_ERROR (maj_stat))
 	return maj_stat;
+
       (*output_name)->type = GSS_KRB5_NT_PRINCIPAL_NAME;
 
-      if ((p = memchr ((*output_name)->value, '@', (*output_name)->length)))
-	{
-	  *p = '/';
-	}
-      else
-	{
-	  char hostname[HOST_NAME_MAX];
-	  size_t hostlen, oldlen, newlen;
-	  char *tmp;
-
-	  if (!gethostname (hostname, sizeof (hostname)))
-	    {
-	      if (minor_status)
-		*minor_status = errno;
-	      return GSS_S_FAILURE;
-	    }
-
-	  hostlen = strlen (hostname);
-	  oldlen = (*output_name)->length;
-	  newlen = oldlen + 1 + hostlen;
-
-	  tmp = realloc ((*output_name)->value, newlen + 1);
-	  if (!tmp)
-	    {
-	      if (minor_status)
-		*minor_status = ENOMEM;
-	      return GSS_S_FAILURE;
-	    }
-
-	  (*output_name)->value = tmp;
-	  (*output_name)->value[oldlen] = '/';
-	  memcpy ((*output_name)->value + 1 + oldlen, hostname, hostlen);
-	  (*output_name)->length = newlen;
-	  (*output_name)->value[oldlen + 1 + hostlen] = '\0';
-	}
+      p = memchr ((*output_name)->value, '@', (*output_name)->length);
+      if (p)
+	*p = '/';
     }
   else if (gss_oid_equal (input_name->type, GSS_KRB5_NT_PRINCIPAL_NAME))
     {
