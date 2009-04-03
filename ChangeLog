@@ -1,3 +1,115 @@
+2009-04-03  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS: Version 0.1.1.
+
+2009-04-03  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS: Fix.
+
+2009-04-03  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS, lib/misc.c, tests/basic.c: Fix memory leaks.
+
+2009-04-03  Simon Josefsson <simon@josefsson.org>
+
+	* configure.ac: Drop obsolete output def call.
+
+2009-04-03  Simon Josefsson <simon@josefsson.org>
+
+	* configure.ac, lib/Makefile.am: Fix variable name.
+
+2009-04-03  Simon Josefsson <simon@josefsson.org>
+
+	* lib/gl/Makefile.am, lib/gl/m4/gnulib-cache.m4,
+	lib/gl/m4/gnulib-comp.m4, lib/gl/m4/ld-output-def.m4,
+	m4/output-def.m4: Use ld-output-def from gnulib.
+
+2009-04-03  Simon Josefsson <simon@josefsson.org>
+
+	* configure.ac, m4/valgrind.m4, tests/Makefile.am: Use valgrind for
+	self tests.
+
+2009-04-03  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS: Add.
+
+2009-04-02  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS, lib/krb5/name.c: Don't use insecure gethostname for name
+	canonicalization.
+
+2009-04-02  Simon Josefsson <simon@josefsson.org>
+
+	* gl/Makefile.am, gl/Makefile.am~, gl/m4/gnulib-cache.m4,
+	gl/m4/gnulib-cache.m4~, lib/gl/Makefile.am, lib/gl/errno.in.h,
+	lib/gl/gethostname.c, lib/gl/m4/errno_h.m4,
+	lib/gl/m4/gethostname.m4, lib/gl/m4/gnulib-cache.m4,
+	lib/gl/m4/gnulib-comp.m4, lib/gl/m4/sockpfaf.m4,
+	lib/gl/m4/sys_socket_h.m4, lib/gl/m4/unistd_h.m4,
+	lib/gl/sys_socket.in.h, lib/gl/unistd.in.h, lib/gl/w32sock.h: Update
+	gnulib files.
+
+2009-04-02  Simon Josefsson <simon@josefsson.org>
+
+	* tests/basic.c: Don't print garbage.
+
+2009-04-01  Simon Josefsson <simon@josefsson.org>
+
+	* lib/error.c: Need to use bindtextdomain in libgss too.
+
+2009-04-01  Simon Josefsson <simon@josefsson.org>
+
+	* lib/krb5/name.c: Fix logic.
+
+2009-04-01  Simon Josefsson <simon@josefsson.org>
+
+	* lib/krb5/name.c: Work around HOST_NAME_MAX problem on mingw.
+
+2009-03-31  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS: Add.
+
+2009-03-31  Simon Josefsson <simon@josefsson.org>
+
+	* lib/Makefile.am, lib/krb5/Makefile.am, src/Makefile.am,
+	tests/Makefile.am: Fix order of -I's.
+
+2009-03-31  Simon Josefsson <simon@josefsson.org>
+
+	* lib/gl/Makefile.am, lib/gl/errno.in.h, lib/gl/gethostname.c,
+	lib/gl/m4/errno_h.m4, lib/gl/m4/gethostname.m4,
+	lib/gl/m4/gnulib-comp.m4, lib/gl/m4/sockpfaf.m4,
+	lib/gl/sys_socket.in.h, lib/gl/w32sock.h: Update gnulib files.
+
+2009-03-31  Simon Josefsson <simon@josefsson.org>
+
+	* lib/Makefile.am: Typo.
+
+2009-03-31  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS, configure.ac, lib/Makefile.am, m4/output-def.m4: Generate
+	*.def file.
+
+2009-03-31  Simon Josefsson <simon@josefsson.org>
+
+	* m4/pkg.m4: Needed by gtk-doc.m4.
+
+2009-03-31  Simon Josefsson <simon@josefsson.org>
+
+	* m4/gtk-doc.m4: Update gtk-doc.m4.
+
+2009-03-30  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS: Fix.
+
+2009-03-30  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS, configure.ac: Bump versions.
+
+2009-03-30  Simon Josefsson <simon@josefsson.org>
+
+	* ChangeLog: Generated.
+
 2009-03-30  Simon Josefsson <simon@josefsson.org>
 
 	* doc/texinfo.css: Update texinfo css.
