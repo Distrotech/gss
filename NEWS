@@ -4,7 +4,7 @@ See the end for copying conditions.
 
 * Version 0.1.1 (unreleased)
 
-** libgss: Fix memory leak in gss_release_oid_set
+** libgss: Fix memory leak in gss_release_oid_set.
 
 ** libgss: Fix bug that prevented error messages from being translated.
 
@@ -12,7 +12,7 @@ See the end for copying conditions.
 The function gss_canonicalize_name will return a
 GSS_KRB5_S_G_BAD_SERVICE_NAME minor status code if you pass it a
 service name without a @hostname part.  The reason is that there is no
-secure way to find a canonical hostname for the local host inside the
+secure way to find a canonical name of the local host inside the
 library.  Instead, the application must provide one.
 
 ** tests: Fix debug output and memory leaks.
