@@ -225,7 +225,7 @@ gss_release_oid_set (OM_uint32 * minor_status, gss_OID_set * set)
 
   for (i = 0, cur = (*set)->elements; i < (*set)->count; i++, cur++)
     free (cur->elements);
-
+  free ((*set)->elements);
   free (*set);
   *set = GSS_C_NO_OID_SET;
 

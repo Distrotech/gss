@@ -4,6 +4,8 @@ See the end for copying conditions.
 
 * Version 0.1.1 (unreleased)
 
+** libgss: Fix memory leak in gss_release_oid_set
+
 ** libgss: Fix bug that prevented error messages from being translated.
 
 ** libgss krb5: no longer supports service names without hostname.
@@ -13,9 +15,9 @@ service name without a @hostname part.  The reason is that there is no
 secure way to find a canonical hostname for the local host inside the
 library.  Instead, the application must provide one.
 
-** Install a libgss-*.def file when building under MinGW.
+** tests: Fix debug output and memory leaks.
 
-** tests: Fix debug output.
+** Install a libgss-*.def file when building under MinGW.
 
 ** Build fixes for MinGW.
 The krb5 mechanism now builds under MinGW as well.
