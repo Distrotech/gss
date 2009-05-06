@@ -184,6 +184,8 @@ AC_DEFUN([gl_FILE_LIST], [
   build-aux/config.rpath
   build-aux/gendocs.sh
   build-aux/gnupload
+  build-aux/useless-if-before-free
+  build-aux/vc-list-files
   doc/fdl-1.3.texi
   doc/gendocs_template
   doc/gpl-3.0.texi
