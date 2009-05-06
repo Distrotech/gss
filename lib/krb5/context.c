@@ -414,13 +414,19 @@ gss_krb5_accept_sec_context (OM_uint32 * minor_status,
 	  cxk5->acceptseqnr = 0;
 	}
 
-      rc = shishi_asn1_to_der (crk5->sh, aprep,
-			       (char **) &data.value, &data.length);
-      if (rc != SHISHI_OK)
-	{
-	  printf ("Error der encoding aprep: %s\n", shishi_strerror (rc));
-	  return GSS_S_FAILURE;
-	}
+      {
+	char *der;
+	size_t len;
+
+	rc = shishi_asn1_to_der (crk5->sh, aprep, &der, &len);
+	if (rc != SHISHI_OK)
+	  {
+	    printf ("Error der encoding aprep: %s\n", shishi_strerror (rc));
+	    return GSS_S_FAILURE;
+	  }
+	data.value = der;
+	data.length = len;
+      }
 
       rc = gss_encapsulate_token_prefix (&data, TOK_AP_REP, TOK_LEN,
 					 GSS_KRB5, output_token);
