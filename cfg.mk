@@ -17,7 +17,8 @@
 # the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 # Boston, MA 02110-1301, USA.
 
-CFGFLAGS ?= --enable-gtk-doc WARN_CFLAGS="-Werror"
+WFLAGS ?= WARN_CFLAGS=-Werror
+CFGFLAGS ?= --enable-gtk-doc $(WFLAGS)
 
 ifeq ($(.DEFAULT_GOAL),abort-due-to-no-makefile)
 .DEFAULT_GOAL := bootstrap
