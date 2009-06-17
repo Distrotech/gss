@@ -389,8 +389,8 @@ packages that use Autoconf.  For detailed information on configuring
 and building it, refer to the @file{INSTALL} file that is part of the
 distribution archive.
 
-Here is an example terminal session that download, configure, build
-and install the package.  You will need a few basic tools, such as
+Here is an example terminal session that downloads, configures, builds
+and installs the package.  You will need a few basic tools, such as
 @samp{sh}, @samp{make} and @samp{cc}.
 
 @example
