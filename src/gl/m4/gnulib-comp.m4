@@ -50,6 +50,7 @@ AC_DEFUN([srcgl_INIT],
   AC_SUBST([LTLIBINTL])
   gl_STDARG_H
   gl_UNISTD_H
+  gl_VERSION_ETC
   m4_ifval(srcgl_LIBSOURCES_LIST, [
     m4_syscmd([test ! -d ]m4_defn([srcgl_LIBSOURCES_DIR])[ ||
       for gl_file in ]srcgl_LIBSOURCES_LIST[ ; do
@@ -119,6 +120,8 @@ AC_DEFUN([srcgl_INIT],
     AC_SUBST([srcgltests_LIBOBJS], [$srcgltests_libobjs])
     AC_SUBST([srcgltests_LTLIBOBJS], [$srcgltests_ltlibobjs])
   ])
+  LIBTESTS_LIBDEPS="$gltests_libdeps"
+  AC_SUBST([LIBTESTS_LIBDEPS])
 ])
 
 # Like AC_LIBOBJ, except that the module name goes
@@ -196,5 +199,10 @@ AC_DEFUN([srcgl_FILE_LIST], [
   m4/include_next.m4
   m4/stdarg.m4
   m4/unistd_h.m4
+  m4/version-etc.m4
   tests/test-unistd.c
+  tests/test-version-etc.c
+  tests/test-version-etc.sh
+  tests=lib/verify.h
+  tests=lib/version-etc-fsf.c
 ])

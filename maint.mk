@@ -21,6 +21,9 @@
 # ME := $(word $(words $(MAKEFILE_LIST)),$(MAKEFILE_LIST))
 ME := maint.mk
 
+# Override this in cfg.mk if you use a non-standard build-aux directory.
+build_aux ?= $(srcdir)/build-aux
+
 # Do not save the original name or timestamp in the .tar.gz file.
 # Use --rsyncable if available.
 gzip_rsyncable := \
@@ -32,7 +35,7 @@ GIT = git
 VC = $(GIT)
 VC-tag = git tag -s -m '$(VERSION)' -u '$(gpg_key_ID)'
 
-VC_LIST = $(srcdir)/build-aux/vc-list-files -C $(srcdir)
+VC_LIST = $(build_aux)/vc-list-files -C $(srcdir)
 
 VC_LIST_EXCEPT = \
   $(VC_LIST) | if test -f $(srcdir)/.x-$@; then grep -vEf $(srcdir)/.x-$@; else grep -v ChangeLog; fi
@@ -111,7 +114,7 @@ define _prohibit_regexp
 endef
 
 sc_avoid_if_before_free:
-	@$(srcdir)/build-aux/useless-if-before-free			\
+	@$(build_aux)/useless-if-before-free				\
 		$(useless_free_options)					\
 	    $$($(VC_LIST_EXCEPT) | grep -v useless-if-before-free) &&	\
 	  { echo '$(ME): found useless "if" before "free" above' 1>&2;	\
@@ -360,16 +363,19 @@ sc_program_name:
 # Require that the final line of each test-lib.sh-using test be this one:
 # Exit $fail
 # Note: this test requires GNU grep's --label= option.
+Exit_witness_file ?= tests/test-lib.sh
+Exit_base := $(notdir $(Exit_witness_file))
 sc_require_test_exit_idiom:
-	@if test -f $(srcdir)/tests/test-lib.sh; then			\
+	@if test -f $(srcdir)/$(Exit_witness_file); then		\
 	  die=0;							\
-	  for i in $$(grep -l -F /../test-lib.sh $$($(VC_LIST) tests)); do \
-	    tail -n1 $$i | grep '^Exit \$$fail$$' > /dev/null		\
+	  for i in $$(grep -l -F 'srcdir/$(Exit_base)'			\
+		$$($(VC_LIST) tests)); do				\
+	    tail -n1 $$i | grep '^Exit .' > /dev/null			\
 	      && : || { die=1; echo $$i; }				\
 	  done;								\
 	  test $$die = 1 &&						\
 	    { echo 1>&2 '$(ME): the final line in each of the above is not:'; \
-	      echo 1>&2 'Exit $$fail';					\
+	      echo 1>&2 'Exit something';				\
 	      exit 1; } || :;						\
 	fi
 
@@ -534,6 +540,7 @@ sc_po_check:
 	  for file in $$($(VC_LIST_EXCEPT)) lib/*.[ch]; do		\
 	    test -r $$file || continue;					\
 	    case $$file in						\
+	      *.m4|*.mk) continue ;;					\
 	      *.?|*.??) ;;						\
 	      *) continue;;						\
 	    esac;							\
@@ -635,11 +642,12 @@ built_programs = $$(cd src && MAKEFLAGS= $(MAKE) -s built_programs.list)
 
 rel-files = $(DIST_ARCHIVES)
 
+gnulib_dir ?= $(srcdir)/gnulib
 gnulib-version = $$(cd $(gnulib_dir) && git describe)
 bootstrap-tools ?= autoconf,automake,gnulib
 
 announcement: NEWS ChangeLog $(rel-files)
-	@$(srcdir)/build-aux/announce-gen				\
+	@$(build_aux)/announce-gen					\
 	    --release-type=$(RELEASE_TYPE)				\
 	    --package=$(PACKAGE)					\
 	    --prev=$(PREV_VERSION)					\
@@ -661,7 +669,7 @@ www-gnu = http://www.gnu.org
 emit_upload_commands:
 	@echo =====================================
 	@echo =====================================
-	@echo "$(srcdir)/build-aux/gnupload $(GNUPLOADFLAGS) \\"
+	@echo "$(build_aux)/gnupload $(GNUPLOADFLAGS) \\"
 	@echo "    --to $(gnu_rel_host):$(PACKAGE) \\"
 	@echo "  $(rel-files)"
 	@echo '# send the /tmp/announcement e-mail'
