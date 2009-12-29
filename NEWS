@@ -4,6 +4,8 @@ See the end for copying conditions.
 
 * Version 0.1.2 (unreleased)
 
+** Build fixes and code cleanups.
+
 * Version 0.1.1 (released 2009-04-03)
 
 ** libgss: Fix memory leak in gss_release_oid_set.
