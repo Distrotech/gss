@@ -44,6 +44,7 @@ AC_DEFUN([libgl_INIT],
   AC_SUBST([LIBINTL])
   AC_SUBST([LTLIBINTL])
   gl_LD_OUTPUT_DEF
+  gl_STDDEF_H
   gl_HEADER_STRING_H
   gl_FUNC_STRVERSCMP
   gl_STRING_MODULE_INDICATOR([strverscmp])
@@ -69,7 +70,7 @@ AC_DEFUN([libgl_INIT],
     if test -n "$libgl_LIBOBJS"; then
       # Remove the extension.
       sed_drop_objext='s/\.o$//;s/\.obj$//'
-      for i in `for i in $libgl_LIBOBJS; do echo "$i"; done | sed "$sed_drop_objext" | sort | uniq`; do
+      for i in `for i in $libgl_LIBOBJS; do echo "$i"; done | sed -e "$sed_drop_objext" | sort | uniq`; do
         libgl_libobjs="$libgl_libobjs $i.$ac_objext"
         libgl_ltlibobjs="$libgl_ltlibobjs $i.lo"
       done
@@ -108,7 +109,7 @@ AC_DEFUN([libgl_INIT],
     if test -n "$libgltests_LIBOBJS"; then
       # Remove the extension.
       sed_drop_objext='s/\.o$//;s/\.obj$//'
-      for i in `for i in $libgltests_LIBOBJS; do echo "$i"; done | sed "$sed_drop_objext" | sort | uniq`; do
+      for i in `for i in $libgltests_LIBOBJS; do echo "$i"; done | sed -e "$sed_drop_objext" | sort | uniq`; do
         libgltests_libobjs="$libgltests_libobjs $i.$ac_objext"
         libgltests_ltlibobjs="$libgltests_ltlibobjs $i.lo"
       done
@@ -175,9 +176,11 @@ AC_DEFUN([libgltests_LIBSOURCES], [
 # This macro records the list of files which have been installed by
 # gnulib-tool and may be removed by future gnulib-tool invocations.
 AC_DEFUN([libgl_FILE_LIST], [
+  build-aux/arg-nonnull.h
   build-aux/link-warning.h
   lib/dummy.c
   lib/gettext.h
+  lib/stddef.in.h
   lib/string.in.h
   lib/strverscmp.c
   m4/00gnulib.m4
@@ -185,6 +188,8 @@ AC_DEFUN([libgl_FILE_LIST], [
   m4/gnulib-common.m4
   m4/include_next.m4
   m4/ld-output-def.m4
+  m4/stddef_h.m4
   m4/string_h.m4
   m4/strverscmp.m4
+  m4/wchar_t.m4
 ])

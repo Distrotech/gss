@@ -25,6 +25,7 @@ AC_DEFUN([srcgl_EARLY],
   m4_pattern_allow([^gl_LIBOBJS$])dnl a variable
   m4_pattern_allow([^gl_LTLIBOBJS$])dnl a variable
   AC_REQUIRE([AC_PROG_RANLIB])
+  AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
   dnl Some compilers (e.g., AIX 5.3 cc) need to be in c99 mode
   dnl for the builtin va_copy to work.  With Autoconf 2.60 or later,
   dnl AC_PROG_CC_STDC arranges for this.  With older Autoconf AC_PROG_CC_STDC
@@ -45,10 +46,15 @@ AC_DEFUN([srcgl_INIT],
   m4_pushdef([srcgl_LIBSOURCES_DIR], [])
   gl_COMMON
   gl_source_base='src/gl'
-  gl_GETOPT
+  gl_FUNC_GETOPT_GNU
+  gl_MODULE_INDICATOR([getopt-gnu])
+  gl_FUNC_GETOPT_POSIX
   AC_SUBST([LIBINTL])
   AC_SUBST([LTLIBINTL])
+  AC_CHECK_DECLS([program_invocation_name], [], [], [#include <errno.h>])
+  AC_CHECK_DECLS([program_invocation_short_name], [], [], [#include <errno.h>])
   gl_STDARG_H
+  gl_STDDEF_H
   gl_UNISTD_H
   gl_VERSION_ETC
   m4_ifval(srcgl_LIBSOURCES_LIST, [
@@ -73,7 +79,7 @@ AC_DEFUN([srcgl_INIT],
     if test -n "$srcgl_LIBOBJS"; then
       # Remove the extension.
       sed_drop_objext='s/\.o$//;s/\.obj$//'
-      for i in `for i in $srcgl_LIBOBJS; do echo "$i"; done | sed "$sed_drop_objext" | sort | uniq`; do
+      for i in `for i in $srcgl_LIBOBJS; do echo "$i"; done | sed -e "$sed_drop_objext" | sort | uniq`; do
         srcgl_libobjs="$srcgl_libobjs $i.$ac_objext"
         srcgl_ltlibobjs="$srcgl_ltlibobjs $i.lo"
       done
@@ -90,6 +96,42 @@ AC_DEFUN([srcgl_INIT],
   m4_pushdef([srcgltests_LIBSOURCES_DIR], [])
   gl_COMMON
   gl_source_base='src/gl/tests'
+  gl_FUNC_ALLOCA
+  gl_FUNC_DUP2
+  gl_UNISTD_MODULE_INDICATOR([dup2])
+  gl_ENVIRON
+  gl_UNISTD_MODULE_INDICATOR([environ])
+  gl_HEADER_ERRNO_H
+  gl_FCNTL_H
+  gl_FUNC_LSTAT
+  gl_SYS_STAT_MODULE_INDICATOR([lstat])
+  gl_FUNC_MALLOC_POSIX
+  gl_STDLIB_MODULE_INDICATOR([malloc-posix])
+  gl_MALLOCA
+  gl_MULTIARCH
+  gl_FUNC_OPEN
+  gl_MODULE_INDICATOR([open])
+  gl_FCNTL_MODULE_INDICATOR([open])
+  gl_PATHMAX
+  gl_FUNC_PUTENV
+  gl_STDLIB_MODULE_INDICATOR([putenv])
+  gl_FUNC_SETENV
+  gl_STDLIB_MODULE_INDICATOR([setenv])
+  gl_FUNC_STAT
+  gl_SYS_STAT_MODULE_INDICATOR([stat])
+  AM_STDBOOL_H
+  gl_STDINT_H
+  gt_TYPE_WCHAR_T
+  gt_TYPE_WINT_T
+  gl_STDLIB_H
+  gl_FUNC_SYMLINK
+  gl_UNISTD_MODULE_INDICATOR([symlink])
+  gl_HEADER_SYS_STAT_H
+  AC_PROG_MKDIR_P
+  gl_HEADER_TIME_H
+  gl_FUNC_UNSETENV
+  gl_STDLIB_MODULE_INDICATOR([unsetenv])
+  gl_WCHAR_H
   m4_ifval(srcgltests_LIBSOURCES_LIST, [
     m4_syscmd([test ! -d ]m4_defn([srcgltests_LIBSOURCES_DIR])[ ||
       for gl_file in ]srcgltests_LIBSOURCES_LIST[ ; do
@@ -112,7 +154,7 @@ AC_DEFUN([srcgl_INIT],
     if test -n "$srcgltests_LIBOBJS"; then
       # Remove the extension.
       sed_drop_objext='s/\.o$//;s/\.obj$//'
-      for i in `for i in $srcgltests_LIBOBJS; do echo "$i"; done | sed "$sed_drop_objext" | sort | uniq`; do
+      for i in `for i in $srcgltests_LIBOBJS; do echo "$i"; done | sed -e "$sed_drop_objext" | sort | uniq`; do
         srcgltests_libobjs="$srcgltests_libobjs $i.$ac_objext"
         srcgltests_ltlibobjs="$srcgltests_ltlibobjs $i.lo"
       done
@@ -181,6 +223,7 @@ AC_DEFUN([srcgltests_LIBSOURCES], [
 # This macro records the list of files which have been installed by
 # gnulib-tool and may be removed by future gnulib-tool invocations.
 AC_DEFUN([srcgl_FILE_LIST], [
+  build-aux/arg-nonnull.h
   build-aux/link-warning.h
   lib/getopt.c
   lib/getopt.in.h
@@ -190,19 +233,105 @@ AC_DEFUN([srcgl_FILE_LIST], [
   lib/progname.c
   lib/progname.h
   lib/stdarg.in.h
+  lib/stddef.in.h
   lib/unistd.in.h
   lib/version-etc.c
   lib/version-etc.h
   m4/00gnulib.m4
+  m4/alloca.m4
+  m4/dos.m4
+  m4/dup2.m4
+  m4/eealloc.m4
+  m4/environ.m4
+  m4/errno_h.m4
+  m4/extensions.m4
+  m4/fcntl-o.m4
+  m4/fcntl_h.m4
   m4/getopt.m4
   m4/gnulib-common.m4
   m4/include_next.m4
+  m4/longlong.m4
+  m4/lstat.m4
+  m4/malloc.m4
+  m4/malloca.m4
+  m4/mode_t.m4
+  m4/multiarch.m4
+  m4/open.m4
+  m4/pathmax.m4
+  m4/putenv.m4
+  m4/setenv.m4
+  m4/stat.m4
   m4/stdarg.m4
+  m4/stdbool.m4
+  m4/stddef_h.m4
+  m4/stdint.m4
+  m4/stdlib_h.m4
+  m4/symlink.m4
+  m4/sys_stat_h.m4
+  m4/time_h.m4
   m4/unistd_h.m4
   m4/version-etc.m4
+  m4/wchar.m4
+  m4/wchar_t.m4
+  m4/wint_t.m4
+  tests/macros.h
+  tests/signature.h
+  tests/test-alloca-opt.c
+  tests/test-binary-io.c
+  tests/test-binary-io.sh
+  tests/test-dup2.c
+  tests/test-environ.c
+  tests/test-errno.c
+  tests/test-fcntl-h.c
+  tests/test-getopt.c
+  tests/test-getopt.h
+  tests/test-getopt_long.h
+  tests/test-lstat.c
+  tests/test-lstat.h
+  tests/test-malloca.c
+  tests/test-open.c
+  tests/test-open.h
+  tests/test-setenv.c
+  tests/test-stat.c
+  tests/test-stat.h
+  tests/test-stdbool.c
+  tests/test-stddef.c
+  tests/test-stdint.c
+  tests/test-stdlib.c
+  tests/test-symlink.c
+  tests/test-symlink.h
+  tests/test-sys_stat.c
+  tests/test-time.c
   tests/test-unistd.c
+  tests/test-unsetenv.c
   tests/test-version-etc.c
   tests/test-version-etc.sh
+  tests/test-wchar.c
+  tests=lib/alloca.in.h
+  tests=lib/binary-io.h
+  tests=lib/dup2.c
+  tests=lib/errno.in.h
+  tests=lib/fcntl.in.h
+  tests=lib/intprops.h
+  tests=lib/lstat.c
+  tests=lib/malloc.c
+  tests=lib/malloca.c
+  tests=lib/malloca.h
+  tests=lib/malloca.valgrind
+  tests=lib/open.c
+  tests=lib/pathmax.h
+  tests=lib/putenv.c
+  tests=lib/same-inode.h
+  tests=lib/setenv.c
+  tests=lib/stat.c
+  tests=lib/stdbool.in.h
+  tests=lib/stdint.in.h
+  tests=lib/stdlib.in.h
+  tests=lib/symlink.c
+  tests=lib/sys_stat.in.h
+  tests=lib/time.in.h
+  tests=lib/unsetenv.c
   tests=lib/verify.h
   tests=lib/version-etc-fsf.c
+  tests=lib/wchar.in.h
 ])
