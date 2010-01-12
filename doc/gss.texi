@@ -16,7 +16,7 @@
 This manual is last updated @value{UPDATED} for version
 @value{VERSION} of GNU GSS.
 
-Copyright @copyright{} 2003, 2004, 2005, 2006, 2007, 2008, 2009 Simon Josefsson.
+Copyright @copyright{} 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010 Simon Josefsson.
 
 @quotation
 Permission is granted to copy, distribute and/or modify this document
@@ -626,7 +626,7 @@ following early in your @code{main()}:
     @{
       printf ("gss_check_version() failed:\n"
               "Header file incompatible with shared library.\n");
-      exit(1);
+      exit(EXIT_FAILURE);
     @}
 @end example
 
@@ -955,8 +955,8 @@ implementation-chosen printable syntax for each supported name-type.
 
 If an application calls @code{gss_display_name}, passing the internal
 name resulting from a call to @code{gss_import_name}, there is no
-guarantee the the resulting contiguous string name will be the same as
-the original imported string name.  Nor do name-space identifiers
+guarantee the resulting contiguous string name will be the same as the
+original imported string name.  Nor do name-space identifiers
 necessarily survive unchanged after a journey through the internal
 name-form.  An example of this might be a mechanism that authenticates
 X.500 names, but provides an algorithmic mapping of Internet DNS names

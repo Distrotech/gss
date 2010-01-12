@@ -1,5 +1,5 @@
 /* krb5context.c --- Kerberos 5 security context self tests.
- * Copyright (C) 2003, 2004, 2005, 2006, 2007, 2008, 2009  Simon Josefsson
+ * Copyright (C) 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010  Simon Josefsson
  *
  * This file is part of the Generic Security Service (GSS).
  *
@@ -20,9 +20,7 @@
  *
  */
 
-#if HAVE_CONFIG_H
-# include "config.h"
-#endif
+#include "config.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -36,45 +34,7 @@
 /* Get Shishi prototypes. */
 #include <shishi.h>
 
-#ifndef __attribute__
-/* This feature is available in gcc versions 2.5 and later.  */
-# if __GNUC__ < 2 || (__GNUC__ == 2 && __GNUC_MINOR__ < 5)
-#  define __attribute__(Spec)	/* empty */
-# endif
-#endif
-
-static void fail (const char *format, ...)
-  __attribute__ ((format (printf, 1, 2)));
-static void success (const char *format, ...)
-  __attribute__ ((format (printf, 1, 2)));
-
-static int debug = 0;
-static int error_count = 0;
-static int break_on_error = 0;
-
-static void
-fail (const char *format, ...)
-{
-  va_list arg_ptr;
-
-  va_start (arg_ptr, format);
-  vfprintf (stderr, format, arg_ptr);
-  va_end (arg_ptr);
-  error_count++;
-  if (break_on_error)
-    exit (1);
-}
-
-static void
-success (const char *format, ...)
-{
-  va_list arg_ptr;
-
-  va_start (arg_ptr, format);
-  if (debug)
-    vfprintf (stdout, format, arg_ptr);
-  va_end (arg_ptr);
-}
+#include "utils.c"
 
 static void
 display_status_1 (const char *m, OM_uint32 code, int type)

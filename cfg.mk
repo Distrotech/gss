@@ -1,4 +1,4 @@
-# Copyright (C) 2006, 2007, 2008, 2009 Simon Josefsson.
+# Copyright (C) 2006, 2007, 2008, 2009, 2010 Simon Josefsson.
 #
 # This file is part of the Generic Security Service (GSS).
 #
@@ -24,6 +24,11 @@ CFGFLAGS ?= --enable-gtk-doc $(ADDFLAGS) $(WFLAGS)
 ifeq ($(.DEFAULT_GOAL),abort-due-to-no-makefile)
 .DEFAULT_GOAL := bootstrap
 endif
+
+local-checks-to-skip = sc_copyright_check sc_immutable_NEWS		\
+	sc_makefile_at_at_check sc_prohibit_strcmp sc_require_config_h	\
+	sc_require_config_h_first
+VC_LIST_NEVER = ^((lib/|src/)?(gl|gltests|build-aux))/.*
 
 gtk-doc.make:
 	gtkdocize
@@ -63,7 +68,7 @@ upload-web-coverage:
 
 W32ROOT ?= $(HOME)/gnutls4win/inst
 
-mingw32: autoreconf 
+mingw32: autoreconf
 	./configure $(CFGFLAGS) --host=i586-mingw32msvc --build=`build-aux/config.guess` --with-libtasn1-prefix=$(W32ROOT) --with-libgcrypt-prefix=$(W32ROOT) --prefix $(W32ROOT)
 
 .PHONY: bootstrap autoreconf mingw32

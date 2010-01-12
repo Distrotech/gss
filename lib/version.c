@@ -1,5 +1,5 @@
 /* version.c --- Version handling.
- * Copyright (C) 2002, 2003, 2004, 2005, 2006, 2007, 2008  Simon Josefsson
+ * Copyright (C) 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2010  Simon Josefsson
  *
  * This file is part of the Generic Security Service (GSS).
  *
@@ -28,7 +28,7 @@
  * gss_check_version:
  * @req_version: version string to compare with, or NULL
  *
- * Check that the the version of the library is at minimum the one
+ * Check that the version of the library is at minimum the one
  * given as a string in @req_version.
  *
  * WARNING: This function is a GNU GSS specific extension, and is not

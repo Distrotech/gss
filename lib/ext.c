@@ -1,5 +1,5 @@
 /* ext.c --- Implementation of GSS specific extensions.
- * Copyright (C) 2003, 2004, 2005, 2006, 2007, 2009  Simon Josefsson
+ * Copyright (C) 2003, 2004, 2005, 2006, 2007, 2009, 2010  Simon Josefsson
  *
  * This file is part of the Generic Security Service (GSS).
  *
@@ -54,7 +54,7 @@ gss_oid_equal (gss_OID first_oid, gss_OID second_oid)
  * @dest_oid: (Object ID, modify) The resultant copy of @src_oid.
  *   Storage associated with this name must be freed by the
  *   application, but gss_release_oid() cannot be used generally as it
- *   deallocate the the oid structure itself too (use
+ *   deallocate the oid structure itself too (use
  *   gss_duplicate_oid() if you don't want this problem.)
  *
  * Make an exact copy of the given OID, that shares no memory areas

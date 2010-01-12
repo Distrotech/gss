@@ -1,6 +1,6 @@
 dnl Process this file with autoconf to produce a configure script.
 
-# Copyright (C) 2003, 2004, 2005, 2006, 2007, 2008, 2009 Simon Josefsson.
+# Copyright (C) 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010 Simon Josefsson.
 #
 # This file is part of the Generic Security Service (GSS).
 #
@@ -76,7 +76,7 @@ AC_ARG_ENABLE(kerberos5,
 if test "$kerberos5" != "no" ; then
   AC_LIB_HAVE_LINKFLAGS(shishi,, [#include <shishi.h>], [shishi ();])
   if test "$ac_cv_libshishi" = yes; then
-    AC_DEFINE(USE_KERBEROS5, 1, [Define to 1 if you want Kerberos 5 mech.])
+    AC_DEFINE([USE_KERBEROS5], 1, [Define to 1 if you want Kerberos 5 mech.])
     INCLUDE_GSS_KRB5='# include <gss/krb5.h>'
     INCLUDE_GSS_KRB5_EXT='# include <gss/krb5-ext.h>'
     kerberos5=yes

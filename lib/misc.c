@@ -1,5 +1,5 @@
 /* misc.c --- Implementation of GSS-API Miscellaneous functions.
- * Copyright (C) 2003, 2004, 2005, 2006, 2007, 2008, 2009  Simon Josefsson
+ * Copyright (C) 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010  Simon Josefsson
  *
  * This file is part of the Generic Security Service (GSS).
  *
@@ -297,8 +297,7 @@ gss_release_buffer (OM_uint32 * minor_status, gss_buffer_t buffer)
 
   if (buffer != GSS_C_NO_BUFFER)
     {
-      if (buffer->value)
-	free (buffer->value);
+      free (buffer->value);
       buffer->value = NULL;
       buffer->length = 0;
     }
