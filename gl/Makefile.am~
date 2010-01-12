@@ -75,6 +75,20 @@ EXTRA_DIST += $(top_srcdir)/maint.mk
 
 ## end   gnulib module maintainer-makefile
 
+## begin gnulib module useless-if-before-free
+
+
+EXTRA_DIST += $(top_srcdir)/build-aux/useless-if-before-free
+
+## end   gnulib module useless-if-before-free
+
+## begin gnulib module vc-list-files
+
+
+EXTRA_DIST += $(top_srcdir)/build-aux/vc-list-files
+
+## end   gnulib module vc-list-files
+
 ## begin gnulib module dummy
 
 libgnu_la_SOURCES += dummy.c

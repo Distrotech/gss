@@ -1,6 +1,6 @@
 ## DO NOT EDIT! GENERATED AUTOMATICALLY!
 ## Process this file with automake to produce Makefile.in.
-# Copyright (C) 2002-2009 Free Software Foundation, Inc.
+# Copyright (C) 2002-2010 Free Software Foundation, Inc.
 #
 # This file is free software, distributed under the terms of the GNU
 # General Public License.  As a special exception to the GNU General
@@ -207,7 +207,6 @@ EXTRA_DIST += fcntl.in.h
 
 TESTS += test-fcntl-h
 check_PROGRAMS += test-fcntl-h
-
 EXTRA_DIST += test-fcntl-h.c
 
 ## end   gnulib module fcntl-h-tests
@@ -391,7 +390,6 @@ EXTRA_DIST += stdbool.in.h
 
 TESTS += test-stdbool
 check_PROGRAMS += test-stdbool
-
 EXTRA_DIST += test-stdbool.c
 
 ## end   gnulib module stdbool-tests
@@ -400,7 +398,6 @@ EXTRA_DIST += test-stdbool.c
 
 TESTS += test-stddef
 check_PROGRAMS += test-stddef
-
 EXTRA_DIST += test-stddef.c
 
 ## end   gnulib module stddef-tests
@@ -451,7 +448,6 @@ EXTRA_DIST += stdint.in.h
 
 TESTS += test-stdint
 check_PROGRAMS += test-stdint
-
 EXTRA_DIST += test-stdint.c
 
 ## end   gnulib module stdint-tests
@@ -533,7 +529,6 @@ EXTRA_DIST += stdlib.in.h
 
 TESTS += test-stdlib
 check_PROGRAMS += test-stdlib
-
 EXTRA_DIST += test-stdlib.c
 
 ## end   gnulib module stdlib-tests
@@ -616,7 +611,6 @@ EXTRA_DIST += sys_stat.in.h
 
 TESTS += test-sys_stat
 check_PROGRAMS += test-sys_stat
-
 EXTRA_DIST += test-sys_stat.c
 
 ## end   gnulib module sys_stat-tests
@@ -654,7 +648,6 @@ EXTRA_DIST += time.in.h
 
 TESTS += test-time
 check_PROGRAMS += test-time
-
 EXTRA_DIST += test-time.c
 
 ## end   gnulib module time-tests
@@ -663,7 +656,6 @@ EXTRA_DIST += test-time.c
 
 TESTS += test-unistd
 check_PROGRAMS += test-unistd
-
 EXTRA_DIST += test-unistd.c
 
 ## end   gnulib module unistd-tests
@@ -707,9 +699,28 @@ EXTRA_DIST += test-version-etc.c test-version-etc.sh
 
 ## end   gnulib module version-etc-tests
 
+## begin gnulib module warn-on-use
+
+BUILT_SOURCES += warn-on-use.h
+# The warn-on-use.h that gets inserted into generated .h files is the same as
+# build-aux/warn-on-use.h, except that it has the copyright header cut off.
+warn-on-use.h: $(top_srcdir)/build-aux/warn-on-use.h
+	$(AM_V_GEN)rm -f $@-t $@ && \
+	sed -n -e '/^.ifndef/,$$p' \
+	  < $(top_srcdir)/build-aux/warn-on-use.h \
+	  > $@-t && \
+	mv $@-t $@
+MOSTLYCLEANFILES += warn-on-use.h warn-on-use.h-t
+
+WARN_ON_USE_H=warn-on-use.h
+
+EXTRA_DIST += $(top_srcdir)/build-aux/warn-on-use.h
+
+## end   gnulib module warn-on-use
+
 ## begin gnulib module wchar
 
-BUILT_SOURCES += $(WCHAR_H)
+BUILT_SOURCES += wchar.h
 
 # We need the following in order to create <wchar.h> when the system
 # version does not work standalone.
@@ -770,7 +781,6 @@ EXTRA_DIST += wchar.in.h
 
 TESTS += test-wchar
 check_PROGRAMS += test-wchar
-
 EXTRA_DIST += test-wchar.c
 
 ## end   gnulib module wchar-tests
