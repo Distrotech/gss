@@ -132,6 +132,7 @@ AC_CONFIG_FILES([
   Makefile
   gss.pc
   doc/Makefile
+  doc/cyclo/Makefile
   doc/reference/Makefile
   gl/Makefile
   lib/Makefile
