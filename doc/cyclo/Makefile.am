@@ -18,6 +18,8 @@
 # the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 # Boston, MA 02110-1301, USA.
 
+EXTRA_DIST = cyclo-$(PACKAGE).html
+
 cyclo-$(PACKAGE).html:
 	$(PMCCABE) ${top_srcdir}/lib/*.[ch] ${top_srcdir}/lib/krb5/*.[ch] \
 		| sort -nr \
