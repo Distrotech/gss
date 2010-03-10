@@ -1,5 +1,5 @@
 /* asn1.c --- Wrapper around pseudo-ASN.1 token format.
- * Copyright (C) 2003, 2004, 2005, 2006, 2007, 2008, 2009  Simon Josefsson
+ * Copyright (C) 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010  Simon Josefsson
  *
  * This file is part of the Generic Security Service (GSS).
  *
@@ -139,6 +139,12 @@ int
 gss_encapsulate_token (const gss_buffer_t input_message,
 		       gss_OID token_oid, gss_buffer_t output_message)
 {
+  if (!input_message)
+    return GSS_S_CALL_INACCESSIBLE_READ;
+  if (!token_oid)
+    return GSS_S_CALL_INACCESSIBLE_READ;
+  if (!output_message)
+    return GSS_S_CALL_INACCESSIBLE_WRITE;
   return _gss_encapsulate_token (token_oid->elements,
 				 token_oid->length,
 				 input_message->value,
@@ -235,6 +241,13 @@ gss_decapsulate_token (const gss_buffer_t input_message,
   char *oid;
   size_t oidlen;
   int rc;
+
+  if (!input_message)
+    return GSS_S_CALL_INACCESSIBLE_READ;
+  if (!token_oid)
+    return GSS_S_CALL_INACCESSIBLE_READ;
+  if (!dataptr || !datalen)
+    return GSS_S_CALL_INACCESSIBLE_WRITE;
 
   rc = _gss_decapsulate_token (input_message->value,
 			       input_message->length,
