@@ -1,5 +1,5 @@
 /* krb5/checksum.h --- (Un)pack checksum fields in Krb5 GSS contexts.
- * Copyright (C) 2003, 2004, 2005, 2006, 2007, 2009  Simon Josefsson
+ * Copyright (C) 2003, 2004, 2005, 2006, 2007, 2009, 2010  Simon Josefsson
  *
  * This file is part of the Generic Security Service (GSS).
  *
@@ -23,5 +23,11 @@
 OM_uint32
 _gss_krb5_checksum_pack (OM_uint32 *minor_status,
 			 const gss_cred_id_t initiator_cred_handle,
+			 gss_ctx_id_t * context_handle,
 			 const gss_channel_bindings_t input_chan_bindings,
 			 OM_uint32 req_flags, char **data, size_t * datalen);
+
+OM_uint32
+_gss_krb5_checksum_parse (OM_uint32 *minor_status,
+			  gss_ctx_id_t * context_handle,
+			  const gss_channel_bindings_t input_chan_bindings);

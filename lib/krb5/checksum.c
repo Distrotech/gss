@@ -26,10 +26,57 @@
 /* Get specification. */
 #include "checksum.h"
 
+static int
+hash_cb (OM_uint32 *minor_status,
+	 gss_ctx_id_t * context_handle,
+	 const gss_channel_bindings_t input_chan_bindings,
+	 char **out)
+{
+  gss_ctx_id_t ctx = *context_handle;
+  _gss_krb5_ctx_t k5 = ctx->krb5;
+  char *buf;
+  size_t len;
+  int res;
+
+  /* We don't support addresses. */
+  if (input_chan_bindings->initiator_addrtype != 0 ||
+      input_chan_bindings->initiator_address.length != 0 ||
+      input_chan_bindings->initiator_address.value != NULL ||
+      input_chan_bindings->acceptor_addrtype != 0 ||
+      input_chan_bindings->acceptor_address.length != 0 ||
+      input_chan_bindings->acceptor_address.value != NULL)
+    return GSS_S_FAILURE;
+
+  /* We need to hash the four OM_uint32 values, for the
+     initiator_addrtype, initiator_address.length, accept_addrtype,
+     and accept_address.length. */
+
+  len = 4 * 4 + input_chan_bindings->application_data.length;
+  buf = malloc (len);
+  if (!buf)
+    {
+      if (minor_status)
+	*minor_status = ENOMEM;
+      return GSS_S_FAILURE;
+    }
+
+  memset (buf, 0, 4 * 4);
+  memcpy (buf, input_chan_bindings->application_data.value,
+	  input_chan_bindings->application_data.length);
+
+  res = shishi_md5 (k5->sh, buf, len, out);
+  free (buf);
+  if (res != SHISHI_OK)
+    return GSS_S_FAILURE;
+
+  return GSS_S_COMPLETE;
+}
+
 /* Create the checksum value field from input parameters. */
 OM_uint32
 _gss_krb5_checksum_pack (OM_uint32 *minor_status,
 			 const gss_cred_id_t initiator_cred_handle,
+			 gss_ctx_id_t * context_handle,
 			 const gss_channel_bindings_t input_chan_bindings,
 			 OM_uint32 req_flags, char **data, size_t * datalen)
 {
@@ -85,14 +132,24 @@ _gss_krb5_checksum_pack (OM_uint32 *minor_status,
    *
    */
 
-  /* XXX We only support GSS_C_NO_CHANNEL_BINDINGS. */
   if (input_chan_bindings != GSS_C_NO_CHANNEL_BINDINGS)
     {
-      free (p);
-      return GSS_S_BAD_BINDINGS;
-    }
+      char *md5hash;
+      int res;
 
-  memset (&p[4], 0, 16);
+      res = hash_cb (minor_status, context_handle,
+		     input_chan_bindings, &md5hash);
+      if (res != GSS_S_COMPLETE)
+	{
+	  free (p);
+	  return res;
+	}
+
+      memcpy (&p[4], md5hash, 16);
+      free (md5hash);
+    }
+  else
+    memset (&p[4], 0, 16);
 
   /*
    * 20..23  Flags   Bit vector of context-establishment flags,
@@ -137,6 +194,68 @@ _gss_krb5_checksum_pack (OM_uint32 *minor_status,
          not fail here, as GSS_C_DELEG_FLAG is masked out above, and
          in context.c. */
     }
+
+  return GSS_S_COMPLETE;
+}
+
+OM_uint32
+_gss_krb5_checksum_parse (OM_uint32 *minor_status,
+			  gss_ctx_id_t * context_handle,
+			  const gss_channel_bindings_t input_chan_bindings)
+{
+  gss_ctx_id_t ctx = *context_handle;
+  _gss_krb5_ctx_t k5 = ctx->krb5;
+  char *out = NULL;
+  size_t len = 0;
+  int rc;
+  char *md5hash;
+
+  if (shishi_ap_authenticator_cksumtype (k5->ap) != 0x8003)
+    {
+      if (minor_status)
+	*minor_status = GSS_KRB5_S_G_VALIDATE_FAILED;
+      return GSS_S_FAILURE;
+    }
+
+  rc = shishi_ap_authenticator_cksumdata (k5->ap, out, &len);
+  if (rc != SHISHI_TOO_SMALL_BUFFER)
+    return GSS_S_FAILURE;
+
+  out = malloc (len);
+  if (!out)
+    {
+      if (minor_status)
+	*minor_status = ENOMEM;
+      return GSS_S_FAILURE;
+    }
+
+  rc = shishi_ap_authenticator_cksumdata (k5->ap, out, &len);
+  if (rc != SHISHI_OK)
+    {
+      free (out);
+      return GSS_S_FAILURE;
+    }
+
+  if (memcmp (out, "\x10\x00\x00\x00", 4) != 0)
+    {
+      free (out);
+      return GSS_S_DEFECTIVE_TOKEN;
+    }
+
+  rc = hash_cb (minor_status, context_handle, input_chan_bindings, &md5hash);
+  if (rc != GSS_S_COMPLETE)
+    {
+      free (out);
+      return GSS_S_DEFECTIVE_TOKEN;
+    }
+
+  rc = memcmp (&out[4], md5hash, 16);
+
+  free (md5hash);
+  free (out);
+
+  if (rc != 0)
+    return GSS_S_DEFECTIVE_TOKEN;
 
   return GSS_S_COMPLETE;
 }

@@ -1,5 +1,5 @@
 /* krb5/context.c --- Implementation of Kerberos 5 GSS Context functions.
- * Copyright (C) 2003, 2004, 2005, 2006, 2007, 2008, 2009  Simon Josefsson
+ * Copyright (C) 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010  Simon Josefsson
  *
  * This file is part of the Generic Security Service (GSS).
  *
@@ -76,6 +76,7 @@ init_request (OM_uint32 * minor_status,
 
   /* Create Authenticator checksum field. */
   maj_stat = _gss_krb5_checksum_pack (minor_status, initiator_cred_handle,
+				      context_handle,
 				      input_chan_bindings, req_flags,
 				      &cksum, &cksumlen);
   if (GSS_ERROR (maj_stat))
@@ -312,10 +313,6 @@ gss_krb5_accept_sec_context (OM_uint32 * minor_status,
     /* XXX support GSS_C_NO_CREDENTIAL: acquire_cred() default server */
     return GSS_S_NO_CRED;
 
-  if (input_chan_bindings != GSS_C_NO_CHANNEL_BINDINGS)
-    /* XXX support channel bindings */
-    return GSS_S_BAD_BINDINGS;
-
   if (*context_handle)
     return GSS_S_FAILURE;
 
@@ -379,14 +376,11 @@ gss_krb5_accept_sec_context (OM_uint32 * minor_status,
   if (rc != SHISHI_OK)
     return GSS_S_FAILURE;
 
-  if (shishi_ap_authenticator_cksumtype (cxk5->ap) != 0x8003)
-    {
-      if (minor_status)
-	*minor_status = GSS_KRB5_S_G_VALIDATE_FAILED;
-      return GSS_S_FAILURE;
-    }
-
-  /* XXX Parse authenticator.checksum data. */
+  rc = _gss_krb5_checksum_parse (minor_status,
+				 context_handle,
+				 input_chan_bindings);
+  if (rc != GSS_S_COMPLETE)
+    return GSS_S_FAILURE;
 
   cxk5->tkt = shishi_ap_tkt (cxk5->ap);
   cxk5->key = shishi_ap_key (cxk5->ap);
