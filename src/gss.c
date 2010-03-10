@@ -47,6 +47,16 @@ const char version_etc_copyright[] =
      year.  */
   "Copyright %s %d Simon Josefsson.";
 
+/* This feature is available in gcc versions 2.5 and later.  */
+#if __GNUC__ < 2 || (__GNUC__ == 2 && __GNUC_MINOR__ < 5)
+# define GSS_ATTR_NO_RETRUN
+#else
+# define GSS_ATTR_NO_RETRUN __attribute__ ((__noreturn__))
+#endif
+
+static void
+usage (int status) GSS_ATTR_NO_RETRUN;
+
 static void
 usage (int status)
 {
