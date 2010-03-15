@@ -1,0 +1,272 @@
+# Italian translation for gss.
+# Copyright (C) 2010 Free Software Foundation, Inc.
+# This file is distributed under the same license as the gss package.
+# Sergio Zanchetta <primes2h@ubuntu.com>, 2010.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: gss-0.0.24\n"
+"Report-Msgid-Bugs-To: bug-gss@josefsson.org\n"
+"POT-Creation-Date: 2008-09-10 13:16+0200\n"
+"PO-Revision-Date: 2010-03-12 10:01+0100\n"
+"Last-Translator: Sergio Zanchetta <primes2h@ubuntu.com>\n"
+"Language-Team: Italian <tp@lists.linux.it>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: Italian\n"
+"X-Poedit-Country: ITALY\n"
+
+#: lib/error.c:43
+msgid "A required input parameter could not be read"
+msgstr "Un parametro di input necessario non può essere letto"
+
+#: lib/error.c:45
+msgid "A required output parameter could not be written"
+msgstr "Un parametro di output necessario non può essere scritto"
+
+#: lib/error.c:47
+msgid "A parameter was malformed"
+msgstr "Un parametro era malformato"
+
+#: lib/error.c:52
+msgid "An unsupported mechanism was requested"
+msgstr "È stato richiesto un meccanismo non supportato"
+
+#: lib/error.c:54
+msgid "An invalid name was supplied"
+msgstr "È stato fornito un nome non valido"
+
+#: lib/error.c:56
+msgid "A supplied name was of an unsupported type"
+msgstr "Un nome fornito era di un tipo non supportato"
+
+#: lib/error.c:58
+msgid "Incorrect channel bindings were supplied"
+msgstr "Sono state fornite associazioni di canale non corrette"
+
+#: lib/error.c:60
+msgid "An invalid status code was supplied"
+msgstr "È stato fornito un codice di stato non valido"
+
+#: lib/error.c:62
+msgid "A token had an invalid MIC"
+msgstr "Un token aveva un MIC non valido"
+
+#: lib/error.c:64
+msgid "No credentials were supplied, or the credentials were unavailable or inaccessible"
+msgstr "Non è stata fornita alcuna credenziale oppure le credenziali erano indisponibili o inaccessibili"
+
+#: lib/error.c:67
+msgid "No context has been established"
+msgstr "Non è stato definito alcun contesto"
+
+#: lib/error.c:69
+msgid "A token was invalid"
+msgstr "Un token non era valido"
+
+#: lib/error.c:71
+msgid "A credential was invalid"
+msgstr "Una credenziale non era valida"
+
+#: lib/error.c:73
+msgid "The referenced credentials have expired"
+msgstr "Le credenziali di riferimento sono scadute"
+
+#: lib/error.c:75
+msgid "The context has expired"
+msgstr "Il contesto è scaduto"
+
+#: lib/error.c:77
+msgid "Unspecified error in underlying mechanism"
+msgstr "Errore non specificato nel meccanismo sottostante"
+
+#: lib/error.c:79
+msgid "The quality-of-protection requested could not be provided"
+msgstr "La qualità di protezione richiesta non può essere fornita"
+
+#: lib/error.c:81
+msgid "The operation is forbidden by local security policy"
+msgstr "L'operazione è proibita dalle politiche di sicurezza locali"
+
+#: lib/error.c:83
+msgid "The operation or option is unavailable"
+msgstr "L'operazione o l'opzione non è disponibile"
+
+#: lib/error.c:85
+msgid "The requested credential element already exists"
+msgstr "L'elemento di credenziale richiesto esiste già"
+
+#: lib/error.c:87
+msgid "The provided name was not a mechanism name"
+msgstr "Il nome fornito non era un nome di meccanismo"
+
+#: lib/error.c:92
+msgid "The gss_init_sec_context() or gss_accept_sec_context() function must be called again to complete its function"
+msgstr "La funzione gss_init_sec_context() oppure gss_accept_sec_context() deve essere chiamata di nuovo per essere completata"
+
+#: lib/error.c:95
+msgid "The token was a duplicate of an earlier token"
+msgstr "Il token era un duplicato di uno precedente"
+
+#: lib/error.c:97
+msgid "The token's validity period has expired"
+msgstr "Il periodo di validità del token è scaduto"
+
+#: lib/error.c:99
+msgid "A later token has already been processed"
+msgstr "Un token successivo è già stato elaborato"
+
+#: lib/error.c:101
+msgid "An expected per-message token was not received"
+msgstr "Un token per-message atteso non è stato ricevuto"
+
+#: lib/error.c:298
+msgid "No error"
+msgstr "Nessun errore"
+
+#: lib/krb5/error.c:41
+msgid "No @ in SERVICE-NAME name string"
+msgstr "Nessun @ nel nome di stringa SERVICE-NAME"
+
+#: lib/krb5/error.c:43
+msgid "STRING-UID-NAME contains nondigits"
+msgstr "STRING-UID-NAME non contiene cifre"
+
+#: lib/krb5/error.c:45
+msgid "UID does not resolve to username"
+msgstr "UID non risolve il nome utente"
+
+#: lib/krb5/error.c:47
+msgid "Validation error"
+msgstr "Errore di validazione"
+
+#: lib/krb5/error.c:49
+msgid "Couldn't allocate gss_buffer_t data"
+msgstr "Impossibile allocare gss_buffer_t data"
+
+#: lib/krb5/error.c:51
+msgid "Message context invalid"
+msgstr "Contesto del messaggio non valido"
+
+#: lib/krb5/error.c:53
+msgid "Buffer is the wrong size"
+msgstr "Il buffer è di dimensione errata"
+
+#: lib/krb5/error.c:55
+msgid "Credential usage type is unknown"
+msgstr "Il tipo d'uso delle credenziali è sconosciuto"
+
+#: lib/krb5/error.c:57
+msgid "Unknown quality of protection specified"
+msgstr "Qualità di protezione specificata sconosciuta"
+
+#: lib/krb5/error.c:60
+msgid "Principal in credential cache does not match desired name"
+msgstr "Il principal nella cache delle credenziali non corrisponde al nome desiderato"
+
+#: lib/krb5/error.c:62
+msgid "No principal in keytab matches desired name"
+msgstr "Nessun principal nel keytab corrisponde al nome desiderato"
+
+#: lib/krb5/error.c:64
+msgid "Credential cache has no TGT"
+msgstr "La cache delle credenziali non contiene TGT"
+
+#: lib/krb5/error.c:66
+msgid "Authenticator has no subkey"
+msgstr "L'autenticatore non ha una sottochiave"
+
+#: lib/krb5/error.c:68
+msgid "Context is already fully established"
+msgstr "Il contesto è già completamente definito"
+
+#: lib/krb5/error.c:70
+msgid "Unknown signature type in token"
+msgstr "Tipo di firma sconosciuto nel token"
+
+#: lib/krb5/error.c:72
+msgid "Invalid field length in token"
+msgstr "Lunghezza di campo non valida nel token"
+
+#: lib/krb5/error.c:74
+msgid "Attempt to use incomplete security context"
+msgstr "Tentativo d'uso di un contesto di sicurezza incompleto"
+
+#: lib/krb5/error.c:91
+msgid "No krb5 error"
+msgstr "Nessun errore krb5"
+
+#: lib/krb5/error.c:120
+msgid "Unknown krb5 error"
+msgstr "Errore krb5 sconosciuto"
+
+#: src/gss.c:65
+#, c-format
+msgid "%s: missing parameter\n"
+msgstr "%s: parametro mancante\n"
+
+#: src/gss.c:66
+#, c-format
+msgid "Try `%s --help' for more information.\n"
+msgstr "Usare \"%s --help\" per maggiori informazioni.\n"
+
+#: src/gss.c:73
+#, c-format
+msgid ""
+"GSS-API major status code %ld (0x%lx).\n"
+"\n"
+msgstr ""
+"Codice di stato principale %ld (0x%lx) di GSS-API.\n"
+"\n"
+
+#: src/gss.c:76
+#, c-format
+msgid ""
+"   MSB                                                                 LSB\n"
+"   +-----------------+-----------------+---------------------------------+\n"
+"   |  Calling Error  |  Routine Error  |       Supplementary Info        |\n"
+"   | "
+msgstr ""
+"   MSB                                                                       LSB\n"
+"   +----------------------+---------------------+------------------------------+\n"
+"   |  Errore di chiamata  |  Errore di routine  |       Info aggiuntive        |\n"
+"   | "
+
+#: src/gss.c:90
+#, c-format
+msgid ""
+"|\n"
+"   +-----------------+-----------------+---------------------------------+\n"
+"Bit 31            24  23            16  15                             0\n"
+"\n"
+msgstr ""
+"|\n"
+"   +----------------------+---------------------+------------------------------+\n"
+"Bit 31                 24  23                16  15                          0\n"
+"\n"
+
+#: src/gss.c:100
+#, c-format
+msgid "Masked routine error %ld (0x%lx) shifted into %ld (0x%lx):\n"
+msgstr "Errore della routine nascosta %ld (0x%lx) spostato in %ld (0x%lx):\n"
+
+#: src/gss.c:117 src/gss.c:152 src/gss.c:190
+#, c-format
+msgid "%s: displaying status code failed\n"
+msgstr "%s: visualizzazione del codice di stato non riuscita\n"
+
+#: src/gss.c:138
+#, c-format
+msgid "Masked calling error %ld (0x%lx) shifted into %ld (0x%lx):\n"
+msgstr "Errore della chiamata nascosta %ld (0x%lx) spostato in %ld (0x%lx):\n"
+
+#: src/gss.c:172
+#, c-format
+msgid "Masked supplementary info %ld (0x%lx) shifted into %ld (0x%lx):\n"
+msgstr "Informazione aggiuntiva nascosta %ld (0x%lx) spostata in %ld (0x%lx):\n"
+
+#: src/gss.c:208
+#, c-format
+msgid "No error\n"
+msgstr "Nessun errore\n"
