@@ -1,5 +1,5 @@
 /* krb5/checksum.c --- (Un)pack checksum fields in Krb5 GSS contexts.
- * Copyright (C) 2003, 2004, 2005, 2006, 2007, 2009  Simon Josefsson
+ * Copyright (C) 2003, 2004, 2005, 2006, 2007, 2009, 2010  Simon Josefsson
  *
  * This file is part of the Generic Security Service (GSS).
  *
@@ -242,16 +242,27 @@ _gss_krb5_checksum_parse (OM_uint32 *minor_status,
       return GSS_S_DEFECTIVE_TOKEN;
     }
 
-  rc = hash_cb (minor_status, context_handle, input_chan_bindings, &md5hash);
-  if (rc != GSS_S_COMPLETE)
+  if (input_chan_bindings != GSS_C_NO_CHANNEL_BINDINGS)
     {
-      free (out);
-      return GSS_S_DEFECTIVE_TOKEN;
+      rc = hash_cb (minor_status, context_handle,
+		    input_chan_bindings, &md5hash);
+      if (rc != GSS_S_COMPLETE)
+	{
+	  free (out);
+	  return GSS_S_DEFECTIVE_TOKEN;
+	}
+
+      rc = memcmp (&out[4], md5hash, 16);
+
+      free (md5hash);
+    }
+  else
+    {
+      char zeros[16];
+      memset (&zeros[0], 0, sizeof zeros);
+      rc = memcmp (&out[4], zeros, 16);
     }
 
-  rc = memcmp (&out[4], md5hash, 16);
-
-  free (md5hash);
   free (out);
 
   if (rc != 0)

@@ -26,8 +26,8 @@ LDADD = ../lib/libgss.la @LTLIBINTL@
 TESTS_ENVIRONMENT = \
 	SHISHI_KEYS=$(srcdir)/krb5context.key \
 	SHISHI_TICKETS=$(srcdir)/krb5context.tkt \
-	SHISHI_CONFIG=ignore-this-warning \
-	SHISHI_HOME=ignore-this-warning \
+	SHISHI_CONFIG=$(srcdir)/shishi.conf \
+	SHISHI_HOME=$(srcdir) \
 	SHISHI_USER=ignore-this-warning \
 	THREADSAFETY_FILES="$(top_srcdir)/lib/*.c $(top_srcdir)/lib/krb5/*.c" \
 	$(VALGRIND)
