@@ -40,7 +40,7 @@ TESTS = $(buildtests) threadsafety
 check_PROGRAMS = $(buildtests)
 dist_check_SCRIPTS = threadsafety
 
-EXTRA_DIST = krb5context.key krb5context.tkt utils.c
+EXTRA_DIST = krb5context.key krb5context.tkt utils.c shishi.conf
 
 localedir = $(datadir)/locale
 DEFS = -DLOCALEDIR=\"$(localedir)\" @DEFS@
