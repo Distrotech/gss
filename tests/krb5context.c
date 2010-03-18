@@ -81,6 +81,11 @@ main (int argc, char *argv[])
   gss_cred_id_t server_creds;
   Shishi *handle;
   size_t i;
+  struct gss_channel_bindings_struct cb;
+
+  memset (&cb, 0, sizeof (cb));
+  cb.application_data.length = 3;
+  cb.application_data.value = (char*) "hej";
 
   do
     if (strcmp (argv[argc - 1], "-v") == 0 ||
@@ -146,7 +151,7 @@ main (int argc, char *argv[])
 	  break;
 
 	case 1:
-	  /* Default OID. */
+	  /* Default OID, channel bindings. */
 	  maj_stat = gss_init_sec_context (&min_stat,
 					   GSS_C_NO_CREDENTIAL,
 					   &cctx,
@@ -156,7 +161,7 @@ main (int argc, char *argv[])
 					   GSS_C_REPLAY_FLAG |
 					   GSS_C_SEQUENCE_FLAG,
 					   0,
-					   GSS_C_NO_CHANNEL_BINDINGS,
+					   &cb,
 					   GSS_C_NO_BUFFER, NULL,
 					   &bufdesc2, NULL, NULL);
 	  if (maj_stat != GSS_S_CONTINUE_NEEDED)
@@ -226,7 +231,19 @@ main (int argc, char *argv[])
 	    fail ("loop 0 accept flag failure (%d)\n", ret_flags);
 	  break;
 
-	default:
+	case 1:
+	  maj_stat = gss_accept_sec_context (&min_stat,
+					     &sctx,
+					     server_creds,
+					     &bufdesc2,
+					     &cb,
+					     &name,
+					     NULL,
+					     &bufdesc,
+					     &ret_flags, &time_rec, NULL);
+	  break;
+
+	case 2:
 	  maj_stat = gss_accept_sec_context (&min_stat,
 					     &sctx,
 					     server_creds,
@@ -236,6 +253,9 @@ main (int argc, char *argv[])
 					     NULL,
 					     &bufdesc,
 					     &ret_flags, &time_rec, NULL);
+	  break;
+	default:
+	  fail ("default?!\n");
 	  break;
 	}
       if (GSS_ERROR (maj_stat))
