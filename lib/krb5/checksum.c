@@ -61,7 +61,7 @@ hash_cb (OM_uint32 *minor_status,
     }
 
   memset (buf, 0, 4 * 4);
-  memcpy (buf, input_chan_bindings->application_data.value,
+  memcpy (buf + 4 * 4, input_chan_bindings->application_data.value,
 	  input_chan_bindings->application_data.length);
 
   res = shishi_md5 (k5->sh, buf, len, out);
