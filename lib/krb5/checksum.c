@@ -26,6 +26,15 @@
 /* Get specification. */
 #include "checksum.h"
 
+static void
+pack_uint32 (OM_uint32 i, char *buf)
+{
+  buf[0] = i & 0xFF;
+  buf[1] = (i >> 8) & 0xFF;
+  buf[2] = (i >> 16) & 0xFF;
+  buf[3] = (i >> 24) & 0xFF;
+}
+
 static int
 hash_cb (OM_uint32 *minor_status,
 	 gss_ctx_id_t * context_handle,
@@ -34,25 +43,20 @@ hash_cb (OM_uint32 *minor_status,
 {
   gss_ctx_id_t ctx = *context_handle;
   _gss_krb5_ctx_t k5 = ctx->krb5;
-  char *buf;
+  char *buf, *p;
   size_t len;
   int res;
 
-  /* We don't support addresses. */
-  if (input_chan_bindings->initiator_addrtype != 0 ||
-      input_chan_bindings->initiator_address.length != 0 ||
-      input_chan_bindings->initiator_address.value != NULL ||
-      input_chan_bindings->acceptor_addrtype != 0 ||
-      input_chan_bindings->acceptor_address.length != 0 ||
-      input_chan_bindings->acceptor_address.value != NULL)
-    return GSS_S_FAILURE;
+  if (input_chan_bindings->initiator_address.length > UINT32_MAX ||
+      input_chan_bindings->acceptor_address.length > UINT32_MAX ||
+      input_chan_bindings->application_data.length > UINT32_MAX)
+    return GSS_S_BAD_BINDINGS;
 
-  /* We need to hash the four OM_uint32 values, for the
-     initiator_addrtype, initiator_address.length, accept_addrtype,
-     and accept_address.length. */
-
-  len = 4 * 4 + input_chan_bindings->application_data.length;
-  buf = malloc (len);
+  len = sizeof (OM_uint32) * 5
+    + input_chan_bindings->initiator_address.length
+    + input_chan_bindings->acceptor_address.length
+    + input_chan_bindings->application_data.length;
+  p = buf = malloc (len);
   if (!buf)
     {
       if (minor_status)
@@ -60,9 +64,31 @@ hash_cb (OM_uint32 *minor_status,
       return GSS_S_FAILURE;
     }
 
-  memset (buf, 0, 4 * 4);
-  memcpy (buf + 4 * 4, input_chan_bindings->application_data.value,
-	  input_chan_bindings->application_data.length);
+  pack_uint32 (input_chan_bindings->initiator_addrtype, p);
+  p += sizeof (OM_uint32);
+  pack_uint32 (input_chan_bindings->initiator_address.length, p);
+  p += sizeof (OM_uint32);
+  if (input_chan_bindings->initiator_address.length > 0)
+    {
+      memcpy (p, input_chan_bindings->initiator_address.value,
+	      input_chan_bindings->initiator_address.length);
+      p += input_chan_bindings->initiator_address.length;
+    }
+  pack_uint32 (input_chan_bindings->acceptor_addrtype, p);
+  p += sizeof (OM_uint32);
+  pack_uint32 (input_chan_bindings->acceptor_address.length, p);
+  p += sizeof (OM_uint32);
+  if (input_chan_bindings->acceptor_address.length > 0)
+    {
+      memcpy (p, input_chan_bindings->acceptor_address.value,
+	      input_chan_bindings->acceptor_address.length);
+      p += input_chan_bindings->acceptor_address.length;
+    }
+  pack_uint32 (input_chan_bindings->application_data.length, p);
+  p += sizeof (OM_uint32);
+  if (input_chan_bindings->application_data.value > 0)
+    memcpy (p, input_chan_bindings->application_data.value,
+	    input_chan_bindings->application_data.length);
 
   res = shishi_md5 (k5->sh, buf, len, out);
   free (buf);
