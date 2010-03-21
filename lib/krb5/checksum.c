@@ -86,7 +86,7 @@ hash_cb (OM_uint32 *minor_status,
     }
   pack_uint32 (input_chan_bindings->application_data.length, p);
   p += sizeof (OM_uint32);
-  if (input_chan_bindings->application_data.value > 0)
+  if (input_chan_bindings->application_data.length > 0)
     memcpy (p, input_chan_bindings->application_data.value,
 	    input_chan_bindings->application_data.length);
 
