@@ -1,5 +1,5 @@
 /* context.c --- Implementation of GSS-API Context functions.
- * Copyright (C) 2003, 2004, 2005, 2006, 2007, 2009  Simon Josefsson
+ * Copyright (C) 2003, 2004, 2005, 2006, 2007, 2009, 2010  Simon Josefsson
  *
  * This file is part of the Generic Security Service (GSS).
  *
@@ -477,7 +477,7 @@ gss_init_sec_context (OM_uint32 * minor_status,
  *   initiator.  Only valid if deleg_flag in ret_flags is true, in
  *   which case an explicit credential handle (i.e. not
  *   GSS_C_NO_CREDENTIAL) will be returned; if deleg_flag is false,
- *   gss_accept_context() will set this parameter to
+ *   gss_accept_sec_context() will set this parameter to
  *   GSS_C_NO_CREDENTIAL.  If a credential handle is returned, the
  *   associated resources must be released by the application after
  *   use with a call to gss_release_cred().  Specify NULL if not
