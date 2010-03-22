@@ -1,5 +1,21 @@
 2010-03-22  Simon Josefsson <simon@josefsson.org>
 
+	* NEWS: Version 0.1.5.
+
+2010-03-22  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS, configure.ac: Bump versions.
+
+2010-03-22  Simon Josefsson <simon@josefsson.org>
+
+	* doc/announce.txt: Add.
+
+2010-03-22  Simon Josefsson <simon@josefsson.org>
+
+	* ChangeLog: Generated.
+
+2010-03-22  Simon Josefsson <simon@josefsson.org>
+
 	* NEWS: Version 0.1.4.
 
 2010-03-22  Simon Josefsson <simon@josefsson.org>
