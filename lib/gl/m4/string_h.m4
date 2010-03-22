@@ -5,7 +5,7 @@
 # gives unlimited permission to copy and/or distribute it,
 # with or without modifications, as long as this notice is preserved.
 
-# serial 10
+# serial 12
 
 # Written by Paul Eggert.
 
@@ -21,6 +21,13 @@ AC_DEFUN([gl_HEADER_STRING_H_BODY],
   AC_REQUIRE([AC_C_RESTRICT])
   AC_REQUIRE([gl_HEADER_STRING_H_DEFAULTS])
   gl_CHECK_NEXT_HEADERS([string.h])
+
+  dnl Check for declarations of anything we want to poison if the
+  dnl corresponding gnulib module is not in use, and which is not
+  dnl guaranteed by C89.
+  gl_WARN_ON_USE_PREPARE([[#include <string.h>
+    ]], [memmem mempcpy memrchr rawmemchr stpcpy stpncpy strchrnul strdup
+    strndup strnlen strpbrk strsep strcasestr strtok_r strsignal strverscmp])
 ])
 
 AC_DEFUN([gl_STRING_MODULE_INDICATOR],
@@ -28,6 +35,8 @@ AC_DEFUN([gl_STRING_MODULE_INDICATOR],
   dnl Use AC_REQUIRE here, so that the default settings are expanded once only.
   AC_REQUIRE([gl_HEADER_STRING_H_DEFAULTS])
   GNULIB_[]m4_translit([$1],[abcdefghijklmnopqrstuvwxyz./-],[ABCDEFGHIJKLMNOPQRSTUVWXYZ___])=1
+  dnl Define it also as a C macro, for the benefit of the unit tests.
+  gl_MODULE_INDICATOR([$1])
 ])
 
 AC_DEFUN([gl_HEADER_STRING_H_DEFAULTS],

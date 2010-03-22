@@ -25,7 +25,21 @@ AC_DEFUN([gl_EARLY],
   m4_pattern_allow([^gl_LIBOBJS$])dnl a variable
   m4_pattern_allow([^gl_LTLIBOBJS$])dnl a variable
   AC_REQUIRE([AC_PROG_RANLIB])
+  # Code from module autobuild:
   AB_INIT
+  # Code from module fdl-1.3:
+  # Code from module gendocs:
+  # Code from module gnumakefile:
+  # Code from module gnupload:
+  # Code from module gpl-3.0:
+  # Code from module havelib:
+  # Code from module lib-symbol-versions:
+  # Code from module maintainer-makefile:
+  # Code from module manywarnings:
+  # Code from module pmccabe2html:
+  # Code from module useless-if-before-free:
+  # Code from module vc-list-files:
+  # Code from module warnings:
 ])
 
 # This macro should be invoked from ./configure.ac, in the section
@@ -41,6 +55,10 @@ AC_DEFUN([gl_INIT],
   m4_pushdef([gl_LIBSOURCES_DIR], [])
   gl_COMMON
   gl_source_base='gl'
+  # Code from module autobuild:
+  # Code from module fdl-1.3:
+  # Code from module gendocs:
+  # Code from module gnumakefile:
   # Autoconf 2.61a.99 and earlier don't support linking a file only
   # in VPATH builds.  But since GNUmakefile is for maintainer use
   # only, it does not matter if we skip the link with older autoconf.
@@ -51,9 +69,23 @@ AC_DEFUN([gl_INIT],
   	m4_defn([m4_PACKAGE_VERSION])), [1], [],
         [AC_CONFIG_LINKS([$GNUmakefile:$GNUmakefile], [],
   	[GNUmakefile=$GNUmakefile])])
+  # Code from module gnupload:
+  # Code from module gpl-3.0:
+  # Code from module havelib:
+  # Code from module lib-symbol-versions:
   gl_LD_VERSION_SCRIPT
+  # Code from module maintainer-makefile:
+  AC_CONFIG_COMMANDS_PRE([m4_ifdef([AH_HEADER],
+    [AC_SUBST([CONFIG_INCLUDE], m4_defn([AH_HEADER]))])])
+  # Code from module manywarnings:
+  # Code from module pmccabe2html:
   AC_PATH_PROG([PMCCABE], [pmccabe], [false])
+  # Code from module useless-if-before-free:
+  # Code from module vc-list-files:
+  # Code from module warnings:
   AC_SUBST([WARN_CFLAGS])
+  # Code from module dummy:
+  # End of code from modules
   m4_ifval(gl_LIBSOURCES_LIST, [
     m4_syscmd([test ! -d ]m4_defn([gl_LIBSOURCES_DIR])[ ||
       for gl_file in ]gl_LIBSOURCES_LIST[ ; do

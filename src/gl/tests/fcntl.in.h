@@ -27,7 +27,6 @@
 #include <sys/types.h>
 #ifndef __GLIBC__ /* Avoid namespace pollution on glibc systems.  */
 # include <sys/stat.h>
-# include <unistd.h>
 #endif
 #@INCLUDE_NEXT@ @NEXT_FCNTL_H@
 
@@ -39,7 +38,6 @@
 #include <sys/types.h>
 #ifndef __GLIBC__ /* Avoid namespace pollution on glibc systems.  */
 # include <sys/stat.h>
-# include <unistd.h>
 #endif
 /* The include_next requires a split double-inclusion guard.  */
 #@INCLUDE_NEXT@ @NEXT_FCNTL_H@
@@ -47,68 +45,92 @@
 #ifndef _GL_FCNTL_H
 #define _GL_FCNTL_H
 
+#ifndef __GLIBC__ /* Avoid namespace pollution on glibc systems.  */
+# include <unistd.h>
+#endif
 
-/* The definition of GL_LINK_WARNING is copied here.  */
+
+/* The definitions of _GL_FUNCDECL_RPL etc. are copied here.  */
 
 /* The definition of _GL_ARG_NONNULL is copied here.  */
+
+/* The definition of _GL_WARN_ON_USE is copied here.  */
 
 
 /* Declare overridden functions.  */
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 #if @GNULIB_FCNTL@
 # if @REPLACE_FCNTL@
-#  undef fcntl
-#  define fcntl rpl_fcntl
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef fcntl
+#   define fcntl rpl_fcntl
+#  endif
+_GL_FUNCDECL_RPL (fcntl, int, (int fd, int action, ...));
+_GL_CXXALIAS_RPL (fcntl, int, (int fd, int action, ...));
+# else
+#  if !@HAVE_FCNTL@
+_GL_FUNCDECL_SYS (fcntl, int, (int fd, int action, ...));
+#  endif
+_GL_CXXALIAS_SYS (fcntl, int, (int fd, int action, ...));
 # endif
-# if !@HAVE_FCNTL@ || @REPLACE_FCNTL@
-extern int fcntl (int fd, int action, ...);
-# endif
+_GL_CXXALIASWARN (fcntl);
 #elif defined GNULIB_POSIXCHECK
 # undef fcntl
-# define fcntl \
-    (GL_LINK_WARNING ("fcntl is not always POSIX compliant - " \
-                      "use gnulib module fcntl for portability"), \
-     fcntl)
+# if HAVE_RAW_DECL_FCNTL
+_GL_WARN_ON_USE (fcntl, "fcntl is not always POSIX compliant - "
+                 "use gnulib module fcntl for portability");
+# endif
 #endif
 
 #if @GNULIB_OPEN@
 # if @REPLACE_OPEN@
-#  undef open
-#  define open rpl_open
-extern int open (const char *filename, int flags, ...) _GL_ARG_NONNULL ((1));
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef open
+#   define open rpl_open
+#  endif
+_GL_FUNCDECL_RPL (open, int, (const char *filename, int flags, ...)
+                             _GL_ARG_NONNULL ((1)));
+_GL_CXXALIAS_RPL (open, int, (const char *filename, int flags, ...));
+# else
+_GL_CXXALIAS_SYS (open, int, (const char *filename, int flags, ...));
 # endif
+_GL_CXXALIASWARN (open);
 #elif defined GNULIB_POSIXCHECK
 # undef open
-# define open \
-    (GL_LINK_WARNING ("open is not always POSIX compliant - " \
-                      "use gnulib module open for portability"), \
-     open)
+/* Assume open is always declared.  */
+_GL_WARN_ON_USE (open, "open is not always POSIX compliant - "
+                 "use gnulib module open for portability");
 #endif
 
 #if @GNULIB_OPENAT@
 # if @REPLACE_OPENAT@
-#  undef openat
-#  define openat rpl_openat
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef openat
+#   define openat rpl_openat
+#  endif
+_GL_FUNCDECL_RPL (openat, int,
+                  (int fd, char const *file, int flags, /* mode_t mode */ ...)
+                  _GL_ARG_NONNULL ((2)));
+_GL_CXXALIAS_RPL (openat, int,
+                  (int fd, char const *file, int flags, /* mode_t mode */ ...));
+# else
+#  if !@HAVE_OPENAT@
+_GL_FUNCDECL_SYS (openat, int,
+                  (int fd, char const *file, int flags, /* mode_t mode */ ...)
+                  _GL_ARG_NONNULL ((2)));
+#  endif
+_GL_CXXALIAS_SYS (openat, int,
+                  (int fd, char const *file, int flags, /* mode_t mode */ ...));
 # endif
-# if !@HAVE_OPENAT@ || @REPLACE_OPENAT@
-extern int openat (int fd, char const *file, int flags, /* mode_t mode */ ...)
-     _GL_ARG_NONNULL ((2));
-# endif
+_GL_CXXALIASWARN (openat);
 #elif defined GNULIB_POSIXCHECK
 # undef openat
-# define openat \
-    (GL_LINK_WARNING ("openat is not portable - " \
-                      "use gnulib module openat for portability"), \
-     openat)
+# if HAVE_RAW_DECL_OPENAT
+_GL_WARN_ON_USE (openat, "openat is not portable - "
+                 "use gnulib module openat for portability");
+# endif
 #endif
 
-#ifdef __cplusplus
-}
-#endif
 
 /* Fix up the FD_* macros, only known to be missing on mingw.  */
 

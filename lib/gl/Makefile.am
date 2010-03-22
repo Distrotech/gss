@@ -62,35 +62,35 @@ EXTRA_DIST += $(top_srcdir)/build-aux/arg-nonnull.h
 
 ## end   gnulib module arg-nonnull
 
-## begin gnulib module gettext-h
-
-libgnu_la_SOURCES += gettext.h
-
-## end   gnulib module gettext-h
-
-## begin gnulib module link-warning
+## begin gnulib module c++defs
 
 # The BUILT_SOURCES created by this Makefile snippet are not used via #include
 # statements but through direct file reference. Therefore this snippet must be
 # present in all Makefile.am that need it. This is ensured by the applicability
 # 'all' defined above.
 
-BUILT_SOURCES += link-warning.h
-# The link-warning.h that gets inserted into generated .h files is the same as
-# build-aux/link-warning.h, except that it has the copyright header cut off.
-link-warning.h: $(top_srcdir)/build-aux/link-warning.h
+BUILT_SOURCES += c++defs.h
+# The c++defs.h that gets inserted into generated .h files is the same as
+# build-aux/c++defs.h, except that it has the copyright header cut off.
+c++defs.h: $(top_srcdir)/build-aux/c++defs.h
 	$(AM_V_GEN)rm -f $@-t $@ && \
-	sed -n -e '/GL_LINK_WARNING/,$$p' \
-	  < $(top_srcdir)/build-aux/link-warning.h \
+	sed -n -e '/_GL_CXXDEFS/,$$p' \
+	  < $(top_srcdir)/build-aux/c++defs.h \
 	  > $@-t && \
 	mv $@-t $@
-MOSTLYCLEANFILES += link-warning.h link-warning.h-t
+MOSTLYCLEANFILES += c++defs.h c++defs.h-t
 
-LINK_WARNING_H=link-warning.h
+CXXDEFS_H=c++defs.h
 
-EXTRA_DIST += $(top_srcdir)/build-aux/link-warning.h
+EXTRA_DIST += $(top_srcdir)/build-aux/c++defs.h
 
-## end   gnulib module link-warning
+## end   gnulib module c++defs
+
+## begin gnulib module gettext-h
+
+libgnu_la_SOURCES += gettext.h
+
+## end   gnulib module gettext-h
 
 ## begin gnulib module stddef
 
@@ -121,7 +121,7 @@ BUILT_SOURCES += string.h
 
 # We need the following in order to create <string.h> when the system
 # doesn't have one that works with the given compiler.
-string.h: string.in.h $(LINK_WARNING_H) $(ARG_NONNULL_H)
+string.h: string.in.h $(CXXDEFS_H) $(ARG_NONNULL_H) $(WARN_ON_USE_H)
 	$(AM_V_GEN)rm -f $@-t $@ && \
 	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */' && \
 	  sed -e 's|@''INCLUDE_NEXT''@|$(INCLUDE_NEXT)|g' \
@@ -189,8 +189,10 @@ string.h: string.in.h $(LINK_WARNING_H) $(ARG_NONNULL_H)
 	      -e 's|@''REPLACE_STRSIGNAL''@|$(REPLACE_STRSIGNAL)|g' \
 	      -e 's|@''REPLACE_STRTOK_R''@|$(REPLACE_STRTOK_R)|g' \
 	      -e 's|@''UNDEFINE_STRTOK_R''@|$(UNDEFINE_STRTOK_R)|g' \
-	      -e '/definition of GL_LINK_WARNING/r $(LINK_WARNING_H)' \
-	      -e '/definition of _GL_ARG_NONNULL/r $(ARG_NONNULL_H)'; \
+	      -e '/definitions of _GL_FUNCDECL_RPL/r $(CXXDEFS_H)' \
+	      -e '/definition of _GL_ARG_NONNULL/r $(ARG_NONNULL_H)' \
+	      -e '/definition of _GL_WARN_ON_USE/r $(WARN_ON_USE_H)'; \
+	      < $(srcdir)/string.in.h; \
 	} > $@-t && \
 	mv $@-t $@
 MOSTLYCLEANFILES += string.h string.h-t
@@ -207,6 +209,25 @@ EXTRA_DIST += strverscmp.c
 EXTRA_libgnu_la_SOURCES += strverscmp.c
 
 ## end   gnulib module strverscmp
+
+## begin gnulib module warn-on-use
+
+BUILT_SOURCES += warn-on-use.h
+# The warn-on-use.h that gets inserted into generated .h files is the same as
+# build-aux/warn-on-use.h, except that it has the copyright header cut off.
+warn-on-use.h: $(top_srcdir)/build-aux/warn-on-use.h
+	$(AM_V_GEN)rm -f $@-t $@ && \
+	sed -n -e '/^.ifndef/,$$p' \
+	  < $(top_srcdir)/build-aux/warn-on-use.h \
+	  > $@-t && \
+	mv $@-t $@
+MOSTLYCLEANFILES += warn-on-use.h warn-on-use.h-t
+
+WARN_ON_USE_H=warn-on-use.h
+
+EXTRA_DIST += $(top_srcdir)/build-aux/warn-on-use.h
+
+## end   gnulib module warn-on-use
 
 ## begin gnulib module dummy
 

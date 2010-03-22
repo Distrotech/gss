@@ -25,12 +25,70 @@ AC_DEFUN([srcgl_EARLY],
   m4_pattern_allow([^gl_LIBOBJS$])dnl a variable
   m4_pattern_allow([^gl_LTLIBOBJS$])dnl a variable
   AC_REQUIRE([AC_PROG_RANLIB])
+  # Code from module alloca-opt:
+  # Code from module alloca-opt-tests:
+  # Code from module arg-nonnull:
+  # Code from module binary-io:
+  # Code from module binary-io-tests:
+  # Code from module c++defs:
+  # Code from module dup2:
+  # Code from module dup2-tests:
+  # Code from module environ:
+  # Code from module environ-tests:
+  # Code from module errno:
+  # Code from module errno-tests:
+  # Code from module extensions:
   AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
+  # Code from module fcntl-h:
+  # Code from module getopt-gnu:
+  # Code from module getopt-posix:
+  # Code from module getopt-posix-tests:
+  # Code from module gettext-h:
+  # Code from module ignore-value:
+  # Code from module include_next:
+  # Code from module intprops:
+  # Code from module lstat:
+  # Code from module lstat-tests:
+  # Code from module malloc-posix:
+  # Code from module malloca:
+  # Code from module malloca-tests:
+  # Code from module multiarch:
+  # Code from module open:
+  # Code from module open-tests:
+  # Code from module pathmax:
+  # Code from module progname:
+  # Code from module putenv:
+  # Code from module same-inode:
+  # Code from module setenv:
+  # Code from module setenv-tests:
+  # Code from module stat:
+  # Code from module stat-tests:
+  # Code from module stdarg:
   dnl Some compilers (e.g., AIX 5.3 cc) need to be in c99 mode
   dnl for the builtin va_copy to work.  With Autoconf 2.60 or later,
   dnl AC_PROG_CC_STDC arranges for this.  With older Autoconf AC_PROG_CC_STDC
   dnl shouldn't hurt, though installers are on their own to set c99 mode.
   AC_REQUIRE([AC_PROG_CC_STDC])
+  # Code from module stdbool:
+  # Code from module stdbool-tests:
+  # Code from module stddef:
+  # Code from module stddef-tests:
+  # Code from module stdint:
+  # Code from module stdint-tests:
+  # Code from module stdlib:
+  # Code from module symlink:
+  # Code from module symlink-tests:
+  # Code from module sys_stat:
+  # Code from module time:
+  # Code from module unistd:
+  # Code from module unsetenv:
+  # Code from module unsetenv-tests:
+  # Code from module verify:
+  # Code from module version-etc:
+  # Code from module version-etc-fsf:
+  # Code from module version-etc-tests:
+  # Code from module warn-on-use:
+  # Code from module wchar:
 ])
 
 # This macro should be invoked from ./configure.ac, in the section
@@ -46,17 +104,31 @@ AC_DEFUN([srcgl_INIT],
   m4_pushdef([srcgl_LIBSOURCES_DIR], [])
   gl_COMMON
   gl_source_base='src/gl'
+  # Code from module arg-nonnull:
+  # Code from module c++defs:
+  # Code from module extensions:
+  # Code from module getopt-gnu:
   gl_FUNC_GETOPT_GNU
   gl_MODULE_INDICATOR([getopt-gnu])
+  # Code from module getopt-posix:
   gl_FUNC_GETOPT_POSIX
+  # Code from module gettext-h:
   AC_SUBST([LIBINTL])
   AC_SUBST([LTLIBINTL])
+  # Code from module include_next:
+  # Code from module progname:
   AC_CHECK_DECLS([program_invocation_name], [], [], [#include <errno.h>])
   AC_CHECK_DECLS([program_invocation_short_name], [], [], [#include <errno.h>])
+  # Code from module stdarg:
   gl_STDARG_H
+  # Code from module stddef:
   gl_STDDEF_H
+  # Code from module unistd:
   gl_UNISTD_H
+  # Code from module version-etc:
   gl_VERSION_ETC
+  # Code from module warn-on-use:
+  # End of code from modules
   m4_ifval(srcgl_LIBSOURCES_LIST, [
     m4_syscmd([test ! -d ]m4_defn([srcgl_LIBSOURCES_DIR])[ ||
       for gl_file in ]srcgl_LIBSOURCES_LIST[ ; do
@@ -103,6 +175,7 @@ AC_DEFUN([srcgl_INIT],
   gl_UNISTD_MODULE_INDICATOR([environ])
   gl_HEADER_ERRNO_H
   gl_FCNTL_H
+  AC_REQUIRE([AC_C_INLINE])
   gl_FUNC_LSTAT
   gl_SYS_STAT_MODULE_INDICATOR([lstat])
   gl_FUNC_MALLOC_POSIX
@@ -224,7 +297,7 @@ AC_DEFUN([srcgltests_LIBSOURCES], [
 # gnulib-tool and may be removed by future gnulib-tool invocations.
 AC_DEFUN([srcgl_FILE_LIST], [
   build-aux/arg-nonnull.h
-  build-aux/link-warning.h
+  build-aux/c++defs.h
   build-aux/warn-on-use.h
   lib/getopt.c
   lib/getopt.in.h
@@ -273,7 +346,7 @@ AC_DEFUN([srcgl_FILE_LIST], [
   m4/unistd_h.m4
   m4/version-etc.m4
   m4/warn-on-use.m4
-  m4/wchar.m4
+  m4/wchar_h.m4
   m4/wchar_t.m4
   m4/wint_t.m4
   tests/macros.h
@@ -284,7 +357,6 @@ AC_DEFUN([srcgl_FILE_LIST], [
   tests/test-dup2.c
   tests/test-environ.c
   tests/test-errno.c
-  tests/test-fcntl-h.c
   tests/test-getopt.c
   tests/test-getopt.h
   tests/test-getopt_long.h
@@ -299,21 +371,17 @@ AC_DEFUN([srcgl_FILE_LIST], [
   tests/test-stdbool.c
   tests/test-stddef.c
   tests/test-stdint.c
-  tests/test-stdlib.c
   tests/test-symlink.c
   tests/test-symlink.h
-  tests/test-sys_stat.c
-  tests/test-time.c
-  tests/test-unistd.c
   tests/test-unsetenv.c
   tests/test-version-etc.c
   tests/test-version-etc.sh
-  tests/test-wchar.c
   tests=lib/alloca.in.h
   tests=lib/binary-io.h
   tests=lib/dup2.c
   tests=lib/errno.in.h
   tests=lib/fcntl.in.h
+  tests=lib/ignore-value.h
   tests=lib/intprops.h
   tests=lib/lstat.c
   tests=lib/malloc.c

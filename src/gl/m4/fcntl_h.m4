@@ -1,4 +1,4 @@
-# serial 9
+# serial 11
 # Configure fcntl.h.
 dnl Copyright (C) 2006, 2007, 2009, 2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
@@ -12,6 +12,12 @@ AC_DEFUN([gl_FCNTL_H],
   AC_REQUIRE([gl_FCNTL_H_DEFAULTS])
   AC_REQUIRE([gl_FCNTL_O_FLAGS])
   gl_CHECK_NEXT_HEADERS([fcntl.h])
+
+  dnl Check for declarations of anything we want to poison if the
+  dnl corresponding gnulib module is not in use, if it is not common
+  dnl enough to be declared everywhere.
+  gl_WARN_ON_USE_PREPARE([[#include <fcntl.h>
+    ]], [fcntl openat])
 ])
 
 AC_DEFUN([gl_FCNTL_MODULE_INDICATOR],
@@ -19,6 +25,8 @@ AC_DEFUN([gl_FCNTL_MODULE_INDICATOR],
   dnl Use AC_REQUIRE here, so that the default settings are expanded once only.
   AC_REQUIRE([gl_FCNTL_H_DEFAULTS])
   GNULIB_[]m4_translit([$1],[abcdefghijklmnopqrstuvwxyz./-],[ABCDEFGHIJKLMNOPQRSTUVWXYZ___])=1
+  dnl Define it also as a C macro, for the benefit of the unit tests.
+  gl_MODULE_INDICATOR([$1])
 ])
 
 AC_DEFUN([gl_FCNTL_H_DEFAULTS],

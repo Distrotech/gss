@@ -52,6 +52,7 @@ AC_DEFUN([gl_INIT],
         [AC_CONFIG_LINKS([$GNUmakefile:$GNUmakefile], [],
   	[GNUmakefile=$GNUmakefile])])
   gl_LD_VERSION_SCRIPT
+  AC_PATH_PROG([PMCCABE], [pmccabe], [false])
   AC_SUBST([WARN_CFLAGS])
   m4_ifval(gl_LIBSOURCES_LIST, [
     m4_syscmd([test ! -d ]m4_defn([gl_LIBSOURCES_DIR])[ ||
@@ -184,6 +185,8 @@ AC_DEFUN([gl_FILE_LIST], [
   build-aux/config.rpath
   build-aux/gendocs.sh
   build-aux/gnupload
+  build-aux/pmccabe.css
+  build-aux/pmccabe2html
   build-aux/useless-if-before-free
   build-aux/vc-list-files
   doc/fdl-1.3.texi
