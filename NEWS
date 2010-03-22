@@ -10,6 +10,8 @@ gss_inquire_saslname_for_mech.
 
 ** KRB5: Fix bug in channel binding computation.
 
+** Update gnulib files.
+
 ** API and ABI modifications.
 gss_inquire_mech_for_saslname: ADDED.
 gss_inquire_saslname_for_mech: ADDED.
