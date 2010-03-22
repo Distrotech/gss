@@ -2,6 +2,14 @@ GSS NEWS -- History of user-visible changes.                    -*- outline -*-
 Copyright (C) 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010 Simon Josefsson
 See the end for copying conditions.
 
+* Version 0.1.5 (unreleased)
+
+** Properly increment shared library version for newly added APIs in v0.1.4.
+Note that the API/ABI is still fully backwards compatible.
+
+** API and ABI modifications.
+No changes since last version.
+
 * Version 0.1.4 (released 2010-03-22)
 
 ** Add new interfaces defined in RFC 5801.
