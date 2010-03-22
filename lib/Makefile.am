@@ -1,5 +1,5 @@
 ## Process this file with automake to produce Makefile.in
-# Copyright (C) 2003, 2004, 2005, 2006, 2007, 2008, 2009 Simon Josefsson
+# Copyright (C) 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010 Simon Josefsson
 #
 # This file is part of the Generic Security Service (GSS).
 #
@@ -34,7 +34,8 @@ libgss_la_SOURCES = libgss.map \
 	internal.h \
 	meta.h meta.c \
 	context.c cred.c error.c misc.c msg.c name.c obsolete.c oid.c \
-	asn1.c ext.c version.c
+	asn1.c ext.c version.c \
+	saslname.c
 libgss_la_LIBADD = @LTLIBINTL@ gl/libgnu.la
 libgss_la_LDFLAGS = -no-undefined \
 	-version-info $(LT_CURRENT):$(LT_REVISION):$(LT_AGE)

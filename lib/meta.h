@@ -1,5 +1,5 @@
 /* meta.h --- Prototypes for internally visible symbols from meta.c.
- * Copyright (C) 2003, 2004, 2005, 2006, 2007, 2008, 2009  Simon Josefsson
+ * Copyright (C) 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010  Simon Josefsson
  *
  * This file is part of the Generic Security Service (GSS).
  *
@@ -20,6 +20,9 @@
  *
  */
 
+#ifndef META_H
+#define META_H
+
 #include <gss/api.h>
 
 #define MAX_NT 5
@@ -27,6 +30,9 @@
 typedef struct _gss_mech_api_struct
 {
   gss_OID mech;
+  const char *sasl_name;
+  const char *mech_name;
+  const char *mech_description;
   gss_OID name_types[MAX_NT];
     OM_uint32 (*init_sec_context)
     (OM_uint32 * minor_status,
@@ -116,5 +122,9 @@ typedef struct _gss_mech_api_struct
 } _gss_mech_api_desc, *_gss_mech_api_t;
 
 _gss_mech_api_t _gss_find_mech (const gss_OID oid);
+_gss_mech_api_t _gss_find_mech_no_default (const gss_OID oid);
+_gss_mech_api_t _gss_find_mech_by_saslname (const char *saslname);
 OM_uint32 _gss_indicate_mechs1 (OM_uint32 * minor_status,
 				gss_OID_set * mech_set);
+
+#endif /* META_H */

@@ -32,7 +32,7 @@ TESTS_ENVIRONMENT = \
 	THREADSAFETY_FILES="$(top_srcdir)/lib/*.c $(top_srcdir)/lib/krb5/*.c" \
 	$(VALGRIND)
 
-buildtests = basic
+buildtests = basic saslname
 if KRB5
 buildtests += krb5context
 endif

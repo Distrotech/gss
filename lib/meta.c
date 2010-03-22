@@ -1,5 +1,5 @@
 /* meta.c --- Implementation of function selection depending on mechanism.
- * Copyright (C) 2003, 2004, 2005, 2006, 2007, 2008, 2009  Simon Josefsson
+ * Copyright (C) 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010  Simon Josefsson
  *
  * This file is part of the Generic Security Service (GSS).
  *
@@ -28,11 +28,19 @@
 # include "krb5/protos.h"
 #endif
 
+/* Get i18n. */
+#include <gettext.h>
+#define gettext_noop(String) String
+#define N_(String) gettext_noop (String)
+
 static _gss_mech_api_desc _gss_mech_apis[] =
   {
 #ifdef USE_KERBEROS5
     {
       &GSS_KRB5_static,
+      "GS2-KRB5",
+      "Kerberos V5",
+      N_("Kerberos V5 GSS-API mechanism"),
       {
 	/* Mandatory name-types. */
 	&GSS_KRB5_NT_PRINCIPAL_NAME_static,
@@ -56,6 +64,9 @@ static _gss_mech_api_desc _gss_mech_apis[] =
       gss_krb5_inquire_cred_by_mech},
 #endif
     {
+      NULL,
+      NULL,
+      NULL,
       NULL,
       {
 	NULL,
@@ -81,7 +92,7 @@ static _gss_mech_api_desc _gss_mech_apis[] =
   };
 
 _gss_mech_api_t
-_gss_find_mech (const gss_OID oid)
+_gss_find_mech_no_default (const gss_OID oid)
 {
   size_t i;
 
@@ -89,12 +100,35 @@ _gss_find_mech (const gss_OID oid)
     if (gss_oid_equal (oid, _gss_mech_apis[i].mech))
       return &_gss_mech_apis[i];
 
-  if (i == 0)
+  return NULL;
+}
+
+_gss_mech_api_t
+_gss_find_mech (const gss_OID oid)
+{
+  _gss_mech_api_t p = _gss_find_mech_no_default (oid);
+
+  if (!p && _gss_mech_apis[0].mech)
+    /* FIXME.  When we support more than one mechanism, make it possible
+       to configure the default mechanism. */
+    return &_gss_mech_apis[0];
+
+  return p;
+}
+
+_gss_mech_api_t
+_gss_find_mech_by_saslname (const char *saslname)
+{
+  size_t i;
+
+  if (!saslname)
     return NULL;
 
-  /* FIXME.  When we support more than one mechanism, make it possible
-     to configure the default mechanism. */
-  return &_gss_mech_apis[0];
+  for (i = 0; _gss_mech_apis[i].mech; i++)
+    if (strcmp (_gss_mech_apis[i].sasl_name, saslname) == 0)
+      return &_gss_mech_apis[i];
+
+  return NULL;
 }
 
 OM_uint32

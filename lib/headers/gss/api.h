@@ -1,5 +1,5 @@
 /* api.h --- Header file for GSS-API.
- * Copyright (C) 2003, 2004, 2005, 2006, 2007  Simon Josefsson
+ * Copyright (C) 2003, 2004, 2005, 2006, 2007, 2010  Simon Josefsson
  *
  * This file is part of the Generic Security Service (GSS).
  *
@@ -628,5 +628,20 @@ gss_unseal (OM_uint32 * minor_status,
 	    gss_buffer_t input_message_buffer,
 	    gss_buffer_t output_message_buffer,
 	    int *conf_state, int *qop_state);
+
+/* RFC 5801 SASL GS2 interfaces. */
+
+OM_uint32
+gss_inquire_saslname_for_mech (OM_uint32 *minor_status,
+			       const gss_OID desired_mech,
+			       gss_buffer_t sasl_mech_name,
+			       gss_buffer_t mech_name,
+			       gss_buffer_t mech_description);
+
+OM_uint32
+gss_inquire_mech_for_saslname (OM_uint32 *minor_status,
+			       const gss_buffer_t sasl_mech_name,
+			       gss_OID *mech_type);
+
 
 #endif /* GSSAPI_H_ */

@@ -1,4 +1,4 @@
-# Copyright (C) 2009 Simon Josefsson
+# Copyright (C) 2009, 2010 Simon Josefsson
 #
 # This file is part of the Generic Security Service (GSS).
 #
@@ -102,3 +102,10 @@ GSS_0.1.0 {
   local:
     *;
 };
+
+GSS_0.1.4 {
+  global:
+# SASL GS2 interfaces:
+    gss_inquire_mech_for_saslname;
+    gss_inquire_saslname_for_mech;
+} GSS_0.1.0;
