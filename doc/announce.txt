@@ -1,4 +1,4 @@
-Subject: Generic Security Service Library (GSSLib) 0.1.3
+Subject: Generic Security Service Library (GSSLib) 0.1.5
 To: help-gss@gnu.org, info-gnu@gnu.org
 <#part sign=pgpmime>
 
@@ -10,18 +10,27 @@ manual, and a command line tool for debugging purposes.
 
 Noteworthy changes since the last version:
 
-* Version 0.1.3 (released 2010-03-15)
+* Version 0.1.5 (released 2010-03-22)
 
-** KRB5: Add support for channel bindings.
-
-** Build fixes and code cleanups.
-
-** i18n: Added Finnish translation, thanks to Jorma Karvonen.
-
-** i18n: Added Italian translation, thanks to Sergio Zanchetta.
+** Properly increment shared library version for newly added APIs in v0.1.4.
+Note that the API/ABI is still fully backwards compatible.
 
 ** API and ABI modifications.
 No changes since last version.
+
+* Version 0.1.4 (released 2010-03-22)
+
+** Add new interfaces defined in RFC 5801.
+The APIs are gss_inquire_mech_for_saslname and
+gss_inquire_saslname_for_mech.
+
+** KRB5: Fix bug in channel binding computation.
+
+** Update gnulib files.
+
+** API and ABI modifications.
+gss_inquire_mech_for_saslname: ADDED.
+gss_inquire_saslname_for_mech: ADDED.
 
 While written to be flexible with regards to different GSS mechanisms,
 the only currently supported mechanism is Kerberos 5 via GNU Shishi.
@@ -67,8 +76,8 @@ to join our help-gss mailing list, see:
 <http://lists.gnu.org/mailman/listinfo/help-gss>.
 
 Here are the compressed sources of the entire package:
-  ftp://alpha.gnu.org/gnu/gss/gss-0.1.3.tar.gz (2.0MB)
-  ftp://alpha.gnu.org/gnu/gss/gss-0.1.3.tar.gz.sig (OpenPGP signature)
+  ftp://alpha.gnu.org/gnu/gss/gss-0.1.5.tar.gz (2.0MB)
+  ftp://alpha.gnu.org/gnu/gss/gss-0.1.5.tar.gz.sig (OpenPGP signature)
 
 Here are the build reports for various platforms:
   http://autobuild.josefsson.org/shishi/
@@ -91,9 +100,9 @@ The key is available from:
 
 Here are the SHA-1 and SHA-224 checksums:
 
-85a1eb2ece45605b7874962203902a8d8388ef04  gss-0.1.3.tar.gz
+b3d3cb530524730c2b128289410f973e1131f520  gss-0.1.5.tar.gz
 
-7cbdb9729128eb47e41d5cd51d4f8aeb04ed157c0151cb5dbc520d58  gss-0.1.3.tar.gz
+33ff99a53f5f0b3afecbddd9685092eea81409e6e6c4190674316fe2  gss-0.1.5.tar.gz
 
 Happy hacking,
 Simon
