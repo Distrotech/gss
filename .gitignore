@@ -1,3 +1,5 @@
+*.gcda
+*.gcno
 *~
 ABOUT-NLS
 INSTALL
@@ -22,6 +24,7 @@ configure
 doc/Makefile
 doc/Makefile.gdoc
 doc/Makefile.in
+doc/coverage/
 doc/cyclo/Makefile
 doc/cyclo/Makefile.in
 doc/cyclo/cyclo-gss.html
@@ -82,6 +85,7 @@ gl/dummy.lo
 gl/dummy.o
 gl/libgnu.la
 gss-*.tar.gz
+gss-*.tar.gz.sig
 gss.pc
 lib/.deps/
 lib/.libs/
