@@ -142,7 +142,6 @@ AC_CONFIG_FILES([
   po/Makefile.in
   src/Makefile
   src/gl/Makefile
-  src/gl/tests/Makefile
   tests/Makefile
 ])
 AC_OUTPUT
