@@ -25,70 +25,25 @@ AC_DEFUN([srcgl_EARLY],
   m4_pattern_allow([^gl_LIBOBJS$])dnl a variable
   m4_pattern_allow([^gl_LTLIBOBJS$])dnl a variable
   AC_REQUIRE([AC_PROG_RANLIB])
-  # Code from module alloca-opt:
-  # Code from module alloca-opt-tests:
   # Code from module arg-nonnull:
-  # Code from module binary-io:
-  # Code from module binary-io-tests:
   # Code from module c++defs:
-  # Code from module dup2:
-  # Code from module dup2-tests:
-  # Code from module environ:
-  # Code from module environ-tests:
-  # Code from module errno:
-  # Code from module errno-tests:
   # Code from module extensions:
   AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
-  # Code from module fcntl-h:
   # Code from module getopt-gnu:
   # Code from module getopt-posix:
-  # Code from module getopt-posix-tests:
   # Code from module gettext-h:
-  # Code from module ignore-value:
   # Code from module include_next:
-  # Code from module intprops:
-  # Code from module lstat:
-  # Code from module lstat-tests:
-  # Code from module malloc-posix:
-  # Code from module malloca:
-  # Code from module malloca-tests:
-  # Code from module multiarch:
-  # Code from module open:
-  # Code from module open-tests:
-  # Code from module pathmax:
   # Code from module progname:
-  # Code from module putenv:
-  # Code from module same-inode:
-  # Code from module setenv:
-  # Code from module setenv-tests:
-  # Code from module stat:
-  # Code from module stat-tests:
   # Code from module stdarg:
   dnl Some compilers (e.g., AIX 5.3 cc) need to be in c99 mode
   dnl for the builtin va_copy to work.  With Autoconf 2.60 or later,
   dnl AC_PROG_CC_STDC arranges for this.  With older Autoconf AC_PROG_CC_STDC
   dnl shouldn't hurt, though installers are on their own to set c99 mode.
   AC_REQUIRE([AC_PROG_CC_STDC])
-  # Code from module stdbool:
-  # Code from module stdbool-tests:
   # Code from module stddef:
-  # Code from module stddef-tests:
-  # Code from module stdint:
-  # Code from module stdint-tests:
-  # Code from module stdlib:
-  # Code from module symlink:
-  # Code from module symlink-tests:
-  # Code from module sys_stat:
-  # Code from module time:
   # Code from module unistd:
-  # Code from module unsetenv:
-  # Code from module unsetenv-tests:
-  # Code from module verify:
   # Code from module version-etc:
-  # Code from module version-etc-fsf:
-  # Code from module version-etc-tests:
   # Code from module warn-on-use:
-  # Code from module wchar:
 ])
 
 # This macro should be invoked from ./configure.ac, in the section
@@ -168,43 +123,6 @@ AC_DEFUN([srcgl_INIT],
   m4_pushdef([srcgltests_LIBSOURCES_DIR], [])
   gl_COMMON
   gl_source_base='src/gl/tests'
-  gl_FUNC_ALLOCA
-  gl_FUNC_DUP2
-  gl_UNISTD_MODULE_INDICATOR([dup2])
-  gl_ENVIRON
-  gl_UNISTD_MODULE_INDICATOR([environ])
-  gl_HEADER_ERRNO_H
-  gl_FCNTL_H
-  AC_REQUIRE([AC_C_INLINE])
-  gl_FUNC_LSTAT
-  gl_SYS_STAT_MODULE_INDICATOR([lstat])
-  gl_FUNC_MALLOC_POSIX
-  gl_STDLIB_MODULE_INDICATOR([malloc-posix])
-  gl_MALLOCA
-  gl_MULTIARCH
-  gl_FUNC_OPEN
-  gl_MODULE_INDICATOR([open])
-  gl_FCNTL_MODULE_INDICATOR([open])
-  gl_PATHMAX
-  gl_FUNC_PUTENV
-  gl_STDLIB_MODULE_INDICATOR([putenv])
-  gl_FUNC_SETENV
-  gl_STDLIB_MODULE_INDICATOR([setenv])
-  gl_FUNC_STAT
-  gl_SYS_STAT_MODULE_INDICATOR([stat])
-  AM_STDBOOL_H
-  gl_STDINT_H
-  gt_TYPE_WCHAR_T
-  gt_TYPE_WINT_T
-  gl_STDLIB_H
-  gl_FUNC_SYMLINK
-  gl_UNISTD_MODULE_INDICATOR([symlink])
-  gl_HEADER_SYS_STAT_H
-  AC_PROG_MKDIR_P
-  gl_HEADER_TIME_H
-  gl_FUNC_UNSETENV
-  gl_STDLIB_MODULE_INDICATOR([unsetenv])
-  gl_WCHAR_H
   m4_ifval(srcgltests_LIBSOURCES_LIST, [
     m4_syscmd([test ! -d ]m4_defn([srcgltests_LIBSOURCES_DIR])[ ||
       for gl_file in ]srcgltests_LIBSOURCES_LIST[ ; do
@@ -235,8 +153,6 @@ AC_DEFUN([srcgl_INIT],
     AC_SUBST([srcgltests_LIBOBJS], [$srcgltests_libobjs])
     AC_SUBST([srcgltests_LTLIBOBJS], [$srcgltests_ltlibobjs])
   ])
-  LIBTESTS_LIBDEPS="$gltests_libdeps"
-  AC_SUBST([LIBTESTS_LIBDEPS])
 ])
 
 # Like AC_LIBOBJ, except that the module name goes
@@ -312,96 +228,14 @@ AC_DEFUN([srcgl_FILE_LIST], [
   lib/version-etc.c
   lib/version-etc.h
   m4/00gnulib.m4
-  m4/alloca.m4
-  m4/dos.m4
-  m4/dup2.m4
-  m4/eealloc.m4
-  m4/environ.m4
-  m4/errno_h.m4
   m4/extensions.m4
-  m4/fcntl-o.m4
-  m4/fcntl_h.m4
   m4/getopt.m4
   m4/gnulib-common.m4
   m4/include_next.m4
-  m4/longlong.m4
-  m4/lstat.m4
-  m4/malloc.m4
-  m4/malloca.m4
-  m4/mode_t.m4
-  m4/multiarch.m4
-  m4/open.m4
-  m4/pathmax.m4
-  m4/putenv.m4
-  m4/setenv.m4
-  m4/stat.m4
   m4/stdarg.m4
-  m4/stdbool.m4
   m4/stddef_h.m4
-  m4/stdint.m4
-  m4/stdlib_h.m4
-  m4/symlink.m4
-  m4/sys_stat_h.m4
-  m4/time_h.m4
   m4/unistd_h.m4
   m4/version-etc.m4
   m4/warn-on-use.m4
-  m4/wchar_h.m4
   m4/wchar_t.m4
-  m4/wint_t.m4
-  tests/macros.h
-  tests/signature.h
-  tests/test-alloca-opt.c
-  tests/test-binary-io.c
-  tests/test-binary-io.sh
-  tests/test-dup2.c
-  tests/test-environ.c
-  tests/test-errno.c
-  tests/test-getopt.c
-  tests/test-getopt.h
-  tests/test-getopt_long.h
-  tests/test-lstat.c
-  tests/test-lstat.h
-  tests/test-malloca.c
-  tests/test-open.c
-  tests/test-open.h
-  tests/test-setenv.c
-  tests/test-stat.c
-  tests/test-stat.h
-  tests/test-stdbool.c
-  tests/test-stddef.c
-  tests/test-stdint.c
-  tests/test-symlink.c
-  tests/test-symlink.h
-  tests/test-unsetenv.c
-  tests/test-version-etc.c
-  tests/test-version-etc.sh
-  tests=lib/alloca.in.h
-  tests=lib/binary-io.h
-  tests=lib/dup2.c
-  tests=lib/errno.in.h
-  tests=lib/fcntl.in.h
-  tests=lib/ignore-value.h
-  tests=lib/intprops.h
-  tests=lib/lstat.c
-  tests=lib/malloc.c
-  tests=lib/malloca.c
-  tests=lib/malloca.h
-  tests=lib/malloca.valgrind
-  tests=lib/open.c
-  tests=lib/pathmax.h
-  tests=lib/putenv.c
-  tests=lib/same-inode.h
-  tests=lib/setenv.c
-  tests=lib/stat.c
-  tests=lib/stdbool.in.h
-  tests=lib/stdint.in.h
-  tests=lib/stdlib.in.h
-  tests=lib/symlink.c
-  tests=lib/sys_stat.in.h
-  tests=lib/time.in.h
-  tests=lib/unsetenv.c
-  tests=lib/verify.h
-  tests=lib/version-etc-fsf.c
-  tests=lib/wchar.in.h
 ])
