@@ -1,5 +1,5 @@
 /* ext.h --- Header file for non-standard GSS-API functions.
- * Copyright (C) 2003, 2004, 2005, 2006, 2007, 2009  Simon Josefsson
+ * Copyright (C) 2003, 2004, 2005, 2006, 2007, 2009, 2010  Simon Josefsson
  *
  * This file is part of the Generic Security Service (GSS).
  *
@@ -31,26 +31,17 @@ extern const char *gss_check_version (const char *req_version);
 
 /* See ext.c. */
 extern int gss_oid_equal (gss_OID first_oid, gss_OID second_oid);
-extern OM_uint32
-gss_copy_oid (OM_uint32 * minor_status,
-	      const gss_OID src_oid, gss_OID dest_oid);
-extern OM_uint32
-gss_duplicate_oid (OM_uint32 * minor_status,
-		   const gss_OID src_oid, gss_OID * dest_oid);
 extern int gss_userok (const gss_name_t name, const char *username);
 
 /* See asn1.c. */
-extern int
-gss_encapsulate_token (const gss_buffer_t input_message,
-		       gss_OID token_oid, gss_buffer_t output_message);
-extern int
-gss_encapsulate_token_prefix (const gss_buffer_t input_message,
-			      const char *prefix, size_t prefixlen,
-			      gss_OID token_oid, gss_buffer_t output_message);
-extern int
-gss_decapsulate_token (const gss_buffer_t input_message,
+extern OM_uint32
+gss_encapsulate_token (const gss_buffer_t input_token,
 		       const gss_OID token_oid,
-		       char **dataptr, size_t * datalen);
+		       gss_buffer_t output_token);
+extern OM_uint32
+gss_decapsulate_token (const gss_buffer_t input_token,
+		       const gss_OID token_oid,
+		       gss_buffer_t output_token);
 
 /* Static versions of the public OIDs for use, e.g., in static
    variable initalization.  See oid.c. */
