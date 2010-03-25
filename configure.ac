@@ -20,15 +20,15 @@ dnl Process this file with autoconf to produce a configure script.
 # Boston, MA 02110-1301, USA.
 
 AC_PREREQ(2.61)
-AC_INIT([GNU Generic Security Service], [0.1.6], [bug-gss@gnu.org], [gss])
+AC_INIT([GNU Generic Security Service], [1.0.0], [bug-gss@gnu.org], [gss])
 
 # Library code modified:                              REVISION++
 # Interfaces changed/added/removed:   CURRENT++       REVISION=0
 # Interfaces added:                             AGE++
 # Interfaces removed:                           AGE=0
-AC_SUBST(LT_CURRENT, 2)
-AC_SUBST(LT_REVISION, 1)
-AC_SUBST(LT_AGE, 1)
+AC_SUBST(LT_CURRENT, 3)
+AC_SUBST(LT_REVISION, 0)
+AC_SUBST(LT_AGE, 0)
 
 # Used when creating libgss-XX.def.
 DLL_VERSION=`expr ${LT_CURRENT} - ${LT_AGE}`
