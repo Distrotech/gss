@@ -79,8 +79,6 @@ dup_data (OM_uint32 *minor_status,
  * `GSS_S_COMPLETE`: Successful completion.
  *
  * `GSS_S_BAD_MECH`: The @desired_mech OID is unsupported.
- *
- * Since: 0.1.4
  **/
 OM_uint32
 gss_inquire_saslname_for_mech (OM_uint32 *minor_status,
@@ -148,8 +146,6 @@ gss_inquire_saslname_for_mech (OM_uint32 *minor_status,
  * `GSS_S_COMPLETE`: Successful completion.
  *
  * `GSS_S_BAD_MECH`: There is no GSS-API mechanism known as @sasl_mech_name.
- *
- * Since: 0.1.4
  **/
 OM_uint32
 gss_inquire_mech_for_saslname (OM_uint32 *minor_status,

@@ -39,10 +39,4 @@
   <index id="api-index-full">
     <title>Index of all symbols</title>
   </index>
-  <index role="0.1.0" id="api-index-0-1-0">
-    <title>Index of new symbols in 0.1.0</title>
-  </index>
-  <index role="0.1.4" id="api-index-0-1-4">
-    <title>Index of new symbols in 0.1.4</title>
-  </index>
 </book>
