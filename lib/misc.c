@@ -69,8 +69,7 @@ gss_create_empty_oid_set (OM_uint32 * minor_status, gss_OID_set * oid_set)
  * @dest_oid: (Object ID, modify) The resultant copy of @src_oid.
  *   Storage associated with this name must be freed by the
  *   application, but gss_release_oid() cannot be used generally as it
- *   deallocate the oid structure itself too (use
- *   gss_duplicate_oid() if you don't want this problem.)
+ *   deallocate the oid structure itself too.
  *
  * Make an exact copy of the given OID, that shares no memory areas
  * with the original.
