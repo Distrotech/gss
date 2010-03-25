@@ -360,7 +360,7 @@ memory or size optimization.
 If you are interested, please write to:
 
 @verbatim
-Simon Josefsson Datakonsult
+Simon Josefsson Datakonsult AB
 Hagagatan 24
 113 47 Stockholm
 Sweden
@@ -378,7 +378,7 @@ be mentioned here, contact the author (@pxref{Bug Reports}).
 
 The package can be downloaded from several places, including:
 
-@url{ftp://alpha.gnu.org/pub/gnu/gss/}
+@url{ftp://ftp.gnu.org/gnu/gss/}
 
 The latest version is stored in a file, e.g.,
 @samp{gss-@value{VERSION}.tar.gz} where the @samp{@value{VERSION}}
@@ -394,7 +394,7 @@ and installs the package.  You will need a few basic tools, such as
 @samp{sh}, @samp{make} and @samp{cc}.
 
 @example
-$ wget -q ftp://alpha.gnu.org/pub/gnu/gss/gss-@value{VERSION}.tar.gz
+$ wget -q ftp://ftp.gnu.org/gnu/gss/gss-@value{VERSION}.tar.gz
 $ tar xfz gss-@value{VERSION}.tar.gz
 $ cd gss-@value{VERSION}/
 $ ./configure
@@ -517,8 +517,6 @@ on anything, please let me know so work duplication can be avoided.
 This would be an API extension.  It could work by forking a process
 and interface to it, or by using a user-specific daemon.  E.g., h =
 START(accept_sec_context(...)), FINISHED(h), ret = FINISH(h), ABORT(h).
-
-@item Compute MD5 of non-empty channel bindings.
 
 @item Support loadable modules via dlopen, a'la Solaris GSS.
 
