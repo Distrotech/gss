@@ -17,10 +17,10 @@
 # the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 # Boston, MA 02110-1301, USA.
 
-GSS_0.1.0 {
+GSS_1.0.0 {
   global:
 
-# Standard interfaces:
+# Standard interfaces RFC 2744:
     GSS_C_NT_ANONYMOUS;
     GSS_C_NT_EXPORT_NAME;
     GSS_C_NT_HOSTBASED_SERVICE;
@@ -67,7 +67,11 @@ GSS_0.1.0 {
     gss_wrap;
     gss_wrap_size_limit;
 
-# Extensions:
+# SASL GS2 interfaces RFC 5801:
+    gss_inquire_mech_for_saslname;
+    gss_inquire_saslname_for_mech;
+
+# GNU GSS extensions:
     GSS_C_NT_ANONYMOUS_static;
     GSS_C_NT_EXPORT_NAME_static;
     GSS_C_NT_HOSTBASED_SERVICE_X_static;
@@ -76,36 +80,26 @@ GSS_0.1.0 {
     GSS_C_NT_STRING_UID_NAME_static;
     GSS_C_NT_USER_NAME_static;
     gss_check_version;
-    gss_copy_oid;
     gss_decapsulate_token;
-    gss_duplicate_oid;
     gss_encapsulate_token;
-    gss_encapsulate_token_prefix;
     gss_oid_equal;
     gss_userok;
 
 # Kerberos V5 standard interface:
-    GSS_KRB5_NT_USER_NAME;
     GSS_KRB5_NT_HOSTBASED_SERVICE_NAME;
-    GSS_KRB5_NT_PRINCIPAL_NAME;
     GSS_KRB5_NT_MACHINE_UID_NAME;
+    GSS_KRB5_NT_PRINCIPAL_NAME;
     GSS_KRB5_NT_STRING_UID_NAME;
+    GSS_KRB5_NT_USER_NAME;
 
-# Kerberos V5 extension:
+# GNU GSS Kerberos V5 extensions:
     GSS_KRB5;
-    GSS_KRB5_static;
-    GSS_KRB5_NT_USER_NAME_static;
-    GSS_KRB5_NT_PRINCIPAL_NAME_static;
     GSS_KRB5_NT_MACHINE_UID_NAME_static;
+    GSS_KRB5_NT_PRINCIPAL_NAME_static;
     GSS_KRB5_NT_STRING_UID_NAME_static;
+    GSS_KRB5_NT_USER_NAME_static;
+    GSS_KRB5_static;
 
   local:
     *;
 };
-
-GSS_0.1.4 {
-  global:
-# SASL GS2 interfaces:
-    gss_inquire_mech_for_saslname;
-    gss_inquire_saslname_for_mech;
-} GSS_0.1.0;
