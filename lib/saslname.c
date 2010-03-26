@@ -22,10 +22,6 @@
 
 #include "internal.h"
 
-/* Get i18n. */
-#include <gettext.h>
-#define _(String) dgettext (PACKAGE, String)
-
 /* _gss_find_mech* */
 #include "meta.h"
 

@@ -40,7 +40,6 @@
 int
 gss_oid_equal (gss_OID first_oid, gss_OID second_oid)
 {
-
   return first_oid && second_oid &&
     first_oid->length == second_oid->length &&
     memcmp (first_oid->elements, second_oid->elements,

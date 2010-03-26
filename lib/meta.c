@@ -28,11 +28,6 @@
 # include "krb5/protos.h"
 #endif
 
-/* Get i18n. */
-#include <gettext.h>
-#define gettext_noop(String) String
-#define N_(String) gettext_noop (String)
-
 static _gss_mech_api_desc _gss_mech_apis[] =
   {
 #ifdef USE_KERBEROS5
