@@ -1,5 +1,5 @@
 /* krb5/error.c --- Kerberos 5 GSS-API error handling functionality.
- * Copyright (C) 2003, 2004, 2005, 2006, 2007, 2008, 2009  Simon Josefsson
+ * Copyright (C) 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010  Simon Josefsson
  *
  * This file is part of the Generic Security Service (GSS).
  *
@@ -22,12 +22,6 @@
 
 /* Get specification. */
 #include "k5internal.h"
-
-/* Get i18n. */
-#include <gettext.h>
-#define _(String) dgettext (PACKAGE, String)
-#define gettext_noop(String) String
-#define N_(String) gettext_noop (String)
 
 struct gss_status_codes
 {
