@@ -81,7 +81,7 @@ gss_create_empty_oid_set (OM_uint32 * minor_status, gss_OID_set * oid_set)
  *
  * `GSS_S_COMPLETE`: Successful completion.
  **/
-OM_uint32
+static OM_uint32
 _gss_copy_oid (OM_uint32 * minor_status,
 	       const gss_OID src_oid, gss_OID dest_oid)
 {

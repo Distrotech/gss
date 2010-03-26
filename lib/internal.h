@@ -59,4 +59,11 @@ typedef struct gss_ctx_id_struct
 #endif
 } gss_ctx_id_desc;
 
+/* asn1.c */
+extern OM_uint32
+_gss_encapsulate_token_prefix (const char *prefix, size_t prefixlen,
+			       const char *in, size_t inlen,
+			       const char *oid, OM_uint32 oidlen,
+			       void **out, size_t * outlen);
+
 #endif /* _INTERNAL_H */

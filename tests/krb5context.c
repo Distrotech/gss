@@ -321,6 +321,39 @@ main (int argc, char *argv[])
 	  display_status ("init_sec_context", maj_stat, min_stat);
 	}
 
+      {
+	gss_buffer_desc pt, pt2, ct;
+	int conf_state;
+	gss_qop_t qop_state;
+
+	pt.value = (char *) "foo";
+	pt.length = strlen (pt.value) + 1;
+	maj_stat = gss_wrap (&min_stat,
+			     cctx,
+			     0, 0, &pt, &conf_state, &ct);
+	if (GSS_ERROR (maj_stat))
+	  {
+	    fail ("client gss_wrap failure\n");
+	    display_status ("client wrap", maj_stat, min_stat);
+	  }
+
+	maj_stat = gss_unwrap (&min_stat, sctx,
+			       &ct, &pt2, &conf_state, &qop_state);
+	if (GSS_ERROR (maj_stat))
+	  {
+	    fail ("server gss_unwrap failure\n");
+	    display_status ("client wrap", maj_stat, min_stat);
+	  }
+
+	if (pt.length != pt2.length
+	    || memcmp (pt2.value, pt.value, pt.length) != 0)
+	  fail ("wrap+unwrap failed (%d, %d, %.*s)\n",
+		pt.length, pt2.length, pt2.length, (char *) pt2.value);
+
+	gss_release_buffer (&min_stat, &ct);
+	gss_release_buffer (&min_stat, &pt2);
+      }
+
       maj_stat = gss_delete_sec_context (&min_stat, &cctx, GSS_C_NO_BUFFER);
       if (GSS_ERROR (maj_stat))
 	{

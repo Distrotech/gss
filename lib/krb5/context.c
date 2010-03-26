@@ -50,10 +50,9 @@ init_request (OM_uint32 * minor_status,
   gss_ctx_id_t ctx = *context_handle;
   _gss_krb5_ctx_t k5 = ctx->krb5;
   char *cksum, *der;
-  size_t cksumlen;
+  size_t cksumlen, derlen;
   int rc;
   OM_uint32 maj_stat;
-  gss_buffer_desc tmp;
   Shishi_tkts_hint hint;
 
   /* Get service ticket. */
@@ -96,16 +95,18 @@ init_request (OM_uint32 * minor_status,
   if (rc != SHISHI_OK)
     return GSS_S_FAILURE;
 
-  rc = shishi_ap_req_der (k5->ap, &der, &tmp.length);
+  rc = shishi_ap_req_der (k5->ap, &der, &derlen);
   if (rc != SHISHI_OK)
     return GSS_S_FAILURE;
 
-  tmp.value = der;
-
-  rc = gss_encapsulate_token_prefix (&tmp, TOK_AP_REQ, TOK_LEN,
-				     GSS_KRB5, output_token);
+  rc = _gss_encapsulate_token_prefix (TOK_AP_REQ, TOK_LEN,
+				      der, derlen,
+				      GSS_KRB5->elements,
+				      GSS_KRB5->length,
+				      &output_token->value,
+				      &output_token->length);
   free (der);
-  if (!rc)
+  if (rc != 0)
     return GSS_S_FAILURE;
 
   if (req_flags & GSS_C_MUTUAL_FLAG)
@@ -133,20 +134,28 @@ init_reply (OM_uint32 * minor_status,
 {
   gss_ctx_id_t ctx = *context_handle;
   _gss_krb5_ctx_t k5 = ctx->krb5;
-  char *data;
-  size_t datalen;
+  OM_uint32 tmp_min_stat;
+  gss_buffer_desc data;
   int rc;
 
-  if (!gss_decapsulate_token (input_token, GSS_KRB5, &data, &datalen))
+  if (gss_decapsulate_token (input_token, GSS_KRB5, &data) != GSS_S_COMPLETE)
     return GSS_S_DEFECTIVE_TOKEN;
 
-  if (datalen < TOK_LEN)
-    return GSS_S_DEFECTIVE_TOKEN;
+  if (data.length < TOK_LEN)
+    {
+      gss_release_buffer (&tmp_min_stat, &data);
+      return GSS_S_DEFECTIVE_TOKEN;
+    }
 
-  if (memcmp (data, TOK_AP_REP, TOK_LEN) != 0)
-    return GSS_S_DEFECTIVE_TOKEN;
+  if (memcmp (data.value, TOK_AP_REP, TOK_LEN) != 0)
+    {
+      gss_release_buffer (&tmp_min_stat, &data);
+      return GSS_S_DEFECTIVE_TOKEN;
+    }
 
-  rc = shishi_ap_rep_der_set (k5->ap, data + TOK_LEN, datalen - TOK_LEN);
+  rc = shishi_ap_rep_der_set (k5->ap, (char *) data.value + TOK_LEN,
+			      data.length - TOK_LEN);
+  gss_release_buffer (&tmp_min_stat, &data);
   if (rc != SHISHI_OK)
     return GSS_S_DEFECTIVE_TOKEN;
 
@@ -295,12 +304,11 @@ gss_krb5_accept_sec_context (OM_uint32 * minor_status,
 			     OM_uint32 * time_rec,
 			     gss_cred_id_t * delegated_cred_handle)
 {
-  gss_buffer_desc data;
-  char *in;
-  size_t inlen;
+  gss_buffer_desc in;
   gss_ctx_id_t cx;
   _gss_krb5_ctx_t cxk5;
   _gss_krb5_cred_t crk5;
+  OM_uint32 tmp_min_stat;
   int rc;
 
   if (minor_status)
@@ -348,17 +356,25 @@ gss_krb5_accept_sec_context (OM_uint32 * minor_status,
   if (rc != SHISHI_OK)
     return GSS_S_FAILURE;
 
-  rc = gss_decapsulate_token (input_token_buffer, GSS_KRB5, &in, &inlen);
-  if (!rc)
+  rc = gss_decapsulate_token (input_token_buffer, GSS_KRB5, &in);
+  if (rc != GSS_S_COMPLETE)
     return GSS_S_BAD_MIC;
 
-  if (inlen < TOK_LEN)
-    return GSS_S_BAD_MIC;
+  if (in.length < TOK_LEN)
+    {
+      gss_release_buffer (&tmp_min_stat, &in);
+      return GSS_S_BAD_MIC;
+    }
 
-  if (memcmp (in, TOK_AP_REQ, TOK_LEN) != 0)
-    return GSS_S_BAD_MIC;
+  if (memcmp (in.value, TOK_AP_REQ, TOK_LEN) != 0)
+    {
+      gss_release_buffer (&tmp_min_stat, &in);
+      return GSS_S_BAD_MIC;
+    }
 
-  rc = shishi_ap_req_der_set (cxk5->ap, in + TOK_LEN, inlen - TOK_LEN);
+  rc = shishi_ap_req_der_set (cxk5->ap, (char *) in.value + TOK_LEN,
+			      in.length - TOK_LEN);
+  gss_release_buffer (&tmp_min_stat, &in);
   if (rc != SHISHI_OK)
     return GSS_S_FAILURE;
 
@@ -388,6 +404,8 @@ gss_krb5_accept_sec_context (OM_uint32 * minor_status,
   if (shishi_apreq_mutual_required_p (crk5->sh, shishi_ap_req (cxk5->ap)))
     {
       Shishi_asn1 aprep;
+      char *der;
+      size_t len;
 
       rc = shishi_ap_rep_asn1 (cxk5->ap, &aprep);
       if (rc != SHISHI_OK)
@@ -408,23 +426,20 @@ gss_krb5_accept_sec_context (OM_uint32 * minor_status,
 	  cxk5->acceptseqnr = 0;
 	}
 
-      {
-	char *der;
-	size_t len;
+      rc = shishi_asn1_to_der (crk5->sh, aprep, &der, &len);
+      if (rc != SHISHI_OK)
+	{
+	  printf ("Error der encoding aprep: %s\n", shishi_strerror (rc));
+	  return GSS_S_FAILURE;
+	}
 
-	rc = shishi_asn1_to_der (crk5->sh, aprep, &der, &len);
-	if (rc != SHISHI_OK)
-	  {
-	    printf ("Error der encoding aprep: %s\n", shishi_strerror (rc));
-	    return GSS_S_FAILURE;
-	  }
-	data.value = der;
-	data.length = len;
-      }
-
-      rc = gss_encapsulate_token_prefix (&data, TOK_AP_REP, TOK_LEN,
-					 GSS_KRB5, output_token);
-      if (!rc)
+      rc = _gss_encapsulate_token_prefix (TOK_AP_REP, TOK_LEN,
+					  der, len,
+					  GSS_KRB5->elements,
+					  GSS_KRB5->length,
+					  &output_token->value,
+					  &output_token->length);
+      if (rc != 0)
 	return GSS_S_FAILURE;
 
       if (ret_flags)

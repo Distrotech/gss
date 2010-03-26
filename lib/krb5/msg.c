@@ -1,5 +1,5 @@
 /* krb5/msg.c --- Implementation of Kerberos 5 GSS-API Per-Message functions.
- * Copyright (C) 2003, 2004, 2005, 2006, 2007, 2008, 2009  Simon Josefsson
+ * Copyright (C) 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010  Simon Josefsson
  *
  * This file is part of the Generic Security Service (GSS).
  *
@@ -163,7 +163,7 @@ gss_krb5_wrap (OM_uint32 * minor_status,
 	data.value = p;
 
 	rc = gss_encapsulate_token (&data, GSS_KRB5, output_message_buffer);
-	if (!rc)
+	if (rc != GSS_S_COMPLETE)
 	  return GSS_S_FAILURE;
 	if (k5->acceptor)
 	  k5->acceptseqnr++;
@@ -249,7 +249,7 @@ gss_krb5_wrap (OM_uint32 * minor_status,
 	data.value = p;
 
 	rc = gss_encapsulate_token (&data, GSS_KRB5, output_message_buffer);
-	if (!rc)
+	if (rc != GSS_S_COMPLETE)
 	  return GSS_S_FAILURE;
 	if (k5->acceptor)
 	  k5->acceptseqnr++;
@@ -273,28 +273,29 @@ gss_krb5_unwrap (OM_uint32 * minor_status,
 		 int *conf_state, gss_qop_t * qop_state)
 {
   _gss_krb5_ctx_t k5 = context_handle->krb5;
+  gss_buffer_desc tok;
   char *data;
-  size_t datalen;
   OM_uint32 sgn_alg, seal_alg;
   size_t tmplen;
   int rc;
 
-  rc = gss_decapsulate_token (input_message_buffer, GSS_KRB5,
-			      &data, &datalen);
-  if (!rc)
+  rc = gss_decapsulate_token (input_message_buffer, GSS_KRB5, &tok);
+  if (rc != GSS_S_COMPLETE)
     return GSS_S_BAD_MIC;
 
-  if (datalen < 8)
+  if (tok.length < 8)
     return GSS_S_BAD_MIC;
 
-  if (memcmp (data, TOK_WRAP, TOK_LEN) != 0)
+  if (memcmp (tok.value, TOK_WRAP, TOK_LEN) != 0)
     return GSS_S_BAD_MIC;
 
-  sgn_alg = ((char *) data)[2] & 0xFF;
-  sgn_alg |= ((char *) data)[3] << 8 & 0xFF00;
+  data = tok.value;
 
-  seal_alg = ((char *) data)[4] & 0xFF;
-  seal_alg |= ((char *) data)[5] << 8 & 0xFF00;
+  sgn_alg = data[2] & 0xFF;
+  sgn_alg |= data[3] << 8 & 0xFF00;
+
+  seal_alg = data[4] & 0xFF;
+  seal_alg |= data[5] << 8 & 0xFF00;
 
   if (conf_state != NULL)
     *conf_state = seal_alg == 0xFFFF;
@@ -329,7 +330,7 @@ gss_krb5_unwrap (OM_uint32 * minor_status,
 	   ;;   PADDED DATA
 	 */
 
-	if (datalen < 5 * 8)
+	if (tok.length < 5 * 8)
 	  return GSS_S_BAD_MIC;
 
 	memcpy (header, data, 8);
@@ -365,11 +366,11 @@ gss_krb5_unwrap (OM_uint32 * minor_status,
 	  k5->acceptseqnr++;
 
 	/* Check pad */
-	padlen = ((char *) data)[datalen - 1];
+	padlen = data[tok.length - 1];
 	if (padlen > 8)
 	  return GSS_S_BAD_MIC;
 	for (i = 1; i <= padlen; i++)
-	  if (((char *) data)[datalen - i] != (int)padlen)
+	  if (data[tok.length - i] != (int)padlen)
 	    return GSS_S_BAD_MIC;
 
 	/* Write header and confounder next to data */
@@ -380,7 +381,7 @@ gss_krb5_unwrap (OM_uint32 * minor_status,
 	rc = shishi_checksum (k5->sh,
 			      k5->key,
 			      0, SHISHI_RSA_MD5_DES_GSS,
-			      data + 16, datalen - 16, &tmp, &tmplen);
+			      data + 16, tok.length - 16, &tmp, &tmplen);
 	if (rc != SHISHI_OK || tmplen != 8)
 	  return GSS_S_FAILURE;
 
@@ -391,7 +392,7 @@ gss_krb5_unwrap (OM_uint32 * minor_status,
 	  return GSS_S_BAD_MIC;
 
 	/* Copy output data */
-	output_message_buffer->length = datalen - 8 - 8 - 8 - 8 - padlen;
+	output_message_buffer->length = tok.length - 8 - 8 - 8 - 8 - padlen;
 	output_message_buffer->value = malloc (output_message_buffer->length);
 	if (!output_message_buffer->value)
 	  {
@@ -400,7 +401,7 @@ gss_krb5_unwrap (OM_uint32 * minor_status,
 	    return GSS_S_FAILURE;
 	  }
 
-	memcpy (output_message_buffer->value, pt, datalen - 4 * 8 - padlen);
+	memcpy (output_message_buffer->value, pt, tok.length - 4 * 8 - padlen);
       }
       break;
 
@@ -413,7 +414,7 @@ gss_krb5_unwrap (OM_uint32 * minor_status,
 	size_t outlen, i;
 	uint32_t seqnr;
 
-	if (datalen < 8 + 8 + 20 + 8 + 8)
+	if (tok.length < 8 + 8 + 20 + 8 + 8)
 	  return GSS_S_BAD_MIC;
 
 	memcpy (cksum, data + 8 + 8, 20);
@@ -444,11 +445,11 @@ gss_krb5_unwrap (OM_uint32 * minor_status,
 	  k5->acceptseqnr++;
 
 	/* Check pad */
-	padlen = ((char *) data)[datalen - 1];
+	padlen = data[tok.length - 1];
 	if (padlen > 8)
 	  return GSS_S_BAD_MIC;
 	for (i = 1; i <= padlen; i++)
-	  if (((char *) data)[datalen - i] != (int) padlen)
+	  if (data[tok.length - i] != (int) padlen)
 	    return GSS_S_BAD_MIC;
 
 	/* Write header next to confounder */
@@ -459,7 +460,7 @@ gss_krb5_unwrap (OM_uint32 * minor_status,
 			      k5->key,
 			      SHISHI_KEYUSAGE_GSS_R2,
 			      SHISHI_HMAC_SHA1_DES3_KD, data + 20 + 8,
-			      datalen - 20 - 8, &t, &tmplen);
+			      tok.length - 20 - 8, &t, &tmplen);
 	if (rc != SHISHI_OK || tmplen != 20)
 	  return GSS_S_FAILURE;
 
@@ -471,7 +472,7 @@ gss_krb5_unwrap (OM_uint32 * minor_status,
 	  return GSS_S_BAD_MIC;
 
 	/* Copy output data */
-	output_message_buffer->length = datalen - 8 - 20 - 8 - 8 - padlen;
+	output_message_buffer->length = tok.length - 8 - 20 - 8 - 8 - padlen;
 	output_message_buffer->value = malloc (output_message_buffer->length);
 	if (!output_message_buffer->value)
 	  {
@@ -480,7 +481,7 @@ gss_krb5_unwrap (OM_uint32 * minor_status,
 	    return GSS_S_FAILURE;
 	  }
 	memcpy (output_message_buffer->value, data + 20 + 8 + 8 + 8,
-		datalen - 20 - 8 - 8 - 8 - padlen);
+		tok.length - 20 - 8 - 8 - 8 - padlen);
       }
       break;
 
