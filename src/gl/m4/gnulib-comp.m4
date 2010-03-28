@@ -64,7 +64,7 @@ AC_DEFUN([srcgl_INIT],
   # Code from module extensions:
   # Code from module getopt-gnu:
   gl_FUNC_GETOPT_GNU
-  gl_MODULE_INDICATOR([getopt-gnu])
+  gl_MODULE_INDICATOR_FOR_TESTS([getopt-gnu])
   # Code from module getopt-posix:
   gl_FUNC_GETOPT_POSIX
   # Code from module gettext-h:
@@ -123,6 +123,11 @@ AC_DEFUN([srcgl_INIT],
   m4_pushdef([srcgltests_LIBSOURCES_DIR], [])
   gl_COMMON
   gl_source_base='src/gl/tests'
+  srcgltests_WITNESS=IN_`echo "${PACKAGE-$PACKAGE_TARNAME}" | LC_ALL=C tr 'a-z' 'A-Z' | LC_ALL=C sed -e 's/[^A-Z0-9_]/_/g'`_GNULIB_TESTS
+  AC_SUBST([srcgltests_WITNESS])
+  gl_module_indicator_condition=$srcgltests_WITNESS
+  m4_pushdef([gl_MODULE_INDICATOR_CONDITION], [$gl_module_indicator_condition])
+  m4_popdef([gl_MODULE_INDICATOR_CONDITION])
   m4_ifval(srcgltests_LIBSOURCES_LIST, [
     m4_syscmd([test ! -d ]m4_defn([srcgltests_LIBSOURCES_DIR])[ ||
       for gl_file in ]srcgltests_LIBSOURCES_LIST[ ; do
