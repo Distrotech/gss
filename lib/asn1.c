@@ -143,6 +143,24 @@ _gss_encapsulate_token_prefix (const char *prefix, size_t prefixlen,
   return 0;
 }
 
+/**
+ * gss_encapsulate_token:
+ * @input_token: (buffer, opaque, read) Buffer with GSS-API context token data.
+ * @token_oid: (Object ID, read) Object identifier of token.
+ * @output_token: (buffer, opaque, modify) Encapsulated token data;
+ *   caller must release with gss_release_buffer().
+ *
+ * Add the mechanism-independent token header to GSS-API context token
+ * data.
+ *
+ * Returns:
+ *
+ * `GSS_S_COMPLETE`: Indicates successful completion, and that output
+ * parameters holds correct information.
+ *
+ * `GSS_S_FAILURE`: Indicates that encapsulation failed for reasons
+ * unspecified at the GSS-API level.
+ **/
 extern OM_uint32
 gss_encapsulate_token (const gss_buffer_t input_token,
 		       const gss_OID token_oid,
@@ -222,6 +240,27 @@ _gss_decapsulate_token (const char *in, size_t inlen,
   return 0;
 }
 
+/**
+ * gss_decapsulate_token:
+ * @input_token: (buffer, opaque, read) Buffer with GSS-API context token.
+ * @token_oid: (Object ID, read) Expected object identifier of token.
+ * @output_token: (buffer, opaque, modify) Decapsulated token data;
+ *   caller must release with gss_release_buffer().
+ *
+ * Remove the mechanism-independent token header from an initial
+ * GSS-API context token.
+ *
+ * Return value:
+ *
+ * `GSS_S_COMPLETE`: Indicates successful completion, and that output
+ * parameters holds correct information.
+ *
+ * `GSS_S_DEFECTIVE_TOKEN`: Means that the token failed consistency
+ * checks (e.g., OID mismatch or ASN.1 DER length errors).
+ *
+ * `GSS_S_FAILURE`: Indicates that decapsulation failed for reasons
+ * unspecified at the GSS-API level.
+ **/
 OM_uint32
 gss_decapsulate_token (const gss_buffer_t input_token,
 		       const gss_OID token_oid,
