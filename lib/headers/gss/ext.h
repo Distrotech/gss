@@ -30,7 +30,7 @@
 extern const char *gss_check_version (const char *req_version);
 
 /* See ext.c. */
-extern int gss_oid_equal (gss_OID first_oid, gss_OID second_oid);
+extern int gss_oid_equal (const gss_OID first_oid, const gss_OID second_oid);
 extern int gss_userok (const gss_name_t name, const char *username);
 
 /* See asn1.c. */
