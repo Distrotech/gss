@@ -26,25 +26,22 @@ AM_CPPFLAGS = -I$(top_srcdir)/gl \
 	-I$(top_builddir)/lib/headers -I$(top_srcdir)/lib/headers
 
 bin_PROGRAMS = gss
-
-BUILT_SOURCES = gss_cmd.c gss_cmd.h
-MAINTAINERCLEANFILES = $(BUILT_SOURCES)
-
-noinst_LTLIBRARIES = libcmd-gss.la
-libcmd_gss_la_CFLAGS =
-libcmd_gss_la_SOURCES = gss.ggo $(BUILT_SOURCES)
-libcmd_gss_la_LIBADD = gl/libgnu.la
-
 gss_SOURCES = gss.c
 gss_LDADD = ../lib/libgss.la gl/libgnu.la @LTLIBINTL@ libcmd-gss.la
 
 gss.c: $(BUILT_SOURCES)
 
+BUILT_SOURCES = gss_cmd.c gss_cmd.h
+MAINTAINERCLEANFILES = $(BUILT_SOURCES)
+
 $(BUILT_SOURCES): gss.ggo
-	gengetopt --no-handle-help --no-handle-version \
-			--input $^ --file-name gss_cmd ||	\
-		test -f gss_cmd.h -a -f gss_cmd.c ||		\
-		cp $(srcdir)/gss_cmd.h $(srcdir)/gss_cmd.h .
+	gengetopt --no-handle-help --no-handle-version	\
+			--input $^ --file-name gss_cmd
+
+noinst_LTLIBRARIES = libcmd-gss.la
+libcmd_gss_la_CFLAGS =
+libcmd_gss_la_SOURCES = gss.ggo $(BUILT_SOURCES)
+libcmd_gss_la_LIBADD = gl/libgnu.la
 
 # For gettext.
 datadir = @datadir@
