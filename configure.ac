@@ -94,6 +94,7 @@ AC_SUBST(INCLUDE_GSS_KRB5_EXT)
 GTK_DOC_CHECK(1.1)
 
 sj_VALGRIND
+sj_PO_SUFFIX($DLL_VERSION)
 
 AC_ARG_ENABLE([gcc-warnings],
   [AS_HELP_STRING([--enable-gcc-warnings],
@@ -140,6 +141,7 @@ AC_CONFIG_FILES([
   lib/headers/gss.h
   lib/krb5/Makefile
   po/Makefile.in
+  po/Makevars
   src/Makefile
   src/gl/Makefile
   tests/Makefile
@@ -148,12 +150,13 @@ AC_OUTPUT
 
 AC_MSG_NOTICE([summary of build options:
 
-  version:          ${VERSION} shared $LT_CURRENT:$LT_REVISION:$LT_AGE
-  Host type:        ${host}
-  Install prefix:   ${prefix}
-  Compiler:         ${CC}
-  Warning flags:    errors: ${WERROR_CFLAGS} warnings: ${WARN_CFLAGS}
-  Library types:    Shared=${enable_shared}, Static=${enable_static}
-  Version script:   $have_ld_version_script
-  Enable krb5 mech: $kerberos5
+  version:            ${VERSION} shared $LT_CURRENT:$LT_REVISION:$LT_AGE
+  Host type:          ${host}
+  Install prefix:     ${prefix}
+  Compiler:           ${CC}
+  Warning flags:      errors: ${WERROR_CFLAGS} warnings: ${WARN_CFLAGS}
+  Library types:      Shared=${enable_shared}, Static=${enable_static}
+  Version script:     $have_ld_version_script
+  Enable krb5 mech:   $kerberos5
+  I18n domain suffix: ${PO_SUFFIX:-none}
 ])

@@ -100,6 +100,8 @@ gss_inquire_saslname_for_mech (OM_uint32 *minor_status,
       return GSS_S_BAD_MECH;
     }
 
+  bindtextdomain (PACKAGE PO_SUFFIX, LOCALEDIR);
+
   if (dup_data (minor_status, sasl_mech_name,
 		m->sasl_name, 0) != GSS_S_COMPLETE)
     return GSS_S_FAILURE;
