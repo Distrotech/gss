@@ -112,15 +112,19 @@ _gss_find_mech (const gss_OID oid)
 }
 
 _gss_mech_api_t
-_gss_find_mech_by_saslname (const char *saslname)
+_gss_find_mech_by_saslname (const gss_buffer_t sasl_mech_name)
 {
   size_t i;
 
-  if (!saslname)
+  if (sasl_mech_name == NULL
+      || sasl_mech_name->value == NULL
+      || sasl_mech_name->length == 0)
     return NULL;
 
   for (i = 0; _gss_mech_apis[i].mech; i++)
-    if (strcmp (_gss_mech_apis[i].sasl_name, saslname) == 0)
+    if (strlen (_gss_mech_apis[i].sasl_name) == sasl_mech_name->length &&
+	memcmp (_gss_mech_apis[i].sasl_name, sasl_mech_name->value,
+		sasl_mech_name->length) == 0)
       return &_gss_mech_apis[i];
 
   return NULL;

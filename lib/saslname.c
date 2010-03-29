@@ -159,8 +159,7 @@ gss_inquire_mech_for_saslname (OM_uint32 *minor_status,
       return GSS_S_CALL_INACCESSIBLE_READ;
     }
 
-  m = _gss_find_mech_by_saslname (sasl_mech_name->value);
-
+  m = _gss_find_mech_by_saslname (sasl_mech_name);
   if (!m)
     {
       if (minor_status)
