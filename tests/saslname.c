@@ -75,8 +75,9 @@ main (int argc, char *argv[])
 	  maj_stat, min_stat);
 
 #ifdef USE_KERBEROS5
-  bufdesc.value = (char *) "GS2-KRB5";
   bufdesc.length = 8;
+  bufdesc.value = malloc (bufdesc.length);
+  memcpy (bufdesc.value, "GS2-KRB5", bufdesc.length);
 
   maj_stat = gss_inquire_mech_for_saslname (&min_stat, &bufdesc, NULL);
   if (maj_stat == GSS_S_COMPLETE)
@@ -94,6 +95,8 @@ main (int argc, char *argv[])
 
   if (oid != GSS_KRB5 || !gss_oid_equal (oid, GSS_KRB5))
     fail ("GS2-OID not Krb5?!\n");
+
+  free (bufdesc.value);
 #endif
 
   maj_stat = gss_inquire_saslname_for_mech (&min_stat, NULL, NULL, NULL, NULL);
