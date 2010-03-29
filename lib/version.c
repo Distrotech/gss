@@ -35,7 +35,7 @@
  * part of the official GSS API.
  *
  * Return value: The actual version string of the library; NULL if the
- *   condition is not met.  If %NULL is passed to this function no
+ *   condition is not met.  If NULL is passed to this function no
  *   check is done and only the version string is returned.
  **/
 const char *

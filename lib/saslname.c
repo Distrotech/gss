@@ -133,7 +133,7 @@ gss_inquire_saslname_for_mech (OM_uint32 *minor_status,
  * @mech_type: (OID, modify, optional) Actual mechanism used.  The OID
  *   returned via this parameter will be a pointer to static storage
  *   that should be treated as read-only; In particular the
- *   application should not attempt to free it.  Specify %NULL if not
+ *   application should not attempt to free it.  Specify NULL if not
  *   required.
  *
  * Output GSS-API mechanism OID of mechanism associated with given
