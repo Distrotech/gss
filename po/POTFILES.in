@@ -1,5 +1,6 @@
 # List of source files containing translatable strings for GSS.
 lib/meta.c
 lib/error.c
+lib/saslname.c
 lib/krb5/error.c
 src/gss.c
