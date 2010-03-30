@@ -2,7 +2,7 @@ GSS NEWS -- History of user-visible changes.                    -*- outline -*-
 Copyright (C) 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010 Simon Josefsson
 See the end for copying conditions.
 
-* Version 1.0.0 (unreleased)
+* Version 1.0.0 (released 2010-03-30)
 
 ** Rarely used GNU GSS extensions removed.
 The removed APIs are gss_copy_oid, gss_duplicate_oid, and
