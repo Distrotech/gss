@@ -1,3 +1,156 @@
+2010-03-30  Simon Josefsson <simon@josefsson.org>
+
+	* Makefile.am: Need to distclean po/Makevars because it is
+	generated.
+
+2010-03-30  Simon Josefsson <simon@josefsson.org>
+
+	* cfg.mk: Copy cyclomatic code coverage chart too.
+
+2010-03-30  Simon Josefsson <simon@josefsson.org>
+
+	* cfg.mk: Upload to ftp.gnu.org.
+
+2010-03-30  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS: Version 1.0.0.
+
+2010-03-30  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS: Add.
+
+2010-03-30  Simon Josefsson <simon@josefsson.org>
+
+	* lib/saslname.c, lib/version.c: Doc fix for GTK-DOC warning.
+
+2010-03-29  Simon Josefsson <simon@josefsson.org>
+
+	* lib/meta.c, lib/meta.h, lib/saslname.c: 
+	gss_inquire_mech_for_saslname: Don't read out bounds.
+
+2010-03-29  Simon Josefsson <simon@josefsson.org>
+
+	* tests/saslname.c: Check for read-out-bounds.
+
+2010-03-29  Simon Josefsson <simon@josefsson.org>
+
+	* Makefile.am: Dist po/Makevars.in.
+
+2010-03-29  Simon Josefsson <simon@josefsson.org>
+
+	* po/POTFILES.in: Revert.
+
+2010-03-29  Simon Josefsson <simon@josefsson.org>
+
+	* po/POTFILES.in: Add.
+
+2010-03-29  Simon Josefsson <simon@josefsson.org>
+
+	* configure.ac, lib/error.c, lib/internal.h, lib/saslname.c,
+	m4/po-suffix.m4, po/Makevars, po/Makevars.in: Add --with-po-suffix
+	support.
+
+2010-03-28  Simon Josefsson <simon@josefsson.org>
+
+	* .x-sc_texinfo_acronym: Add.
+
+2010-03-28  Simon Josefsson <simon@josefsson.org>
+
+	* src/Makefile.am: Fix syntax-check warning.
+
+2010-03-28  Simon Josefsson <simon@josefsson.org>
+
+	* lib/ext.c, lib/headers/gss/ext.h: gss_oid_equal: Constify
+	parameters.
+
+2010-03-28  Simon Josefsson <simon@josefsson.org>
+
+	* lib/asn1.c: Doc fix.
+
+2010-03-28  Simon Josefsson <simon@josefsson.org>
+
+	* gl/m4/gnulib-common.m4, gl/m4/gnulib-comp.m4,
+	gl/m4/gnulib-comp.m4~, lib/gl/gettext.h,
+	lib/gl/m4/gnulib-common.m4, lib/gl/m4/gnulib-comp.m4,
+	lib/gl/m4/stddef_h.m4, lib/gl/m4/string_h.m4, lib/gl/string.in.h,
+	maint.mk, src/gl/getopt.in.h, src/gl/gettext.h,
+	src/gl/m4/gnulib-common.m4, src/gl/m4/gnulib-comp.m4,
+	src/gl/m4/stddef_h.m4, src/gl/m4/unistd_h.m4, src/gl/stdarg.in.h,
+	src/gl/unistd.in.h: Update gnulib files.
+
+2010-03-26  Simon Josefsson <simon@josefsson.org>
+
+	* lib/krb5/error.c: Cleanup code.
+
+2010-03-26  Simon Josefsson <simon@josefsson.org>
+
+	* lib/error.c, lib/ext.c, lib/internal.h, lib/meta.c,
+	lib/saslname.c: Cleanup.
+
+2010-03-26  Simon Josefsson <simon@josefsson.org>
+
+	* lib/asn1.c, lib/internal.h, lib/krb5/context.c, lib/krb5/msg.c,
+	lib/misc.c, tests/krb5context.c: Align capsulation APIs with new
+	approach and update callers.
+
+2010-03-25  Simon Josefsson <simon@josefsson.org>
+
+	* doc/reference/gss-docs.sgml, lib/headers/gss.h.in, lib/saslname.c: 
+	Drop Since gtk-doc stuff.
+
+2010-03-25  Simon Josefsson <simon@josefsson.org>
+
+	* doc/gss.texi: Doc updates for v1.0.0.
+
+2010-03-25  Simon Josefsson <simon@josefsson.org>
+
+	* lib/misc.c: Doc fix.
+
+2010-03-25  Simon Josefsson <simon@josefsson.org>
+
+	* lib/ext.c: Drop gss_copy_oid.
+
+2010-03-25  Simon Josefsson <simon@josefsson.org>
+
+	* doc/gss.texi, lib/ext.c, lib/misc.c: Update documentation for
+	removed APIs.  Fix internal use of gss_copy_oid.
+
+2010-03-25  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS: Bump version.
+
+2010-03-25  Simon Josefsson <simon@josefsson.org>
+
+	* lib/headers/gss/ext.h: Drop bad extension functions and fix
+	capsulate functions.  Drop gss_copy_oid, gss_duplicate_oid, and
+	gss_encapsulate_token_prefix.  Align gss_encapsulate_token and
+	gss_decapsulate_token with draft-josefsson-gss-capsulate-00.txt.
+
+2010-03-25  Simon Josefsson <simon@josefsson.org>
+
+	* lib/libgss.map: Bump version and drop bad extension functions.  The dropped functions are gss_copy_oid, gss_duplicate_oid, and
+	gss_encapsulate_token_prefix.
+
+2010-03-25  Simon Josefsson <simon@josefsson.org>
+
+	* configure.ac: Bump version, break API/ABI compatibility.
+
+2010-03-22  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS, configure.ac: Bump versions.
+
+2010-03-22  Simon Josefsson <simon@josefsson.org>
+
+	* .gitignore: Add more.
+
+2010-03-22  Simon Josefsson <simon@josefsson.org>
+
+	* doc/announce.txt: Update for 0.1.5.
+
+2010-03-22  Simon Josefsson <simon@josefsson.org>
+
+	* ChangeLog: Generated.
+
 2010-03-22  Simon Josefsson <simon@josefsson.org>
 
 	* NEWS: Version 0.1.5.
