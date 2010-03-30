@@ -21,6 +21,7 @@
 DISTCHECK_CONFIGURE_FLAGS = --enable-gtk-doc
 
 EXTRA_DIST = cfg.mk maint.mk .clcopying po/Makevars.in
+DISTCLEANFILES = po/Makevars
 
 pkgconfigdir = $(libdir)/pkgconfig
 pkgconfig_DATA = gss.pc
