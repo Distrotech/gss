@@ -12,6 +12,10 @@ gss_encapsulate_token_prefix.
 The functions are gss_encapsulate_token and gss_decapsulate_token.
 The semantics and function prototypes changed slightly.
 
+** Added --with-po-suffix configure parameter to modify the gettext domain.
+This parameter is useful when you want to have both this version and
+the older version installed at the same time.
+
 ** API and ABI modifications.
 gss_copy_oid: REMOVED.
 gss_duplicate_oid: REMOVED.
