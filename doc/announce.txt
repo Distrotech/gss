@@ -1,41 +1,41 @@
-Subject: Generic Security Service Library (GSSLib) 0.1.5
 To: help-gss@gnu.org, info-gnu@gnu.org
-<#part sign=pgpmime>
+Subject: Generic Security Service Library (GSSLib) 1.0.0
 
-GSSLib is an implementation of the Generic Security Service Application
-Program Interface (GSS-API).  GSS-API is used by network servers to
-provide security services.  For example, GSS can be used to authenticate
-a client against SMTP or IMAP servers.  GSS consists of a library, a
-manual, and a command line tool for debugging purposes.
+<#part sign=pgpmime>
+GSSLib is an implementation of the Generic Security Service
+Application Program Interface (GSS-API).  GSS-API is used by network
+servers to provide security services.  For example, GSS can be used to
+authenticate a client against SMTP or IMAP servers.  GSS consists of a
+library, a manual, and a command line tool for debugging purposes.
 
 Noteworthy changes since the last version:
 
-* Version 0.1.5 (released 2010-03-22)
+* Version 1.0.0 (released 2010-03-30)
 
-** Properly increment shared library version for newly added APIs in v0.1.4.
-Note that the API/ABI is still fully backwards compatible.
+** Rarely used GNU GSS extensions removed.
+The removed APIs are gss_copy_oid, gss_duplicate_oid, and
+gss_encapsulate_token_prefix.
 
-** API and ABI modifications.
-No changes since last version.
+** Align capsulation functions with Heimdal and specification document.
+The functions are gss_encapsulate_token and gss_decapsulate_token.
+The semantics and function prototypes changed slightly.
 
-* Version 0.1.4 (released 2010-03-22)
-
-** Add new interfaces defined in RFC 5801.
-The APIs are gss_inquire_mech_for_saslname and
-gss_inquire_saslname_for_mech.
-
-** KRB5: Fix bug in channel binding computation.
-
-** Update gnulib files.
+** Added --with-po-suffix configure parameter to modify the gettext domain.
+This parameter is useful when you want to have both this version and
+the older version installed at the same time.
 
 ** API and ABI modifications.
-gss_inquire_mech_for_saslname: ADDED.
-gss_inquire_saslname_for_mech: ADDED.
+gss_copy_oid: REMOVED.
+gss_duplicate_oid: REMOVED.
+gss_encapsulate_token_prefix: REMOVED.
+gss_encapsulate_token: MODIFIED.
+gss_decapsulate_token: MODIFIED.
 
 While written to be flexible with regards to different GSS mechanisms,
-the only currently supported mechanism is Kerberos 5 via GNU Shishi.
-Mutual and non-mutual authentication, as client and server, is
-supported.  Message privacy protection using DES and 3DES is supported.
+the only currently supported mechanism is Kerberos V5 via GNU Shishi.
+Mutual and non-mutual authentication and channel bindings, as client
+and server, is supported.  Message privacy protection using DES and
+3DES is supported.
 
 GSS aims to be internationalized, thread safe and portable.  GSS is
 written in ANSI/ISO C89, and has been ported to numerous platforms, even
@@ -67,17 +67,21 @@ The main manual:
   http://www.gnu.org/software/gss/manual/gss.html - HTML format
   http://www.gnu.org/software/gss/manual/gss.pdf - PDF format
 
-Also useful are code coverage charts which indicate parts of the source
-code that needs to be tested better by the included self-tests:
+For code coverage and cyclomatic code complexity charts:
   http://www.gnu.org/software/gss/coverage/
+  http://www.gnu.org/software/gss/cyclo/cyclo-gss.html
 
-If you need help to use GNU GSS, or want to help others, you are invited
-to join our help-gss mailing list, see:
-<http://lists.gnu.org/mailman/listinfo/help-gss>.
+If you need help to use GNU GSS, or want to help others, you are
+invited to join our help-gss mailing list, see:
+  http://lists.gnu.org/mailman/listinfo/help-gss
 
 Here are the compressed sources of the entire package:
-  ftp://alpha.gnu.org/gnu/gss/gss-0.1.5.tar.gz (2.0MB)
-  ftp://alpha.gnu.org/gnu/gss/gss-0.1.5.tar.gz.sig (OpenPGP signature)
+  ftp://ftp.gnu.org/gnu/gss/gss-1.0.0.tar.gz (1.9MB)
+  ftp://ftp.gnu.org/gnu/gss/gss-1.0.0.tar.gz.sig (OpenPGP signature)
+
+We also provide pre-built Windows binaries:
+  http://josefsson.org/gnutls4win/gss-1.0.0.zip
+  http://josefsson.org/gnutls4win/mingw32-gss_1.0.0-1_all.deb
 
 Here are the build reports for various platforms:
   http://autobuild.josefsson.org/shishi/
@@ -100,9 +104,14 @@ The key is available from:
 
 Here are the SHA-1 and SHA-224 checksums:
 
-b3d3cb530524730c2b128289410f973e1131f520  gss-0.1.5.tar.gz
+f992c7b6f8bff6606570d5600f56b8a93dc77656  gss-1.0.0.tar.gz
+e5f2c6e85c745d05444512b426fa2603f48da85712322049c8549405  gss-1.0.0.tar.gz
 
-33ff99a53f5f0b3afecbddd9685092eea81409e6e6c4190674316fe2  gss-0.1.5.tar.gz
+eb6eb267c9707263d35a52474ed765da47c71341  gss-1.0.0.zip
+880bafde1b81ad824d1c8aa4df54a317d81df6feb49ad11ced8f91d2  gss-1.0.0.zip
+
+bd313a2afa302fb6d5278e158fa089654fa8222a  mingw32-gss_1.0.0-1_all.deb
+b30e9e326f6ea396968abfb44db9bf8912cdf82ca11303de21c3d735  mingw32-gss_1.0.0-1_all.deb
 
 Happy hacking,
 Simon
