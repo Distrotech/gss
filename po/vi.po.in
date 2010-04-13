@@ -1,22 +1,26 @@
 # Vietnamese Translation for GSS.
-# Copyright © 2008 Free Software Foundation, Inc.
-# Copyright © 2008 Simon Josefsson (msgid)
+# Copyright © 2010 Free Software Foundation, Inc.
+# Copyright © 2010 Simon Josefsson (msgid)
 # This file is distributed under the same license as the gss package.
-# Clytie Siddall <clytie@riverland.net.au>, 2005-2008.
+# Clytie Siddall <clytie@riverland.net.au>, 2005-2010.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gss 0.0.24\n"
+"Project-Id-Version: gss 0.1.5\n"
 "Report-Msgid-Bugs-To: bug-gss@josefsson.org\n"
-"POT-Creation-Date: 2008-09-10 13:16+0200\n"
-"PO-Revision-Date: 2008-09-22 19:00+0930\n"
+"POT-Creation-Date: 2010-03-22 10:38+0100\n"
+"PO-Revision-Date: 2010-03-25 22:34+0930\n"
 "Last-Translator: Clytie Siddall <clytie@riverland.net.au>\n"
 "Language-Team: Vietnamese <vi-VN@googlegroups.com>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: LocFactoryEditor 1.7b3\n"
+"X-Generator: LocFactoryEditor 1.8\n"
+
+#: lib/meta.c:43
+msgid "Kerberos V5 GSS-API mechanism"
+msgstr "Cơ chế GSS-API Kerberos pb5"
 
 #: lib/error.c:43
 msgid "A required input parameter could not be read"
@@ -122,97 +126,121 @@ msgstr "Một hiệu bài nằm sau đã được xử lý"
 msgid "An expected per-message token was not received"
 msgstr "Chưa nhận một hiệu bài từng thông điệp mong đợi"
 
-#: lib/error.c:298
+#: lib/error.c:318
 msgid "No error"
 msgstr "Không có lỗi"
 
-#: lib/krb5/error.c:41
+#: lib/krb5/error.c:42
 msgid "No @ in SERVICE-NAME name string"
 msgstr "Không có dấu @ trong chuỗi SERVICE-NAME (tên dịch vụ)"
 
-#: lib/krb5/error.c:43
+#: lib/krb5/error.c:44
 msgid "STRING-UID-NAME contains nondigits"
 msgstr "STRING-UID-NAME (chuỗi-tên-UID) chứa ký tự khác chữ số"
 
-#: lib/krb5/error.c:45
+#: lib/krb5/error.c:46
 msgid "UID does not resolve to username"
 msgstr "UID không giải quyết thành tên người dùng"
 
-#: lib/krb5/error.c:47
+#: lib/krb5/error.c:48
 msgid "Validation error"
 msgstr "Lỗi hợp lệ hoá"
 
-#: lib/krb5/error.c:49
+#: lib/krb5/error.c:50
 msgid "Couldn't allocate gss_buffer_t data"
 msgstr "Không thể phân cấp dữ liệu « gss_buffer_t »"
 
-#: lib/krb5/error.c:51
+#: lib/krb5/error.c:52
 msgid "Message context invalid"
 msgstr "Ngữ cảnh thông điệp không hợp lệ"
 
-#: lib/krb5/error.c:53
+#: lib/krb5/error.c:54
 msgid "Buffer is the wrong size"
 msgstr "Vùng đệm kích cỡ sai"
 
-#: lib/krb5/error.c:55
+#: lib/krb5/error.c:56
 msgid "Credential usage type is unknown"
 msgstr "Không rõ kiểu sử dụng thông tin xác thực"
 
-#: lib/krb5/error.c:57
+#: lib/krb5/error.c:58
 msgid "Unknown quality of protection specified"
 msgstr "Đã ghi rõ mức bảo vệ không rõ"
 
-#: lib/krb5/error.c:60
+#: lib/krb5/error.c:61
 msgid "Principal in credential cache does not match desired name"
 msgstr "Điều chính trong bộ nhớ tạm thông tin xác thực không tương ứng với tên yêu cầu"
 
-#: lib/krb5/error.c:62
+#: lib/krb5/error.c:63
 msgid "No principal in keytab matches desired name"
 msgstr "Không có điều chính trong keytab mà tương ứng với tên yêu cầu"
 
-#: lib/krb5/error.c:64
+#: lib/krb5/error.c:65
 msgid "Credential cache has no TGT"
 msgstr "Bộ nhớ tạm thông tin xác thực không có TGT"
 
-#: lib/krb5/error.c:66
+#: lib/krb5/error.c:67
 msgid "Authenticator has no subkey"
 msgstr "Nhà xác thực không có khoá phụ"
 
-#: lib/krb5/error.c:68
+#: lib/krb5/error.c:69
 msgid "Context is already fully established"
 msgstr "Ngữ cảnh đã được thiết lập đầy đủ"
 
-#: lib/krb5/error.c:70
+#: lib/krb5/error.c:71
 msgid "Unknown signature type in token"
 msgstr "Không rõ kiểu chữ ký trong hiệu bài"
 
-#: lib/krb5/error.c:72
+#: lib/krb5/error.c:73
 msgid "Invalid field length in token"
 msgstr "Chiều dài trường không hợp lệ trong hiệu bài"
 
-#: lib/krb5/error.c:74
+#: lib/krb5/error.c:75
 msgid "Attempt to use incomplete security context"
 msgstr "Đã thử sử dụng ngữ cảnh bảo mật chưa hoàn tất"
 
-#: lib/krb5/error.c:91
+#: lib/krb5/error.c:92
 msgid "No krb5 error"
 msgstr "Không có lỗi krb5"
 
-#: lib/krb5/error.c:120
+#: lib/krb5/error.c:133
 msgid "Unknown krb5 error"
 msgstr "Lỗi krb5 không rõ"
 
-#: src/gss.c:65
-#, c-format
-msgid "%s: missing parameter\n"
-msgstr "%s: thiếu tham số\n"
-
-#: src/gss.c:66
+#: src/gss.c:64
 #, c-format
 msgid "Try `%s --help' for more information.\n"
 msgstr "Hãy thử câu lệnh trợ giúp « %s --help » để tìm thêm thông tin.\n"
 
-#: src/gss.c:73
+#: src/gss.c:68
+#, c-format
+msgid "Usage: %s OPTIONS...\n"
+msgstr "Sử dụng: %s TÙY_CHỌN...\n"
+
+#: src/gss.c:71
+msgid ""
+"Command line interface to GSS, used to explain error codes.\n"
+"\n"
+msgstr ""
+"Giao diện dòng lệnh vào GSS, dùng để giải thích mã lỗi.\n"
+"\n"
+
+#: src/gss.c:75
+msgid "Mandatory arguments to long options are mandatory for short options too.\n"
+msgstr "Mọi đối số bắt buộc phải sử dụng với tùy chọn dài cũng bắt buộc với tùy chọn ngắn.\n"
+
+#: src/gss.c:78
+msgid ""
+"  -h, --help        Print help and exit\n"
+"  -V, --version     Print version and exit\n"
+"  -m, --major=LONG  Describe a `major status' error code vaue in plain text.\n"
+"  -q, --quiet       Silent operation  (default=off)\n"
+msgstr ""
+"  -h, --help        Hiển thị trợ giúp, sau đó thoát\n"
+"  -V, --version     Hiển thị số thứ tự phiên bản, sau đó thoát\n"
+"  -m, --major=DÀI    Diễn tả một giá trị mã lỗi « trạng thái chính » bằng nhập thô.\n"
+"  -q, --quiet       Thao tác mà không xuất chi tiết (mặc định là bị tắt)\n"
+
+#: src/gss.c:119
 #, c-format
 msgid ""
 "GSS-API major status code %ld (0x%lx).\n"
@@ -221,7 +249,7 @@ msgstr ""
 "GSS-API mã trạng thái chính %ld (0x%lx).\n"
 "\n"
 
-#: src/gss.c:76
+#: src/gss.c:122
 #, c-format
 msgid ""
 "   MSB                                                                 LSB\n"
@@ -234,7 +262,7 @@ msgstr ""
 "   |    Lỗi gọi    |  Lỗi hàm  |       Thông tin bổ sung       |\n"
 "   | "
 
-#: src/gss.c:90
+#: src/gss.c:136
 #, c-format
 msgid ""
 "|\n"
@@ -247,27 +275,27 @@ msgstr ""
 "Bit 31            24  23            16  15                             0\n"
 "\n"
 
-#: src/gss.c:100
+#: src/gss.c:146
 #, c-format
 msgid "Masked routine error %ld (0x%lx) shifted into %ld (0x%lx):\n"
 msgstr "Lỗi hàm có mặt nạ %ld (0x%lx) đã rời vào %ld (0x%lx):\n"
 
-#: src/gss.c:117 src/gss.c:152 src/gss.c:190
+#: src/gss.c:163 src/gss.c:198 src/gss.c:236
 #, c-format
 msgid "%s: displaying status code failed\n"
 msgstr "%s: lỗi hiển thị mã trạng thái\n"
 
-#: src/gss.c:138
+#: src/gss.c:184
 #, c-format
 msgid "Masked calling error %ld (0x%lx) shifted into %ld (0x%lx):\n"
 msgstr "Lỗi gói có mặt nạ %ld (0x%lx) đã rời vào %ld (0x%lx):\n"
 
-#: src/gss.c:172
+#: src/gss.c:218
 #, c-format
 msgid "Masked supplementary info %ld (0x%lx) shifted into %ld (0x%lx):\n"
 msgstr "Thông tin bổ sung có mặt nạ %ld (0x%lx) đã rời vào %ld (0x%lx):\n"
 
-#: src/gss.c:208
+#: src/gss.c:254
 #, c-format
 msgid "No error\n"
 msgstr "Không có lỗi\n"

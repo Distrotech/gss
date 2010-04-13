@@ -1,19 +1,23 @@
 # Indonesian translations for gss package.
-# Copyright (C) 2008 Free Software Foundation, Inc.
+# Copyright (C) 2010 Free Software Foundation, Inc.
 # This file is distributed under the same license as the gss package.
-# Andhika Padmawan <andhika.padmawan@gmail.com>, 2008.
+# Andhika Padmawan <andhika.padmawan@gmail.com>, 2010.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gss 0.0.24\n"
+"Project-Id-Version: gss 0.1.5\n"
 "Report-Msgid-Bugs-To: bug-gss@josefsson.org\n"
-"POT-Creation-Date: 2008-09-10 13:16+0200\n"
-"PO-Revision-Date: 2008-09-11 22:15+0700\n"
+"POT-Creation-Date: 2010-03-22 10:38+0100\n"
+"PO-Revision-Date: 2010-03-25 23:00+0700\n"
 "Last-Translator: Andhika Padmawan <andhika.padmawan@gmail.com>\n"
 "Language-Team: Indonesian <translation-team-id@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+
+#: lib/meta.c:43
+msgid "Kerberos V5 GSS-API mechanism"
+msgstr "Mekanisme Kerberos V5 GSS-API"
 
 #: lib/error.c:43
 msgid "A required input parameter could not be read"
@@ -119,97 +123,121 @@ msgstr "Token selanjutnya telah diproses"
 msgid "An expected per-message token was not received"
 msgstr "Token per-pesan yang diharapkan tidak diterima"
 
-#: lib/error.c:298
+#: lib/error.c:318
 msgid "No error"
 msgstr "Tak ada galat"
 
-#: lib/krb5/error.c:41
+#: lib/krb5/error.c:42
 msgid "No @ in SERVICE-NAME name string"
 msgstr "Tak ada @ di benang nama SERVICE-NAME"
 
-#: lib/krb5/error.c:43
+#: lib/krb5/error.c:44
 msgid "STRING-UID-NAME contains nondigits"
 msgstr "STRING-UID-NAME berisi nondigit"
 
-#: lib/krb5/error.c:45
+#: lib/krb5/error.c:46
 msgid "UID does not resolve to username"
 msgstr "UID tak dapat memecahkan ke nama pengguna"
 
-#: lib/krb5/error.c:47
+#: lib/krb5/error.c:48
 msgid "Validation error"
 msgstr "Galat validasi"
 
-#: lib/krb5/error.c:49
+#: lib/krb5/error.c:50
 msgid "Couldn't allocate gss_buffer_t data"
 msgstr "Tak dapat mengalokasikan data gss_buffer_t"
 
-#: lib/krb5/error.c:51
+#: lib/krb5/error.c:52
 msgid "Message context invalid"
 msgstr "Konteks pesan tidak sah"
 
-#: lib/krb5/error.c:53
+#: lib/krb5/error.c:54
 msgid "Buffer is the wrong size"
 msgstr "Penyangga dalam ukuran yang salah"
 
-#: lib/krb5/error.c:55
+#: lib/krb5/error.c:56
 msgid "Credential usage type is unknown"
 msgstr "Tipe penggunaan kredensial tak diketahui"
 
-#: lib/krb5/error.c:57
+#: lib/krb5/error.c:58
 msgid "Unknown quality of protection specified"
 msgstr "Kualitas proteksi tak diketahui telah ditentukan"
 
-#: lib/krb5/error.c:60
+#: lib/krb5/error.c:61
 msgid "Principal in credential cache does not match desired name"
 msgstr "Prinsip dalam tembolok kredensial tidak cocok dengan nama yang diinginkan"
 
-#: lib/krb5/error.c:62
+#: lib/krb5/error.c:63
 msgid "No principal in keytab matches desired name"
 msgstr "Tak ada prinsip di tab kunci yang cocok dengan nama yang diinginkan"
 
-#: lib/krb5/error.c:64
+#: lib/krb5/error.c:65
 msgid "Credential cache has no TGT"
 msgstr "Tembolok kredensial tak memiliki TGT"
 
-#: lib/krb5/error.c:66
+#: lib/krb5/error.c:67
 msgid "Authenticator has no subkey"
 msgstr "Otentikator tidak memiliki subkunci"
 
-#: lib/krb5/error.c:68
+#: lib/krb5/error.c:69
 msgid "Context is already fully established"
 msgstr "Konteks telah sepenuhnya terbangun"
 
-#: lib/krb5/error.c:70
+#: lib/krb5/error.c:71
 msgid "Unknown signature type in token"
 msgstr "Tipe tanda tangan tak dikenal di token"
 
-#: lib/krb5/error.c:72
+#: lib/krb5/error.c:73
 msgid "Invalid field length in token"
 msgstr "Panjang medan tak sah di token"
 
-#: lib/krb5/error.c:74
+#: lib/krb5/error.c:75
 msgid "Attempt to use incomplete security context"
 msgstr "Coba menggunakan konteks keamanan tidak lengkap"
 
-#: lib/krb5/error.c:91
+#: lib/krb5/error.c:92
 msgid "No krb5 error"
 msgstr "Tak ada galat krb5"
 
-#: lib/krb5/error.c:120
+#: lib/krb5/error.c:133
 msgid "Unknown krb5 error"
 msgstr "Galat krb5 tak dikenal"
 
-#: src/gss.c:65
-#, c-format
-msgid "%s: missing parameter\n"
-msgstr "%s: kehilangan parameter\n"
-
-#: src/gss.c:66
+#: src/gss.c:64
 #, c-format
 msgid "Try `%s --help' for more information.\n"
 msgstr "Coba `%s --help' untuk informasi lebih lanjut.\n"
 
-#: src/gss.c:73
+#: src/gss.c:68
+#, c-format
+msgid "Usage: %s OPTIONS...\n"
+msgstr "Penggunaan: %s OPSI...\n"
+
+#: src/gss.c:71
+msgid ""
+"Command line interface to GSS, used to explain error codes.\n"
+"\n"
+msgstr ""
+"Antarmuka baris perintah ke GSS, digunakan untuk menjelaskan kode galat.\n"
+"\n"
+
+#: src/gss.c:75
+msgid "Mandatory arguments to long options are mandatory for short options too.\n"
+msgstr "Argumen wajib untuk opsi panjang juga wajib untuk opsi pendek.\n"
+
+#: src/gss.c:78
+msgid ""
+"  -h, --help        Print help and exit\n"
+"  -V, --version     Print version and exit\n"
+"  -m, --major=LONG  Describe a `major status' error code vaue in plain text.\n"
+"  -q, --quiet       Silent operation  (default=off)\n"
+msgstr ""
+"  -h, --help        Cetak bantuan dan keluar\n"
+"  -V, --version     Cetak versi dan keluar\n"
+"  -m, --major=LONG  Jelaskan nilai kode galat `status utama' dalam teks biasa.\n"
+"  -q, --quiet       Operasi diam (standar=off)\n"
+
+#: src/gss.c:119
 #, c-format
 msgid ""
 "GSS-API major status code %ld (0x%lx).\n"
@@ -218,7 +246,7 @@ msgstr ""
 "Kode status mayor GSS-API %ld (0x%lx).\n"
 "\n"
 
-#: src/gss.c:76
+#: src/gss.c:122
 #, c-format
 msgid ""
 "   MSB                                                                 LSB\n"
@@ -231,7 +259,7 @@ msgstr ""
 "   |  Galat Memanggil  |  Galat Rutin  |       Info Tambahan             |\n"
 "   | "
 
-#: src/gss.c:90
+#: src/gss.c:136
 #, c-format
 msgid ""
 "|\n"
@@ -244,27 +272,30 @@ msgstr ""
 "Bita 31            24  23            16  15                             0\n"
 "\n"
 
-#: src/gss.c:100
+#: src/gss.c:146
 #, c-format
 msgid "Masked routine error %ld (0x%lx) shifted into %ld (0x%lx):\n"
 msgstr "Galat rutin bertopeng %ld (0x%lx) digeser ke %ld (0x%lx):\n"
 
-#: src/gss.c:117 src/gss.c:152 src/gss.c:190
+#: src/gss.c:163 src/gss.c:198 src/gss.c:236
 #, c-format
 msgid "%s: displaying status code failed\n"
 msgstr "%s: menampilkan kode status gagal\n"
 
-#: src/gss.c:138
+#: src/gss.c:184
 #, c-format
 msgid "Masked calling error %ld (0x%lx) shifted into %ld (0x%lx):\n"
 msgstr "Galat memanggil bertopeng %ld (0x%lx) digeser ke %ld (0x%lx):\n"
 
-#: src/gss.c:172
+#: src/gss.c:218
 #, c-format
 msgid "Masked supplementary info %ld (0x%lx) shifted into %ld (0x%lx):\n"
 msgstr "Info tambahan bertopeng %ld (0x%lx) digeser ke %ld (0x%lx):\n"
 
-#: src/gss.c:208
+#: src/gss.c:254
 #, c-format
 msgid "No error\n"
 msgstr "Tak ada galat\n"
+
+#~ msgid "%s: missing parameter\n"
+#~ msgstr "%s: kehilangan parameter\n"
