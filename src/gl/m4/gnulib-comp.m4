@@ -52,6 +52,7 @@ AC_DEFUN([srcgl_INIT],
 [
   AM_CONDITIONAL([GL_COND_LIBTOOL], [true])
   gl_cond_libtool=true
+  gl_m4_base='src/gl/m4'
   m4_pushdef([AC_LIBOBJ], m4_defn([srcgl_LIBOBJ]))
   m4_pushdef([AC_REPLACE_FUNCS], m4_defn([srcgl_REPLACE_FUNCS]))
   m4_pushdef([AC_LIBSOURCES], m4_defn([srcgl_LIBSOURCES]))
@@ -123,7 +124,9 @@ AC_DEFUN([srcgl_INIT],
   m4_pushdef([srcgltests_LIBSOURCES_DIR], [])
   gl_COMMON
   gl_source_base='src/gl/tests'
-  srcgltests_WITNESS=IN_`echo "${PACKAGE-$PACKAGE_TARNAME}" | LC_ALL=C tr 'a-z' 'A-Z' | LC_ALL=C sed -e 's/[^A-Z0-9_]/_/g'`_GNULIB_TESTS
+changequote(,)dnl
+  srcgltests_WITNESS=IN_`echo "${PACKAGE-$PACKAGE_TARNAME}" | LC_ALL=C tr abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ | LC_ALL=C sed -e 's/[^A-Z0-9_]/_/g'`_GNULIB_TESTS
+changequote([, ])dnl
   AC_SUBST([srcgltests_WITNESS])
   gl_module_indicator_condition=$srcgltests_WITNESS
   m4_pushdef([gl_MODULE_INDICATOR_CONDITION], [$gl_module_indicator_condition])

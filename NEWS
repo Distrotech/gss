@@ -4,6 +4,8 @@ See the end for copying conditions.
 
 * Version 1.0.1 (unreleased)
 
+** Update gnulib files.
+
 ** i18n: Translations were updated.
 
 ** API and ABI modifications.
