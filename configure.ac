@@ -74,7 +74,7 @@ AC_ARG_ENABLE(kerberos5,
     [disable Kerberos V5 mechanism unconditionally]),
   kerberos5=$enableval)
 if test "$kerberos5" != "no" ; then
-  AC_LIB_HAVE_LINKFLAGS(shishi,, [#include <shishi.h>], [shishi ();])
+  AC_LIB_HAVE_LINKFLAGS(shishi,, [#include <shishi.h>], [shishi_key_timestamp();])
   if test "$ac_cv_libshishi" = yes; then
     AC_DEFINE([USE_KERBEROS5], 1, [Define to 1 if you want Kerberos 5 mech.])
     INCLUDE_GSS_KRB5='# include <gss/krb5.h>'

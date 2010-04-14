@@ -4,6 +4,9 @@ See the end for copying conditions.
 
 * Version 1.0.1 (unreleased)
 
+** The check for GNU Shishi now requires 0.0.42 or later.
+Earlier versions had bugs that caused the self-checks to fail.
+
 ** Update gnulib files.
 
 ** i18n: Translations were updated.
