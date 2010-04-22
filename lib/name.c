@@ -1,5 +1,5 @@
 /* name.c --- Implementation of GSS-API Name Manipulation functions.
- * Copyright (C) 2003, 2004, 2005, 2006, 2007, 2008, 2009  Simon Josefsson
+ * Copyright (C) 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010  Simon Josefsson
  *
  * This file is part of the Generic Security Service (GSS).
  *
