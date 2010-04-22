@@ -632,16 +632,16 @@ gss_unseal (OM_uint32 * minor_status,
 /* RFC 5801 SASL GS2 interfaces. */
 
 OM_uint32
-gss_inquire_saslname_for_mech (OM_uint32 *minor_status,
+gss_inquire_saslname_for_mech (OM_uint32 * minor_status,
 			       const gss_OID desired_mech,
 			       gss_buffer_t sasl_mech_name,
 			       gss_buffer_t mech_name,
 			       gss_buffer_t mech_description);
 
 OM_uint32
-gss_inquire_mech_for_saslname (OM_uint32 *minor_status,
+gss_inquire_mech_for_saslname (OM_uint32 * minor_status,
 			       const gss_buffer_t sasl_mech_name,
-			       gss_OID *mech_type);
+			       gss_OID * mech_type);
 
 
 #endif /* GSSAPI_H_ */

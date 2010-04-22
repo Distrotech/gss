@@ -85,7 +85,7 @@ main (int argc, char *argv[])
 
   memset (&cb, 0, sizeof (cb));
   cb.application_data.length = 3;
-  cb.application_data.value = (char*) "hej";
+  cb.application_data.value = (char *) "hej";
 
   do
     if (strcmp (argv[argc - 1], "-v") == 0 ||
@@ -108,7 +108,7 @@ main (int argc, char *argv[])
 
   /* Name of service. */
 
-  bufdesc.value = (char*) "host@latte.josefsson.org";
+  bufdesc.value = (char *) "host@latte.josefsson.org";
   bufdesc.length = strlen (bufdesc.value);
 
   maj_stat = gss_import_name (&min_stat, &bufdesc,
@@ -328,9 +328,7 @@ main (int argc, char *argv[])
 
 	pt.value = (char *) "foo";
 	pt.length = strlen (pt.value) + 1;
-	maj_stat = gss_wrap (&min_stat,
-			     cctx,
-			     0, 0, &pt, &conf_state, &ct);
+	maj_stat = gss_wrap (&min_stat, cctx, 0, 0, &pt, &conf_state, &ct);
 	if (GSS_ERROR (maj_stat))
 	  {
 	    fail ("client gss_wrap failure\n");

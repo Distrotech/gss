@@ -21,13 +21,13 @@
  */
 
 OM_uint32
-_gss_krb5_checksum_pack (OM_uint32 *minor_status,
+_gss_krb5_checksum_pack (OM_uint32 * minor_status,
 			 const gss_cred_id_t initiator_cred_handle,
 			 gss_ctx_id_t * context_handle,
 			 const gss_channel_bindings_t input_chan_bindings,
 			 OM_uint32 req_flags, char **data, size_t * datalen);
 
 OM_uint32
-_gss_krb5_checksum_parse (OM_uint32 *minor_status,
+_gss_krb5_checksum_parse (OM_uint32 * minor_status,
 			  gss_ctx_id_t * context_handle,
 			  const gss_channel_bindings_t input_chan_bindings);

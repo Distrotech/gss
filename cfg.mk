@@ -21,6 +21,8 @@ WFLAGS ?= --enable-gcc-warnings
 ADDFLAGS ?=
 CFGFLAGS ?= --enable-gtk-doc $(ADDFLAGS) $(WFLAGS)
 
+INDENT_SOURCES = `find . -name \*.[ch] -o -name gss.h.in | grep -v -e ^./build-aux/ -e ^./lib/gl/ -e ^./gl/ -e ^./src/gl/`
+
 ifeq ($(.DEFAULT_GOAL),abort-due-to-no-makefile)
 .DEFAULT_GOAL := bootstrap
 endif

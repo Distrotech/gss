@@ -233,8 +233,7 @@ gss_krb5_wrap (OM_uint32 * minor_status,
 	    memset (p + 8 + 4, 0, 4);
 	  }
 
-	rc = shishi_encrypt_iv_etype (k5->sh, k5->key, 0, SHISHI_DES3_CBC_NONE,
-				      p + 16, 8,	/* cksum */
+	rc = shishi_encrypt_iv_etype (k5->sh, k5->key, 0, SHISHI_DES3_CBC_NONE, p + 16, 8,	/* cksum */
 				      p + 8, 8, &tmp, &tmplen);
 	if (rc != SHISHI_OK || tmplen != 8)
 	  return GSS_S_FAILURE;
@@ -370,7 +369,7 @@ gss_krb5_unwrap (OM_uint32 * minor_status,
 	if (padlen > 8)
 	  return GSS_S_BAD_MIC;
 	for (i = 1; i <= padlen; i++)
-	  if (data[tok.length - i] != (int)padlen)
+	  if (data[tok.length - i] != (int) padlen)
 	    return GSS_S_BAD_MIC;
 
 	/* Write header and confounder next to data */
@@ -401,7 +400,8 @@ gss_krb5_unwrap (OM_uint32 * minor_status,
 	    return GSS_S_FAILURE;
 	  }
 
-	memcpy (output_message_buffer->value, pt, tok.length - 4 * 8 - padlen);
+	memcpy (output_message_buffer->value, pt,
+		tok.length - 4 * 8 - padlen);
       }
       break;
 

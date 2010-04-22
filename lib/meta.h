@@ -123,7 +123,8 @@ typedef struct _gss_mech_api_struct
 
 _gss_mech_api_t _gss_find_mech (const gss_OID oid);
 _gss_mech_api_t _gss_find_mech_no_default (const gss_OID oid);
-_gss_mech_api_t _gss_find_mech_by_saslname (const gss_buffer_t sasl_mech_name);
+_gss_mech_api_t _gss_find_mech_by_saslname (const gss_buffer_t
+					    sasl_mech_name);
 OM_uint32 _gss_indicate_mechs1 (OM_uint32 * minor_status,
 				gss_OID_set * mech_set);
 

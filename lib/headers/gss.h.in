@@ -24,7 +24,8 @@
 #define _GSS_H
 
 # ifdef __cplusplus
-extern "C" {
+extern "C"
+{
 # endif
 
   /**
@@ -74,11 +75,13 @@ extern "C" {
 
 # include <gss/api.h>
 # include <gss/ext.h>
+  /* *INDENT-OFF* */
 @INCLUDE_GSS_KRB5@
 @INCLUDE_GSS_KRB5_EXT@
+  /* *INDENT-ON* */
 
 # ifdef __cplusplus
 }
 # endif
 
-#endif /* _GSS_H */
+#endif				/* _GSS_H */

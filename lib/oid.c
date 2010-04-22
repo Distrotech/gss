@@ -36,6 +36,7 @@
 gss_OID_desc GSS_C_NT_USER_NAME_static = {
   10, (void *) "\x2a\x86\x48\x86\xf7\x12\x01\x02\x01\x01"
 };
+
 gss_OID GSS_C_NT_USER_NAME = &GSS_C_NT_USER_NAME_static;
 
 /*
@@ -52,6 +53,7 @@ gss_OID GSS_C_NT_USER_NAME = &GSS_C_NT_USER_NAME_static;
 gss_OID_desc GSS_C_NT_MACHINE_UID_NAME_static = {
   10, (void *) "\x2a\x86\x48\x86\xf7\x12\x01\x02\x01\x02"
 };
+
 gss_OID GSS_C_NT_MACHINE_UID_NAME = &GSS_C_NT_MACHINE_UID_NAME_static;
 
 /*
@@ -68,6 +70,7 @@ gss_OID GSS_C_NT_MACHINE_UID_NAME = &GSS_C_NT_MACHINE_UID_NAME_static;
 gss_OID_desc GSS_C_NT_STRING_UID_NAME_static = {
   10, (void *) "\x2a\x86\x48\x86\xf7\x12\x01\x02\x01\x03"
 };
+
 gss_OID GSS_C_NT_STRING_UID_NAME = &GSS_C_NT_STRING_UID_NAME_static;
 
 /*
@@ -90,6 +93,7 @@ gss_OID GSS_C_NT_STRING_UID_NAME = &GSS_C_NT_STRING_UID_NAME_static;
 gss_OID_desc GSS_C_NT_HOSTBASED_SERVICE_X_static = {
   6, (void *) "\x2b\x06\x01\x05\x06\x02"
 };
+
 gss_OID GSS_C_NT_HOSTBASED_SERVICE_X = &GSS_C_NT_HOSTBASED_SERVICE_X_static;
 
 /*
@@ -106,6 +110,7 @@ gss_OID GSS_C_NT_HOSTBASED_SERVICE_X = &GSS_C_NT_HOSTBASED_SERVICE_X_static;
 gss_OID_desc GSS_C_NT_HOSTBASED_SERVICE_static = {
   10, (void *) "\x2a\x86\x48\x86\xf7\x12\x01\x02\x01\x04"
 };
+
 gss_OID GSS_C_NT_HOSTBASED_SERVICE = &GSS_C_NT_HOSTBASED_SERVICE_static;
 
 /*
@@ -121,6 +126,7 @@ gss_OID GSS_C_NT_HOSTBASED_SERVICE = &GSS_C_NT_HOSTBASED_SERVICE_static;
 gss_OID_desc GSS_C_NT_ANONYMOUS_static = {
   6, (void *) "\x2b\x06\01\x05\x06\x03"
 };
+
 gss_OID GSS_C_NT_ANONYMOUS = &GSS_C_NT_ANONYMOUS_static;
 
 
@@ -137,4 +143,5 @@ gss_OID GSS_C_NT_ANONYMOUS = &GSS_C_NT_ANONYMOUS_static;
 gss_OID_desc GSS_C_NT_EXPORT_NAME_static = {
   6, (void *) "\x2b\x06\x01\x05\x06\x04"
 };
+
 gss_OID GSS_C_NT_EXPORT_NAME = &GSS_C_NT_EXPORT_NAME_static;

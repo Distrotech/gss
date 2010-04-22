@@ -393,8 +393,7 @@ gss_krb5_accept_sec_context (OM_uint32 * minor_status,
     return GSS_S_FAILURE;
 
   rc = _gss_krb5_checksum_parse (minor_status,
-				 context_handle,
-				 input_chan_bindings);
+				 context_handle, input_chan_bindings);
   if (rc != GSS_S_COMPLETE)
     return GSS_S_FAILURE;
 
@@ -415,9 +414,8 @@ gss_krb5_accept_sec_context (OM_uint32 * minor_status,
 	}
 
       rc = shishi_encapreppart_seqnumber_get (cxk5->sh,
-					      shishi_ap_encapreppart (cxk5->
-								      ap),
-					      &cxk5->acceptseqnr);
+					      shishi_ap_encapreppart
+					      (cxk5->ap), &cxk5->acceptseqnr);
       if (rc != SHISHI_OK)
 	{
 	  /* A strict 1964 implementation would return

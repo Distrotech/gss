@@ -99,7 +99,8 @@ main (int argc, char *argv[])
   free (bufdesc.value);
 #endif
 
-  maj_stat = gss_inquire_saslname_for_mech (&min_stat, NULL, NULL, NULL, NULL);
+  maj_stat =
+    gss_inquire_saslname_for_mech (&min_stat, NULL, NULL, NULL, NULL);
   if (maj_stat == GSS_S_CALL_INACCESSIBLE_READ)
     success ("gss_inquire_saslname_for_mech (NULL) success\n");
   else

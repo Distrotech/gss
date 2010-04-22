@@ -88,8 +88,7 @@ gss_import_name (OM_uint32 * minor_status,
       return GSS_S_FAILURE;
     }
   memcpy ((*output_name)->value,
-	  input_name_buffer->value,
-	  input_name_buffer->length);
+	  input_name_buffer->value, input_name_buffer->length);
 
   (*output_name)->type = input_name_type;
 

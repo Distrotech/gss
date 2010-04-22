@@ -60,7 +60,7 @@ _gss_asn1_length_der (size_t len, unsigned char *ans, size_t * ans_len)
 }
 
 static size_t
-_gss_asn1_get_length_der (const char *der, size_t der_len, size_t *len)
+_gss_asn1_get_length_der (const char *der, size_t der_len, size_t * len)
 {
   size_t ans;
   size_t k, punt;
@@ -163,8 +163,7 @@ _gss_encapsulate_token_prefix (const char *prefix, size_t prefixlen,
  **/
 extern OM_uint32
 gss_encapsulate_token (const gss_buffer_t input_token,
-		       const gss_OID token_oid,
-		       gss_buffer_t output_token)
+		       const gss_OID token_oid, gss_buffer_t output_token)
 {
   int rc;
 
@@ -263,8 +262,7 @@ _gss_decapsulate_token (const char *in, size_t inlen,
  **/
 OM_uint32
 gss_decapsulate_token (const gss_buffer_t input_token,
-		       const gss_OID token_oid,
-		       gss_buffer_t output_token)
+		       const gss_OID token_oid, gss_buffer_t output_token)
 {
   gss_OID_desc tmpoid;
   char *oid = NULL, *out = NULL;
@@ -279,8 +277,7 @@ gss_decapsulate_token (const gss_buffer_t input_token,
 
   if (_gss_decapsulate_token ((char *) input_token->value,
 			      input_token->length,
-			      &oid, &oidlen,
-			      &out, &outlen) != 0)
+			      &oid, &oidlen, &out, &outlen) != 0)
     return GSS_S_DEFECTIVE_TOKEN;
 
   tmpoid.length = oidlen;

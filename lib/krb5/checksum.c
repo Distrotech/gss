@@ -36,10 +36,9 @@ pack_uint32 (OM_uint32 i, char *buf)
 }
 
 static int
-hash_cb (OM_uint32 *minor_status,
+hash_cb (OM_uint32 * minor_status,
 	 gss_ctx_id_t * context_handle,
-	 const gss_channel_bindings_t input_chan_bindings,
-	 char **out)
+	 const gss_channel_bindings_t input_chan_bindings, char **out)
 {
   gss_ctx_id_t ctx = *context_handle;
   _gss_krb5_ctx_t k5 = ctx->krb5;
@@ -100,7 +99,7 @@ hash_cb (OM_uint32 *minor_status,
 
 /* Create the checksum value field from input parameters. */
 OM_uint32
-_gss_krb5_checksum_pack (OM_uint32 *minor_status,
+_gss_krb5_checksum_pack (OM_uint32 * minor_status,
 			 const gss_cred_id_t initiator_cred_handle,
 			 gss_ctx_id_t * context_handle,
 			 const gss_channel_bindings_t input_chan_bindings,
@@ -225,7 +224,7 @@ _gss_krb5_checksum_pack (OM_uint32 *minor_status,
 }
 
 OM_uint32
-_gss_krb5_checksum_parse (OM_uint32 *minor_status,
+_gss_krb5_checksum_parse (OM_uint32 * minor_status,
 			  gss_ctx_id_t * context_handle,
 			  const gss_channel_bindings_t input_chan_bindings)
 {

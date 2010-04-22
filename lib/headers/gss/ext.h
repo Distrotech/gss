@@ -36,12 +36,10 @@ extern int gss_userok (const gss_name_t name, const char *username);
 /* See asn1.c. */
 extern OM_uint32
 gss_encapsulate_token (const gss_buffer_t input_token,
-		       const gss_OID token_oid,
-		       gss_buffer_t output_token);
+		       const gss_OID token_oid, gss_buffer_t output_token);
 extern OM_uint32
 gss_decapsulate_token (const gss_buffer_t input_token,
-		       const gss_OID token_oid,
-		       gss_buffer_t output_token);
+		       const gss_OID token_oid, gss_buffer_t output_token);
 
 /* Static versions of the public OIDs for use, e.g., in static
    variable initalization.  See oid.c. */

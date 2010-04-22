@@ -262,7 +262,7 @@ main (int argc, char *argv[])
 
   /* Check name */
   service = NULL;
-  bufdesc.value = (char*) "imap@server.example.org@FOO";
+  bufdesc.value = (char *) "imap@server.example.org@FOO";
   bufdesc.length = strlen (bufdesc.value);
 
   maj_stat = gss_import_name (&min_stat, &bufdesc, GSS_C_NT_HOSTBASED_SERVICE,

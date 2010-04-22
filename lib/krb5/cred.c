@@ -38,7 +38,7 @@ acquire_cred1 (OM_uint32 * minor_status,
 
   if (desired_name == GSS_C_NO_NAME)
     {
-      gss_buffer_desc buf = { 4, (char*) "host" };
+      gss_buffer_desc buf = { 4, (char *) "host" };
 
       maj_stat = gss_import_name (minor_status, &buf,
 				  GSS_C_NT_HOSTBASED_SERVICE, &name);

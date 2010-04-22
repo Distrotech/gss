@@ -71,8 +71,8 @@ gss_krb5_canonicalize_name (OM_uint32 * minor_status,
       char *p;
 
       /* We don't support service-names without hostname part because
-	 we can't compute a canonicalized name of the local host.
-	 Calling gethostname does not give a canonicalized name. */
+         we can't compute a canonicalized name of the local host.
+         Calling gethostname does not give a canonicalized name. */
       if (!memchr (input_name->value, '@', input_name->length))
 	{
 	  *minor_status = GSS_KRB5_S_G_BAD_SERVICE_NAME;
@@ -80,7 +80,7 @@ gss_krb5_canonicalize_name (OM_uint32 * minor_status,
 	}
 
       /* We don't do DNS name canoncalization since that is
-	 insecure. */
+         insecure. */
 
       maj_stat = gss_duplicate_name (minor_status, input_name, output_name);
       if (GSS_ERROR (maj_stat))

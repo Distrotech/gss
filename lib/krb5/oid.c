@@ -34,6 +34,7 @@
 gss_OID_desc GSS_KRB5_static = {
   9, (void *) "\x2a\x86\x48\x86\xf7\x12\x01\x02\x02"
 };
+
 gss_OID GSS_KRB5 = &GSS_KRB5_static;
 
 /*
@@ -45,6 +46,7 @@ gss_OID GSS_KRB5 = &GSS_KRB5_static;
 gss_OID_desc GSS_KRB5_NT_USER_NAME_static = {
   10, (void *) "\x2a\x86\x48\x86\xf7\x12\x01\x02\x01\x01"
 };
+
 gss_OID GSS_KRB5_NT_USER_NAME = &GSS_KRB5_NT_USER_NAME_static;
 
 /*
@@ -67,6 +69,7 @@ gss_OID GSS_KRB5_NT_HOSTBASED_SERVICE_NAME =
 gss_OID_desc GSS_KRB5_NT_PRINCIPAL_NAME_static = {
   10, (void *) "\x2a\x86\x48\x86\xf7\x12\x01\x02\x02\x01"
 };
+
 gss_OID GSS_KRB5_NT_PRINCIPAL_NAME = &GSS_KRB5_NT_PRINCIPAL_NAME_static;
 
 /*
@@ -78,6 +81,7 @@ gss_OID GSS_KRB5_NT_PRINCIPAL_NAME = &GSS_KRB5_NT_PRINCIPAL_NAME_static;
 gss_OID_desc GSS_KRB5_NT_MACHINE_UID_NAME_static = {
   10, (void *) "\x2a\x86\x48\x86\xf7\x12\x01\x02\x02\x02"
 };
+
 gss_OID GSS_KRB5_NT_MACHINE_UID_NAME = &GSS_KRB5_NT_MACHINE_UID_NAME_static;
 
 /*
@@ -89,4 +93,5 @@ gss_OID GSS_KRB5_NT_MACHINE_UID_NAME = &GSS_KRB5_NT_MACHINE_UID_NAME_static;
 gss_OID_desc GSS_KRB5_NT_STRING_UID_NAME_static = {
   10, (void *) "\x2a\x86\x48\x86\xf7\x12\x01\x02\x01\x03"
 };
+
 gss_OID GSS_KRB5_NT_STRING_UID_NAME = &GSS_KRB5_NT_STRING_UID_NAME_static;

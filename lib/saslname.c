@@ -26,10 +26,8 @@
 #include "meta.h"
 
 static OM_uint32
-dup_data (OM_uint32 *minor_status,
-	  gss_buffer_t out,
-	  const char *str,
-	  int translate)
+dup_data (OM_uint32 * minor_status,
+	  gss_buffer_t out, const char *str, int translate)
 {
   if (!out)
     return GSS_S_COMPLETE;
@@ -77,7 +75,7 @@ dup_data (OM_uint32 *minor_status,
  * `GSS_S_BAD_MECH`: The @desired_mech OID is unsupported.
  **/
 OM_uint32
-gss_inquire_saslname_for_mech (OM_uint32 *minor_status,
+gss_inquire_saslname_for_mech (OM_uint32 * minor_status,
 			       const gss_OID desired_mech,
 			       gss_buffer_t sasl_mech_name,
 			       gss_buffer_t mech_name,
@@ -105,8 +103,7 @@ gss_inquire_saslname_for_mech (OM_uint32 *minor_status,
   if (dup_data (minor_status, sasl_mech_name,
 		m->sasl_name, 0) != GSS_S_COMPLETE)
     return GSS_S_FAILURE;
-  if (dup_data (minor_status, mech_name,
-		m->mech_name, 0) != GSS_S_COMPLETE)
+  if (dup_data (minor_status, mech_name, m->mech_name, 0) != GSS_S_COMPLETE)
     {
       if (sasl_mech_name)
 	free (sasl_mech_name->value);
@@ -146,9 +143,9 @@ gss_inquire_saslname_for_mech (OM_uint32 *minor_status,
  * `GSS_S_BAD_MECH`: There is no GSS-API mechanism known as @sasl_mech_name.
  **/
 OM_uint32
-gss_inquire_mech_for_saslname (OM_uint32 *minor_status,
+gss_inquire_mech_for_saslname (OM_uint32 * minor_status,
 			       const gss_buffer_t sasl_mech_name,
-			       gss_OID *mech_type)
+			       gss_OID * mech_type)
 {
   _gss_mech_api_t m;
 

@@ -55,10 +55,10 @@ const char version_etc_copyright[] =
 #endif
 
 static void
-usage (int status) GSS_ATTR_NO_RETRUN;
-
-static void
 usage (int status)
+  GSS_ATTR_NO_RETRUN;
+
+     static void usage (int status)
 {
   if (status != EXIT_SUCCESS)
     fprintf (stderr, _("Try `%s --help' for more information.\n"),
@@ -147,10 +147,10 @@ main (int argc, char *argv[])
 		  "into %ld (0x%lx):\n"),
 		GSS_ROUTINE_ERROR (args.major_arg),
 		GSS_ROUTINE_ERROR (args.major_arg),
-		GSS_ROUTINE_ERROR (args.
-				   major_arg) >> GSS_C_ROUTINE_ERROR_OFFSET,
-		GSS_ROUTINE_ERROR (args.
-				   major_arg) >> GSS_C_ROUTINE_ERROR_OFFSET);
+		GSS_ROUTINE_ERROR (args.major_arg) >>
+		GSS_C_ROUTINE_ERROR_OFFSET,
+		GSS_ROUTINE_ERROR (args.major_arg) >>
+		GSS_C_ROUTINE_ERROR_OFFSET);
 
       message_context = 0;
       do
