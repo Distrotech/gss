@@ -361,6 +361,48 @@ main (int argc, char *argv[])
   else
     fail ("gss_release_buffer() failed (%d,%d)\n", maj_stat, min_stat);
 
+  /* Encapsulate. */
+  bufdesc.value = (char *) "context token";
+  bufdesc.length = strlen (bufdesc.value);
+  maj_stat = gss_encapsulate_token (&bufdesc, GSS_C_NT_USER_NAME, &bufdesc2);
+  if (maj_stat == GSS_S_COMPLETE)
+    success ("gss_encapsulate_token() OK\n");
+  else
+    fail ("gss_encapsulate_token() failed (%d)\n", maj_stat);
+
+  maj_stat = gss_decapsulate_token (&bufdesc2, GSS_C_NT_ANONYMOUS, &bufdesc);
+  if (maj_stat == GSS_S_DEFECTIVE_TOKEN)
+    success ("gss_decapsulate_token(bad oid) OK\n");
+  else
+    fail ("gss_decapsulate_token() failed (%d)\n", maj_stat);
+
+  n = ((char *)bufdesc2.value)[3];
+  ((char *)bufdesc2.value)[3] = 42;
+  maj_stat = gss_decapsulate_token (&bufdesc2, GSS_C_NT_USER_NAME, &bufdesc);
+  ((char *)bufdesc2.value)[3] = n;
+  if (maj_stat == GSS_S_DEFECTIVE_TOKEN)
+    success ("gss_decapsulate_token(bad length) OK\n");
+  else
+    fail ("gss_decapsulate_token() failed (%d)\n", maj_stat);
+
+  maj_stat = gss_decapsulate_token (&bufdesc2, GSS_C_NT_USER_NAME, &bufdesc);
+  if (maj_stat == GSS_S_COMPLETE)
+    success ("gss_decapsulate_token() OK\n");
+  else
+    fail ("gss_decapsulate_token() failed (%d)\n", maj_stat);
+
+  maj_stat = gss_release_buffer (&min_stat, &bufdesc);
+  if (maj_stat == GSS_S_COMPLETE)
+    success ("gss_release_buffer() OK\n");
+  else
+    fail ("gss_release_buffer() failed (%d,%d)\n", maj_stat, min_stat);
+
+  maj_stat = gss_release_buffer (&min_stat, &bufdesc2);
+  if (maj_stat == GSS_S_COMPLETE)
+    success ("gss_release_buffer() OK\n");
+  else
+    fail ("gss_release_buffer() failed (%d,%d)\n", maj_stat, min_stat);
+
   if (debug)
     printf ("Basic self tests done with %d errors\n", error_count);
 
