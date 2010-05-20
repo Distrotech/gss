@@ -156,6 +156,7 @@ AC_MSG_NOTICE([summary of build options:
   Compiler:           ${CC}
   Warning flags:      errors: ${WERROR_CFLAGS} warnings: ${WARN_CFLAGS}
   Library types:      Shared=${enable_shared}, Static=${enable_static}
+  Valgrind:           ${VALGRIND}
   Version script:     $have_ld_version_script
   Enable krb5 mech:   $kerberos5
   I18n domain suffix: ${PO_SUFFIX:-none}
