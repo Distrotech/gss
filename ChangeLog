@@ -1,3 +1,165 @@
+2010-05-20  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS: Version 1.0.1.
+
+2010-05-20  Simon Josefsson <simon@josefsson.org>
+
+	* doc/gendocs_template, gl/override/doc/gendocs_template.diff: Fix
+	HTML page.
+
+2010-05-20  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS: Add.
+
+2010-05-20  Simon Josefsson <simon@josefsson.org>
+
+	* .gitignore: Add.
+
+2010-05-20  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS, cfg.mk, doc/reference/Makefile.am, gtk-doc.make,
+	m4/gtk-doc.m4: Update GTK-DOC files to build PDF file.
+
+2010-05-20  Simon Josefsson <simon@josefsson.org>
+
+	* po/zh_CN.po.in: Sync with TP.
+
+2010-05-20  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS: Reorder.
+
+2010-05-20  Simon Josefsson <simon@josefsson.org>
+
+	* THANKS: Add.
+
+2010-05-20  Simon Josefsson <simon@josefsson.org>
+
+	* tests/Makefile.am: Link krb5context with -lshishi directly because
+	it uses Shishi functions.  Reported by ludo@gnu.org (Ludovic Courtès).
+
+2010-05-20  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS, doc/gss.texi, src/gss.c, src/gss.ggo: Add gss
+	--list-mechanisms.  Document gss tool.
+
+2010-05-20  Simon Josefsson <simon@josefsson.org>
+
+	* src/gl/Makefile.am, src/gl/errno.in.h, src/gl/error.c,
+	src/gl/error.h, src/gl/intprops.h, src/gl/m4/errno_h.m4,
+	src/gl/m4/error.m4, src/gl/m4/gnulib-cache.m4,
+	src/gl/m4/gnulib-comp.m4, src/gl/m4/strerror.m4,
+	src/gl/m4/string_h.m4, src/gl/strerror.c, src/gl/string.in.h,
+	src/gss.c: Restructure gss tool.  Use error module.
+
+2010-05-20  Simon Josefsson <simon@josefsson.org>
+
+	* src/gss.c: Fix --help typo.
+
+2010-05-20  Simon Josefsson <simon@josefsson.org>
+
+	* configure.ac: Improve final debug output.
+
+2010-05-20  Simon Josefsson <simon@josefsson.org>
+
+	* configure.ac, doc/gendocs_template, gl/Makefile.am,
+	gl/m4/gnulib-cache.m4, gl/m4/gnulib-comp.m4,
+	gl/m4/valgrind-tests.m4, m4/valgrind.m4: Update gnulib files, use
+	valgrind-tests module.
+
+2010-05-17  Simon Josefsson <simon@josefsson.org>
+
+	* build-aux/c++defs.h, build-aux/gendocs.sh, build-aux/gnupload,
+	gl/m4/gnulib-common.m4, lib/gl/m4/gnulib-common.m4, maint.mk,
+	src/gl/Makefile.am, src/gl/m4/gnulib-common.m4,
+	src/gl/m4/unistd_h.m4, src/gl/unistd.in.h: Update gnulib files.
+
+2010-04-27  Simon Josefsson <simon@josefsson.org>
+
+	* tests/basic.c: Test capsulation functions more.
+
+2010-04-25  Simon Josefsson <simon@josefsson.org>
+
+	* build-aux/vc-list-files, maint.mk: Update gnulib files.
+
+2010-04-22  Simon Josefsson <simon@josefsson.org>
+
+	* configure.ac: Fix Shishi detection.
+
+2010-04-22  Simon Josefsson <simon@josefsson.org>
+
+	* lib/headers/gss/krb5-ext.h, lib/headers/gss/krb5.h,
+	lib/krb5/cred.c, lib/krb5/k5internal.h, lib/krb5/name.c,
+	lib/krb5/oid.c, lib/krb5/protos.h, lib/krb5/utils.c: Bump copyright
+	years.
+
+2010-04-22  Simon Josefsson <simon@josefsson.org>
+
+	* .clcopying, .cvsusers, AUTHORS, Makefile.am, NEWS, README,
+	THANKS, cfg.mk, configure.ac, doc/Makefile.gdoci, gss.pc.in,
+	lib/Makefile.am, lib/cred.c, lib/msg.c, lib/name.c, lib/obsolete.c,
+	lib/oid.c, lib/version.c, src/Makefile.am, src/gss.ggo,
+	tests/Makefile.am, tests/threadsafety: Bump copyright years.  Fix
+	PGP key.
+
+2010-04-22  Simon Josefsson <simon@josefsson.org>
+
+	* cfg.mk, lib/asn1.c, lib/headers/gss.h.in, lib/headers/gss/api.h,
+	lib/headers/gss/ext.h, lib/krb5/checksum.c, lib/krb5/checksum.h,
+	lib/krb5/context.c, lib/krb5/cred.c, lib/krb5/msg.c,
+	lib/krb5/name.c, lib/krb5/oid.c, lib/meta.c, lib/meta.h,
+	lib/name.c, lib/obsolete.c, lib/oid.c, lib/saslname.c,
+	lib/version.c, src/gss.c, tests/basic.c, tests/krb5context.c,
+	tests/saslname.c: Indent code.
+
+2010-04-22  Simon Josefsson <simon@josefsson.org>
+
+	* gl/Makefile.am~, gl/m4/gnulib-cache.m4~, gl/m4/gnulib-comp.m4~: 
+	Remove backup files.
+
+2010-04-22  Simon Josefsson <simon@josefsson.org>
+
+	* maint.mk, src/gl/getopt.c, src/gl/getopt_int.h,
+	src/gl/m4/getopt.m4: Update gnulib files.
+
+2010-04-14  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS, configure.ac: Make sure we have a recent Shishi.
+
+2010-04-13  Simon Josefsson <simon@josefsson.org>
+
+	* m4/valgrind.m4: Use valgrind -q.
+
+2010-04-13  Simon Josefsson <simon@josefsson.org>
+
+	* .x-sc_prohibit_empty_lines_at_EOF, .x-sc_prohibit_test_minus_ao,
+	GNUmakefile, NEWS, build-aux/c++defs.h, build-aux/warn-on-use.h,
+	doc/reference/Makefile.am, gl/m4/gnulib-common.m4,
+	gl/m4/gnulib-comp.m4, gl/m4/gnulib-comp.m4~, gl/m4/lib-link.m4,
+	lib/gl/Makefile.am, lib/gl/m4/gnulib-common.m4,
+	lib/gl/m4/gnulib-comp.m4, lib/gl/m4/string_h.m4,
+	lib/gl/string.in.h, maint.mk, src/gl/Makefile.am,
+	src/gl/getopt.in.h, src/gl/m4/gnulib-common.m4,
+	src/gl/m4/gnulib-comp.m4, src/gl/m4/unistd_h.m4,
+	src/gl/stdarg.in.h, src/gl/unistd.in.h: Update gnulib files and fix
+	new syntax-check warnings.
+
+2010-04-13  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS, po/fi.po.in, po/id.po.in, po/pl.po.in, po/vi.po.in: Sync
+	with TP.
+
+2010-03-30  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS, configure.ac: Bump versions.
+
+2010-03-30  Simon Josefsson <simon@josefsson.org>
+
+	* doc/announce.txt: Update for 1.0.0.
+
+2010-03-30  Simon Josefsson <simon@josefsson.org>
+
+	* ChangeLog: Generated.
+
 2010-03-30  Simon Josefsson <simon@josefsson.org>
 
 	* Makefile.am: Need to distclean po/Makevars because it is
@@ -6350,7 +6512,8 @@
 
 	-----
 
-	Copyright (C) 2003, 2004, 2005, 2006, 2007, 2008 Simon Josefsson
+	Copyright (C) 2003, 2004, 2005, 2006, 2007, 2008, 2009,
+        2010 Simon Josefsson
 
 	Copying and distribution of this file, with or without
 	modification, are permitted provided the copyright notice
