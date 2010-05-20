@@ -40,6 +40,8 @@ TESTS = $(buildtests) threadsafety
 check_PROGRAMS = $(buildtests)
 dist_check_SCRIPTS = threadsafety
 
+krb5context_LDADD = $(LDADD) @LTLIBSHISHI@
+
 EXTRA_DIST = krb5context.key krb5context.tkt utils.c shishi.conf
 
 localedir = $(datadir)/locale
