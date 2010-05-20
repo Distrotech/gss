@@ -78,7 +78,7 @@ Mandatory arguments to long options are mandatory for short options too.\n\
       fputs (_("\
   -h, --help        Print help and exit\n\
   -V, --version     Print version and exit\n\
-  -m, --major=LONG  Describe a `major status' error code vaue in plain text.\n\
+  -m, --major=LONG  Describe a `major status' error code value.\n\
   -q, --quiet       Silent operation  (default=off)\n\
 "), stdout);
       emit_bug_reporting_address ();
