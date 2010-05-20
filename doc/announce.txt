@@ -1,6 +1,5 @@
 To: help-gss@gnu.org, info-gnu@gnu.org
-Subject: Generic Security Service Library (GSSLib) 1.0.0
-
+Subject: Generic Security Service Library (GSSLib) 1.0.1
 <#part sign=pgpmime>
 GSSLib is an implementation of the Generic Security Service
 Application Program Interface (GSS-API).  GSS-API is used by network
@@ -10,26 +9,24 @@ library, a manual, and a command line tool for debugging purposes.
 
 Noteworthy changes since the last version:
 
-* Version 1.0.0 (released 2010-03-30)
+* Version 1.0.1 (released 2010-05-20)
 
-** Rarely used GNU GSS extensions removed.
-The removed APIs are gss_copy_oid, gss_duplicate_oid, and
-gss_encapsulate_token_prefix.
+** gss: New --list-mechanisms (-l) to list supported mechanisms in library.
 
-** Align capsulation functions with Heimdal and specification document.
-The functions are gss_encapsulate_token and gss_decapsulate_token.
-The semantics and function prototypes changed slightly.
+** doc: Added section documenting command-line tool "gss".
 
-** Added --with-po-suffix configure parameter to modify the gettext domain.
-This parameter is useful when you want to have both this version and
-the older version installed at the same time.
+** doc: Added PDF version of API reference manual.
+See doc/reference/gss.pdf.
+
+** i18n: Translations were updated.
+
+** build: The check for GNU Shishi now requires 0.0.42 or later.
+Earlier Shishi versions had bugs that caused the self-checks to fail.
+
+** build: Update gnulib files.
 
 ** API and ABI modifications.
-gss_copy_oid: REMOVED.
-gss_duplicate_oid: REMOVED.
-gss_encapsulate_token_prefix: REMOVED.
-gss_encapsulate_token: MODIFIED.
-gss_decapsulate_token: MODIFIED.
+No changes since last version.
 
 While written to be flexible with regards to different GSS mechanisms,
 the only currently supported mechanism is Kerberos V5 via GNU Shishi.
@@ -61,11 +58,13 @@ The project's web page is available at:
 All manuals are available from:
   http://www.gnu.org/software/gss/manual/
 
-Specifically, the following formats are available.
+Direct links to the manual:
+  HTML: http://www.gnu.org/software/gss/manual/gss.html
+  PDF: http://www.gnu.org/software/gss/manual/gss.pdf
 
-The main manual:
-  http://www.gnu.org/software/gss/manual/gss.html - HTML format
-  http://www.gnu.org/software/gss/manual/gss.pdf - PDF format
+Direct links to the API Reference manual:
+  HTML: http://www.gnu.org/software/gss/reference/
+  PDF: http://www.gnu.org/software/gss/reference/gss.pdf
 
 For code coverage and cyclomatic code complexity charts:
   http://www.gnu.org/software/gss/coverage/
@@ -76,8 +75,8 @@ invited to join our help-gss mailing list, see:
   http://lists.gnu.org/mailman/listinfo/help-gss
 
 Here are the compressed sources of the entire package:
-  ftp://ftp.gnu.org/gnu/gss/gss-1.0.0.tar.gz (1.9MB)
-  ftp://ftp.gnu.org/gnu/gss/gss-1.0.0.tar.gz.sig (OpenPGP signature)
+  ftp://ftp.gnu.org/gnu/gss/gss-1.0.1.tar.gz (2.1MB)
+  ftp://ftp.gnu.org/gnu/gss/gss-1.0.1.tar.gz.sig (OpenPGP signature)
 
 We also provide pre-built Windows binaries:
   http://josefsson.org/gnutls4win/gss-1.0.0.zip
@@ -104,14 +103,14 @@ The key is available from:
 
 Here are the SHA-1 and SHA-224 checksums:
 
-f992c7b6f8bff6606570d5600f56b8a93dc77656  gss-1.0.0.tar.gz
-e5f2c6e85c745d05444512b426fa2603f48da85712322049c8549405  gss-1.0.0.tar.gz
+ae1ef7c7fa708db8a399312041d75e73621689ea  gss-1.0.1.tar.gz
+59f1d33d6dc54c5dd2acca4e7bddf7797e0b9d9d639752539b30e3bd  gss-1.0.1.tar.gz
 
-eb6eb267c9707263d35a52474ed765da47c71341  gss-1.0.0.zip
-880bafde1b81ad824d1c8aa4df54a317d81df6feb49ad11ced8f91d2  gss-1.0.0.zip
+3963f8bfeabe61b976d332a7516f87bcfa566c80  gss-1.0.1.zip
+40167ed226c9bed5a5fa5fad1c0ab674506d6816079f1418c25ae28f  gss-1.0.1.zip
 
-bd313a2afa302fb6d5278e158fa089654fa8222a  mingw32-gss_1.0.0-1_all.deb
-b30e9e326f6ea396968abfb44db9bf8912cdf82ca11303de21c3d735  mingw32-gss_1.0.0-1_all.deb
+a290bef163773d16fbe0a3fe5f5f2303ef83c9c5  mingw32-gss_1.0.1-1_all.deb
+7199dc1467fbb7ff517b958b64f2e0016ada8bbd3ca7ae3592855f54  mingw32-gss_1.0.1-1_all.deb
 
 Happy hacking,
 Simon
