@@ -19,7 +19,7 @@
 
 WFLAGS ?= --enable-gcc-warnings
 ADDFLAGS ?=
-CFGFLAGS ?= --enable-gtk-doc $(ADDFLAGS) $(WFLAGS)
+CFGFLAGS ?= --enable-gtk-doc --enable-gtk-doc-pdf $(ADDFLAGS) $(WFLAGS)
 
 INDENT_SOURCES = `find . -name \*.[ch] -o -name gss.h.in | grep -v -e ^./build-aux/ -e ^./lib/gl/ -e ^./gl/ -e ^./src/gl/`
 

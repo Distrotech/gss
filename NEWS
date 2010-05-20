@@ -4,9 +4,11 @@ See the end for copying conditions.
 
 * Version 1.0.1 (unreleased)
 
-** gss: Added parameter --list-mechanisms (-l) to list supported mechanisms.
+** gss: New --list-mechanisms (-l) to list supported mechanisms in library.
 
 ** doc: Added section documenting command-line tool "gss".
+
+** doc: Added PDF version of API reference manual.
 
 ** i18n: Translations were updated.
 
