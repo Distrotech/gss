@@ -1,9 +1,10 @@
-61a62,69
+61a62,70
 > 
-> <p>The manual is also available in a few experimental formats:
+> <p>There is also an API reference manual:
 > 
 > <ul>
 >   <li><a href="../reference/">HTML Reference API Manual (GTK-DOC)</a>.
+>   <li><a href="../reference/%%PACKAGE%%.pdf">PDF Reference API Manual (GTK-DOC)</a>.
 >   <li><a href="../reference/%%PACKAGE%%.devhelp">DevHelp Reference API Manual (GTK-DOC)</a>.
 > </ul>
 > 
