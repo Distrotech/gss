@@ -38,6 +38,7 @@ AC_DEFUN([gl_EARLY],
   # Code from module manywarnings:
   # Code from module pmccabe2html:
   # Code from module useless-if-before-free:
+  # Code from module valgrind-tests:
   # Code from module vc-list-files:
   # Code from module warnings:
 ])
@@ -82,6 +83,8 @@ AC_DEFUN([gl_INIT],
   # Code from module pmccabe2html:
   AC_PATH_PROG([PMCCABE], [pmccabe], [false])
   # Code from module useless-if-before-free:
+  # Code from module valgrind-tests:
+  gl_VALGRIND_TESTS
   # Code from module vc-list-files:
   # Code from module warnings:
   AC_SUBST([WARN_CFLAGS])
@@ -132,6 +135,7 @@ changequote([, ])dnl
   AC_SUBST([gltests_WITNESS])
   gl_module_indicator_condition=$gltests_WITNESS
   m4_pushdef([gl_MODULE_INDICATOR_CONDITION], [$gl_module_indicator_condition])
+  gl_VALGRIND_TESTS
   m4_popdef([gl_MODULE_INDICATOR_CONDITION])
   m4_ifval(gltests_LIBSOURCES_LIST, [
     m4_syscmd([test ! -d ]m4_defn([gltests_LIBSOURCES_DIR])[ ||
@@ -241,6 +245,7 @@ AC_DEFUN([gl_FILE_LIST], [
   m4/lib-link.m4
   m4/lib-prefix.m4
   m4/manywarnings.m4
+  m4/valgrind-tests.m4
   m4/warnings.m4
   top/GNUmakefile
   top/maint.mk

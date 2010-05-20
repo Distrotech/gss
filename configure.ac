@@ -94,7 +94,6 @@ AC_SUBST(INCLUDE_GSS_KRB5_EXT)
 # Check for gtk-doc.
 GTK_DOC_CHECK(1.1)
 
-sj_VALGRIND
 sj_PO_SUFFIX($DLL_VERSION)
 
 AC_ARG_ENABLE([gcc-warnings],
