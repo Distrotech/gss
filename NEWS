@@ -9,6 +9,7 @@ See the end for copying conditions.
 ** doc: Added section documenting command-line tool "gss".
 
 ** doc: Added PDF version of API reference manual.
+See doc/reference/gss.pdf.
 
 ** i18n: Translations were updated.
 
