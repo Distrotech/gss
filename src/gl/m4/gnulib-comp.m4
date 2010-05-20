@@ -27,12 +27,15 @@ AC_DEFUN([srcgl_EARLY],
   AC_REQUIRE([AC_PROG_RANLIB])
   # Code from module arg-nonnull:
   # Code from module c++defs:
+  # Code from module errno:
+  # Code from module error:
   # Code from module extensions:
   AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
   # Code from module getopt-gnu:
   # Code from module getopt-posix:
   # Code from module gettext-h:
   # Code from module include_next:
+  # Code from module intprops:
   # Code from module progname:
   # Code from module stdarg:
   dnl Some compilers (e.g., AIX 5.3 cc) need to be in c99 mode
@@ -41,6 +44,8 @@ AC_DEFUN([srcgl_EARLY],
   dnl shouldn't hurt, though installers are on their own to set c99 mode.
   AC_REQUIRE([AC_PROG_CC_STDC])
   # Code from module stddef:
+  # Code from module strerror:
+  # Code from module string:
   # Code from module unistd:
   # Code from module version-etc:
   # Code from module warn-on-use:
@@ -62,6 +67,13 @@ AC_DEFUN([srcgl_INIT],
   gl_source_base='src/gl'
   # Code from module arg-nonnull:
   # Code from module c++defs:
+  # Code from module errno:
+  gl_HEADER_ERRNO_H
+  # Code from module error:
+  gl_ERROR
+  m4_ifdef([AM_XGETTEXT_OPTION],
+    [AM_][XGETTEXT_OPTION([--flag=error:3:c-format])
+     AM_][XGETTEXT_OPTION([--flag=error_at_line:5:c-format])])
   # Code from module extensions:
   # Code from module getopt-gnu:
   gl_FUNC_GETOPT_GNU
@@ -72,6 +84,7 @@ AC_DEFUN([srcgl_INIT],
   AC_SUBST([LIBINTL])
   AC_SUBST([LTLIBINTL])
   # Code from module include_next:
+  # Code from module intprops:
   # Code from module progname:
   AC_CHECK_DECLS([program_invocation_name], [], [], [#include <errno.h>])
   AC_CHECK_DECLS([program_invocation_short_name], [], [], [#include <errno.h>])
@@ -79,6 +92,11 @@ AC_DEFUN([srcgl_INIT],
   gl_STDARG_H
   # Code from module stddef:
   gl_STDDEF_H
+  # Code from module strerror:
+  gl_FUNC_STRERROR
+  gl_STRING_MODULE_INDICATOR([strerror])
+  # Code from module string:
+  gl_HEADER_STRING_H
   # Code from module unistd:
   gl_UNISTD_H
   # Code from module version-etc:
@@ -223,25 +241,35 @@ AC_DEFUN([srcgl_FILE_LIST], [
   build-aux/arg-nonnull.h
   build-aux/c++defs.h
   build-aux/warn-on-use.h
+  lib/errno.in.h
+  lib/error.c
+  lib/error.h
   lib/getopt.c
   lib/getopt.in.h
   lib/getopt1.c
   lib/getopt_int.h
   lib/gettext.h
+  lib/intprops.h
   lib/progname.c
   lib/progname.h
   lib/stdarg.in.h
   lib/stddef.in.h
+  lib/strerror.c
+  lib/string.in.h
   lib/unistd.in.h
   lib/version-etc.c
   lib/version-etc.h
   m4/00gnulib.m4
+  m4/errno_h.m4
+  m4/error.m4
   m4/extensions.m4
   m4/getopt.m4
   m4/gnulib-common.m4
   m4/include_next.m4
   m4/stdarg.m4
   m4/stddef_h.m4
+  m4/strerror.m4
+  m4/string_h.m4
   m4/unistd_h.m4
   m4/version-etc.m4
   m4/warn-on-use.m4

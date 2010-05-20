@@ -39,6 +39,7 @@
 
 /* Gnulib utils. */
 #include "progname.h"
+#include "error.h"
 #include "version-etc.h"
 
 const char version_etc_copyright[] =
@@ -86,15 +87,159 @@ Mandatory arguments to long options are mandatory for short options too.\n\
   exit (status);
 }
 
+static int
+describe_major (unsigned int quiet, long major)
+{
+  gss_buffer_desc status_string;
+  OM_uint32 message_context = 0;
+  OM_uint32 maj = 0, min;
+  size_t i;
+  int rc = 0;
+
+  if (!quiet)
+    {
+      printf (_("GSS-API major status code %ld (0x%lx).\n\n"),
+	      major, major);
+
+      printf (_("   MSB                               "
+		"                                  LSB\n"
+		"   +-----------------+---------------"
+		"--+---------------------------------+\n"
+		"   |  Calling Error  |  Routine Error"
+		"  |       Supplementary Info        |\n   | "));
+      for (i = 0; i < 8; i++)
+	printf ("%ld ", (major >> (31 - i)) & 1);
+      printf ("| ");
+      for (i = 0; i < 8; i++)
+	printf ("%ld ", (major >> (23 - i)) & 1);
+      printf ("| ");
+      for (i = 0; i < 16; i++)
+	printf ("%ld ", (major >> (15 - i)) & 1);
+      printf (_("|\n"
+		"   +-----------------+---------------"
+		"--+---------------------------------+\n"
+		"Bit 31            24  23            1"
+		"6  15                             0\n\n"));
+    }
+
+  if (GSS_ROUTINE_ERROR (major))
+    {
+      if (!quiet)
+	printf (_("Masked routine error %ld (0x%lx) shifted "
+		  "into %ld (0x%lx):\n"),
+		GSS_ROUTINE_ERROR (major),
+		GSS_ROUTINE_ERROR (major),
+		GSS_ROUTINE_ERROR (major) >>
+		GSS_C_ROUTINE_ERROR_OFFSET,
+		GSS_ROUTINE_ERROR (major) >>
+		GSS_C_ROUTINE_ERROR_OFFSET);
+
+      message_context = 0;
+      do
+	{
+	  maj = gss_display_status (&min, GSS_ROUTINE_ERROR (major),
+				    GSS_C_GSS_CODE, GSS_C_NO_OID,
+				    &message_context, &status_string);
+	  if (GSS_ERROR (maj))
+	    {
+	      error (0, 0, _("displaying status code failed (%d)"), maj);
+	      rc = 1;
+	      break;
+	    }
+
+	  printf ("%.*s\n", (int) status_string.length,
+		  (char *) status_string.value);
+
+	  gss_release_buffer (&min, &status_string);
+	}
+      while (message_context);
+
+      if (!quiet)
+	printf ("\n");
+    }
+
+  if (GSS_CALLING_ERROR (major))
+    {
+      if (!quiet)
+	printf
+	  (_("Masked calling error %ld (0x%lx) shifted into %ld (0x%lx):\n"),
+	   GSS_CALLING_ERROR (major),
+	   GSS_CALLING_ERROR (major),
+	   GSS_CALLING_ERROR (major) >> GSS_C_CALLING_ERROR_OFFSET,
+	   GSS_CALLING_ERROR (major) >> GSS_C_CALLING_ERROR_OFFSET);
+
+      message_context = 0;
+      do
+	{
+	  maj = gss_display_status (&min, GSS_CALLING_ERROR (major),
+				    GSS_C_GSS_CODE, GSS_C_NO_OID,
+				    &message_context, &status_string);
+	  if (GSS_ERROR (maj))
+	    {
+	      error (0, 0, _("displaying status code failed (%d)"), maj);
+	      rc = 1;
+	      break;
+	    }
+
+	  printf ("%.*s\n", (int) status_string.length,
+		  (char *) status_string.value);
+
+	  gss_release_buffer (&min, &status_string);
+	}
+      while (message_context);
+
+      if (!quiet)
+	printf ("\n");
+    }
+
+  if (GSS_SUPPLEMENTARY_INFO (major))
+    {
+      if (!quiet)
+	printf (_("Masked supplementary info %ld (0x%lx) shifted "
+		  "into %ld (0x%lx):\n"),
+		GSS_SUPPLEMENTARY_INFO (major),
+		GSS_SUPPLEMENTARY_INFO (major),
+		GSS_SUPPLEMENTARY_INFO (major) >>
+		GSS_C_SUPPLEMENTARY_OFFSET,
+		GSS_SUPPLEMENTARY_INFO (major) >>
+		GSS_C_SUPPLEMENTARY_OFFSET);
+
+      message_context = 0;
+      do
+	{
+	  maj = gss_display_status (&min,
+				    GSS_SUPPLEMENTARY_INFO (major),
+				    GSS_C_GSS_CODE, GSS_C_NO_OID,
+				    &message_context, &status_string);
+	  if (GSS_ERROR (maj))
+	    {
+	      error (0, 0, _("displaying status code failed (%d)"), maj);
+	      rc = 1;
+	      break;
+	    }
+
+	  printf ("%.*s\n", (int) status_string.length,
+		  (char *) status_string.value);
+
+	  gss_release_buffer (&min, &status_string);
+	}
+      while (message_context);
+
+      if (!quiet)
+	printf ("\n");
+    }
+
+  if (major == GSS_S_COMPLETE)
+    printf (_("No error\n"));
+
+  return rc;
+}
+
 int
 main (int argc, char *argv[])
 {
   struct gengetopt_args_info args;
-  gss_buffer_desc status_string;
-  OM_uint32 message_context = 0;
-  OM_uint32 maj = 0, min;
   int rc = 0;
-  size_t i;
 
   setlocale (LC_ALL, "");
   set_program_name (argv[0]);
@@ -111,147 +256,12 @@ main (int argc, char *argv[])
       return EXIT_SUCCESS;
     }
 
-  if (args.help_given || !args.major_given)
+  if (args.help_given)
     usage (EXIT_SUCCESS);
-
-  if (!args.quiet_given)
-    {
-      printf (_("GSS-API major status code %ld (0x%lx).\n\n"),
-	      args.major_arg, args.major_arg);
-
-      printf (_("   MSB                               "
-		"                                  LSB\n"
-		"   +-----------------+---------------"
-		"--+---------------------------------+\n"
-		"   |  Calling Error  |  Routine Error"
-		"  |       Supplementary Info        |\n   | "));
-      for (i = 0; i < 8; i++)
-	printf ("%ld ", (args.major_arg >> (31 - i)) & 1);
-      printf ("| ");
-      for (i = 0; i < 8; i++)
-	printf ("%ld ", (args.major_arg >> (23 - i)) & 1);
-      printf ("| ");
-      for (i = 0; i < 16; i++)
-	printf ("%ld ", (args.major_arg >> (15 - i)) & 1);
-      printf (_("|\n"
-		"   +-----------------+---------------"
-		"--+---------------------------------+\n"
-		"Bit 31            24  23            1"
-		"6  15                             0\n\n"));
-    }
-
-  if (GSS_ROUTINE_ERROR (args.major_arg))
-    {
-      if (!args.quiet_given)
-	printf (_("Masked routine error %ld (0x%lx) shifted "
-		  "into %ld (0x%lx):\n"),
-		GSS_ROUTINE_ERROR (args.major_arg),
-		GSS_ROUTINE_ERROR (args.major_arg),
-		GSS_ROUTINE_ERROR (args.major_arg) >>
-		GSS_C_ROUTINE_ERROR_OFFSET,
-		GSS_ROUTINE_ERROR (args.major_arg) >>
-		GSS_C_ROUTINE_ERROR_OFFSET);
-
-      message_context = 0;
-      do
-	{
-	  maj = gss_display_status (&min, GSS_ROUTINE_ERROR (args.major_arg),
-				    GSS_C_GSS_CODE, GSS_C_NO_OID,
-				    &message_context, &status_string);
-	  if (GSS_ERROR (maj))
-	    {
-	      fprintf (stderr, _("%s: displaying status code failed\n"),
-		       argv[0]);
-	      rc = 1;
-	      break;
-	    }
-
-	  printf ("%.*s\n", (int) status_string.length,
-		  (char *) status_string.value);
-
-	  gss_release_buffer (&min, &status_string);
-	}
-      while (message_context);
-
-      if (!args.quiet_given)
-	printf ("\n");
-    }
-
-  if (GSS_CALLING_ERROR (args.major_arg))
-    {
-      if (!args.quiet_given)
-	printf
-	  (_("Masked calling error %ld (0x%lx) shifted into %ld (0x%lx):\n"),
-	   GSS_CALLING_ERROR (args.major_arg),
-	   GSS_CALLING_ERROR (args.major_arg),
-	   GSS_CALLING_ERROR (args.major_arg) >> GSS_C_CALLING_ERROR_OFFSET,
-	   GSS_CALLING_ERROR (args.major_arg) >> GSS_C_CALLING_ERROR_OFFSET);
-
-      message_context = 0;
-      do
-	{
-	  maj = gss_display_status (&min, GSS_CALLING_ERROR (args.major_arg),
-				    GSS_C_GSS_CODE, GSS_C_NO_OID,
-				    &message_context, &status_string);
-	  if (GSS_ERROR (maj))
-	    {
-	      fprintf (stderr, _("%s: displaying status code failed\n"),
-		       argv[0]);
-	      rc = 1;
-	      break;
-	    }
-
-	  printf ("%.*s\n", (int) status_string.length,
-		  (char *) status_string.value);
-
-	  gss_release_buffer (&min, &status_string);
-	}
-      while (message_context);
-
-      if (!args.quiet_given)
-	printf ("\n");
-    }
-
-  if (GSS_SUPPLEMENTARY_INFO (args.major_arg))
-    {
-      if (!args.quiet_given)
-	printf (_("Masked supplementary info %ld (0x%lx) shifted "
-		  "into %ld (0x%lx):\n"),
-		GSS_SUPPLEMENTARY_INFO (args.major_arg),
-		GSS_SUPPLEMENTARY_INFO (args.major_arg),
-		GSS_SUPPLEMENTARY_INFO (args.major_arg) >>
-		GSS_C_SUPPLEMENTARY_OFFSET,
-		GSS_SUPPLEMENTARY_INFO (args.major_arg) >>
-		GSS_C_SUPPLEMENTARY_OFFSET);
-
-      message_context = 0;
-      do
-	{
-	  maj = gss_display_status (&min,
-				    GSS_SUPPLEMENTARY_INFO (args.major_arg),
-				    GSS_C_GSS_CODE, GSS_C_NO_OID,
-				    &message_context, &status_string);
-	  if (GSS_ERROR (maj))
-	    {
-	      fprintf (stderr, _("%s: displaying status code failed\n"),
-		       argv[0]);
-	      rc = 1;
-	      break;
-	    }
-
-	  printf ("%.*s\n", (int) status_string.length,
-		  (char *) status_string.value);
-
-	  gss_release_buffer (&min, &status_string);
-	}
-      while (message_context);
-
-      if (!args.quiet_given)
-	printf ("\n");
-    }
-
-  if (args.major_arg == GSS_S_COMPLETE)
-    printf (_("No error\n"));
+  else if (args.major_given)
+    rc = describe_major (args.quiet_given, args.major_arg);
+  else
+    usage (EXIT_SUCCESS);
 
   return rc;
 }
