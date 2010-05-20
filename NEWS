@@ -9,6 +9,10 @@ Earlier versions had bugs that caused the self-checks to fail.
 
 ** Update gnulib files.
 
+** gss: Added parameter --list-mechanisms (-l) to list supported mechanisms.
+
+** doc: Added section documenting command-line tool "gss".
+
 ** i18n: Translations were updated.
 
 ** API and ABI modifications.

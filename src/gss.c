@@ -77,10 +77,15 @@ Command line interface to GSS, used to explain error codes.\n\
 Mandatory arguments to long options are mandatory for short options too.\n\
 "), stdout);
       fputs (_("\
-  -h, --help        Print help and exit\n\
-  -V, --version     Print version and exit\n\
+  -h, --help        Print help and exit.\n\
+  -V, --version     Print version and exit.\n\
+  -l, --list-mechanisms\n\
+                    List information about supported mechanisms\n\
+                    in a human readable format.\n\
   -m, --major=LONG  Describe a `major status' error code value.\n\
-  -q, --quiet       Silent operation  (default=off)\n\
+"), stdout);
+      fputs (_("\
+  -q, --quiet       Silent operation (default=off).\n\
 "), stdout);
       emit_bug_reporting_address ();
     }
@@ -235,6 +240,50 @@ describe_major (unsigned int quiet, long major)
   return rc;
 }
 
+static int
+list_mechanisms (unsigned quiet)
+{
+  OM_uint32 maj, min;
+  gss_OID_set mech_set;
+  size_t i;
+  gss_buffer_desc sasl_mech_name;
+  gss_buffer_desc mech_name;
+  gss_buffer_desc mech_description;
+
+  maj = gss_indicate_mechs (&min, &mech_set);
+  if (GSS_ERROR (maj))
+    {
+      error (0, 0, _("indicating mechanisms failed (%d)"), maj);
+      return 1;
+    }
+
+  printf ("Found %d supported mechanisms.\n", mech_set->count);
+
+  for (i = 0; i < mech_set->count; i++)
+    {
+      printf ("\nMechanism %d:\n", i);
+
+      maj = gss_inquire_saslname_for_mech (&min, mech_set->elements++,
+					   &sasl_mech_name, &mech_name,
+					   &mech_description);
+      if (GSS_ERROR (maj))
+	{
+	  error (0, 0, _("inquiring information about mechanism failed (%d)"),
+		 maj);
+	  continue;
+	}
+
+      printf ("\tMechanism name: %.*s\n",
+	      mech_name.length, (char *) mech_name.value);
+      printf ("\tMechanism description: %.*s\n",
+	      mech_description.length, (char *) mech_description.value);
+      printf ("\tSASL Mechanism name: %.*s\n",
+	      sasl_mech_name.length, (char *) sasl_mech_name.value);
+    }
+
+  return 0;
+}
+
 int
 main (int argc, char *argv[])
 {
@@ -260,6 +309,8 @@ main (int argc, char *argv[])
     usage (EXIT_SUCCESS);
   else if (args.major_given)
     rc = describe_major (args.quiet_given, args.major_arg);
+  else if (args.list_mechanisms_given)
+    rc = list_mechanisms (args.quiet_given);
   else
     usage (EXIT_SUCCESS);
 

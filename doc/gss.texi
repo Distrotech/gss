@@ -56,6 +56,7 @@ Documentation License''.
 * Preparation::                 What you should do before using the library.
 * Standard GSS API::            Reference documentation for the Standard API.
 * Extended GSS API::            Non-standard functions.
+* Invoking gss::                Command line interface to the library.
 * Acknowledgements::            Whom to blame.
 
 Appendices
@@ -1525,6 +1526,59 @@ the reverse of @code{gss_encapsulate_token}.  The translation is
 loss-less, all data is preserved as is.
 
 @end deftypefun
+
+@c **********************************************************
+@c *********************  Invoking gss  *********************
+@c **********************************************************
+@node Invoking gss
+@chapter Invoking gss
+
+@pindex gss
+@cindex invoking @command{gss}
+@cindex command line
+
+@majorheading Name
+
+GNU GSS (gss) -- Command line interface to the GSS Library.
+
+@majorheading Description
+
+@code{gss} is the main program of GNU GSS.
+
+Mandatory or optional arguments to long options are also mandatory or
+optional for any corresponding short options.
+
+@majorheading Commands
+
+@code{gss} recognizes these commands:
+
+@verbatim
+  -l, --list-mechanisms
+                    List information about supported mechanisms
+                    in a human readable format.
+
+  -m, --major=LONG  Describe a `major status' error code value.
+@end verbatim
+
+@majorheading Other Options
+
+These are some standard parameters.
+
+@verbatim
+  -h, --help        Print help and exit
+  -V, --version     Print version and exit
+  -q, --quiet       Silent operation  (default=off)
+@end verbatim
+
+@majorheading Examples
+
+
+
+@verbatim
+  -h, --help        Print help and exit
+  -V, --version     Print version and exit
+  -q, --quiet       Silent operation  (default=off)
+@end verbatim
 
 @c **********************************************************
 @c *******************  Acknowledgements  *******************
