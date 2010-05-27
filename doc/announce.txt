@@ -1,5 +1,5 @@
 To: help-gss@gnu.org, info-gnu@gnu.org
-Subject: Generic Security Service Library (GSSLib) 1.0.1
+Subject: GNU Generic Security Service 1.0.1 released
 <#part sign=pgpmime>
 GSSLib is an implementation of the Generic Security Service
 Application Program Interface (GSS-API).  GSS-API is used by network
