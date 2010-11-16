@@ -131,7 +131,7 @@ main (int argc, char *argv[])
 					    &bufdesc, NULL, NULL);
   if (maj_stat == GSS_S_COMPLETE)
     success ("gss_inquire_saslname_for_mech (GSS-KRB5) success: %.*s\n",
-	     bufdesc.length, (char *) bufdesc.value);
+	     (int) bufdesc.length, (char *) bufdesc.value);
   else
     fail ("gss_inquire_saslname_for_mech (GSS-KRB5) failed (%d,%d)\n",
 	  maj_stat, min_stat);
@@ -146,7 +146,7 @@ main (int argc, char *argv[])
 					    NULL, &bufdesc, NULL);
   if (maj_stat == GSS_S_COMPLETE)
     success ("gss_inquire_saslname_for_mech (GSS-KRB5-2) success: %.*s\n",
-	     bufdesc.length, (char *) bufdesc.value);
+	     (int) bufdesc.length, (char *) bufdesc.value);
   else
     fail ("gss_inquire_saslname_for_mech (GSS-KRB5-2) failed (%d,%d)\n",
 	  maj_stat, min_stat);
@@ -161,7 +161,7 @@ main (int argc, char *argv[])
 					    NULL, NULL, &bufdesc);
   if (maj_stat == GSS_S_COMPLETE)
     success ("gss_inquire_saslname_for_mech (GSS-KRB5-3) success: %.*s\n",
-	     bufdesc.length, (char *) bufdesc.value);
+	     (int) bufdesc.length, (char *) bufdesc.value);
   else
     fail ("gss_inquire_saslname_for_mech (GSS-KRB5-3) failed (%d,%d)\n",
 	  maj_stat, min_stat);

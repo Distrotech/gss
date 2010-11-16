@@ -346,7 +346,8 @@ main (int argc, char *argv[])
 	if (pt.length != pt2.length
 	    || memcmp (pt2.value, pt.value, pt.length) != 0)
 	  fail ("wrap+unwrap failed (%d, %d, %.*s)\n",
-		pt.length, pt2.length, pt2.length, (char *) pt2.value);
+		(int) pt.length, (int) pt2.length, (int) pt2.length,
+		(char *) pt2.value);
 
 	gss_release_buffer (&min_stat, &ct);
 	gss_release_buffer (&min_stat, &pt2);
@@ -366,7 +367,7 @@ main (int argc, char *argv[])
 	  display_status ("server delete_sec_context", maj_stat, min_stat);
 	}
 
-      success ("loop %d ok\n", i);
+      success ("loop %d ok\n", (int) i);
     }
 
   /* Clean up. */

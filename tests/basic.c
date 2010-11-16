@@ -279,8 +279,8 @@ main (int argc, char *argv[])
     fail ("gss_display_name() failed (%d,%d)\n", maj_stat, min_stat);
 
   if (debug)
-    printf ("    display_name() => %d: %.*s\n", bufdesc2.length,
-	    bufdesc2.length, (char *) bufdesc2.value);
+    printf ("    display_name() => %d: %.*s\n", (int) bufdesc2.length,
+	    (int) bufdesc2.length, (char *) bufdesc2.value);
 
   maj_stat = gss_release_buffer (&min_stat, &bufdesc2);
   if (maj_stat == GSS_S_COMPLETE)
@@ -353,7 +353,7 @@ main (int argc, char *argv[])
 
   if (debug)
     printf ("    Display status for GSS_S_COMPLETE => %*s\n",
-	    bufdesc.length, (char *) bufdesc.value);
+	    (int) bufdesc.length, (char *) bufdesc.value);
 
   maj_stat = gss_release_buffer (&min_stat, &bufdesc);
   if (maj_stat == GSS_S_COMPLETE)
