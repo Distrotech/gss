@@ -117,6 +117,7 @@ if test "$gl_gcc_warnings" = yes; then
   nw="$nw -Wcast-qual"                 # Too many warnings for now
   nw="$nw -Wtraditional"               # Warns on #elif which we use often
   nw="$nw -Wunreachable-code"          # False positive on strcmp
+  nw="$nw -Wpadded"                    # Standard GSS-API headers are unpadded
 
   gl_MANYWARN_ALL_GCC([ws])
   gl_MANYWARN_COMPLEMENT(ws, [$ws], [$nw])
