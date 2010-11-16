@@ -257,11 +257,11 @@ list_mechanisms (unsigned quiet)
       return 1;
     }
 
-  printf ("Found %d supported mechanisms.\n", mech_set->count);
+  printf ("Found %lu supported mechanisms.\n", (unsigned long) mech_set->count);
 
   for (i = 0; i < mech_set->count; i++)
     {
-      printf ("\nMechanism %d:\n", i);
+      printf ("\nMechanism %lu:\n", (unsigned long) i);
 
       maj = gss_inquire_saslname_for_mech (&min, mech_set->elements++,
 					   &sasl_mech_name, &mech_name,
@@ -274,11 +274,11 @@ list_mechanisms (unsigned quiet)
 	}
 
       printf ("\tMechanism name: %.*s\n",
-	      mech_name.length, (char *) mech_name.value);
+	      (int) mech_name.length, (char *) mech_name.value);
       printf ("\tMechanism description: %.*s\n",
-	      mech_description.length, (char *) mech_description.value);
+	      (int) mech_description.length, (char *) mech_description.value);
       printf ("\tSASL Mechanism name: %.*s\n",
-	      sasl_mech_name.length, (char *) sasl_mech_name.value);
+	      (int) sasl_mech_name.length, (char *) sasl_mech_name.value);
     }
 
   return 0;
