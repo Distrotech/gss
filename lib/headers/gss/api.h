@@ -1,5 +1,5 @@
 /* api.h --- Header file for GSS-API.
- * Copyright (C) 2003, 2004, 2005, 2006, 2007, 2010  Simon Josefsson
+ * Copyright (C) 2003, 2004, 2005, 2006, 2007, 2010, 2011  Simon Josefsson
  *
  * This file is part of the Generic Security Service (GSS).
  *
@@ -643,5 +643,14 @@ gss_inquire_mech_for_saslname (OM_uint32 * minor_status,
 			       const gss_buffer_t sasl_mech_name,
 			       gss_OID * mech_type);
 
+/* RFC 5587 const typedefs */
+
+typedef const gss_buffer_desc * gss_const_buffer_t;
+typedef const struct gss_channel_bindings_struct *gss_const_channel_bindings_t;
+typedef const struct gss_ctx_id_struct * gss_const_ctx_id_t;
+typedef const struct gss_cred_id_struct * gss_const_cred_id_t;
+typedef const struct gss_name_struct * gss_const_name_t;
+typedef const gss_OID_desc * gss_const_OID;
+typedef const gss_OID_set_desc * gss_const_OID_set;
 
 #endif /* GSSAPI_H_ */
