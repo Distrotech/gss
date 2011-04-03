@@ -1,5 +1,5 @@
 /* ext.h --- Header file for non-standard GSS-API functions.
- * Copyright (C) 2003, 2004, 2005, 2006, 2007, 2009, 2010  Simon Josefsson
+ * Copyright (C) 2003, 2004, 2005, 2006, 2007, 2009, 2010, 2011  Simon Josefsson
  *
  * This file is part of the Generic Security Service (GSS).
  *
@@ -30,16 +30,18 @@
 extern const char *gss_check_version (const char *req_version);
 
 /* See ext.c. */
-extern int gss_oid_equal (const gss_OID first_oid, const gss_OID second_oid);
+extern int gss_oid_equal (gss_const_OID first_oid, gss_const_OID second_oid);
 extern int gss_userok (const gss_name_t name, const char *username);
 
 /* See asn1.c. */
 extern OM_uint32
-gss_encapsulate_token (const gss_buffer_t input_token,
-		       const gss_OID token_oid, gss_buffer_t output_token);
+gss_encapsulate_token (gss_const_buffer_t input_token,
+		       gss_const_OID token_oid,
+		       gss_buffer_t output_token);
 extern OM_uint32
-gss_decapsulate_token (const gss_buffer_t input_token,
-		       const gss_OID token_oid, gss_buffer_t output_token);
+gss_decapsulate_token (gss_const_buffer_t input_token,
+		       gss_const_OID token_oid,
+		       gss_buffer_t output_token);
 
 /* Static versions of the public OIDs for use, e.g., in static
    variable initalization.  See oid.c. */

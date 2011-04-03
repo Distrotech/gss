@@ -1,5 +1,5 @@
 /* ext.c --- Implementation of GSS specific extensions.
- * Copyright (C) 2003, 2004, 2005, 2006, 2007, 2009, 2010  Simon Josefsson
+ * Copyright (C) 2003, 2004, 2005, 2006, 2007, 2009, 2010, 2011  Simon Josefsson
  *
  * This file is part of the Generic Security Service (GSS).
  *
@@ -38,7 +38,7 @@
  *   equal, otherwise false.
  **/
 int
-gss_oid_equal (const gss_OID first_oid, const gss_OID second_oid)
+gss_oid_equal (gss_const_OID first_oid, gss_const_OID second_oid)
 {
   return first_oid && second_oid &&
     first_oid->length == second_oid->length &&
