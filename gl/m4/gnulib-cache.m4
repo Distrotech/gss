@@ -15,7 +15,7 @@
 
 
 # Specification in the form of a command-line invocation:
-#   gnulib-tool --import --dir=. --local-dir=gl/override --lib=libgnu --source-base=gl --m4-base=gl/m4 --doc-base=doc --tests-base=gl/tests --aux-dir=build-aux --libtool --macro-prefix=gl --no-vc-files autobuild fdl-1.3 gendocs gnupload gpl-3.0 havelib lib-symbol-versions maintainer-makefile manywarnings pmccabe2html valgrind-tests warnings
+#   gnulib-tool --import --dir=. --local-dir=gl/override --lib=libgnu --source-base=gl --m4-base=gl/m4 --doc-base=doc --tests-base=gl/tests --aux-dir=build-aux --libtool --macro-prefix=gl --no-vc-files autobuild fdl-1.3 gendocs gnupload gpl-3.0 havelib lib-symbol-versions maintainer-makefile manywarnings pmccabe2html update-copyright valgrind-tests warnings
 
 # Specification in the form of a few gnulib-tool.m4 macro invocations:
 gl_LOCAL_DIR([gl/override])
@@ -30,6 +30,7 @@ gl_MODULES([
   maintainer-makefile
   manywarnings
   pmccabe2html
+  update-copyright
   valgrind-tests
   warnings
 ])
