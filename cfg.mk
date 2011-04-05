@@ -1,4 +1,4 @@
-# Copyright (C) 2006, 2007, 2008, 2009, 2010, 2011  Simon Josefsson
+# Copyright (C) 2006-2011  Simon Josefsson
 #
 # This file is part of the Generic Security Service (GSS).
 #
