@@ -1,5 +1,5 @@
 /* context.c --- Implementation of GSS-API Context functions.
- * Copyright (C) 2003, 2004, 2005, 2006, 2007, 2009, 2010  Simon Josefsson
+ * Copyright (C) 2003-2011 Simon Josefsson
  *
  * This file is part of the Generic Security Service (GSS).
  *

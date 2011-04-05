@@ -32,7 +32,7 @@ local-checks-to-skip = sc_copyright_check sc_immutable_NEWS		\
 	sc_require_config_h_first
 VC_LIST_ALWAYS_EXCLUDE_REGEX = ^((lib/|src/)?(gl|gltests|build-aux))/.*
 
-update-copyright-env = UPDATE_COPYRIGHT_HOLDER="Simon Josefsson"
+update-copyright-env = UPDATE_COPYRIGHT_HOLDER="Simon Josefsson" UPDATE_COPYRIGHT_USE_INTERVALS=1
 
 gtk-doc.make:
 	gtkdocize
