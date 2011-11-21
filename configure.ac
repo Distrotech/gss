@@ -50,8 +50,8 @@ DLL_VERSION=`expr ${LT_CURRENT} - ${LT_AGE}`
 AC_SUBST(DLL_VERSION)
 
 # Internationalization.
-AM_GNU_GETTEXT(external)
-AM_GNU_GETTEXT_VERSION(0.17)
+AM_GNU_GETTEXT([external])
+AM_GNU_GETTEXT_VERSION([0.18.1])
 
 # For gnulib stuff.
 gl_INIT
