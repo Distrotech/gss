@@ -21,6 +21,11 @@ dnl Process this file with autoconf to produce a configure script.
 
 AC_PREREQ(2.61)
 AC_INIT([GNU Generic Security Service], [1.0.2], [bug-gss@gnu.org], [gss])
+AC_CONFIG_AUX_DIR([build-aux])
+AC_CONFIG_MACRO_DIR([m4])
+AC_CONFIG_HEADERS(config.h)
+AM_INIT_AUTOMAKE([1.10 -Wall -Werror -Wno-override])
+AM_SILENT_RULES([yes])
 
 # Library code modified:                              REVISION++
 # Interfaces changed/added/removed:   CURRENT++       REVISION=0
@@ -29,16 +34,6 @@ AC_INIT([GNU Generic Security Service], [1.0.2], [bug-gss@gnu.org], [gss])
 AC_SUBST(LT_CURRENT, 3)
 AC_SUBST(LT_REVISION, 2)
 AC_SUBST(LT_AGE, 0)
-
-# Used when creating libgss-XX.def.
-DLL_VERSION=`expr ${LT_CURRENT} - ${LT_AGE}`
-AC_SUBST(DLL_VERSION)
-
-AC_CONFIG_AUX_DIR([build-aux])
-AC_CONFIG_MACRO_DIR([m4])
-AM_INIT_AUTOMAKE([1.10 -Wall -Werror -Wno-override])
-AM_SILENT_RULES([yes])
-AC_CONFIG_HEADERS(config.h)
 
 # Checks for programs.
 AC_PROG_CC
@@ -49,6 +44,10 @@ AC_LIBTOOL_WIN32_DLL
 AC_PROG_LIBTOOL
 AM_MISSING_PROG(PERL, perl, $missing_dir)
 AM_MISSING_PROG(HELP2MAN, help2man, $missing_dir)
+
+# Used when creating libgss-XX.def.
+DLL_VERSION=`expr ${LT_CURRENT} - ${LT_AGE}`
+AC_SUBST(DLL_VERSION)
 
 # Internationalization.
 AM_GNU_GETTEXT(external)
@@ -120,6 +119,8 @@ if test "$gl_gcc_warnings" = yes; then
   nw="$nw -Wunreachable-code"          # False positive on strcmp
   nw="$nw -Wpadded"                    # Standard GSS-API headers are unpadded
   nw="$nw -Wtraditional-conversion"    # Too many warnings for now
+  nw="$nw -Wsuggest-attribute=pure"    # Is it worth using attributes?
+  nw="$nw -Wsuggest-attribute=const"   # Is it worth using attributes?
 
   gl_MANYWARN_ALL_GCC([ws])
   gl_MANYWARN_COMPLEMENT(ws, [$ws], [$nw])
