@@ -18,7 +18,7 @@ the non-const parameters before.
 
 ** i18n: Translations were updated.
 
-** build: Update gnulib files.
+** build: Update gnulib files.  Several QA bug fixes.
 
 ** API and ABI modifications.
 No changes since last version.
