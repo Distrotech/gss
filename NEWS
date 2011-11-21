@@ -21,7 +21,9 @@ the non-const parameters before.
 ** build: Update gnulib files.  Several QA bug fixes.
 
 ** API and ABI modifications.
-No changes since last version.
+gss_oid_equal:
+gss_encapsulate_token:
+gss_decapsulate_token: See above.
 
 * Version 1.0.1 (released 2010-05-20)
 
