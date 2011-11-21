@@ -12,7 +12,8 @@ gss_const_OID, and gss_const_OID_set.
 ** gss/ext.h: Added 'const' keywords to gss_oid_equal, gss_encapsulate_token,
 ** and gss_decapsulate_token.
 This does not affect the ABI and doesn't modify any semantics: the
-functions did not modify the non-const parameters before.
+functions did not modify the non-const parameters before.  This aligns
+with recently published RFC 6339.
 
 ** i18n: Translations were updated.
 
