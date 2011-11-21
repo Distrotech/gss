@@ -9,11 +9,12 @@ The new types are gss_const_buffer_t, gss_const_channel_bindings_t,
 gss_const_ctx_id_t, gss_const_cred_id_t, gss_const_name_t,
 gss_const_OID, and gss_const_OID_set.
 
-** gss/ext.h: Added 'const' keywords to gss_oid_equal, gss_encapsulate_token,
-** and gss_decapsulate_token.
-This does not affect the ABI and doesn't modify any semantics: the
-functions did not modify the non-const parameters before.  This aligns
-with recently published RFC 6339.
+** gss/api.h, gss/ext.h: Moved RFC 6339 functions from ext.h to api.h.
+The functions gss_oid_equal, gss_encapsulate_token, and
+gss_decapsulate_token are now standardized.  The types have changed
+slightly to used RFC 5587 const types instead.  This does not affect
+the ABI and doesn't modify any semantics: the functions did not modify
+the non-const parameters before.
 
 ** i18n: Translations were updated.
 

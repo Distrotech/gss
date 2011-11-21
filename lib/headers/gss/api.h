@@ -643,7 +643,7 @@ gss_inquire_mech_for_saslname (OM_uint32 * minor_status,
 			       const gss_buffer_t sasl_mech_name,
 			       gss_OID * mech_type);
 
-/* RFC 5587 const typedefs */
+/* RFC 5587 const typedefs. */
 
 typedef const gss_buffer_desc *gss_const_buffer_t;
 typedef const struct gss_channel_bindings_struct
@@ -653,5 +653,21 @@ typedef const struct gss_cred_id_struct *gss_const_cred_id_t;
 typedef const struct gss_name_struct *gss_const_name_t;
 typedef const gss_OID_desc *gss_const_OID;
 typedef const gss_OID_set_desc *gss_const_OID_set;
+
+/* RFC 6339 interfaces. */
+
+extern int
+gss_oid_equal (gss_const_OID first_oid,
+	       gss_const_OID second_oid);
+
+OM_uint32
+gss_encapsulate_token (gss_const_buffer_t input_token,
+		       gss_const_OID token_oid,
+		       gss_buffer_t output_token);
+
+OM_uint32
+gss_decapsulate_token (gss_const_buffer_t input_token,
+		       gss_const_OID token_oid,
+		       gss_buffer_t output_token);
 
 #endif /* GSSAPI_H_ */

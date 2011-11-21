@@ -23,30 +23,6 @@
 #include "internal.h"
 
 /**
- * gss_oid_equal:
- * @first_oid: (Object ID, read) First Object identifier.
- * @second_oid: (Object ID, read) First Object identifier.
- *
- * Compare two OIDs for equality.  The comparison is "deep", i.e., the
- * actual byte sequences of the OIDs are compared instead of just the
- * pointer equality.
- *
- * WARNING: This function is a GNU GSS specific extension, and is not
- * part of the official GSS API.
- *
- * Return value: Returns boolean value true when the two OIDs are
- *   equal, otherwise false.
- **/
-int
-gss_oid_equal (gss_const_OID first_oid, gss_const_OID second_oid)
-{
-  return first_oid && second_oid &&
-    first_oid->length == second_oid->length &&
-    memcmp (first_oid->elements, second_oid->elements,
-	    second_oid->length) == 0;
-}
-
-/**
  * gss_userok:
  * @name: (gss_name_t, read) Name to be compared.
  * @username: Zero terminated string with username.
