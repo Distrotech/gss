@@ -1467,6 +1467,9 @@ allocated.  Any length field associated with such pointers (as in a
                                   object identifiers.
    gss_test_oid_set_member        Determines whether an object
                                   identifier is a member of a set.
+   gss_encapsulate_token          Encapsulate a context token.
+   gss_decapsulate_token          Decapsulate a context token.
+   gss_oid_equal                  Compare two OIDs for equality.
 @end verbatim
 
 @include texi/gss_add_oid_set_member.texi
@@ -1476,6 +1479,9 @@ allocated.  Any length field associated with such pointers (as in a
 @include texi/gss_release_oid_set.texi
 @include texi/gss_create_empty_oid_set.texi
 @include texi/gss_test_oid_set_member.texi
+@include texi/gss_encapsulate_token.texi
+@include texi/gss_decapsulate_token.texi
+@include texi/gss_oid_equal.texi
 
 @node SASL GS2 Routines
 @section SASL GS2 Routines
@@ -1495,37 +1501,7 @@ such, they are not declared in @file{gss/api.h}, but rather in
 @xref{Header}.
 
 @include texi/gss_check_version.texi
-@include texi/gss_oid_equal.texi
 @include texi/gss_userok.texi
-
-@deftypefun {int} gss_encapsulate_token (gss_buffer_t @var{input_message}, gss_OID @var{token_oid}, gss_buffer_t @var{output_message})
-
-@var{input_message}: Message to be encapsulated.
-
-@var{token_oid}: OID of mechanism.
-
-@var{input_message}: Output buffer with encapsulated message.
-
-Wrap a buffer in the mechanism-independent token format.  This is used
-for the initial token of a GSS-API context establishment sequence.  It
-incorporates an identifier of the mechanism type to be used on that
-context, and enables tokens to be interpreted unambiguously at GSS-API
-peers.  See further section 3.1 of RFC 2743.
-@end deftypefun
-
-@deftypefun {int} gss_decapsulate_token (gss_buffer_t @var{input_message}, gss_OID @var{token_oid}, gss_buffer_t @var{output_message})
-
-@var{input_message}: Message to decapsulated.
-
-@var{token_oid}: Output buffer with mechanism OID used in message.
-
-@var{input_message}: Output buffer with encapsulated message.
-
-Unwrap a buffer in the mechanism-independent token format.  This is
-the reverse of @code{gss_encapsulate_token}.  The translation is
-loss-less, all data is preserved as is.
-
-@end deftypefun
 
 @c **********************************************************
 @c *********************  Invoking gss  *********************

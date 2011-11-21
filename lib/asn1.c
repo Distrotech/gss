@@ -151,7 +151,11 @@ _gss_encapsulate_token_prefix (const char *prefix, size_t prefixlen,
  *   caller must release with gss_release_buffer().
  *
  * Add the mechanism-independent token header to GSS-API context token
- * data.  This function is standardized in RFC 6339.
+ * data.  This is used for the initial token of a GSS-API context
+ * establishment sequence.  It incorporates an identifier of the
+ * mechanism type to be used on that context, and enables tokens to be
+ * interpreted unambiguously at GSS-API peers.  See further section
+ * 3.1 of RFC 2743.  This function is standardized in RFC 6339.
  *
  * Returns:
  *
@@ -248,7 +252,10 @@ _gss_decapsulate_token (const char *in, size_t inlen,
  *   caller must release with gss_release_buffer().
  *
  * Remove the mechanism-independent token header from an initial
- * GSS-API context token.  This function is standardized in RFC 6339.
+ * GSS-API context token.  Unwrap a buffer in the
+ * mechanism-independent token format.  This is the reverse of
+ * gss_encapsulate_token().  The translation is loss-less, all data is
+ * preserved as is.  This function is standardized in RFC 6339.
  *
  * Return value:
  *
