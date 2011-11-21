@@ -135,12 +135,12 @@ gss_acquire_cred (OM_uint32 * minor_status,
     {
       size_t i;
 
-      /* Is the desired_mechs an OR or AND list?  I.e., if the OID set
-         contain several OIDs, MUST the credential work with all of
-         them?  Or just any of them?  The specification isn't entirely
-         clear on this, to me.  This implement an OR list, chosing the
-         first mechanism in the OID set we support.  We need more
-         information in meta.c to implement AND lists. */
+      /* Is the desired_mechs an "OR" or "AND" list?  I.e., if the OID
+         set contain several OIDs, MUST the credential work with all
+         of them?  Or just any of them?  The specification isn't
+         entirely clear on this, to me.  This implement an OR list,
+         chosing the first mechanism in the OID set we support.  We
+         need more information in meta.c to implement AND lists. */
 
       for (i = 0; mech == NULL && i < desired_mechs->count; i++)
 	mech = _gss_find_mech ((&desired_mechs->elements)[i]);

@@ -1,0 +1,11 @@
+--- gl/m4/valgrind-tests.m4.orig	2011-11-21 14:26:50.677333900 +0100
++++ gl/m4/valgrind-tests.m4	2011-11-21 14:27:05.058065430 +0100
+@@ -23,7 +23,7 @@
+ 
+   if test -n "$VALGRIND" && $VALGRIND -q true > /dev/null 2>&1; then
+     opt_valgrind_tests=yes
+-    VALGRIND="$VALGRIND -q --error-exitcode=1 --leak-check=full"
++    VALGRIND="$VALGRIND -q --error-exitcode=1 --leak-check=no"
+   else
+     opt_valgrind_tests=no
+     VALGRIND=
