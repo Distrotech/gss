@@ -2,7 +2,7 @@ GSS NEWS -- History of user-visible changes.                    -*- outline -*-
 Copyright (C) 2003-2011  Simon Josefsson
 See the end for copying conditions.
 
-* Version 1.0.2 (unreleased)
+* Version 1.0.2 (released 2011-11-25)
 
 ** gss/api.h: Added RFC 5587 const typedefs.
 The new types are gss_const_buffer_t, gss_const_channel_bindings_t,
