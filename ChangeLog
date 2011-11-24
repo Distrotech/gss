@@ -1,3 +1,278 @@
+2011-11-25  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS: Version 1.0.2.
+
+2011-11-25  Simon Josefsson <simon@josefsson.org>
+
+	* gl/m4/valgrind-tests.m4, gl/override/m4/valgrind-tests.m4.diff: 
+	Fix valgrind-tests.m4 patch.
+
+2011-11-21  Simon Josefsson <simon@josefsson.org>
+
+	* configure.ac: Bump required gettext version (0.18.1 is part of
+	Debian Squeeze).
+
+2011-11-21  Simon Josefsson <simon@josefsson.org>
+
+	* configure.ac: Don't warn about missing pure/const attributes.
+
+2011-11-21  Simon Josefsson <simon@josefsson.org>
+
+	* doc/gss.texi, lib/asn1.c: Doc fix to align with RFC 6339.
+
+2011-11-21  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS: Mention API changes.
+
+2011-11-21  Simon Josefsson <simon@josefsson.org>
+
+	* .gitignore, NEWS, configure.ac, doc/reference/Makefile.am,
+	doc/reference/gss-docs.sgml, doc/reference/version.xml.in,
+	gtk-doc.make, m4/gtk-doc.m4: Update GTK-DOC infrastructure.
+
+2011-11-21  Simon Josefsson <simon@josefsson.org>
+
+	* doc/cyclo/Makefile.am: Improve links in output.
+
+2011-11-21  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS, lib/asn1.c, lib/ext.c, lib/headers/gss/api.h,
+	lib/headers/gss/ext.h, lib/oid.c: RFC 6339 adjustments.
+
+2011-11-21  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS: Mention RFC 6339.
+
+2011-11-21  Simon Josefsson <simon@josefsson.org>
+
+	* GNUmakefile, build-aux/arg-nonnull.h, build-aux/c++defs.h,
+	build-aux/gendocs.sh, build-aux/snippet/arg-nonnull.h,
+	build-aux/snippet/c++defs.h, build-aux/snippet/warn-on-use.h,
+	build-aux/useless-if-before-free, build-aux/vc-list-files,
+	build-aux/warn-on-use.h, cfg.mk, doc/fdl-1.3.texi, gl/Makefile.am,
+	gl/m4/gnulib-cache.m4, gl/m4/gnulib-common.m4,
+	gl/m4/gnulib-comp.m4, gl/m4/manywarnings.m4, gl/m4/warnings.m4,
+	gl/override/m4/valgrind-tests.m4.diff, lib/cred.c,
+	lib/gl/Makefile.am, lib/gl/gettext.h, lib/gl/m4/extensions.m4,
+	lib/gl/m4/gnulib-cache.m4, lib/gl/m4/gnulib-common.m4,
+	lib/gl/m4/gnulib-comp.m4, lib/gl/m4/include_next.m4,
+	lib/gl/m4/stddef_h.m4, lib/gl/m4/string_h.m4,
+	lib/gl/m4/strverscmp.m4, lib/gl/m4/warn-on-use.m4,
+	lib/gl/override/lib/gettext.h.diff, lib/gl/stddef.in.h,
+	lib/gl/string.in.h, maint.mk, src/gl/Makefile.am,
+	src/gl/errno.in.h, src/gl/error.c, src/gl/getopt.c,
+	src/gl/getopt.in.h, src/gl/gettext.h, src/gl/intprops.h,
+	src/gl/m4/errno_h.m4, src/gl/m4/error.m4, src/gl/m4/extensions.m4,
+	src/gl/m4/getopt.m4, src/gl/m4/gnulib-cache.m4,
+	src/gl/m4/gnulib-common.m4, src/gl/m4/gnulib-comp.m4,
+	src/gl/m4/include_next.m4, src/gl/m4/msvc-inval.m4,
+	src/gl/m4/msvc-nothrow.m4, src/gl/m4/nocrash.m4,
+	src/gl/m4/ssize_t.m4, src/gl/m4/stdarg.m4, src/gl/m4/stddef_h.m4,
+	src/gl/m4/strerror.m4, src/gl/m4/string_h.m4,
+	src/gl/m4/sys_socket_h.m4, src/gl/m4/unistd_h.m4,
+	src/gl/m4/warn-on-use.m4, src/gl/msvc-inval.c, src/gl/msvc-inval.h,
+	src/gl/msvc-nothrow.c, src/gl/msvc-nothrow.h,
+	src/gl/override/lib/gettext.h.diff, src/gl/stdarg.in.h,
+	src/gl/stddef.in.h, src/gl/strerror-override.c,
+	src/gl/strerror-override.h, src/gl/strerror.c, src/gl/string.in.h,
+	src/gl/unistd.in.h, src/gl/verify.h: Update gnulib files.
+
+2011-04-05  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS: Improve RFC 5587 entry.
+
+2011-04-05  Simon Josefsson <simon@josefsson.org>
+
+	* cfg.mk, lib/asn1.c, lib/ext.c, lib/headers/gss/api.h: Update
+	remaining copyright headers.
+
+2011-04-05  Simon Josefsson <simon@josefsson.org>
+
+	* AUTHORS: Update PGP key.
+
+2011-04-05  Simon Josefsson <simon@josefsson.org>
+
+	* lib/headers/gss/api.h: Indent RFC 5587 types.
+
+2011-04-05  Simon Josefsson <simon@josefsson.org>
+
+	* maint.mk: Update gnulib files.
+
+2011-04-05  Simon Josefsson <simon@josefsson.org>
+
+	* .clcopying, AUTHORS, Makefile.am, README-alpha, THANKS, cfg.mk,
+	configure.ac, doc/Makefile.gdoci, doc/cyclo/Makefile.am, doc/gdoc,
+	doc/gss.texi, gss.pc.in, lib/Makefile.am, lib/context.c,
+	lib/cred.c, lib/error.c, lib/headers/gss.h.in,
+	lib/headers/gss/krb5-ext.h, lib/headers/gss/krb5.h, lib/internal.h,
+	lib/krb5/Makefile.am, lib/krb5/checksum.c, lib/krb5/checksum.h,
+	lib/krb5/context.c, lib/krb5/cred.c, lib/krb5/error.c,
+	lib/krb5/k5internal.h, lib/krb5/msg.c, lib/krb5/name.c,
+	lib/krb5/oid.c, lib/krb5/protos.h, lib/krb5/utils.c,
+	lib/libgss.map, lib/meta.c, lib/meta.h, lib/misc.c, lib/msg.c,
+	lib/name.c, lib/obsolete.c, lib/oid.c, lib/saslname.c,
+	lib/version.c, src/Makefile.am, src/gss.c, src/gss.ggo,
+	tests/Makefile.am, tests/basic.c, tests/krb5context.c,
+	tests/saslname.c, tests/threadsafety: Update copyright years.  Use
+	ranges.
+
+2011-04-05  Simon Josefsson <simon@josefsson.org>
+
+	* build-aux/update-copyright, cfg.mk, gl/Makefile.am,
+	gl/m4/gnulib-cache.m4, gl/m4/gnulib-comp.m4: Add update-copyright
+	gnulib module.
+
+2011-04-03  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS, gl/m4/valgrind-tests.m4, lib/asn1.c, lib/ext.c,
+	lib/headers/gss/ext.h: Constify capsulate and oid equal function.
+	Fix valgrind check.
+
+2011-04-03  Simon Josefsson <simon@josefsson.org>
+
+	* gl/m4/gnulib-common.m4, lib/gl/m4/gnulib-common.m4,
+	src/gl/m4/gnulib-common.m4: Update gnulib files.
+
+2011-04-03  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS, README, doc/Makefile.am, lib/headers/gss/api.h: Add RFC 5587
+	const typedefs.
+
+2011-03-31  Simon Josefsson <simon@josefsson.org>
+
+	* gl/m4/gnulib-common.m4, lib/gl/m4/gnulib-common.m4,
+	src/gl/m4/gnulib-common.m4: Work around gnulib issue.
+
+2011-03-31  Simon Josefsson <simon@josefsson.org>
+
+	* GNUmakefile, build-aux/arg-nonnull.h, build-aux/c++defs.h,
+	build-aux/config.rpath, build-aux/gendocs.sh,
+	build-aux/pmccabe2html, build-aux/useless-if-before-free,
+	build-aux/vc-list-files, build-aux/warn-on-use.h,
+	doc/gendocs_template, gl/Makefile.am, gl/dummy.c,
+	gl/m4/00gnulib.m4, gl/m4/autobuild.m4, gl/m4/gnulib-cache.m4,
+	gl/m4/gnulib-common.m4, gl/m4/gnulib-comp.m4, gl/m4/gnulib-tool.m4,
+	gl/m4/ld-version-script.m4, gl/m4/lib-ld.m4, gl/m4/lib-link.m4,
+	gl/m4/lib-prefix.m4, gl/m4/manywarnings.m4,
+	gl/m4/valgrind-tests.m4, gl/m4/warnings.m4, lib/gl/Makefile.am,
+	lib/gl/dummy.c, lib/gl/gettext.h, lib/gl/m4/00gnulib.m4,
+	lib/gl/m4/extensions.m4, lib/gl/m4/gnulib-cache.m4,
+	lib/gl/m4/gnulib-common.m4, lib/gl/m4/gnulib-comp.m4,
+	lib/gl/m4/gnulib-tool.m4, lib/gl/m4/include_next.m4,
+	lib/gl/m4/ld-output-def.m4, lib/gl/m4/stddef_h.m4,
+	lib/gl/m4/string_h.m4, lib/gl/m4/strverscmp.m4,
+	lib/gl/m4/warn-on-use.m4, lib/gl/m4/wchar_t.m4, lib/gl/stddef.in.h,
+	lib/gl/string.in.h, lib/gl/strverscmp.c, maint.mk,
+	src/gl/Makefile.am, src/gl/errno.in.h, src/gl/error.c,
+	src/gl/error.h, src/gl/getopt.c, src/gl/getopt.in.h,
+	src/gl/getopt1.c, src/gl/getopt_int.h, src/gl/gettext.h,
+	src/gl/intprops.h, src/gl/m4/00gnulib.m4, src/gl/m4/errno_h.m4,
+	src/gl/m4/error.m4, src/gl/m4/extensions.m4, src/gl/m4/getopt.m4,
+	src/gl/m4/gnulib-cache.m4, src/gl/m4/gnulib-common.m4,
+	src/gl/m4/gnulib-comp.m4, src/gl/m4/gnulib-tool.m4,
+	src/gl/m4/include_next.m4, src/gl/m4/stdarg.m4,
+	src/gl/m4/stddef_h.m4, src/gl/m4/strerror.m4,
+	src/gl/m4/string_h.m4, src/gl/m4/unistd_h.m4,
+	src/gl/m4/version-etc.m4, src/gl/m4/warn-on-use.m4,
+	src/gl/m4/wchar_t.m4, src/gl/progname.c, src/gl/progname.h,
+	src/gl/stdarg.in.h, src/gl/stddef.in.h, src/gl/strerror.c,
+	src/gl/string.in.h, src/gl/unistd.in.h, src/gl/version-etc.c,
+	src/gl/version-etc.h: Update gnulib files.
+
+2011-03-31  Simon Josefsson <simon@josefsson.org>
+
+	* po/LINGUAS, po/eo.po.in, po/fr.po.in, po/zh_CN.po.in: Sync with
+	TP.
+
+2010-12-09  Simon Josefsson <simon@josefsson.org>
+
+	* po/fi.po.in, po/it.po.in, po/pl.po.in: Sync with TP.
+
+2010-12-09  Simon Josefsson <simon@josefsson.org>
+
+	* configure.ac: Use silent build rules.
+
+2010-12-09  Simon Josefsson <simon@josefsson.org>
+
+	* build-aux/gendocs.sh, gl/m4/gnulib-common.m4, lib/gl/gettext.h,
+	lib/gl/m4/gnulib-common.m4, lib/gl/string.in.h, maint.mk,
+	src/gl/Makefile.am, src/gl/gettext.h, src/gl/intprops.h,
+	src/gl/m4/getopt.m4, src/gl/m4/gnulib-common.m4,
+	src/gl/m4/unistd_h.m4, src/gl/string.in.h, src/gl/unistd.in.h: 
+	Update gnulib files.
+
+2010-11-16  Simon Josefsson <simon@josefsson.org>
+
+	* tests/basic.c, tests/krb5context.c, tests/saslname.c: Fix
+	warnings.
+
+2010-11-16  Simon Josefsson <simon@josefsson.org>
+
+	* src/gss.c: Fix compiler warnings.
+
+2010-11-16  Simon Josefsson <simon@josefsson.org>
+
+	* configure.ac: Disable -Wtraditional-conversion because of too many
+	warnings with gcc 4.4.
+
+2010-11-16  Simon Josefsson <simon@josefsson.org>
+
+	* configure.ac: Drop -Wpadded because standard GSS-API header files
+	are unpadded on 64-bit archs.
+
+2010-11-16  Simon Josefsson <simon@josefsson.org>
+
+	* cfg.mk: Remove mingw32 rules, not useful anymore.
+
+2010-11-16  Simon Josefsson <simon@josefsson.org>
+
+	* .x-sc_bindtextdomain: Fix syntax checks.
+
+2010-11-16  Simon Josefsson <simon@josefsson.org>
+
+	* gtk-doc.make: Fix syntax checks.
+
+2010-11-16  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS, configure.ac: Bump versions.
+
+2010-11-16  Simon Josefsson <simon@josefsson.org>
+
+	* po/it.po.in: Sync with TP.
+
+2010-11-16  Simon Josefsson <simon@josefsson.org>
+
+	* GNUmakefile, build-aux/gendocs.sh, build-aux/gnupload,
+	build-aux/pmccabe.css, build-aux/pmccabe2html, doc/fdl-1.3.texi,
+	gl/Makefile.am, gl/m4/gnulib-cache.m4, gl/m4/gnulib-comp.m4,
+	gl/m4/ld-version-script.m4, gl/m4/lib-ld.m4, gl/m4/lib-link.m4,
+	lib/gl/Makefile.am, lib/gl/m4/gnulib-cache.m4,
+	lib/gl/m4/gnulib-comp.m4, lib/gl/m4/include_next.m4,
+	lib/gl/m4/string_h.m4, lib/gl/m4/wchar_t.m4, lib/gl/stddef.in.h,
+	lib/gl/string.in.h, maint.mk, src/gl/Makefile.am,
+	src/gl/errno.in.h, src/gl/getopt.in.h, src/gl/m4/errno_h.m4,
+	src/gl/m4/error.m4, src/gl/m4/getopt.m4, src/gl/m4/gnulib-cache.m4,
+	src/gl/m4/gnulib-comp.m4, src/gl/m4/include_next.m4,
+	src/gl/m4/stdarg.m4, src/gl/m4/string_h.m4, src/gl/m4/wchar_t.m4,
+	src/gl/stdarg.in.h, src/gl/stddef.in.h, src/gl/strerror.c,
+	src/gl/string.in.h, src/gl/unistd.in.h: Update gnulib files.
+
+2010-05-27  Simon Josefsson <simon@josefsson.org>
+
+	* doc/announce.txt: Doc fix.
+
+2010-05-20  Simon Josefsson <simon@josefsson.org>
+
+	* doc/announce.txt: Update announcement.txt.
+
+2010-05-20  Simon Josefsson <simon@josefsson.org>
+
+	* cfg.mk: Fix release target.
+
+2010-05-20  Simon Josefsson <simon@josefsson.org>
+
+	* ChangeLog: Generated.
+
 2010-05-20  Simon Josefsson <simon@josefsson.org>
 
 	* NEWS: Version 1.0.1.
@@ -6512,8 +6787,7 @@
 
 	-----
 
-	Copyright (C) 2003, 2004, 2005, 2006, 2007, 2008, 2009,
-        2010 Simon Josefsson
+	Copyright (C) 2003-2011  Simon Josefsson
 
 	Copying and distribution of this file, with or without
 	modification, are permitted provided the copyright notice
