@@ -1,32 +1,40 @@
 To: help-gss@gnu.org, info-gnu@gnu.org
-Subject: GNU Generic Security Service 1.0.1 released
+Subject: GNU Generic Security Service 1.0.2 released
 <#part sign=pgpmime>
-GSSLib is an implementation of the Generic Security Service
-Application Program Interface (GSS-API).  GSS-API is used by network
-servers to provide security services.  For example, GSS can be used to
-authenticate a client against SMTP or IMAP servers.  GSS consists of a
-library, a manual, and a command line tool for debugging purposes.
+GSSLib is an implementation of the Generic Security Service Application
+Program Interface (GSS-API).  GSS-API is used by network applications to
+implement security services.  For example, an application can use GSS to
+authenticate a user against a SMTP or IMAP server for sending or
+receiving e-mail.  GSS consists of a library, a manual, and a command
+line tool for debugging purposes.
 
 Noteworthy changes since the last version:
 
-* Version 1.0.1 (released 2010-05-20)
+** gss/api.h: Added RFC 5587 const typedefs.
+The new types are gss_const_buffer_t, gss_const_channel_bindings_t,
+gss_const_ctx_id_t, gss_const_cred_id_t, gss_const_name_t,
+gss_const_OID, and gss_const_OID_set.
 
-** gss: New --list-mechanisms (-l) to list supported mechanisms in library.
-
-** doc: Added section documenting command-line tool "gss".
-
-** doc: Added PDF version of API reference manual.
-See doc/reference/gss.pdf.
+** gss/api.h, gss/ext.h: Moved RFC 6339 functions from ext.h to api.h.
+The functions gss_oid_equal, gss_encapsulate_token, and
+gss_decapsulate_token are now standardized.  The types have changed
+slightly to used RFC 5587 const types instead.  This does not affect
+the ABI and doesn't modify any semantics: the functions did not modify
+the non-const parameters before.
 
 ** i18n: Translations were updated.
 
-** build: The check for GNU Shishi now requires 0.0.42 or later.
-Earlier Shishi versions had bugs that caused the self-checks to fail.
-
-** build: Update gnulib files.
+** build: Update gnulib files.  Several QA bug fixes.
 
 ** API and ABI modifications.
-No changes since last version.
+gss_oid_equal:
+gss_encapsulate_token:
+gss_decapsulate_token: See above.
+
+There is a known problem building this release on MinGW with MSVC as the
+compiler, fortunately there is a workaround available -- please see
+https://lists.gnu.org/archive/html/help-libtasn1/2011-11/msg00001.html
+for more information.
 
 While written to be flexible with regards to different GSS mechanisms,
 the only currently supported mechanism is Kerberos V5 via GNU Shishi.
@@ -53,49 +61,39 @@ maintenance.  We are always looking for interesting development
 projects.
 
 The project's web page is available at:
-  http://www.gnu.org/software/gss/
+  https://www.gnu.org/software/gss/
 
 All manuals are available from:
-  http://www.gnu.org/software/gss/manual/
+  https://www.gnu.org/software/gss/manual/
 
 Direct links to the manual:
-  HTML: http://www.gnu.org/software/gss/manual/gss.html
-  PDF: http://www.gnu.org/software/gss/manual/gss.pdf
+  HTML: https://www.gnu.org/software/gss/manual/gss.html
+  PDF: https://www.gnu.org/software/gss/manual/gss.pdf
 
 Direct links to the API Reference manual:
-  HTML: http://www.gnu.org/software/gss/reference/
-  PDF: http://www.gnu.org/software/gss/reference/gss.pdf
+  HTML: https://www.gnu.org/software/gss/reference/
+  PDF: https://www.gnu.org/software/gss/reference/gss.pdf
 
 For code coverage and cyclomatic code complexity charts:
-  http://www.gnu.org/software/gss/coverage/
-  http://www.gnu.org/software/gss/cyclo/cyclo-gss.html
+  https://www.gnu.org/software/gss/coverage/
+  https://www.gnu.org/software/gss/cyclo/cyclo-gss.html
 
 If you need help to use GNU GSS, or want to help others, you are
 invited to join our help-gss mailing list, see:
-  http://lists.gnu.org/mailman/listinfo/help-gss
+  https://lists.gnu.org/mailman/listinfo/help-gss
 
 Here are the compressed sources of the entire package:
-  ftp://ftp.gnu.org/gnu/gss/gss-1.0.1.tar.gz (2.1MB)
-  ftp://ftp.gnu.org/gnu/gss/gss-1.0.1.tar.gz.sig (OpenPGP signature)
-
-We also provide pre-built Windows binaries:
-  http://josefsson.org/gnutls4win/gss-1.0.0.zip
-  http://josefsson.org/gnutls4win/mingw32-gss_1.0.0-1_all.deb
-
-Here are the build reports for various platforms:
-  http://autobuild.josefsson.org/shishi/
-
-Daily builds of the package are available from:
-  http://daily.josefsson.org/gss/
+  ftp://ftp.gnu.org/gnu/gss/gss-1.0.2.tar.gz (2.2MB)
+  ftp://ftp.gnu.org/gnu/gss/gss-1.0.2.tar.gz.sig (OpenPGP signature)
 
 The software is cryptographically signed by the author using an
 OpenPGP key identified by the following information:
 
-pub   1280R/B565716F 2002-05-05 [expires: 2011-03-30]
+pub   1280R/B565716F 2002-05-05 [expires: 2012-01-24]
       Key fingerprint = 0424 D4EE 81A0 E3D1 19C6  F835 EDA2 1E94 B565 716F
-uid                  Simon Josefsson <jas@extundo.com>
 uid                  Simon Josefsson <simon@josefsson.org>
-sub   1280R/4D5D40AE 2002-05-05 [expires: 2011-03-30]
+uid                  Simon Josefsson <jas@extundo.com>
+sub   1280R/4D5D40AE 2002-05-05 [expires: 2012-01-24]
 
 The key is available from:
   http://josefsson.org/key.txt
@@ -103,14 +101,8 @@ The key is available from:
 
 Here are the SHA-1 and SHA-224 checksums:
 
-ae1ef7c7fa708db8a399312041d75e73621689ea  gss-1.0.1.tar.gz
-59f1d33d6dc54c5dd2acca4e7bddf7797e0b9d9d639752539b30e3bd  gss-1.0.1.tar.gz
-
-3963f8bfeabe61b976d332a7516f87bcfa566c80  gss-1.0.1.zip
-40167ed226c9bed5a5fa5fad1c0ab674506d6816079f1418c25ae28f  gss-1.0.1.zip
-
-a290bef163773d16fbe0a3fe5f5f2303ef83c9c5  mingw32-gss_1.0.1-1_all.deb
-7199dc1467fbb7ff517b958b64f2e0016ada8bbd3ca7ae3592855f54  mingw32-gss_1.0.1-1_all.deb
+243bb5afd9b1925b2c45be8bbfe0339b04d37c4f  gss-1.0.2.tar.gz
+4c91b5805904652dcb88066b3736450f5ef44868f7d8b89bcb0b0bfc  gss-1.0.2.tar.gz
 
 Happy hacking,
 Simon
