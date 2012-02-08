@@ -44,7 +44,6 @@ AC_DEFUN([gl_EARLY],
   # Code from module gendocs:
   # Code from module gnumakefile:
   # Code from module gnupload:
-  # Code from module gpl-3.0:
   # Code from module havelib:
   # Code from module lib-symbol-versions:
   # Code from module maintainer-makefile:
@@ -234,7 +233,6 @@ AC_DEFUN([gl_FILE_LIST], [
   build-aux/vc-list-files
   doc/fdl-1.3.texi
   doc/gendocs_template
-  doc/gpl-3.0.texi
   lib/dummy.c
   m4/00gnulib.m4
   m4/autobuild.m4
