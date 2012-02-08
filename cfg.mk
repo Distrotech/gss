@@ -1,4 +1,4 @@
-# Copyright (C) 2006-2011  Simon Josefsson
+# Copyright (C) 2006-2012  Simon Josefsson
 #
 # This file is part of the Generic Security Service (GSS).
 #
@@ -30,9 +30,9 @@ endif
 local-checks-to-skip = sc_copyright_check sc_immutable_NEWS		\
 	sc_makefile_at_at_check sc_prohibit_strcmp sc_require_config_h	\
 	sc_require_config_h_first
-VC_LIST_ALWAYS_EXCLUDE_REGEX = ^maint.mk|((lib/|src/)?(gl|gltests|build-aux))/.*$$
+VC_LIST_ALWAYS_EXCLUDE_REGEX = ^maint.mk|GNUmakefile|gtk-doc.make|po/.*.po.in|((lib/|src/)?(gl|gltests|build-aux))/.*$$
 
-update-copyright-env = UPDATE_COPYRIGHT_HOLDER="Simon Josefsson" UPDATE_COPYRIGHT_USE_INTERVALS=1
+update-copyright-env = UPDATE_COPYRIGHT_HOLDER="Simon Josefsson" UPDATE_COPYRIGHT_USE_INTERVALS=2
 
 gtk-doc.make:
 	gtkdocize

@@ -1,5 +1,5 @@
 /* saslname.c --- Implementation of the SASL GS2 interfaces.
- * Copyright (C) 2010-2011 Simon Josefsson
+ * Copyright (C) 2010-2012 Simon Josefsson
  *
  * This file is part of the Generic Security Service (GSS).
  *
