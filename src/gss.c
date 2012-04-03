@@ -25,6 +25,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <errno.h>
 
 /* For gettext. */
 #include <locale.h>
@@ -38,8 +39,9 @@
 #include "gss_cmd.h"
 
 /* Gnulib utils. */
-#include "progname.h"
+#include "base64.h"
 #include "error.h"
+#include "progname.h"
 #include "version-etc.h"
 
 const char version_etc_copyright[] =
@@ -83,6 +85,10 @@ Mandatory arguments to long options are mandatory for short options too.\n\
                     List information about supported mechanisms\n\
                     in a human readable format.\n\
   -m, --major=LONG  Describe a `major status' error code value.\n\
+"), stdout);
+      fputs (_("\
+  -i, --init-sec-context\n\
+                    Initialize a security context as client.\n\
 "), stdout);
       fputs (_("\
   -q, --quiet       Silent operation (default=off).\n\
@@ -284,6 +290,59 @@ list_mechanisms (unsigned quiet)
   return 0;
 }
 
+static int
+init_sec_context (unsigned quiet)
+{
+  OM_uint32 maj, min;
+  gss_ctx_id_t ctx = GSS_C_NO_CONTEXT;
+  gss_name_t servername = GSS_C_NO_NAME;
+  gss_buffer_desc bufdesc;
+  gss_buffer_desc sasl_mech_name;
+  gss_OID mech_type;
+  size_t outlen;
+  char *out;
+
+  sasl_mech_name.length = strlen ("SAML20");
+  sasl_mech_name.value = (void*) "SAML20";
+
+  maj = gss_inquire_mech_for_saslname (&min, &sasl_mech_name, &mech_type);
+  if (GSS_ERROR (maj))
+    error (EXIT_FAILURE, 0,
+	   _("inquiring mechanism for SASL name (%d/%d)"), maj, min);
+
+  do
+    {
+      maj = gss_init_sec_context (&min,
+				  GSS_C_NO_CREDENTIAL,
+				  &ctx,
+				  servername,
+				  mech_type,
+				  GSS_C_MUTUAL_FLAG |
+				  GSS_C_REPLAY_FLAG |
+				  GSS_C_SEQUENCE_FLAG,
+				  0,
+				  GSS_C_NO_CHANNEL_BINDINGS,
+				  GSS_C_NO_BUFFER, NULL,
+				  &bufdesc, NULL, NULL);
+      if (GSS_ERROR (maj))
+	error (EXIT_FAILURE, 0,
+	       _("initializing security context failed (%d/%d)"), maj, min);
+
+      outlen = base64_encode_alloc (bufdesc.value, bufdesc.length, &out);
+      if (out == NULL && outlen == 0 && bufdesc.length != 0)
+	error (EXIT_FAILURE, 0, _("base64 input too long"));
+      if (out == NULL)
+	error (EXIT_FAILURE, errno, _("malloc"));
+
+      printf ("%s\n", out);
+
+      free (out);
+    }
+  while (maj == GSS_S_CONTINUE_NEEDED);
+
+  return 0;
+}
+
 int
 main (int argc, char *argv[])
 {
@@ -311,6 +370,8 @@ main (int argc, char *argv[])
     rc = describe_major (args.quiet_given, args.major_arg);
   else if (args.list_mechanisms_given)
     rc = list_mechanisms (args.quiet_given);
+  else if (args.init_sec_context_given)
+    rc = init_sec_context (args.quiet_given);
   else
     usage (EXIT_SUCCESS);
 

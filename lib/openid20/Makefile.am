@@ -1,5 +1,5 @@
-# gss.ggo --- Run gengetopt on this file to produce gss_cmd.*.       -*- sh -*-
-# Copyright (C) 2003-2012 Simon Josefsson
+## Process this file with automake to produce Makefile.in
+# Copyright (C) 2012 Simon Josefsson
 #
 # This file is part of the Generic Security Service (GSS).
 #
@@ -18,9 +18,15 @@
 # the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 # Boston, MA 02110-1301, USA.
 
-purpose "Command line interface to GSS, used to explain error codes."
+AM_CFLAGS = $(WARN_CFLAGS) $(WERROR_CFLAGS)
+AM_CPPFLAGS = -I$(top_srcdir)/lib/gl \
+	-I$(top_srcdir)/lib \
+	-I$(top_builddir)/lib/headers -I$(top_srcdir)/lib/headers
 
-option "major" m "See gss.c for doc string" long no
-option "list-mechanisms" l "See gss.c for doc string" no
-option "init-sec-context" i "See gss.c for doc string" no
-option "quiet" q "Silent operation" flag off
+noinst_LTLIBRARIES = libgss-openid20.la
+
+libgss_openid20_la_SOURCES = oid.c
+libgss_openid20_la_LIBADD = @LTLIBINTL@
+
+localedir = $(datadir)/locale
+DEFS = -DLOCALEDIR=\"$(localedir)\" @DEFS@

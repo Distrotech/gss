@@ -77,7 +77,8 @@ if test "$kerberos5" != "no" ; then
   AC_LIB_HAVE_LINKFLAGS(shishi,, [#include <shishi.h>],
                         [shishi_key_timestamp (0);])
   if test "$ac_cv_libshishi" = yes; then
-    AC_DEFINE([USE_KERBEROS5], 1, [Define to 1 if you want Kerberos 5 mech.])
+    AC_DEFINE([USE_KERBEROS5], 1,
+              [Define to 1 if you want the Kerberos 5 mech.])
     INCLUDE_GSS_KRB5='# include <gss/krb5.h>'
     INCLUDE_GSS_KRB5_EXT='# include <gss/krb5-ext.h>'
     kerberos5=yes
@@ -90,6 +91,40 @@ AC_MSG_RESULT($kerberos5)
 AM_CONDITIONAL(KRB5, test "$kerberos5" = "yes")
 AC_SUBST(INCLUDE_GSS_KRB5)
 AC_SUBST(INCLUDE_GSS_KRB5_EXT)
+
+# Test for OpenID20.
+AC_ARG_ENABLE(openid20,
+  AC_HELP_STRING([--disable-openid20],
+    [disable OPENID20 mechanism unconditionally]),
+  openid20=$enableval)
+if test "$openid20" != "no" ; then
+  AC_DEFINE([USE_OPENID20], 1, [Define to 1 if you want the OPENID20 mech.])
+  INCLUDE_GSS_OPENID20_EXT='# include <gss/openid20-ext.h>'
+  openid20=yes
+else
+  openid20=no
+fi
+AC_MSG_CHECKING([if the OPENID20 mechanism should be supported])
+AC_MSG_RESULT($openid20)
+AM_CONDITIONAL(OPENID20, test "$openid20" = "yes")
+AC_SUBST(INCLUDE_GSS_OPENID20_EXT)
+
+# Test for SAML20.
+AC_ARG_ENABLE(saml20,
+  AC_HELP_STRING([--disable-saml20],
+    [disable SAML20 mechanism unconditionally]),
+  saml20=$enableval)
+if test "$saml20" != "no" ; then
+  AC_DEFINE([USE_SAML20], 1, [Define to 1 if you want the SAML20 mech.])
+  INCLUDE_GSS_SAML20_EXT='# include <gss/saml20-ext.h>'
+  saml20=yes
+else
+  saml20=no
+fi
+AC_MSG_CHECKING([if the SAML20 mechanism should be supported])
+AC_MSG_RESULT($saml20)
+AM_CONDITIONAL(SAML20, test "$saml20" = "yes")
+AC_SUBST(INCLUDE_GSS_SAML20_EXT)
 
 # Check for gtk-doc.
 GTK_DOC_CHECK(1.1)
@@ -145,6 +180,8 @@ AC_CONFIG_FILES([
   lib/gl/Makefile
   lib/headers/gss.h
   lib/krb5/Makefile
+  lib/openid20/Makefile
+  lib/saml20/Makefile
   po/Makefile.in
   po/Makevars
   src/Makefile
@@ -163,6 +200,9 @@ AC_MSG_NOTICE([summary of build options:
   Library types:      Shared=${enable_shared}, Static=${enable_static}
   Valgrind:           ${VALGRIND}
   Version script:     $have_ld_version_script
-  Enable krb5 mech:   $kerberos5
   I18n domain suffix: ${PO_SUFFIX:-none}
+
+  Kerberos 5:         $kerberos5
+  OPENID20:           $openid20
+  SAML20:             $saml20
 ])

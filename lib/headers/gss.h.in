@@ -78,6 +78,8 @@ extern "C"
   /* *INDENT-OFF* */
 @INCLUDE_GSS_KRB5@
 @INCLUDE_GSS_KRB5_EXT@
+@INCLUDE_GSS_OPENID20_EXT@
+@INCLUDE_GSS_SAML20_EXT@
   /* *INDENT-ON* */
 
 # ifdef __cplusplus

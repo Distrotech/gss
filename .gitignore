@@ -156,6 +156,18 @@ lib/obsolete.lo
 lib/obsolete.o
 lib/oid.lo
 lib/oid.o
+lib/openid20/.deps/
+lib/openid20/.libs/
+lib/openid20/libgss-openid20.la
+lib/openid20/oid.lo
+lib/openid20/oid.o
+lib/saml20/.deps/
+lib/saml20/.libs/
+lib/saml20/context.lo
+lib/saml20/context.o
+lib/saml20/libgss-saml20.la
+lib/saml20/oid.lo
+lib/saml20/oid.o
 lib/saslname.lo
 lib/saslname.o
 lib/version.lo
@@ -232,6 +244,8 @@ src/gl/Makefile
 src/gl/Makefile.in
 src/gl/TAGS
 src/gl/arg-nonnull.h
+src/gl/base64.lo
+src/gl/base64.o
 src/gl/c++defs.h
 src/gl/getopt.h
 src/gl/getopt.lo

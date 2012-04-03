@@ -59,5 +59,17 @@ gssinclude_HEADERS += headers/gss/krb5.h headers/gss/krb5-ext.h
 libgss_la_LIBADD += krb5/libgss-shishi.la
 endif
 
+if OPENID20
+SUBDIRS += openid20
+gssinclude_HEADERS += headers/gss/openid20-ext.h
+libgss_la_LIBADD += openid20/libgss-openid20.la
+endif
+
+if SAML20
+SUBDIRS += saml20
+gssinclude_HEADERS += headers/gss/saml20-ext.h
+libgss_la_LIBADD += saml20/libgss-saml20.la
+endif
+
 localedir = $(datadir)/locale
 DEFS = -DLOCALEDIR=\"$(localedir)\" @DEFS@

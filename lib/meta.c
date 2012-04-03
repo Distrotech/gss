@@ -28,6 +28,15 @@
 # include "krb5/protos.h"
 #endif
 
+#ifdef USE_OPENID20
+# include <gss/openid20-ext.h>
+#endif
+
+#ifdef USE_SAML20
+# include <gss/saml20-ext.h>
+# include "saml20/protos.h"
+#endif
+
 static _gss_mech_api_desc _gss_mech_apis[] = {
 #ifdef USE_KERBEROS5
   {
@@ -55,6 +64,58 @@ static _gss_mech_api_desc _gss_mech_apis[] = {
    gss_krb5_context_time,
    gss_krb5_inquire_cred,
    gss_krb5_inquire_cred_by_mech},
+#endif
+#ifdef USE_OPENID20
+  {
+    &GSS_OPENID20_static,
+    "OPENID20",
+    "OpenID 2.0",
+    N_("OpenID 2.0 GSS-API mechanism (client only)"),
+    {
+      /* Mandatory name-types. */
+      &GSS_C_NT_USER_NAME_static,
+      &GSS_C_NT_HOSTBASED_SERVICE_static},
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL},
+#endif
+#ifdef USE_SAML20
+  {
+    &GSS_SAML20_static,
+    "SAML20",
+    "SAML 2.0",
+    N_("SAML 2.0 GSS-API mechanism (client only)"),
+    {
+      /* Mandatory name-types. */
+      &GSS_C_NT_USER_NAME_static,
+      &GSS_C_NT_HOSTBASED_SERVICE_static},
+    gss_saml20_init_sec_context,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL},
 #endif
   {
    NULL,

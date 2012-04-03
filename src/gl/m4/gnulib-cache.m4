@@ -27,11 +27,12 @@
 
 
 # Specification in the form of a command-line invocation:
-#   gnulib-tool --import --dir=. --local-dir=src/gl/override --lib=libgnu --source-base=src/gl --m4-base=src/gl/m4 --doc-base=doc --tests-base=src/gl/tests --aux-dir=build-aux --no-conditional-dependencies --libtool --macro-prefix=srcgl --no-vc-files error getopt-gnu progname version-etc
+#   gnulib-tool --import --dir=. --local-dir=src/gl/override --lib=libgnu --source-base=src/gl --m4-base=src/gl/m4 --doc-base=doc --tests-base=src/gl/tests --aux-dir=build-aux --no-conditional-dependencies --libtool --macro-prefix=srcgl --no-vc-files base64 error getopt-gnu progname version-etc
 
 # Specification in the form of a few gnulib-tool.m4 macro invocations:
 gl_LOCAL_DIR([src/gl/override])
 gl_MODULES([
+  base64
   error
   getopt-gnu
   progname
