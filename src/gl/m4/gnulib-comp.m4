@@ -43,6 +43,8 @@ AC_DEFUN([srcgl_EARLY],
   # Code from module error:
   # Code from module extensions:
   AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
+  # Code from module getdelim:
+  # Code from module getline:
   # Code from module getopt-gnu:
   # Code from module getopt-posix:
   # Code from module gettext-h:
@@ -51,8 +53,11 @@ AC_DEFUN([srcgl_EARLY],
   # Code from module memchr:
   # Code from module msvc-inval:
   # Code from module msvc-nothrow:
+  # Code from module multiarch:
   # Code from module nocrash:
   # Code from module progname:
+  # Code from module realloc-posix:
+  # Code from module snippet/_Noreturn:
   # Code from module snippet/arg-nonnull:
   # Code from module snippet/c++defs:
   # Code from module snippet/warn-on-use:
@@ -65,6 +70,9 @@ AC_DEFUN([srcgl_EARLY],
   gl_PROG_CC_C99
   # Code from module stdbool:
   # Code from module stddef:
+  # Code from module stdint:
+  # Code from module stdio:
+  # Code from module stdlib:
   # Code from module strerror:
   # Code from module strerror-override:
   # Code from module string:
@@ -97,6 +105,18 @@ fi
 m4_ifdef([AM_XGETTEXT_OPTION],
   [AM_][XGETTEXT_OPTION([--flag=error:3:c-format])
    AM_][XGETTEXT_OPTION([--flag=error_at_line:5:c-format])])
+gl_FUNC_GETDELIM
+if test $HAVE_GETDELIM = 0 || test $REPLACE_GETDELIM = 1; then
+  AC_LIBOBJ([getdelim])
+  gl_PREREQ_GETDELIM
+fi
+gl_STDIO_MODULE_INDICATOR([getdelim])
+gl_FUNC_GETLINE
+if test $REPLACE_GETLINE = 1; then
+  AC_LIBOBJ([getline])
+  gl_PREREQ_GETLINE
+fi
+gl_STDIO_MODULE_INDICATOR([getline])
 gl_FUNC_GETOPT_GNU
 if test $REPLACE_GETOPT = 1; then
   AC_LIBOBJ([getopt])
@@ -132,12 +152,21 @@ gl_MSVC_NOTHROW
 if test $HAVE_MSVC_INVALID_PARAMETER_HANDLER = 1; then
   AC_LIBOBJ([msvc-nothrow])
 fi
+gl_MULTIARCH
 AC_CHECK_DECLS([program_invocation_name], [], [], [#include <errno.h>])
 AC_CHECK_DECLS([program_invocation_short_name], [], [], [#include <errno.h>])
+gl_FUNC_REALLOC_POSIX
+if test $REPLACE_REALLOC = 1; then
+  AC_LIBOBJ([realloc])
+fi
+gl_STDLIB_MODULE_INDICATOR([realloc-posix])
 gt_TYPE_SSIZE_T
 gl_STDARG_H
 AM_STDBOOL_H
 gl_STDDEF_H
+gl_STDINT_H
+gl_STDIO_H
+gl_STDLIB_H
 gl_FUNC_STRERROR
 if test $REPLACE_STRERROR = 1; then
   AC_LIBOBJ([strerror])
@@ -289,6 +318,7 @@ AC_DEFUN([srcgltests_LIBSOURCES], [
 # This macro records the list of files which have been installed by
 # gnulib-tool and may be removed by future gnulib-tool invocations.
 AC_DEFUN([srcgl_FILE_LIST], [
+  build-aux/snippet/_Noreturn.h
   build-aux/snippet/arg-nonnull.h
   build-aux/snippet/c++defs.h
   build-aux/snippet/warn-on-use.h
@@ -297,6 +327,8 @@ AC_DEFUN([srcgl_FILE_LIST], [
   lib/errno.in.h
   lib/error.c
   lib/error.h
+  lib/getdelim.c
+  lib/getline.c
   lib/getopt.c
   lib/getopt.in.h
   lib/getopt1.c
@@ -311,9 +343,13 @@ AC_DEFUN([srcgl_FILE_LIST], [
   lib/msvc-nothrow.h
   lib/progname.c
   lib/progname.h
+  lib/realloc.c
   lib/stdarg.in.h
   lib/stdbool.in.h
   lib/stddef.in.h
+  lib/stdint.in.h
+  lib/stdio.in.h
+  lib/stdlib.in.h
   lib/strerror-override.c
   lib/strerror-override.h
   lib/strerror.c
@@ -327,18 +363,27 @@ AC_DEFUN([srcgl_FILE_LIST], [
   m4/errno_h.m4
   m4/error.m4
   m4/extensions.m4
+  m4/getdelim.m4
+  m4/getline.m4
   m4/getopt.m4
   m4/gnulib-common.m4
   m4/include_next.m4
+  m4/longlong.m4
+  m4/malloc.m4
   m4/memchr.m4
   m4/mmap-anon.m4
   m4/msvc-inval.m4
   m4/msvc-nothrow.m4
+  m4/multiarch.m4
   m4/nocrash.m4
+  m4/realloc.m4
   m4/ssize_t.m4
   m4/stdarg.m4
   m4/stdbool.m4
   m4/stddef_h.m4
+  m4/stdint.m4
+  m4/stdio_h.m4
+  m4/stdlib_h.m4
   m4/strerror.m4
   m4/string_h.m4
   m4/sys_socket_h.m4
