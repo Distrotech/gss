@@ -25,6 +25,15 @@
 #include "internal.h"
 #include "protos.h"
 
+/* SCRAM implementation */
+#include "tokens.h"
+#include "printer.h"
+
+typedef struct _gss_scram_ctx_struct
+{
+  struct scram_client_first cf;
+} _gss_scram_ctx_desc, *_gss_scram_ctx_t;
+
 OM_uint32
 gss_scram_init_sec_context (OM_uint32 * minor_status,
 			    const gss_cred_id_t initiator_cred_handle,
@@ -40,6 +49,8 @@ gss_scram_init_sec_context (OM_uint32 * minor_status,
 			    OM_uint32 * ret_flags,
 			    OM_uint32 * time_rec)
 {
+  gss_ctx_id_t ctx = *context_handle;
+  _gss_scram_ctx_t sctx = ctx->scram;
   OM_uint32 maj;
   gss_buffer_desc token;
 
@@ -48,6 +59,17 @@ gss_scram_init_sec_context (OM_uint32 * minor_status,
 
   if (initiator_cred_handle)
     return GSS_S_NO_CRED;
+
+  if (sctx == NULL)
+    {
+      sctx = ctx->scram = calloc (sizeof (*sctx), 1);
+      if (!sctx)
+	{
+	  if (minor_status)
+	    *minor_status = ENOMEM;
+	  return GSS_S_FAILURE;
+	}
+    }
 
   if (input_token)
     {

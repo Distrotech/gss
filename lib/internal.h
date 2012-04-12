@@ -63,6 +63,9 @@ typedef struct gss_ctx_id_struct
 #ifdef USE_KERBEROS5
   struct _gss_krb5_ctx_struct *krb5;
 #endif
+#ifdef USE_SCRAM
+  struct _gss_scram_ctx_struct *scram;
+#endif
 } gss_ctx_id_desc;
 
 /* asn1.c */
