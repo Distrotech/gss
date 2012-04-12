@@ -29,10 +29,26 @@
 #include "tokens.h"
 #include "printer.h"
 
+#define CNONCE_ENTROPY_BYTES 23
+
 typedef struct _gss_scram_ctx_struct
 {
   struct scram_client_first cf;
 } _gss_scram_ctx_desc, *_gss_scram_ctx_t;
+
+void
+bin2hex (const char *binstr, size_t binlen, char *hexstr)
+{
+  static const char trans[] = "0123456789abcdef";
+
+  while (binlen--)
+    {
+      *hexstr++ = trans[(*binstr >> 4) & 0xf];
+      *hexstr++ = trans[*binstr++ & 0xf];
+    }
+
+  *hexstr = '\0';
+}
 
 OM_uint32
 gss_scram_init_sec_context (OM_uint32 * minor_status,
@@ -62,6 +78,9 @@ gss_scram_init_sec_context (OM_uint32 * minor_status,
 
   if (sctx == NULL)
     {
+      char buf[CNONCE_ENTROPY_BYTES];
+      int rc;
+
       sctx = ctx->scram = calloc (sizeof (*sctx), 1);
       if (!sctx)
 	{
@@ -69,6 +88,24 @@ gss_scram_init_sec_context (OM_uint32 * minor_status,
 	    *minor_status = ENOMEM;
 	  return GSS_S_FAILURE;
 	}
+
+      rc = gc_nonce (buf, sizeof (buf));
+      if (rc != GC_OK)
+	{
+	  if (minor_status)
+	    *minor_status = rc;
+	  return GSS_S_FAILURE;
+	}
+
+      cf.client_nonce = malloc (2 * sizeof (buf) + 1);
+      if (cf.client_nonce == NULL)
+	{
+	  if (minor_status)
+	    *minor_status = ENOMEM;
+	  return GSS_S_FAILURE;
+	}
+
+      bin2hex (buf, sizeof (buf), cf.client_nonce);
     }
 
   if (input_token)

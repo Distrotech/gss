@@ -116,6 +116,8 @@ lib/gl/arg-nonnull.h
 lib/gl/c++defs.h
 lib/gl/dummy.lo
 lib/gl/dummy.o
+lib/gl/gc-gnulib.lo
+lib/gl/gc-gnulib.o
 lib/gl/libgnu.la
 lib/gl/link-warning.h
 lib/gl/string.h
@@ -165,6 +167,12 @@ lib/scram/context.o
 lib/scram/libgss-scram.la
 lib/scram/oid.lo
 lib/scram/oid.o
+lib/scram/printer.lo
+lib/scram/printer.o
+lib/scram/tokens.lo
+lib/scram/tokens.o
+lib/scram/validate.lo
+lib/scram/validate.o
 lib/version.lo
 lib/version.o
 libtool

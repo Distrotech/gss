@@ -38,9 +38,12 @@ AC_DEFUN([libgl_EARLY],
   m4_pattern_allow([^gl_LIBOBJS$])dnl a variable
   m4_pattern_allow([^gl_LTLIBOBJS$])dnl a variable
   AC_REQUIRE([gl_PROG_AR_RANLIB])
+  # Code from module crypto/gc:
+  # Code from module crypto/gc-random:
   # Code from module extensions:
   AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
   # Code from module gettext-h:
+  # Code from module havelib:
   # Code from module include_next:
   # Code from module lib-msvc-compat:
   # Code from module snippet/arg-nonnull:
@@ -65,6 +68,18 @@ AC_DEFUN([libgl_INIT],
   m4_pushdef([libgl_LIBSOURCES_DIR], [])
   gl_COMMON
   gl_source_base='lib/gl'
+gl_GC
+if test "$ac_cv_libgcrypt" = yes; then
+  AC_LIBOBJ([gc-libgcrypt])
+else
+  AC_LIBOBJ([gc-gnulib])
+fi
+if test $gl_cond_libtool = false; then
+  gl_ltlibdeps="$gl_ltlibdeps $LTLIBGCRYPT"
+  gl_libdeps="$gl_libdeps $LIBGCRYPT"
+fi
+gl_GC_RANDOM
+gl_MODULE_INDICATOR([gc-random])
 AC_SUBST([LIBINTL])
 AC_SUBST([LTLIBINTL])
 gl_LD_OUTPUT_DEF
@@ -212,19 +227,28 @@ AC_DEFUN([libgltests_LIBSOURCES], [
 # This macro records the list of files which have been installed by
 # gnulib-tool and may be removed by future gnulib-tool invocations.
 AC_DEFUN([libgl_FILE_LIST], [
+  build-aux/config.rpath
   build-aux/snippet/arg-nonnull.h
   build-aux/snippet/c++defs.h
   build-aux/snippet/warn-on-use.h
   lib/dummy.c
+  lib/gc-gnulib.c
+  lib/gc-libgcrypt.c
+  lib/gc.h
   lib/gettext.h
   lib/stddef.in.h
   lib/string.in.h
   lib/strverscmp.c
   m4/00gnulib.m4
   m4/extensions.m4
+  m4/gc-random.m4
+  m4/gc.m4
   m4/gnulib-common.m4
   m4/include_next.m4
   m4/ld-output-def.m4
+  m4/lib-ld.m4
+  m4/lib-link.m4
+  m4/lib-prefix.m4
   m4/stddef_h.m4
   m4/string_h.m4
   m4/strverscmp.m4
