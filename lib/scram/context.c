@@ -53,6 +53,57 @@ bin2hex (const char *binstr, size_t binlen, char *hexstr)
   *hexstr = '\0';
 }
 
+/* Generate SCRAM client-first message.  Returns GSS_S_CONTINUE_NEEDED
+   on success, or an error code. */
+static OM_uint32
+client_first (OM_uint32 * minor_status,
+	      _gss_scram_ctx_t sctx,
+	      gss_buffer_t output_token)
+{
+  OM_uint32 maj;
+  gss_buffer_desc token;
+  int rc;
+  char buf[CNONCE_ENTROPY_BYTES];
+
+  rc = gc_nonce (buf, sizeof (buf));
+  if (rc != GC_OK)
+    {
+      if (minor_status)
+	*minor_status = rc;
+      return GSS_S_FAILURE;
+    }
+
+  sctx->cf.client_nonce = malloc (2 * sizeof (buf) + 1);
+  if (sctx->cf.client_nonce == NULL)
+    {
+      if (minor_status)
+	*minor_status = ENOMEM;
+      return GSS_S_FAILURE;
+    }
+
+  bin2hex (buf, sizeof (buf), sctx->cf.client_nonce);
+
+  sctx->cf.cbflag = 'n';
+  sctx->cf.username = strdup ("jas");  /* XXX */
+  sctx->cf.authzid = strdup ("authzid"); /* XXX */
+
+  rc = scram_print_client_first (&sctx->cf, (char **) &token.value);
+  if (rc != 0)
+    {
+      if (minor_status)
+	*minor_status = rc;
+      return GSS_S_FAILURE;
+    }
+
+  token.length = strlen (token.value);
+
+  maj = gss_encapsulate_token (&token, GSS_SCRAMSHA1, output_token);
+  if (GSS_ERROR (maj))
+    return maj;
+
+  return GSS_S_CONTINUE_NEEDED;
+}
+
 OM_uint32
 gss_scram_init_sec_context (OM_uint32 * minor_status,
 			    const gss_cred_id_t initiator_cred_handle,
@@ -71,8 +122,6 @@ gss_scram_init_sec_context (OM_uint32 * minor_status,
   gss_ctx_id_t ctx = *context_handle;
   _gss_scram_ctx_t sctx = ctx->scram;
   OM_uint32 maj;
-  gss_buffer_desc token;
-  int rc;
 
   if (minor_status)
     *minor_status = 0;
@@ -82,8 +131,6 @@ gss_scram_init_sec_context (OM_uint32 * minor_status,
 
   if (sctx == NULL)
     {
-      char buf[CNONCE_ENTROPY_BYTES];
-
       sctx = ctx->scram = calloc (sizeof (*sctx), 1);
       if (!sctx)
 	{
@@ -92,50 +139,16 @@ gss_scram_init_sec_context (OM_uint32 * minor_status,
 	  return GSS_S_FAILURE;
 	}
 
-      rc = gc_nonce (buf, sizeof (buf));
-      if (rc != GC_OK)
-	{
-	  free (sctx);
-	  if (minor_status)
-	    *minor_status = rc;
-	  return GSS_S_FAILURE;
-	}
+      maj = client_first (minor_status, sctx, output_token);
 
-      sctx->cf.client_nonce = malloc (2 * sizeof (buf) + 1);
-      if (sctx->cf.client_nonce == NULL)
-	{
-	  free (sctx);
-	  if (minor_status)
-	    *minor_status = ENOMEM;
-	  return GSS_S_FAILURE;
-	}
-
-      bin2hex (buf, sizeof (buf), sctx->cf.client_nonce);
-
-      sctx->cf.cbflag = 'n';
-      sctx->cf.username = strdup ("jas");  /* XXX */
-      sctx->cf.authzid = strdup ("authzid"); /* XXX */
-
-      rc = scram_print_client_first (&sctx->cf, (char **) &token.value);
-      if (rc != 0)
-	{
-	  scram_free_client_first (&sctx->cf);
-	  free (sctx);
-	  if (minor_status)
-	    *minor_status = rc;
-	  return GSS_S_FAILURE;
-	}
-      token.length = strlen (token.value);
-
-      maj = gss_encapsulate_token (&token, GSS_SCRAMSHA1, output_token);
-      if (GSS_ERROR (maj))
+      if (maj != GSS_S_CONTINUE_NEEDED)
 	{
 	  scram_free_client_first (&sctx->cf);
 	  free (sctx);
 	  return maj;
 	}
 
-      return GSS_S_CONTINUE_NEEDED;
+      return maj;
     }
 
   return GSS_S_FAILURE;

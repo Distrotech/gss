@@ -113,6 +113,8 @@ lib/gl/Makefile
 lib/gl/Makefile.in
 lib/gl/TAGS
 lib/gl/arg-nonnull.h
+lib/gl/base64.lo
+lib/gl/base64.o
 lib/gl/c++defs.h
 lib/gl/dummy.lo
 lib/gl/dummy.o

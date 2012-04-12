@@ -38,6 +38,7 @@ AC_DEFUN([libgl_EARLY],
   m4_pattern_allow([^gl_LIBOBJS$])dnl a variable
   m4_pattern_allow([^gl_LTLIBOBJS$])dnl a variable
   AC_REQUIRE([gl_PROG_AR_RANLIB])
+  # Code from module base64:
   # Code from module crypto/gc:
   # Code from module crypto/gc-random:
   # Code from module extensions:
@@ -46,9 +47,11 @@ AC_DEFUN([libgl_EARLY],
   # Code from module havelib:
   # Code from module include_next:
   # Code from module lib-msvc-compat:
+  # Code from module memchr:
   # Code from module snippet/arg-nonnull:
   # Code from module snippet/c++defs:
   # Code from module snippet/warn-on-use:
+  # Code from module stdbool:
   # Code from module stddef:
   # Code from module string:
   # Code from module strverscmp:
@@ -68,6 +71,7 @@ AC_DEFUN([libgl_INIT],
   m4_pushdef([libgl_LIBSOURCES_DIR], [])
   gl_COMMON
   gl_source_base='lib/gl'
+gl_FUNC_BASE64
 gl_GC
 if test "$ac_cv_libgcrypt" = yes; then
   AC_LIBOBJ([gc-libgcrypt])
@@ -83,6 +87,13 @@ gl_MODULE_INDICATOR([gc-random])
 AC_SUBST([LIBINTL])
 AC_SUBST([LTLIBINTL])
 gl_LD_OUTPUT_DEF
+gl_FUNC_MEMCHR
+if test $HAVE_MEMCHR = 0 || test $REPLACE_MEMCHR = 1; then
+  AC_LIBOBJ([memchr])
+  gl_PREREQ_MEMCHR
+fi
+gl_STRING_MODULE_INDICATOR([memchr])
+AM_STDBOOL_H
 gl_STDDEF_H
 gl_HEADER_STRING_H
 gl_FUNC_STRVERSCMP
@@ -231,15 +242,20 @@ AC_DEFUN([libgl_FILE_LIST], [
   build-aux/snippet/arg-nonnull.h
   build-aux/snippet/c++defs.h
   build-aux/snippet/warn-on-use.h
-  lib/dummy.c
+  lib/base64.c
+  lib/base64.h
   lib/gc-gnulib.c
   lib/gc-libgcrypt.c
   lib/gc.h
   lib/gettext.h
+  lib/memchr.c
+  lib/memchr.valgrind
+  lib/stdbool.in.h
   lib/stddef.in.h
   lib/string.in.h
   lib/strverscmp.c
   m4/00gnulib.m4
+  m4/base64.m4
   m4/extensions.m4
   m4/gc-random.m4
   m4/gc.m4
@@ -249,6 +265,9 @@ AC_DEFUN([libgl_FILE_LIST], [
   m4/lib-ld.m4
   m4/lib-link.m4
   m4/lib-prefix.m4
+  m4/memchr.m4
+  m4/mmap-anon.m4
+  m4/stdbool.m4
   m4/stddef_h.m4
   m4/string_h.m4
   m4/strverscmp.m4
