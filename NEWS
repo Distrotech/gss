@@ -2,6 +2,15 @@ GSS NEWS -- History of user-visible changes.                    -*- outline -*-
 Copyright (C) 2003-2012 Simon Josefsson
 See the end for copying conditions.
 
+* Version 1.0.3 (unreleased)
+
+** i18n: Translations were updated.
+
+** build: Update gnulib files.
+
+** API and ABI modifications.
+No changes since last version.
+
 * Version 1.0.2 (released 2011-11-25)
 
 ** gss/api.h: Added RFC 5587 const typedefs.
