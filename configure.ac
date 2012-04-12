@@ -20,7 +20,7 @@ dnl Process this file with autoconf to produce a configure script.
 # Boston, MA 02110-1301, USA.
 
 AC_PREREQ(2.61)
-AC_INIT([GNU Generic Security Service], [1.0.2], [bug-gss@gnu.org], [gss])
+AC_INIT([GNU Generic Security Service], [1.0.3], [bug-gss@gnu.org], [gss])
 AC_CONFIG_AUX_DIR([build-aux])
 AC_CONFIG_MACRO_DIR([m4])
 AC_CONFIG_HEADERS(config.h)
@@ -32,7 +32,7 @@ AM_SILENT_RULES([yes])
 # Interfaces added:                             AGE++
 # Interfaces removed:                           AGE=0
 AC_SUBST(LT_CURRENT, 3)
-AC_SUBST(LT_REVISION, 2)
+AC_SUBST(LT_REVISION, 3)
 AC_SUBST(LT_AGE, 0)
 
 # Checks for programs.
