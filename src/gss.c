@@ -41,7 +41,6 @@
 /* Gnulib utils. */
 #include "base64.h"
 #include "error.h"
-#include "getline.h"
 #include "progname.h"
 #include "version-etc.h"
 
@@ -295,17 +294,39 @@ list_mechanisms (unsigned quiet)
   return 0;
 }
 
+static ssize_t
+gettrimline (char **line, size_t * n, FILE * fh)
+{
+  ssize_t s = getline (line, n, fh);
+
+  if (s >= 2)
+    {
+      if ((*line)[strlen (*line) - 1] == '\n')
+	(*line)[strlen (*line) - 1] = '\0';
+      if ((*line)[strlen (*line) - 1] == '\r')
+	(*line)[strlen (*line) - 1] = '\0';
+    }
+
+  return s;
+}
+
 static int
 init_sec_context (unsigned quiet, const char *mech)
 {
   OM_uint32 maj, min;
   gss_ctx_id_t ctx = GSS_C_NO_CONTEXT;
   gss_name_t servername = GSS_C_NO_NAME;
+  gss_buffer_desc inbuf_desc;
+  gss_buffer_t inbuf = GSS_C_NO_BUFFER;
   gss_buffer_desc bufdesc;
   gss_buffer_desc sasl_mech_name;
   gss_OID mech_type;
   size_t outlen;
   char *out;
+  ssize_t s;
+  char *line = NULL;
+  size_t n = 0;
+  bool ok;
 
   sasl_mech_name.length = strlen (mech);
   sasl_mech_name.value = (void*) mech;
@@ -327,7 +348,7 @@ init_sec_context (unsigned quiet, const char *mech)
 				  GSS_C_SEQUENCE_FLAG,
 				  0,
 				  GSS_C_NO_CHANNEL_BINDINGS,
-				  GSS_C_NO_BUFFER, NULL,
+				  inbuf, NULL,
 				  &bufdesc, NULL, NULL);
       if (GSS_ERROR (maj))
 	error (EXIT_FAILURE, 0,
@@ -342,6 +363,20 @@ init_sec_context (unsigned quiet, const char *mech)
       printf ("%s\n", out);
 
       free (out);
+
+      s = gettrimline (&line, &n, stdin);
+      if (s == -1)
+	perror ("getline");
+
+      ok = base64_decode_alloc (line, strlen (line), &out, &outlen);
+      if (!ok)
+	error (EXIT_FAILURE, 0, _("base64 fail"));
+      if (out == NULL)
+	error (EXIT_FAILURE, errno, _("malloc"));
+
+      inbuf_desc.value = out;
+      inbuf_desc.length = outlen;
+      inbuf = &inbuf_desc;
     }
   while (maj == GSS_S_CONTINUE_NEEDED);
 
@@ -357,11 +392,28 @@ accept_sec_context (unsigned quiet)
   gss_name_t client = GSS_C_NO_NAME;
   gss_buffer_desc bufdesc, bufdesc2;
   gss_OID mech_type;
-  size_t outlen;
   char *out;
+  size_t outlen;
+  ssize_t s;
+  char *line = NULL;
+  size_t n = 0;
+  bool ok;
 
   do
     {
+      s = gettrimline (&line, &n, stdin);
+      if (s == -1)
+	perror ("getline");
+
+      ok = base64_decode_alloc (line, strlen (line), &out, &outlen);
+      if (!ok)
+	error (EXIT_FAILURE, 0, _("base64 fail"));
+      if (out == NULL)
+	error (EXIT_FAILURE, errno, _("malloc"));
+
+      bufdesc.value = out;
+      bufdesc.length = outlen;
+
       maj = gss_accept_sec_context (&min,
 				    &ctx,
 				    cred,
