@@ -25,7 +25,7 @@ AM_CPPFLAGS = -I$(top_srcdir)/lib/gl \
 
 noinst_LTLIBRARIES = libgss-scram.la
 
-libgss_scram_la_SOURCES = oid.c
+libgss_scram_la_SOURCES = oid.c context.c
 libgss_scram_la_LIBADD = @LTLIBINTL@
 
 localedir = $(datadir)/locale

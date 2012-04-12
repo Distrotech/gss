@@ -71,7 +71,7 @@ static _gss_mech_api_desc _gss_mech_apis[] = {
       /* Mandatory name-types. */
       &GSS_C_NT_USER_NAME_static,
       &GSS_C_NT_HOSTBASED_SERVICE_static},
-    NULL,
+    gss_scram_init_sec_context,
     NULL,
     NULL,
     NULL,

@@ -160,6 +160,8 @@ lib/saslname.lo
 lib/saslname.o
 lib/scram/.deps/
 lib/scram/.libs/
+lib/scram/context.lo
+lib/scram/context.o
 lib/scram/libgss-scram.la
 lib/scram/oid.lo
 lib/scram/oid.o
@@ -237,6 +239,8 @@ src/gl/Makefile
 src/gl/Makefile.in
 src/gl/TAGS
 src/gl/arg-nonnull.h
+src/gl/base64.lo
+src/gl/base64.o
 src/gl/c++defs.h
 src/gl/getopt.h
 src/gl/getopt.lo
