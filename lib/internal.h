@@ -74,5 +74,9 @@ _gss_encapsulate_token_prefix (const char *prefix, size_t prefixlen,
 			       const char *in, size_t inlen,
 			       const char *oid, OM_uint32 oidlen,
 			       void **out, size_t * outlen);
+extern int
+_gss_decapsulate_token (const char *in, size_t inlen,
+			char **oid, size_t * oidlen,
+			char **out, size_t * outlen);
 
 #endif /* _INTERNAL_H */
