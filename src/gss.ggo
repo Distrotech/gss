@@ -22,5 +22,6 @@ purpose "Command line interface to GSS, used to explain error codes."
 
 option "major" m "See gss.c for doc string" long no
 option "list-mechanisms" l "See gss.c for doc string" no
+option "accept-sec-context" a "See gss.c for doc string" no
 option "init-sec-context" i "See gss.c for doc string" string no
 option "quiet" q "Silent operation" flag off

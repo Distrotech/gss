@@ -81,7 +81,7 @@ static _gss_mech_api_desc _gss_mech_apis[] = {
     NULL,
     NULL,
     NULL,
-    NULL,
+    gss_scram_accept_sec_context,
     NULL,
     NULL,
     NULL,

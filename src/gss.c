@@ -41,6 +41,7 @@
 /* Gnulib utils. */
 #include "base64.h"
 #include "error.h"
+#include "getline.h"
 #include "progname.h"
 #include "version-etc.h"
 
@@ -87,6 +88,8 @@ Mandatory arguments to long options are mandatory for short options too.\n\
   -m, --major=LONG  Describe a `major status' error code value.\n\
 "), stdout);
       fputs (_("\
+  -a, --accept-sec-context\n\
+                    Accept a security context as server.\n\
   -i, --init-sec-context=MECH\n\
                     Initialize a security context as client.\n\
                     MECH is the SASL name of mechanism, use -l\n\
@@ -345,6 +348,47 @@ init_sec_context (unsigned quiet, const char *mech)
   return 0;
 }
 
+static int
+accept_sec_context (unsigned quiet)
+{
+  OM_uint32 maj, min;
+  gss_ctx_id_t ctx = GSS_C_NO_CONTEXT;
+  gss_cred_id_t cred = GSS_C_NO_CREDENTIAL;
+  gss_name_t client = GSS_C_NO_NAME;
+  gss_buffer_desc bufdesc, bufdesc2;
+  gss_OID mech_type;
+  size_t outlen;
+  char *out;
+
+  do
+    {
+      maj = gss_accept_sec_context (&min,
+				    &ctx,
+				    cred,
+				    &bufdesc,
+				    GSS_C_NO_CHANNEL_BINDINGS,
+				    &client,
+				    &mech_type,
+				    &bufdesc2, NULL, NULL, NULL);
+      if (GSS_ERROR (maj))
+	error (EXIT_FAILURE, 0,
+	       _("accepting security context failed (%d/%d)"), maj, min);
+
+      outlen = base64_encode_alloc (bufdesc2.value, bufdesc2.length, &out);
+      if (out == NULL && outlen == 0 && bufdesc2.length != 0)
+	error (EXIT_FAILURE, 0, _("base64 input too long"));
+      if (out == NULL)
+	error (EXIT_FAILURE, errno, _("malloc"));
+
+      printf ("%s\n", out);
+
+      free (out);
+    }
+  while (maj == GSS_S_CONTINUE_NEEDED);
+
+  return 0;
+}
+
 int
 main (int argc, char *argv[])
 {
@@ -374,6 +418,8 @@ main (int argc, char *argv[])
     rc = list_mechanisms (args.quiet_given);
   else if (args.init_sec_context_given)
     rc = init_sec_context (args.quiet_given, args.init_sec_context_arg);
+  else if (args.accept_sec_context_given)
+    rc = accept_sec_context (args.quiet_given);
   else
     usage (EXIT_SUCCESS);
 

@@ -39,4 +39,17 @@ gss_scram_init_sec_context (OM_uint32 * minor_status,
 			    OM_uint32 * ret_flags,
 			    OM_uint32 * time_rec);
 
+extern OM_uint32
+gss_scram_accept_sec_context (OM_uint32 * minor_status,
+			      gss_ctx_id_t * context_handle,
+			      const gss_cred_id_t acceptor_cred_handle,
+			      const gss_buffer_t input_token_buffer,
+			      const gss_channel_bindings_t input_chan_bindings,
+			      gss_name_t * src_name,
+			      gss_OID * mech_type,
+			      gss_buffer_t output_token,
+			      OM_uint32 * ret_flags,
+			      OM_uint32 * time_rec,
+			      gss_cred_id_t * delegated_cred_handle);
+
 #endif /* GSS_SCRAM_PROTOS_H */

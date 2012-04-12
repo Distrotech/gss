@@ -104,6 +104,7 @@ client_first (OM_uint32 * minor_status,
   return GSS_S_CONTINUE_NEEDED;
 }
 
+/* SCRAM client */
 OM_uint32
 gss_scram_init_sec_context (OM_uint32 * minor_status,
 			    const gss_cred_id_t initiator_cred_handle,
@@ -152,4 +153,32 @@ gss_scram_init_sec_context (OM_uint32 * minor_status,
     }
 
   return GSS_S_FAILURE;
+}
+
+/* SCRAM server. */
+OM_uint32
+gss_scram_accept_sec_context (OM_uint32 * minor_status,
+			      gss_ctx_id_t * context_handle,
+			      const gss_cred_id_t acceptor_cred_handle,
+			      const gss_buffer_t input_token_buffer,
+			      const gss_channel_bindings_t input_chan_bindings,
+			      gss_name_t * src_name,
+			      gss_OID * mech_type,
+			      gss_buffer_t output_token,
+			      OM_uint32 * ret_flags,
+			      OM_uint32 * time_rec,
+			      gss_cred_id_t * delegated_cred_handle)
+{
+  OM_uint32 maj;
+  gss_buffer_desc token;
+
+  maj = gss_decapsulate_token (input_token_buffer, GSS_SCRAMSHA1, &token);
+  if (GSS_ERROR (maj))
+    return maj;
+
+  printf ("foo: %.*s\n", (int) token.length, (char *) token.value);
+
+  if (minor_status)
+    *minor_status = 0;
+  return GSS_S_COMPLETE;
 }
