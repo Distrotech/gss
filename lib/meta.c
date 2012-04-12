@@ -28,6 +28,11 @@
 # include "krb5/protos.h"
 #endif
 
+#ifdef USE_SCRAM
+# include <gss/scram-ext.h>
+# include "scram/protos.h"
+#endif
+
 static _gss_mech_api_desc _gss_mech_apis[] = {
 #ifdef USE_KERBEROS5
   {
@@ -55,6 +60,32 @@ static _gss_mech_api_desc _gss_mech_apis[] = {
    gss_krb5_context_time,
    gss_krb5_inquire_cred,
    gss_krb5_inquire_cred_by_mech},
+#endif
+#ifdef USE_SCRAM
+  {
+    &GSS_SCRAMSHA1_static,
+    "SCRAM-SHA-1",
+    "SCRAM SHA-1",
+    N_("Salted Challenge-Response Authentication Mechanism using SHA-1"),
+    {
+      /* Mandatory name-types. */
+      &GSS_C_NT_USER_NAME_static,
+      &GSS_C_NT_HOSTBASED_SERVICE_static},
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL},
 #endif
   {
    NULL,

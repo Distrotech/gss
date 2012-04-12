@@ -158,6 +158,11 @@ lib/oid.lo
 lib/oid.o
 lib/saslname.lo
 lib/saslname.o
+lib/scram/.deps/
+lib/scram/.libs/
+lib/scram/libgss-scram.la
+lib/scram/oid.lo
+lib/scram/oid.o
 lib/version.lo
 lib/version.o
 libtool

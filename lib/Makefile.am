@@ -59,5 +59,11 @@ gssinclude_HEADERS += headers/gss/krb5.h headers/gss/krb5-ext.h
 libgss_la_LIBADD += krb5/libgss-shishi.la
 endif
 
+if SCRAM
+SUBDIRS += scram
+gssinclude_HEADERS += headers/gss/scram-ext.h
+libgss_la_LIBADD += scram/libgss-scram.la
+endif
+
 localedir = $(datadir)/locale
 DEFS = -DLOCALEDIR=\"$(localedir)\" @DEFS@
