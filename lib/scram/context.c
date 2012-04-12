@@ -29,6 +29,9 @@
 #include "tokens.h"
 #include "printer.h"
 
+/* gnulib */
+#include "gc.h"
+
 #define CNONCE_ENTROPY_BYTES 23
 
 typedef struct _gss_scram_ctx_struct
@@ -36,7 +39,7 @@ typedef struct _gss_scram_ctx_struct
   struct scram_client_first cf;
 } _gss_scram_ctx_desc, *_gss_scram_ctx_t;
 
-void
+static void
 bin2hex (const char *binstr, size_t binlen, char *hexstr)
 {
   static const char trans[] = "0123456789abcdef";
@@ -69,6 +72,7 @@ gss_scram_init_sec_context (OM_uint32 * minor_status,
   _gss_scram_ctx_t sctx = ctx->scram;
   OM_uint32 maj;
   gss_buffer_desc token;
+  int rc;
 
   if (minor_status)
     *minor_status = 0;
@@ -79,7 +83,6 @@ gss_scram_init_sec_context (OM_uint32 * minor_status,
   if (sctx == NULL)
     {
       char buf[CNONCE_ENTROPY_BYTES];
-      int rc;
 
       sctx = ctx->scram = calloc (sizeof (*sctx), 1);
       if (!sctx)
@@ -92,39 +95,48 @@ gss_scram_init_sec_context (OM_uint32 * minor_status,
       rc = gc_nonce (buf, sizeof (buf));
       if (rc != GC_OK)
 	{
+	  free (sctx);
 	  if (minor_status)
 	    *minor_status = rc;
 	  return GSS_S_FAILURE;
 	}
 
-      cf.client_nonce = malloc (2 * sizeof (buf) + 1);
-      if (cf.client_nonce == NULL)
+      sctx->cf.client_nonce = malloc (2 * sizeof (buf) + 1);
+      if (sctx->cf.client_nonce == NULL)
 	{
+	  free (sctx);
 	  if (minor_status)
 	    *minor_status = ENOMEM;
 	  return GSS_S_FAILURE;
 	}
 
-      bin2hex (buf, sizeof (buf), cf.client_nonce);
+      bin2hex (buf, sizeof (buf), sctx->cf.client_nonce);
+
+      sctx->cf.cbflag = 'n';
+      sctx->cf.username = strdup ("jas");  /* XXX */
+      sctx->cf.authzid = strdup ("authzid"); /* XXX */
+
+      rc = scram_print_client_first (&sctx->cf, (char **) &token.value);
+      if (rc != 0)
+	{
+	  scram_free_client_first (&sctx->cf);
+	  free (sctx);
+	  if (minor_status)
+	    *minor_status = rc;
+	  return GSS_S_FAILURE;
+	}
+      token.length = strlen (token.value);
+
+      maj = gss_encapsulate_token (&token, GSS_SCRAMSHA1, output_token);
+      if (GSS_ERROR (maj))
+	{
+	  scram_free_client_first (&sctx->cf);
+	  free (sctx);
+	  return maj;
+	}
+
+      return GSS_S_CONTINUE_NEEDED;
     }
 
-  if (input_token)
-    {
-      printf ("got url %.*s\n", (int) input_token->length,
-	      (char*) input_token->value);
-
-      output_token->value = strdup ("=");
-      output_token->length = 1;
-
-      return GSS_S_COMPLETE;
-    }
-
-  token.value = (char *) "openidp.feide.no";
-  token.length = strlen ("openidp.feide.no");
-
-  maj = gss_encapsulate_token (&token, GSS_SCRAMSHA1, output_token);
-  if (GSS_ERROR (maj))
-    return maj;
-
-  return GSS_S_CONTINUE_NEEDED;
+  return GSS_S_FAILURE;
 }
