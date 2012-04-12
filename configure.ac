@@ -91,6 +91,23 @@ AM_CONDITIONAL(KRB5, test "$kerberos5" = "yes")
 AC_SUBST(INCLUDE_GSS_KRB5)
 AC_SUBST(INCLUDE_GSS_KRB5_EXT)
 
+# SCRAM
+AC_ARG_ENABLE(scram,
+  AC_HELP_STRING([--disable-scram],
+    [disable SCRAM mechanism unconditionally]),
+  scram=$enableval)
+if test "$scram" != "no" ; then
+  AC_DEFINE([USE_SCRAM], 1, [Define to 1 if you want the SCRAM mech.])
+  INCLUDE_GSS_SCRAM_EXT='# include <gss/scram-ext.h>'
+  scram=yes
+else
+  scram=no
+fi
+AC_MSG_CHECKING([if the SCRAM mechanism should be supported])
+AC_MSG_RESULT($scram)
+AM_CONDITIONAL(SCRAM, test "$scram" = "yes")
+AC_SUBST(INCLUDE_GSS_SCRAM_EXT)
+
 # Check for gtk-doc.
 GTK_DOC_CHECK(1.1)
 
@@ -145,6 +162,7 @@ AC_CONFIG_FILES([
   lib/gl/Makefile
   lib/headers/gss.h
   lib/krb5/Makefile
+  lib/scram/Makefile
   po/Makefile.in
   po/Makevars
   src/Makefile
@@ -163,6 +181,8 @@ AC_MSG_NOTICE([summary of build options:
   Library types:      Shared=${enable_shared}, Static=${enable_static}
   Valgrind:           ${VALGRIND}
   Version script:     $have_ld_version_script
-  Enable krb5 mech:   $kerberos5
   I18n domain suffix: ${PO_SUFFIX:-none}
+
+  Kerberos V5:        $kerberos5
+  SCRAM:              $scram
 ])
