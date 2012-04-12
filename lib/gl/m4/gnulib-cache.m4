@@ -27,15 +27,20 @@
 
 
 # Specification in the form of a command-line invocation:
-#   gnulib-tool --import --dir=. --local-dir=lib/gl/override --lib=libgnu --source-base=lib/gl --m4-base=lib/gl/m4 --doc-base=doc --tests-base=lib/gl/tests --aux-dir=build-aux --avoid=xalloc-die --no-conditional-dependencies --libtool --macro-prefix=libgl --no-vc-files base64 crypto/gc-random gettext-h lib-msvc-compat strverscmp
+#   gnulib-tool --import --dir=. --local-dir=lib/gl/override --lib=libgnu --source-base=lib/gl --m4-base=lib/gl/m4 --doc-base=doc --tests-base=lib/gl/tests --aux-dir=build-aux --avoid=xalloc-die --no-conditional-dependencies --libtool --macro-prefix=libgl --no-vc-files base64 c-ctype crypto/gc-hmac-sha1 crypto/gc-pbkdf2-sha1 crypto/gc-random crypto/gc-sha1 gettext-h lib-msvc-compat memxor strverscmp
 
 # Specification in the form of a few gnulib-tool.m4 macro invocations:
 gl_LOCAL_DIR([lib/gl/override])
 gl_MODULES([
   base64
+  c-ctype
+  crypto/gc-hmac-sha1
+  crypto/gc-pbkdf2-sha1
   crypto/gc-random
+  crypto/gc-sha1
   gettext-h
   lib-msvc-compat
+  memxor
   strverscmp
 ])
 gl_AVOID([xalloc-die])

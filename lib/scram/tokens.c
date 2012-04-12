@@ -32,8 +32,6 @@
 void
 scram_free_client_first (struct scram_client_first *cf)
 {
-  free (cf->cbname);
-  free (cf->authzid);
   free (cf->username);
   free (cf->client_nonce);
 

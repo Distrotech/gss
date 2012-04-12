@@ -52,4 +52,9 @@ gss_scram_accept_sec_context (OM_uint32 * minor_status,
 			      OM_uint32 * time_rec,
 			      gss_cred_id_t * delegated_cred_handle);
 
+extern OM_uint32
+gss_scram_delete_sec_context (OM_uint32 * minor_status,
+			      gss_ctx_id_t * context_handle,
+			      gss_buffer_t output_token);
+
 #endif /* GSS_SCRAM_PROTOS_H */

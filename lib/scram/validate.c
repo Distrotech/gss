@@ -33,35 +33,6 @@
 bool
 scram_valid_client_first (struct scram_client_first *cf)
 {
-  /* Check that cbflag is one of permitted values. */
-  switch (cf->cbflag)
-    {
-    case 'p':
-    case 'n':
-    case 'y':
-      break;
-
-    default:
-      return false;
-    }
-
-  /* Check that cbname is only set when cbflag is p. */
-  if (cf->cbflag == 'p' && cf->cbname == NULL)
-    return false;
-  else if (cf->cbflag != 'p' && cf->cbname != NULL)
-    return false;
-
-  if (cf->cbname)
-    {
-      const char *p = cf->cbname;
-
-      while (*p && strchr ("ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-			   "abcdefghijklmnopqrstuvwxyz" "0123456789.-", *p))
-	p++;
-      if (*p)
-	return false;
-    }
-
   /* We require a non-zero username string. */
   if (cf->username == NULL || *cf->username == '\0')
     return false;
@@ -105,12 +76,8 @@ scram_valid_server_first (struct scram_server_first * sf)
 bool
 scram_valid_client_final (struct scram_client_final * cl)
 {
-  /* We require a non-zero cbind. */
-  if (cl->cbind == NULL || *cl->cbind == '\0')
-    return false;
-
   /* FIXME check that cbind is valid base64. */
-  if (strchr (cl->cbind, ','))
+  if (cl->cbind && strchr (cl->cbind, ','))
     return false;
 
   /* We require a non-zero nonce. */

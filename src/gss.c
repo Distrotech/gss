@@ -364,9 +364,14 @@ init_sec_context (unsigned quiet, const char *mech)
 
       free (out);
 
+      if (maj == GSS_S_COMPLETE)
+	break;
+
       s = gettrimline (&line, &n, stdin);
+      if (s == -1 && !feof (stdin))
+	error (EXIT_FAILURE, errno, _("getline"));
       if (s == -1)
-	perror ("getline");
+	error (EXIT_FAILURE, 0, _("EOF"));
 
       ok = base64_decode_alloc (line, strlen (line), &out, &outlen);
       if (!ok)
@@ -402,8 +407,10 @@ accept_sec_context (unsigned quiet)
   do
     {
       s = gettrimline (&line, &n, stdin);
+      if (s == -1 && !feof (stdin))
+	error (EXIT_FAILURE, errno, _("getline"));
       if (s == -1)
-	perror ("getline");
+	error (EXIT_FAILURE, 0, _("EOF"));
 
       ok = base64_decode_alloc (line, strlen (line), &out, &outlen);
       if (!ok)

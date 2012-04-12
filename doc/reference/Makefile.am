@@ -58,9 +58,12 @@ EXTRA_HFILES=
 
 # Header files or dirs to ignore when scanning. Use base file/dir names
 # e.g. IGNORE_HFILES=gtkdebug.h gtkintl.h private_code
-IGNORE_HFILES=internal.h k5internal.h protos.h checksum.h meta.h	\
-	gettext.h string.h string.in.h unistd.h unistd.in.h c++defs.h	\
-	stddef.in.h
+#echo `find . -name \*.h|grep -v ^./headers|sed 's,.*/,,'`
+IGNORE_HFILES=meta.h string.h base64.h gc.h warn-on-use.h stdint.in.h	\
+	stdalign.h stdbool.in.h stddef.in.h gettext.h stdalign.in.h	\
+	string.in.h sha1.h arg-nonnull.h c++defs.h c-ctype.h hmac.h	\
+	memxor.h internal.h parser.h validate.h printer.h tokens.h	\
+	protos.h checksum.h protos.h k5internal.h
 
 # Images to copy into HTML directory.
 # e.g. HTML_IMAGES=$(top_srcdir)/gtk/stock-icons/stock_about_24.png

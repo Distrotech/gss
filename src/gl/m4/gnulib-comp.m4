@@ -76,6 +76,7 @@ AC_DEFUN([srcgl_EARLY],
   # Code from module strerror:
   # Code from module strerror-override:
   # Code from module string:
+  # Code from module sys_types:
   # Code from module unistd:
   # Code from module verify:
   # Code from module version-etc:
@@ -180,6 +181,8 @@ if test -n "$ERRNO_H" || test $REPLACE_STRERROR_0 = 1; then
   gl_PREREQ_SYS_H_WINSOCK2
 fi
 gl_HEADER_STRING_H
+gl_SYS_TYPES_H
+AC_PROG_MKDIR_P
 gl_UNISTD_H
 gl_VERSION_ETC
   # End of code from modules
@@ -354,6 +357,7 @@ AC_DEFUN([srcgl_FILE_LIST], [
   lib/strerror-override.h
   lib/strerror.c
   lib/string.in.h
+  lib/sys_types.in.h
   lib/unistd.in.h
   lib/verify.h
   lib/version-etc.c
@@ -387,6 +391,7 @@ AC_DEFUN([srcgl_FILE_LIST], [
   m4/strerror.m4
   m4/string_h.m4
   m4/sys_socket_h.m4
+  m4/sys_types_h.m4
   m4/unistd_h.m4
   m4/version-etc.m4
   m4/warn-on-use.m4

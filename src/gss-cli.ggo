@@ -1,4 +1,4 @@
-## Process this file with automake to produce Makefile.in
+# gss-cli.ggo --- Run gengetopt to produce gss_cli_cmd.*.            -*- sh -*-
 # Copyright (C) 2003-2012 Simon Josefsson
 #
 # This file is part of the Generic Security Service (GSS).
@@ -18,19 +18,7 @@
 # the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 # Boston, MA 02110-1301, USA.
 
-AM_CFLAGS = $(WARN_CFLAGS) $(WERROR_CFLAGS)
-AM_CPPFLAGS = -I$(top_srcdir)/lib/gl \
-	-I$(top_srcdir)/lib \
-	-I$(top_builddir)/lib/headers -I$(top_srcdir)/lib/headers
+purpose "Generic Security Service test client."
 
-noinst_LTLIBRARIES = libgss-scram.la
-
-libgss_scram_la_SOURCES = oid.c context.c
-libgss_scram_la_SOURCES += tokens.h tokens.c
-libgss_scram_la_SOURCES += printer.h printer.c
-libgss_scram_la_SOURCES += validate.h validate.c
-libgss_scram_la_SOURCES += parser.h parser.c
-libgss_scram_la_LIBADD = @LTLIBINTL@
-
-localedir = $(datadir)/locale
-DEFS = -DLOCALEDIR=\"$(localedir)\" @DEFS@
+option "mechanism" m "See gss.c for doc string" string no
+option "quiet" q "Silent operation" flag off

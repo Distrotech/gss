@@ -1,4 +1,4 @@
-/* tokens.h --- Types for SCRAM tokens.
+/* parser.h --- SCRAM parser.
  * Copyright (C) 2009-2012 Simon Josefsson
  *
  * This file is part of GNU SASL Library.
@@ -20,43 +20,22 @@
  *
  */
 
-#ifndef SCRAM_TOKENS_H
-#define SCRAM_TOKENS_H
+#ifndef SCRAM_PARSER_H
+#define SCRAM_PARSER_H
 
-/* Get size_t. */
-#include <stddef.h>
+/* Get token types. */
+#include "tokens.h"
 
-struct scram_client_first
-{
-  char *username;
-  char *client_nonce;
-};
+extern int scram_parse_client_first (const char *str, size_t len,
+				     struct scram_client_first *cf);
 
-struct scram_server_first
-{
-  char *nonce;
-  char *salt;
-  size_t iter;
-};
+extern int scram_parse_server_first (const char *str, size_t len,
+				     struct scram_server_first *cf);
 
-struct scram_client_final
-{
-  char *cbind;
-  char *nonce;
-  char *proof;
-};
+extern int scram_parse_client_final (const char *str, size_t len,
+				     struct scram_client_final *cl);
 
-struct scram_server_final
-{
-  char *verifier;
-};
+extern int scram_parse_server_final (const char *str, size_t len,
+				     struct scram_server_final *sl);
 
-extern void scram_free_client_first (struct scram_client_first *cf);
-
-extern void scram_free_server_first (struct scram_server_first *sf);
-
-extern void scram_free_client_final (struct scram_client_final *cl);
-
-extern void scram_free_server_final (struct scram_server_final *sl);
-
-#endif /* SCRAM_TOKENS_H */
+#endif /* SCRAM_PARSER_H */

@@ -562,3 +562,34 @@ gss_release_cred (OM_uint32 * minor_status, gss_cred_id_t * cred_handle)
 
   return GSS_S_COMPLETE;
 }
+
+OM_uint32
+gss_acquire_cred_with_password (OM_uint32 *minor_status,
+				const gss_name_t desired_name,
+				const gss_buffer_t password,
+				OM_uint32 time_req,
+				const gss_OID_set desired_mechs,
+				gss_cred_usage_t cred_usage,
+				gss_cred_id_t *output_cred_handle,
+				gss_OID_set *actual_mechs,
+				OM_uint32 *time_rec)
+{
+  return -1;
+}
+
+OM_uint32
+gss_add_cred_with_password (OM_uint32 * minor_status,
+			    const gss_cred_id_t input_cred_handle,
+			    const gss_name_t desired_name,
+			    const gss_OID desired_mech,
+			    const gss_buffer_t password,
+			    gss_cred_usage_t cred_usage,
+			    OM_uint32 initiator_time_req,
+			    OM_uint32 acceptor_time_req,
+			    gss_cred_id_t * output_cred_handle,
+			    gss_OID_set * actual_mechs,
+			    OM_uint32 * initiator_time_rec,
+			    OM_uint32 * acceptor_time_rec)
+{
+  return -1;
+}

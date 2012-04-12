@@ -39,8 +39,14 @@ AC_DEFUN([libgl_EARLY],
   m4_pattern_allow([^gl_LTLIBOBJS$])dnl a variable
   AC_REQUIRE([gl_PROG_AR_RANLIB])
   # Code from module base64:
+  # Code from module c-ctype:
   # Code from module crypto/gc:
+  # Code from module crypto/gc-hmac-sha1:
+  # Code from module crypto/gc-pbkdf2-sha1:
   # Code from module crypto/gc-random:
+  # Code from module crypto/gc-sha1:
+  # Code from module crypto/hmac-sha1:
+  # Code from module crypto/sha1:
   # Code from module extensions:
   AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
   # Code from module gettext-h:
@@ -48,11 +54,15 @@ AC_DEFUN([libgl_EARLY],
   # Code from module include_next:
   # Code from module lib-msvc-compat:
   # Code from module memchr:
+  # Code from module memxor:
+  # Code from module multiarch:
   # Code from module snippet/arg-nonnull:
   # Code from module snippet/c++defs:
   # Code from module snippet/warn-on-use:
+  # Code from module stdalign:
   # Code from module stdbool:
   # Code from module stddef:
+  # Code from module stdint:
   # Code from module string:
   # Code from module strverscmp:
 ])
@@ -82,8 +92,13 @@ if test $gl_cond_libtool = false; then
   gl_ltlibdeps="$gl_ltlibdeps $LTLIBGCRYPT"
   gl_libdeps="$gl_libdeps $LIBGCRYPT"
 fi
+gl_GC_HMAC_SHA1
+gl_MODULE_INDICATOR([gc-hmac-sha1])
 gl_GC_RANDOM
 gl_MODULE_INDICATOR([gc-random])
+gl_GC_SHA1
+gl_MODULE_INDICATOR([gc-sha1])
+gl_SHA1
 AC_SUBST([LIBINTL])
 AC_SUBST([LTLIBINTL])
 gl_LD_OUTPUT_DEF
@@ -93,8 +108,12 @@ if test $HAVE_MEMCHR = 0 || test $REPLACE_MEMCHR = 1; then
   gl_PREREQ_MEMCHR
 fi
 gl_STRING_MODULE_INDICATOR([memchr])
+gl_MEMXOR
+gl_MULTIARCH
+gl_STDALIGN_H
 AM_STDBOOL_H
 gl_STDDEF_H
+gl_STDINT_H
 gl_HEADER_STRING_H
 gl_FUNC_STRVERSCMP
 if test $HAVE_STRVERSCMP = 0; then
@@ -244,20 +263,33 @@ AC_DEFUN([libgl_FILE_LIST], [
   build-aux/snippet/warn-on-use.h
   lib/base64.c
   lib/base64.h
+  lib/c-ctype.c
+  lib/c-ctype.h
   lib/gc-gnulib.c
   lib/gc-libgcrypt.c
+  lib/gc-pbkdf2-sha1.c
   lib/gc.h
   lib/gettext.h
+  lib/hmac-sha1.c
+  lib/hmac.h
   lib/memchr.c
   lib/memchr.valgrind
+  lib/memxor.c
+  lib/memxor.h
+  lib/sha1.c
+  lib/sha1.h
+  lib/stdalign.in.h
   lib/stdbool.in.h
   lib/stddef.in.h
+  lib/stdint.in.h
   lib/string.in.h
   lib/strverscmp.c
   m4/00gnulib.m4
   m4/base64.m4
   m4/extensions.m4
+  m4/gc-hmac-sha1.m4
   m4/gc-random.m4
+  m4/gc-sha1.m4
   m4/gc.m4
   m4/gnulib-common.m4
   m4/include_next.m4
@@ -265,10 +297,16 @@ AC_DEFUN([libgl_FILE_LIST], [
   m4/lib-ld.m4
   m4/lib-link.m4
   m4/lib-prefix.m4
+  m4/longlong.m4
   m4/memchr.m4
+  m4/memxor.m4
   m4/mmap-anon.m4
+  m4/multiarch.m4
+  m4/sha1.m4
+  m4/stdalign.m4
   m4/stdbool.m4
   m4/stddef_h.m4
+  m4/stdint.m4
   m4/string_h.m4
   m4/strverscmp.m4
   m4/warn-on-use.m4
