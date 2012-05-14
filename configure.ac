@@ -130,6 +130,7 @@ if test "$gl_gcc_warnings" = yes; then
 
   gl_WARN_ADD([-Wno-unused-parameter])
   gl_WARN_ADD([-Wno-stack-protector])  # Some functions cannot be protected
+  gl_WARN_ADD([-Wno-array-bounds])     # gcc-4.6 meta.c false positive
   gl_WARN_ADD([-fdiagnostics-show-option])
 fi
 
