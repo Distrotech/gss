@@ -705,12 +705,28 @@ gss_accept_sec_context (OM_uint32 * minor_status,
 
   if (*context_handle == GSS_C_NO_CONTEXT)
     {
-      /* FIXME: We should extract GSS-API mechanism OID from token
-         here, and use it to find the proper mechanism. */
-      mech = _gss_find_mech (GSS_C_NO_OID);
+      char *oid;
+      size_t oidlen;
+      gss_OID_desc oidbuf;
+      int rc;
+
+      rc = _gss_decapsulate_token (input_token_buffer->value,
+				   input_token_buffer->length,
+				   &oid, &oidlen, NULL, NULL);
+      if (rc != 0)
+	{
+	  if (minor_status)
+	    *minor_status = 0;
+	  return GSS_S_DEFECTIVE_TOKEN;
+	}
+
+      oidbuf.elements = oid;
+      oidbuf.length = oidlen;
+
+      mech = _gss_find_mech_no_default (&oidbuf);
     }
   else
-    mech = _gss_find_mech ((*context_handle)->mech);
+    mech = _gss_find_mech_no_default ((*context_handle)->mech);
   if (mech == NULL)
     {
       if (minor_status)

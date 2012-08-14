@@ -192,7 +192,7 @@ gss_encapsulate_token (gss_const_buffer_t input_token,
   return GSS_S_COMPLETE;
 }
 
-static int
+int
 _gss_decapsulate_token (const char *in, size_t inlen,
 			char **oid, size_t * oidlen,
 			char **out, size_t * outlen)
@@ -238,8 +238,10 @@ _gss_decapsulate_token (const char *in, size_t inlen,
   inlen -= asn1lenlen;
   in += asn1lenlen;
 
-  *outlen = inlen;
-  *out = (char *) in;
+  if (outlen)
+    *outlen = inlen;
+  if (out)
+    *out = (char *) in;
 
   return 0;
 }
