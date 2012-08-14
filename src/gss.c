@@ -25,6 +25,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <errno.h>
 
 /* For gettext. */
 #include <locale.h>
@@ -38,8 +39,9 @@
 #include "gss_cmd.h"
 
 /* Gnulib utils. */
-#include "progname.h"
+#include "base64.h"
 #include "error.h"
+#include "progname.h"
 #include "version-etc.h"
 
 const char version_etc_copyright[] =
@@ -83,6 +85,14 @@ Mandatory arguments to long options are mandatory for short options too.\n\
                     List information about supported mechanisms\n\
                     in a human readable format.\n\
   -m, --major=LONG  Describe a `major status' error code value.\n\
+"), stdout);
+      fputs (_("\
+  -a, --accept-sec-context\n\
+                    Accept a security context as server.\n\
+  -i, --init-sec-context=MECH\n\
+                    Initialize a security context as client.\n\
+                    MECH is the SASL name of mechanism, use -l\n\
+                    to list supported mechanisms.\n\
 "), stdout);
       fputs (_("\
   -q, --quiet       Silent operation (default=off).\n\
@@ -284,6 +294,160 @@ list_mechanisms (unsigned quiet)
   return 0;
 }
 
+static ssize_t
+gettrimline (char **line, size_t * n, FILE * fh)
+{
+  ssize_t s = getline (line, n, fh);
+
+  if (s >= 2)
+    {
+      if ((*line)[strlen (*line) - 1] == '\n')
+	(*line)[strlen (*line) - 1] = '\0';
+      if ((*line)[strlen (*line) - 1] == '\r')
+	(*line)[strlen (*line) - 1] = '\0';
+    }
+
+  return s;
+}
+
+static int
+init_sec_context (unsigned quiet, const char *mech)
+{
+  OM_uint32 maj, min;
+  gss_ctx_id_t ctx = GSS_C_NO_CONTEXT;
+  gss_name_t servername = GSS_C_NO_NAME;
+  gss_buffer_desc inbuf_desc;
+  gss_buffer_t inbuf = GSS_C_NO_BUFFER;
+  gss_buffer_desc bufdesc;
+  gss_buffer_desc sasl_mech_name;
+  gss_OID mech_type;
+  size_t outlen;
+  char *out;
+  ssize_t s;
+  char *line = NULL;
+  size_t n = 0;
+  bool ok;
+
+  sasl_mech_name.length = strlen (mech);
+  sasl_mech_name.value = (void*) mech;
+
+  maj = gss_inquire_mech_for_saslname (&min, &sasl_mech_name, &mech_type);
+  if (GSS_ERROR (maj))
+    error (EXIT_FAILURE, 0,
+	   _("inquiring mechanism for SASL name (%d/%d)"), maj, min);
+
+  do
+    {
+      maj = gss_init_sec_context (&min,
+				  GSS_C_NO_CREDENTIAL,
+				  &ctx,
+				  servername,
+				  mech_type,
+				  GSS_C_MUTUAL_FLAG |
+				  GSS_C_REPLAY_FLAG |
+				  GSS_C_SEQUENCE_FLAG,
+				  0,
+				  GSS_C_NO_CHANNEL_BINDINGS,
+				  inbuf, NULL,
+				  &bufdesc, NULL, NULL);
+      if (GSS_ERROR (maj))
+	error (EXIT_FAILURE, 0,
+	       _("initializing security context failed (%d/%d)"), maj, min);
+
+      outlen = base64_encode_alloc (bufdesc.value, bufdesc.length, &out);
+      if (out == NULL && outlen == 0 && bufdesc.length != 0)
+	error (EXIT_FAILURE, 0, _("base64 input too long"));
+      if (out == NULL)
+	error (EXIT_FAILURE, errno, _("malloc"));
+
+      printf ("%s\n", out);
+
+      free (out);
+
+      if (maj == GSS_S_COMPLETE)
+	break;
+
+      s = gettrimline (&line, &n, stdin);
+      if (s == -1 && !feof (stdin))
+	error (EXIT_FAILURE, errno, _("getline"));
+      if (s == -1)
+	error (EXIT_FAILURE, 0, _("EOF"));
+
+      ok = base64_decode_alloc (line, strlen (line), &out, &outlen);
+      if (!ok)
+	error (EXIT_FAILURE, 0, _("base64 fail"));
+      if (out == NULL)
+	error (EXIT_FAILURE, errno, _("malloc"));
+
+      inbuf_desc.value = out;
+      inbuf_desc.length = outlen;
+      inbuf = &inbuf_desc;
+    }
+  while (maj == GSS_S_CONTINUE_NEEDED);
+
+  return 0;
+}
+
+static int
+accept_sec_context (unsigned quiet)
+{
+  OM_uint32 maj, min;
+  gss_ctx_id_t ctx = GSS_C_NO_CONTEXT;
+  gss_cred_id_t cred = GSS_C_NO_CREDENTIAL;
+  gss_name_t client = GSS_C_NO_NAME;
+  gss_buffer_desc bufdesc, bufdesc2;
+  gss_OID mech_type;
+  char *out;
+  size_t outlen;
+  ssize_t s;
+  char *line = NULL;
+  size_t n = 0;
+  bool ok;
+
+  do
+    {
+      s = gettrimline (&line, &n, stdin);
+      if (s == -1 && !feof (stdin))
+	error (EXIT_FAILURE, errno, _("getline"));
+      if (s == -1)
+	error (EXIT_FAILURE, 0, _("EOF"));
+
+      ok = base64_decode_alloc (line, strlen (line), &out, &outlen);
+      if (!ok)
+	error (EXIT_FAILURE, 0, _("base64 fail"));
+      if (out == NULL)
+	error (EXIT_FAILURE, errno, _("malloc"));
+
+      bufdesc.value = out;
+      bufdesc.length = outlen;
+
+      maj = gss_accept_sec_context (&min,
+				    &ctx,
+				    cred,
+				    &bufdesc,
+				    GSS_C_NO_CHANNEL_BINDINGS,
+				    &client,
+				    &mech_type,
+				    &bufdesc2, NULL, NULL, NULL);
+      if (GSS_ERROR (maj))
+	error (EXIT_FAILURE, 0,
+	       _("accepting security context failed (%d/%d)"), maj, min);
+
+      outlen = base64_encode_alloc (bufdesc2.value, bufdesc2.length, &out);
+      if (out == NULL && outlen == 0 && bufdesc2.length != 0)
+	error (EXIT_FAILURE, 0, _("base64 input too long"));
+      if (out == NULL)
+	error (EXIT_FAILURE, errno, _("malloc"));
+
+      printf ("%s\n", out);
+
+      free (out);
+    }
+  while (maj == GSS_S_CONTINUE_NEEDED);
+
+  return 0;
+}
+
 int
 main (int argc, char *argv[])
 {
@@ -311,6 +475,10 @@ main (int argc, char *argv[])
     rc = describe_major (args.quiet_given, args.major_arg);
   else if (args.list_mechanisms_given)
     rc = list_mechanisms (args.quiet_given);
+  else if (args.init_sec_context_given)
+    rc = init_sec_context (args.quiet_given, args.init_sec_context_arg);
+  else if (args.accept_sec_context_given)
+    rc = accept_sec_context (args.quiet_given);
   else
     usage (EXIT_SUCCESS);
 

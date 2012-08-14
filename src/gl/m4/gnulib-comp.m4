@@ -38,6 +38,7 @@ AC_DEFUN([srcgl_EARLY],
   m4_pattern_allow([^gl_LIBOBJS$])dnl a variable
   m4_pattern_allow([^gl_LTLIBOBJS$])dnl a variable
   AC_REQUIRE([gl_PROG_AR_RANLIB])
+  # Code from module base64:
   # Code from module errno:
   # Code from module error:
   # Code from module extensions:
@@ -47,6 +48,7 @@ AC_DEFUN([srcgl_EARLY],
   # Code from module gettext-h:
   # Code from module include_next:
   # Code from module intprops:
+  # Code from module memchr:
   # Code from module msvc-inval:
   # Code from module msvc-nothrow:
   # Code from module nocrash:
@@ -61,6 +63,7 @@ AC_DEFUN([srcgl_EARLY],
   dnl gl_PROG_CC_C99 arranges for this.  With older Autoconf gl_PROG_CC_C99
   dnl shouldn't hurt, though installers are on their own to set c99 mode.
   gl_PROG_CC_C99
+  # Code from module stdbool:
   # Code from module stddef:
   # Code from module strerror:
   # Code from module strerror-override:
@@ -85,6 +88,7 @@ AC_DEFUN([srcgl_INIT],
   m4_pushdef([srcgl_LIBSOURCES_DIR], [])
   gl_COMMON
   gl_source_base='src/gl'
+gl_FUNC_BASE64
 gl_HEADER_ERRNO_H
 gl_ERROR
 if test $ac_cv_lib_error_at_line = no; then
@@ -115,6 +119,12 @@ fi
 AC_SUBST([GNULIB_GL_SRCGL_UNISTD_H_GETOPT])
 AC_SUBST([LIBINTL])
 AC_SUBST([LTLIBINTL])
+gl_FUNC_MEMCHR
+if test $HAVE_MEMCHR = 0 || test $REPLACE_MEMCHR = 1; then
+  AC_LIBOBJ([memchr])
+  gl_PREREQ_MEMCHR
+fi
+gl_STRING_MODULE_INDICATOR([memchr])
 gl_MSVC_INVAL
 if test $HAVE_MSVC_INVALID_PARAMETER_HANDLER = 1; then
   AC_LIBOBJ([msvc-inval])
@@ -127,6 +137,7 @@ AC_CHECK_DECLS([program_invocation_name], [], [], [#include <errno.h>])
 AC_CHECK_DECLS([program_invocation_short_name], [], [], [#include <errno.h>])
 gt_TYPE_SSIZE_T
 gl_STDARG_H
+AM_STDBOOL_H
 gl_STDDEF_H
 gl_FUNC_STRERROR
 if test $REPLACE_STRERROR = 1; then
@@ -284,6 +295,8 @@ AC_DEFUN([srcgl_FILE_LIST], [
   build-aux/snippet/arg-nonnull.h
   build-aux/snippet/c++defs.h
   build-aux/snippet/warn-on-use.h
+  lib/base64.c
+  lib/base64.h
   lib/errno.in.h
   lib/error.c
   lib/error.h
@@ -293,6 +306,8 @@ AC_DEFUN([srcgl_FILE_LIST], [
   lib/getopt_int.h
   lib/gettext.h
   lib/intprops.h
+  lib/memchr.c
+  lib/memchr.valgrind
   lib/msvc-inval.c
   lib/msvc-inval.h
   lib/msvc-nothrow.c
@@ -300,6 +315,7 @@ AC_DEFUN([srcgl_FILE_LIST], [
   lib/progname.c
   lib/progname.h
   lib/stdarg.in.h
+  lib/stdbool.in.h
   lib/stddef.in.h
   lib/strerror-override.c
   lib/strerror-override.h
@@ -311,18 +327,22 @@ AC_DEFUN([srcgl_FILE_LIST], [
   lib/version-etc.c
   lib/version-etc.h
   m4/00gnulib.m4
+  m4/base64.m4
   m4/errno_h.m4
   m4/error.m4
   m4/extensions.m4
   m4/getopt.m4
   m4/gnulib-common.m4
   m4/include_next.m4
+  m4/memchr.m4
+  m4/mmap-anon.m4
   m4/msvc-inval.m4
   m4/msvc-nothrow.m4
   m4/nocrash.m4
   m4/off_t.m4
   m4/ssize_t.m4
   m4/stdarg.m4
+  m4/stdbool.m4
   m4/stddef_h.m4
   m4/strerror.m4
   m4/string_h.m4
