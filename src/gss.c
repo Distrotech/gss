@@ -93,6 +93,9 @@ Mandatory arguments to long options are mandatory for short options too.\n\
                     Initialize a security context as client.\n\
                     MECH is the SASL name of mechanism, use -l\n\
                     to list supported mechanisms.\n\
+  -n, --server-name=SERVICE@HOSTNAME\n\
+                    For -i, set the name of the remote host.\n\
+                    For example, \"imap@mail.example.com\".\n\
 "), stdout);
       fputs (_("\
   -q, --quiet       Silent operation (default=off).\n\
@@ -311,7 +314,7 @@ gettrimline (char **line, size_t * n, FILE * fh)
 }
 
 static int
-init_sec_context (unsigned quiet, const char *mech)
+init_sec_context (unsigned quiet, const char *mech, const char *server)
 {
   OM_uint32 maj, min;
   gss_ctx_id_t ctx = GSS_C_NO_CONTEXT;
@@ -327,6 +330,7 @@ init_sec_context (unsigned quiet, const char *mech)
   char *line = NULL;
   size_t n = 0;
   bool ok;
+  OM_uint32 ret_flags;
 
   sasl_mech_name.length = strlen (mech);
   sasl_mech_name.value = (void*) mech;
@@ -335,6 +339,21 @@ init_sec_context (unsigned quiet, const char *mech)
   if (GSS_ERROR (maj))
     error (EXIT_FAILURE, 0,
 	   _("inquiring mechanism for SASL name (%d/%d)"), maj, min);
+
+  if (server)
+    {
+      gss_buffer_desc namebuf;
+
+      namebuf.length = strlen (server);
+      namebuf.value = (void*) server;
+
+      maj = gss_import_name (&min, &namebuf, GSS_C_NT_HOSTBASED_SERVICE,
+			     &servername);
+      if (GSS_ERROR (maj))
+	error (EXIT_FAILURE, 0,
+	       _("could not import server name \"%s\" (%d/%d)"),
+	       server, maj, min);
+    }
 
   do
     {
@@ -349,7 +368,8 @@ init_sec_context (unsigned quiet, const char *mech)
 				  0,
 				  GSS_C_NO_CHANNEL_BINDINGS,
 				  inbuf, NULL,
-				  &bufdesc, NULL, NULL);
+				  &bufdesc,
+				  &ret_flags, NULL);
       if (GSS_ERROR (maj))
 	error (EXIT_FAILURE, 0,
 	       _("initializing security context failed (%d/%d)"), maj, min);
@@ -360,12 +380,28 @@ init_sec_context (unsigned quiet, const char *mech)
       if (out == NULL)
 	error (EXIT_FAILURE, errno, _("malloc"));
 
-      printf ("%s\n", out);
+      if (!quiet)
+	{
+	  if (maj == GSS_S_COMPLETE && bufdesc.length == 0)
+	    printf ("Context has been initialized.\n");
+	  else if (maj == GSS_S_COMPLETE)
+	    printf ("Context has been initialized.  Final context token:\n");
+	  else if (maj == GSS_S_CONTINUE_NEEDED &&
+		   (ret_flags & GSS_C_PROT_READY_FLAG))
+	    printf ("Context token (protection is available):\n");
+	  else if (maj == GSS_S_CONTINUE_NEEDED)
+	    printf ("Context token:\n");
+	}
+      if (bufdesc.length != 0)
+	printf ("%s\n", out);
 
       free (out);
 
       if (maj == GSS_S_COMPLETE)
 	break;
+
+      if (!quiet)
+	printf ("Input context token:\n");
 
       s = gettrimline (&line, &n, stdin);
       if (s == -1 && !feof (stdin))
@@ -389,10 +425,11 @@ init_sec_context (unsigned quiet, const char *mech)
 }
 
 static int
-accept_sec_context (unsigned quiet)
+accept_sec_context (unsigned quiet, const char *server)
 {
   OM_uint32 maj, min;
   gss_ctx_id_t ctx = GSS_C_NO_CONTEXT;
+  gss_name_t servername = GSS_C_NO_NAME;
   gss_cred_id_t cred = GSS_C_NO_CREDENTIAL;
   gss_name_t client = GSS_C_NO_NAME;
   gss_buffer_desc bufdesc, bufdesc2;
@@ -403,9 +440,35 @@ accept_sec_context (unsigned quiet)
   char *line = NULL;
   size_t n = 0;
   bool ok;
+  OM_uint32 ret_flags;
+
+  if (server)
+    {
+      gss_buffer_desc namebuf;
+
+      namebuf.length = strlen (server);
+      namebuf.value = (void*) server;
+
+      maj = gss_import_name (&min, &namebuf, GSS_C_NT_HOSTBASED_SERVICE,
+			     &servername);
+      if (GSS_ERROR (maj))
+	error (EXIT_FAILURE, 0,
+	       _("could not import server name \"%s\" (%d/%d)"),
+	       server, maj, min);
+    }
+
+  maj = gss_acquire_cred (&min, servername, 0,
+			  GSS_C_NULL_OID_SET, GSS_C_ACCEPT,
+			  &cred, NULL, NULL);
+  if (GSS_ERROR (maj))
+    error (EXIT_FAILURE, 0,
+	   _("could not acquire server creentials (%d/%d)"), maj, min);
 
   do
     {
+      if (!quiet)
+	printf ("Input context token:\n");
+
       s = gettrimline (&line, &n, stdin);
       if (s == -1 && !feof (stdin))
 	error (EXIT_FAILURE, errno, _("getline"));
@@ -428,7 +491,8 @@ accept_sec_context (unsigned quiet)
 				    GSS_C_NO_CHANNEL_BINDINGS,
 				    &client,
 				    &mech_type,
-				    &bufdesc2, NULL, NULL, NULL);
+				    &bufdesc2,
+				    &ret_flags, NULL, NULL);
       if (GSS_ERROR (maj))
 	error (EXIT_FAILURE, 0,
 	       _("accepting security context failed (%d/%d)"), maj, min);
@@ -439,7 +503,20 @@ accept_sec_context (unsigned quiet)
       if (out == NULL)
 	error (EXIT_FAILURE, errno, _("malloc"));
 
-      printf ("%s\n", out);
+      if (!quiet)
+	{
+	  if (maj == GSS_S_COMPLETE && bufdesc2.length == 0)
+	    printf ("Context has been accepted.\n");
+	  else if (maj == GSS_S_COMPLETE)
+	    printf ("Context has been accepted.  Final context token:\n");
+	  else if (maj == GSS_S_CONTINUE_NEEDED &&
+		   (ret_flags & GSS_C_PROT_READY_FLAG))
+	    printf ("Context token (protection is available):\n");
+	  else if (maj == GSS_S_CONTINUE_NEEDED)
+	    printf ("Context token:\n");
+	}
+      if (bufdesc2.length != 0)
+	printf ("%s\n", out);
 
       free (out);
     }
@@ -476,9 +553,10 @@ main (int argc, char *argv[])
   else if (args.list_mechanisms_given)
     rc = list_mechanisms (args.quiet_given);
   else if (args.init_sec_context_given)
-    rc = init_sec_context (args.quiet_given, args.init_sec_context_arg);
+    rc = init_sec_context (args.quiet_given, args.init_sec_context_arg,
+			   args.server_name_arg);
   else if (args.accept_sec_context_given)
-    rc = accept_sec_context (args.quiet_given);
+    rc = accept_sec_context (args.quiet_given, args.server_name_arg);
   else
     usage (EXIT_SUCCESS);
 
