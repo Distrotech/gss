@@ -38,9 +38,7 @@ main (int argc, char *argv[])
 {
   gss_uint32 maj_stat, min_stat;
   gss_buffer_desc bufdesc;
-#ifdef USE_KERBEROS5
   gss_OID oid;
-#endif
 
   do
     if (strcmp (argv[argc - 1], "-v") == 0 ||
