@@ -1532,8 +1532,16 @@ optional for any corresponding short options.
   -l, --list-mechanisms
                     List information about supported mechanisms
                     in a human readable format.
-
   -m, --major=LONG  Describe a `major status' error code value.
+  -a, --accept-sec-context
+                    Accept a security context as server.
+  -i, --init-sec-context=MECH
+                    Initialize a security context as client.
+                    MECH is the SASL name of mechanism, use -l
+                    to list supported mechanisms.
+  -n, --server-name=SERVICE@HOSTNAME
+                    For -i, set the name of the remote host.
+                    For example, "imap@mail.example.com".
 @end verbatim
 
 @majorheading Other Options
@@ -1548,12 +1556,65 @@ These are some standard parameters.
 
 @majorheading Examples
 
-
+To list the supported mechanisms, use @code{gss -l} like this:
 
 @verbatim
-  -h, --help        Print help and exit
-  -V, --version     Print version and exit
-  -q, --quiet       Silent operation  (default=off)
+$ src/gss -l
+Found 1 supported mechanisms.
+
+Mechanism 0:
+        Mechanism name: Kerberos V5
+        Mechanism description: Kerberos V5 GSS-API mechanism
+        SASL Mechanism name: GS2-KRB5
+$
+@end verbatim
+
+To initialize a Kerberos V5 security context, use the
+@code{--init-sec-context} parameter.  Kerberos V5 needs to know the name
+of the remote entity, so you need to supply the @code{--server-name}
+parameter as well.  That will provide the name of the server.  For
+example, use @code{imap@@mail.example.com} to setup a security context
+with the @code{imap} service on the host @code{mail.example.com}.  The
+Kerberos V5 client will use your ticket-granting ticket (which needs to
+be available) and acquire a server ticket for the service.  The KDC must
+know about the server for this to work.  The tool will print the GSS-API
+context tokens base64 encoded on standard output.
+
+@verbatim
+$ gss -i GS2-KRB5 -n host@interop.josefsson.org
+Context token (protection is available):
+YIICIQYJKoZIhvcSAQICAQBuggIQMIICDKADAgEFoQMCAQ6iBwMFACAAAACjggEYYYIBFDCCARCgAwIBBaEXGxVpbnRlcm9wLmpvc2Vmc3Nvbi5vcmeiKDAmoAMCAQGhHzAdGwRob3N0GxVpbnRlcm9wLmpvc2Vmc3Nvbi5vcmejgcUwgcKgAwIBEqKBugSBt0zqTh6tBBKV2BwDjQg6H4abEaPshPa0o3tT/TH9U7BaSw/M9ugYYqpHAhOitVjcQidhG2FdSl1n3FOgDBufHHO+gHOW0Y1XHc2QtEdkg1xYF2J4iR1vNQB14kXDM78pogCsfvfLnjsEESKWoeKRGOYWPRx0ksLJDnl/e5tXecZTjhJ3hLrFNBEWRmpIOakTAPnL+Xzz6xcnLHMLLnhZ5VcHqtIMm5p9IDWsP0juIncJ6tO8hjMA2qSB2jCB16ADAgESooHPBIHMWSeRBgV80gh/6hNNMr00jTVwCs5TEAIkljvjOfyPmNBzIFWoG+Wj5ZKOBdizdi7vYbJ2s8b1iSsq/9YEZSqaTxul+5aNrclKoJ7J/IW4kTuMklHcQf/A16TeZFsm9TdfE+x8+PjbOBFtKYXT8ODT8LLicNNiDbWW0meY7lsktXAVpZiUds4wTZ1W5bOSEGY7+mxAWrAlTnNwNAt1J2MHZnfGJFJDLJZldXoyG8OwHyp4h1nBhgzC5BfAmL85QJVxxgVfiHhM5oT9mE1O
+Input context token:
+
+@end verbatim
+
+The tool is waiting for the final Kerberos V5 context token from the
+server.  Note the status text informing you that message protection is
+available.
+
+To accept a Kerberos V5 context, the process is similar.  The server
+needs to know its name, so that it can find the host key from
+(typically) @code{/etc/shishi/shishi.keys}.  Once started it will wait
+for a context token from the client.  Below we'll paste in the token
+printed above.
+
+@verbatim
+$ gss -a -n host@interop.josefsson.org
+Input context token:
+YIICIQYJKoZIhvcSAQICAQBuggIQMIICDKADAgEFoQMCAQ6iBwMFACAAAACjggEYYYIBFDCCARCgAwIBBaEXGxVpbnRlcm9wLmpvc2Vmc3Nvbi5vcmeiKDAmoAMCAQGhHzAdGwRob3N0GxVpbnRlcm9wLmpvc2Vmc3Nvbi5vcmejgcUwgcKgAwIBEqKBugSBt0zqTh6tBBKV2BwDjQg6H4abEaPshPa0o3tT/TH9U7BaSw/M9ugYYqpHAhOitVjcQidhG2FdSl1n3FOgDBufHHO+gHOW0Y1XHc2QtEdkg1xYF2J4iR1vNQB14kXDM78pogCsfvfLnjsEESKWoeKRGOYWPRx0ksLJDnl/e5tXecZTjhJ3hLrFNBEWRmpIOakTAPnL+Xzz6xcnLHMLLnhZ5VcHqtIMm5p9IDWsP0juIncJ6tO8hjMA2qSB2jCB16ADAgESooHPBIHMWSeRBgV80gh/6hNNMr00jTVwCs5TEAIkljvjOfyPmNBzIFWoG+Wj5ZKOBdizdi7vYbJ2s8b1iSsq/9YEZSqaTxul+5aNrclKoJ7J/IW4kTuMklHcQf/A16TeZFsm9TdfE+x8+PjbOBFtKYXT8ODT8LLicNNiDbWW0meY7lsktXAVpZiUds4wTZ1W5bOSEGY7+mxAWrAlTnNwNAt1J2MHZnfGJFJDLJZldXoyG8OwHyp4h1nBhgzC5BfAmL85QJVxxgVfiHhM5oT9mE1O
+Context has been accepted.  Final context token:
+YHEGCSqGSIb3EgECAgIAb2IwYKADAgEFoQMCAQ+iVDBSoAMCARKhAwIBAKJGBESy1Zoy9DrG+DuV/6aWmAp79s9d+ofGXC/WKOzRuxAqo98vMRWbsbILW8z9aF1th4GZz0kjFz/hZAmnWyomZ9JiP3yQvg==
+$
+@end verbatim
+
+Returning to the client, you may now cut'n'paste the final context token
+as shown by the server.  The client has then authenticated the server as
+well.  The output from the client is shown below.
+
+@verbatim
+YHEGCSqGSIb3EgECAgIAb2IwYKADAgEFoQMCAQ+iVDBSoAMCARKhAwIBAKJGBESy1Zoy9DrG+DuV/6aWmAp79s9d+ofGXC/WKOzRuxAqo98vMRWbsbILW8z9aF1th4GZz0kjFz/hZAmnWyomZ9JiP3yQvg==
+Context has been initialized.
+$
 @end verbatim
 
 @c **********************************************************

@@ -213,6 +213,11 @@ gss_krb5_init_sec_context (OM_uint32 * minor_status,
       return GSS_S_NO_CRED;
     }
 
+  if (target_name == NULL)
+    {
+      return GSS_S_BAD_NAME;
+    }
+
   if (k5 == NULL)
     {
       k5 = ctx->krb5 = calloc (sizeof (*k5), 1);

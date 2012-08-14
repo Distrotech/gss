@@ -51,11 +51,12 @@ acquire_cred1 (OM_uint32 * minor_status,
   if (GSS_ERROR (maj_stat))
     return maj_stat;
 
-  if (desired_name == GSS_C_NO_NAME)
+  if (k5->peerptr == GSS_C_NO_NAME)
     {
       maj_stat = gss_release_name (minor_status, &name);
       if (GSS_ERROR (maj_stat))
 	return maj_stat;
+      return GSS_S_BAD_NAME;
     }
 
   if (shishi_init_server (&k5->sh) != SHISHI_OK)

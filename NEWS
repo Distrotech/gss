@@ -2,7 +2,11 @@ GSS NEWS -- History of user-visible changes.                    -*- outline -*-
 Copyright (C) 2003-2012 Simon Josefsson
 See the end for copying conditions.
 
-* Version 1.1.0 (unreleased)
+* Version 1.0.3 (unreleased)
+
+** gss: The command line tool can now initialize and accept security contexts.
+This is useful for debugging.  See the section "Invoking gss" in the
+manual for more information.
 
 ** i18n: Translations were updated.
 
