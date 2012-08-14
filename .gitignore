@@ -232,6 +232,8 @@ src/gl/Makefile
 src/gl/Makefile.in
 src/gl/TAGS
 src/gl/arg-nonnull.h
+src/gl/base64.lo
+src/gl/base64.o
 src/gl/c++defs.h
 src/gl/getopt.h
 src/gl/getopt.lo
@@ -243,6 +245,7 @@ src/gl/link-warning.h
 src/gl/progname.lo
 src/gl/progname.o
 src/gl/string.h
+src/gl/sys/
 src/gl/tests/.deps/
 src/gl/tests/Makefile
 src/gl/tests/Makefile.in
