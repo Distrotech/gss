@@ -177,6 +177,8 @@ lib/scram/.deps/
 lib/scram/.libs/
 lib/scram/context.lo
 lib/scram/context.o
+lib/scram/cred.lo
+lib/scram/cred.o
 lib/scram/libgss-scram.la
 lib/scram/oid.lo
 lib/scram/oid.o
@@ -277,6 +279,7 @@ src/gl/progname.o
 src/gl/stdio.h
 src/gl/stdlib.h
 src/gl/string.h
+src/gl/sys/
 src/gl/tests/.deps/
 src/gl/tests/Makefile
 src/gl/tests/Makefile.in
