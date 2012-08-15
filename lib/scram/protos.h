@@ -57,4 +57,18 @@ gss_scram_delete_sec_context (OM_uint32 * minor_status,
 			      gss_ctx_id_t * context_handle,
 			      gss_buffer_t output_token);
 
+/* cred.c */
+extern OM_uint32
+gss_scram_acquire_cred (OM_uint32 * minor_status,
+		       const gss_name_t desired_name,
+		       OM_uint32 time_req,
+		       const gss_OID_set desired_mechs,
+		       gss_cred_usage_t cred_usage,
+		       gss_cred_id_t * output_cred_handle,
+		       gss_OID_set * actual_mechs, OM_uint32 * time_rec);
+
+extern OM_uint32
+gss_scram_release_cred (OM_uint32 * minor_status, gss_cred_id_t * cred_handle);
+
+
 #endif /* GSS_SCRAM_PROTOS_H */

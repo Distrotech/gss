@@ -87,14 +87,17 @@ Mandatory arguments to long options are mandatory for short options too.\n\
   -m, --major=LONG  Describe a `major status' error code value.\n\
 "), stdout);
       fputs (_("\
-  -a, --accept-sec-context\n\
+  -a, --accept-sec-context[=MECH]\n\
                     Accept a security context as server.\n\
+                    If MECH is not specified, no credentials\n\
+                    will be acquired.  Use \"*\" to use library\n\
+                    default mechanism.\n\
   -i, --init-sec-context=MECH\n\
                     Initialize a security context as client.\n\
                     MECH is the SASL name of mechanism, use -l\n\
                     to list supported mechanisms.\n\
   -n, --server-name=SERVICE@HOSTNAME\n\
-                    For -i, set the name of the remote host.\n\
+                    For -i and -a, set the name of the remote host.\n\
                     For example, \"imap@mail.example.com\".\n\
 "), stdout);
       fputs (_("\
@@ -116,8 +119,7 @@ describe_major (unsigned int quiet, long major)
 
   if (!quiet)
     {
-      printf (_("GSS-API major status code %ld (0x%lx).\n\n"),
-	      major, major);
+      printf (_("GSS-API major status code %ld (0x%lx).\n\n"), major, major);
 
       printf (_("   MSB                               "
 		"                                  LSB\n"
@@ -149,8 +151,7 @@ describe_major (unsigned int quiet, long major)
 		GSS_ROUTINE_ERROR (major),
 		GSS_ROUTINE_ERROR (major) >>
 		GSS_C_ROUTINE_ERROR_OFFSET,
-		GSS_ROUTINE_ERROR (major) >>
-		GSS_C_ROUTINE_ERROR_OFFSET);
+		GSS_ROUTINE_ERROR (major) >> GSS_C_ROUTINE_ERROR_OFFSET);
 
       message_context = 0;
       do
@@ -219,8 +220,7 @@ describe_major (unsigned int quiet, long major)
 		GSS_SUPPLEMENTARY_INFO (major),
 		GSS_SUPPLEMENTARY_INFO (major) >>
 		GSS_C_SUPPLEMENTARY_OFFSET,
-		GSS_SUPPLEMENTARY_INFO (major) >>
-		GSS_C_SUPPLEMENTARY_OFFSET);
+		GSS_SUPPLEMENTARY_INFO (major) >> GSS_C_SUPPLEMENTARY_OFFSET);
 
       message_context = 0;
       do
@@ -270,7 +270,8 @@ list_mechanisms (unsigned quiet)
       return 1;
     }
 
-  printf ("Found %lu supported mechanisms.\n", (unsigned long) mech_set->count);
+  printf ("Found %lu supported mechanisms.\n",
+	  (unsigned long) mech_set->count);
 
   for (i = 0; i < mech_set->count; i++)
     {
@@ -333,7 +334,7 @@ init_sec_context (unsigned quiet, const char *mech, const char *server)
   OM_uint32 ret_flags;
 
   sasl_mech_name.length = strlen (mech);
-  sasl_mech_name.value = (void*) mech;
+  sasl_mech_name.value = (void *) mech;
 
   maj = gss_inquire_mech_for_saslname (&min, &sasl_mech_name, &mech_type);
   if (GSS_ERROR (maj))
@@ -345,7 +346,7 @@ init_sec_context (unsigned quiet, const char *mech, const char *server)
       gss_buffer_desc namebuf;
 
       namebuf.length = strlen (server);
-      namebuf.value = (void*) server;
+      namebuf.value = (void *) server;
 
       maj = gss_import_name (&min, &namebuf, GSS_C_NT_HOSTBASED_SERVICE,
 			     &servername);
@@ -367,9 +368,7 @@ init_sec_context (unsigned quiet, const char *mech, const char *server)
 				  GSS_C_SEQUENCE_FLAG,
 				  0,
 				  GSS_C_NO_CHANNEL_BINDINGS,
-				  inbuf, NULL,
-				  &bufdesc,
-				  &ret_flags, NULL);
+				  inbuf, NULL, &bufdesc, &ret_flags, NULL);
       if (GSS_ERROR (maj))
 	error (EXIT_FAILURE, 0,
 	       _("initializing security context failed (%d/%d)"), maj, min);
@@ -425,15 +424,14 @@ init_sec_context (unsigned quiet, const char *mech, const char *server)
 }
 
 static int
-accept_sec_context (unsigned quiet, const char *server)
+accept_sec_context (unsigned quiet, const char *mech, const char *server)
 {
   OM_uint32 maj, min;
   gss_ctx_id_t ctx = GSS_C_NO_CONTEXT;
-  gss_name_t servername = GSS_C_NO_NAME;
   gss_cred_id_t cred = GSS_C_NO_CREDENTIAL;
   gss_name_t client = GSS_C_NO_NAME;
   gss_buffer_desc bufdesc, bufdesc2;
-  gss_OID mech_type;
+  gss_OID mech_type = GSS_C_NO_OID;
   char *out;
   size_t outlen;
   ssize_t s;
@@ -442,27 +440,92 @@ accept_sec_context (unsigned quiet, const char *server)
   bool ok;
   OM_uint32 ret_flags;
 
-  if (server)
+  /*
+    We support these variants:
+
+    1) No call to gss_acquire_cred at all.  This happens if mech=NULL
+    and server=NULL.
+
+    2) Call to gss_acquire_cred with desired_mechs=GSS_C_NULL_OID_SET
+    and desired_name=GSS_C_NO_NAME.  This happens if mech="*" (the
+    string) and server=NULL.
+
+    3) Call to gss_acquire_cred with desired_mechs=GSS_C_NULL_OID_SET
+    and desired_name=server.  This happens if mech=NULL or mech="*"
+    (the string) and server!=NULL.
+
+    4) Call to gss_acquire_cred with desired_mechs=mech and
+    desired_name=GSS_C_NO_NAME.  This happens if mech is a valid
+    SASL-name and server=NULL.
+
+    5) Call to gss_acquire_cred with desired_mechs=mech and
+    desired_name=server.  This happens if mech is a valid SASL-name
+    and server!=NULL.
+   */
+
+  if (mech || server)
     {
-      gss_buffer_desc namebuf;
+      gss_name_t servername = GSS_C_NO_NAME;
+      gss_OID_set mech_types = GSS_C_NULL_OID_SET;
 
-      namebuf.length = strlen (server);
-      namebuf.value = (void*) server;
+      if (mech && strcmp (mech, "*") != 0)
+	{
+	  gss_buffer_desc sasl_mech_name;
 
-      maj = gss_import_name (&min, &namebuf, GSS_C_NT_HOSTBASED_SERVICE,
-			     &servername);
+	  sasl_mech_name.length = strlen (mech);
+	  sasl_mech_name.value = (void *) mech;
+
+	  printf ("Inquiring mechanism OID for SASL name \"%s\"...\n", mech);
+	  maj = gss_inquire_mech_for_saslname (&min, &sasl_mech_name,
+					       &mech_type);
+	  if (GSS_ERROR (maj))
+	    error (EXIT_FAILURE, 0,
+		   _("inquiring mechanism for SASL name (%d/%d)"), maj, min);
+	}
+
+      if (server)
+	{
+	  gss_buffer_desc namebuf;
+
+	  namebuf.length = strlen (server);
+	  namebuf.value = (void *) server;
+
+	  printf ("Importing name \"%s\"...\n", server);
+	  maj = gss_import_name (&min, &namebuf, GSS_C_NT_HOSTBASED_SERVICE,
+				 &servername);
+	  if (GSS_ERROR (maj))
+	    error (EXIT_FAILURE, 0,
+		   _("could not import server name \"%s\" (%d/%d)"),
+		   server, maj, min);
+	}
+
+      if (mech_type != GSS_C_NO_OID)
+	{
+	  maj = gss_create_empty_oid_set (&min, &mech_types);
+	  if (GSS_ERROR (maj))
+	    error (EXIT_FAILURE, 0, "gss_create_empty_oid_set (%d/%d)",
+		   maj, min);
+
+	  maj = gss_add_oid_set_member (&min, mech_type, &mech_types);
+	  if (GSS_ERROR (maj))
+	    error (EXIT_FAILURE, 0, "gss_add_oid_set_member (%d/%d)",
+		   maj, min);
+	}
+
+      printf ("Acquiring credentials...\n");
+      maj = gss_acquire_cred (&min, servername, 0, mech_types, GSS_C_ACCEPT,
+			      &cred, NULL, NULL);
       if (GSS_ERROR (maj))
 	error (EXIT_FAILURE, 0,
-	       _("could not import server name \"%s\" (%d/%d)"),
-	       server, maj, min);
-    }
+	       _("could not acquire server credentials (%d/%d)"), maj, min);
 
-  maj = gss_acquire_cred (&min, servername, 0,
-			  GSS_C_NULL_OID_SET, GSS_C_ACCEPT,
-			  &cred, NULL, NULL);
-  if (GSS_ERROR (maj))
-    error (EXIT_FAILURE, 0,
-	   _("could not acquire server creentials (%d/%d)"), maj, min);
+      if (mech_type != GSS_C_NO_OID)
+	{
+	  maj = gss_release_oid_set (&min, &mech_types);
+	  if (GSS_ERROR (maj))
+	    error (EXIT_FAILURE, 0, "gss_release_oid_set (%d/%d)", maj, min);
+	}
+    }
 
   do
     {
@@ -491,8 +554,7 @@ accept_sec_context (unsigned quiet, const char *server)
 				    GSS_C_NO_CHANNEL_BINDINGS,
 				    &client,
 				    &mech_type,
-				    &bufdesc2,
-				    &ret_flags, NULL, NULL);
+				    &bufdesc2, &ret_flags, NULL, NULL);
       if (GSS_ERROR (maj))
 	error (EXIT_FAILURE, 0,
 	       _("accepting security context failed (%d/%d)"), maj, min);
@@ -556,7 +618,8 @@ main (int argc, char *argv[])
     rc = init_sec_context (args.quiet_given, args.init_sec_context_arg,
 			   args.server_name_arg);
   else if (args.accept_sec_context_given)
-    rc = accept_sec_context (args.quiet_given, args.server_name_arg);
+    rc = accept_sec_context (args.quiet_given, args.accept_sec_context_arg,
+			     args.server_name_arg);
   else
     usage (EXIT_SUCCESS);
 
