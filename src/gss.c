@@ -441,22 +441,26 @@ accept_sec_context (unsigned quiet, const char *mech, const char *server)
   OM_uint32 ret_flags;
 
   /*
-     We support these variants:
+    We support these variants:
 
-     1) No call to gss_acquire_cred at all.  This happens if mech=NULL
-     and server=NULL.
+    1) No call to gss_acquire_cred at all.  This happens if mech=NULL
+    and server=NULL.
 
-     2) Call to gss_acquire_cred with desired_mechs=GSS_C_NULL_OID_SET
-     and desired_name=GSS_C_NO_NAME.  This happens if mech="*" (the
-     string) and server=NULL.
+    2) Call to gss_acquire_cred with desired_mechs=GSS_C_NULL_OID_SET
+    and desired_name=GSS_C_NO_NAME.  This happens if mech="*" (the
+    string) and server=NULL.
 
-     3) Call to gss_acquire_cred with desired_mechs=mech and
-     desired_name=GSS_C_NO_NAME.  This happens if mech is neither NULL
-     nor "*" and server=NULL.
+    3) Call to gss_acquire_cred with desired_mechs=GSS_C_NULL_OID_SET
+    and desired_name=server.  This happens if mech=NULL or mech="*"
+    (the string) and server!=NULL.
 
-     4) Call to gss_acquire_cred with desired_mechs=mech and
-     desired_name=server.  This happens if mech is neither NULL nor "*"
-     and server!=NULL.
+    4) Call to gss_acquire_cred with desired_mechs=mech and
+    desired_name=GSS_C_NO_NAME.  This happens if mech is a valid
+    SASL-name and server=NULL.
+
+    5) Call to gss_acquire_cred with desired_mechs=mech and
+    desired_name=server.  This happens if mech is a valid SASL-name
+    and server!=NULL.
    */
 
   if (mech || server)
