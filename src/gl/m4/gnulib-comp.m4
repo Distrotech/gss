@@ -43,16 +43,29 @@ AC_DEFUN([srcgl_EARLY],
   # Code from module error:
   # Code from module extensions:
   AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
+  # Code from module fseek:
+  # Code from module fseeko:
+  AC_REQUIRE([AC_FUNC_FSEEKO])
+  # Code from module fstat:
+  # Code from module getdelim:
+  # Code from module getline:
   # Code from module getopt-gnu:
   # Code from module getopt-posix:
+  # Code from module getpass-gnu:
   # Code from module gettext-h:
   # Code from module include_next:
   # Code from module intprops:
+  # Code from module largefile:
+  AC_REQUIRE([AC_SYS_LARGEFILE])
+  # Code from module lseek:
   # Code from module memchr:
   # Code from module msvc-inval:
   # Code from module msvc-nothrow:
+  # Code from module multiarch:
   # Code from module nocrash:
   # Code from module progname:
+  # Code from module realloc-posix:
+  # Code from module snippet/_Noreturn:
   # Code from module snippet/arg-nonnull:
   # Code from module snippet/c++defs:
   # Code from module snippet/warn-on-use:
@@ -65,10 +78,15 @@ AC_DEFUN([srcgl_EARLY],
   gl_PROG_CC_C99
   # Code from module stdbool:
   # Code from module stddef:
+  # Code from module stdint:
+  # Code from module stdio:
+  # Code from module stdlib:
   # Code from module strerror:
   # Code from module strerror-override:
   # Code from module string:
+  # Code from module sys_stat:
   # Code from module sys_types:
+  # Code from module time:
   # Code from module unistd:
   # Code from module verify:
   # Code from module version-etc:
@@ -88,74 +106,126 @@ AC_DEFUN([srcgl_INIT],
   m4_pushdef([srcgl_LIBSOURCES_DIR], [])
   gl_COMMON
   gl_source_base='src/gl'
-gl_FUNC_BASE64
-gl_HEADER_ERRNO_H
-gl_ERROR
-if test $ac_cv_lib_error_at_line = no; then
-  AC_LIBOBJ([error])
-  gl_PREREQ_ERROR
-fi
-m4_ifdef([AM_XGETTEXT_OPTION],
-  [AM_][XGETTEXT_OPTION([--flag=error:3:c-format])
-   AM_][XGETTEXT_OPTION([--flag=error_at_line:5:c-format])])
-gl_FUNC_GETOPT_GNU
-if test $REPLACE_GETOPT = 1; then
-  AC_LIBOBJ([getopt])
-  AC_LIBOBJ([getopt1])
-  gl_PREREQ_GETOPT
-  dnl Arrange for unistd.h to include getopt.h.
-  GNULIB_GL_SRCGL_UNISTD_H_GETOPT=1
-fi
-AC_SUBST([GNULIB_GL_SRCGL_UNISTD_H_GETOPT])
-gl_MODULE_INDICATOR_FOR_TESTS([getopt-gnu])
-gl_FUNC_GETOPT_POSIX
-if test $REPLACE_GETOPT = 1; then
-  AC_LIBOBJ([getopt])
-  AC_LIBOBJ([getopt1])
-  gl_PREREQ_GETOPT
-  dnl Arrange for unistd.h to include getopt.h.
-  GNULIB_GL_SRCGL_UNISTD_H_GETOPT=1
-fi
-AC_SUBST([GNULIB_GL_SRCGL_UNISTD_H_GETOPT])
-AC_SUBST([LIBINTL])
-AC_SUBST([LTLIBINTL])
-gl_FUNC_MEMCHR
-if test $HAVE_MEMCHR = 0 || test $REPLACE_MEMCHR = 1; then
-  AC_LIBOBJ([memchr])
-  gl_PREREQ_MEMCHR
-fi
-gl_STRING_MODULE_INDICATOR([memchr])
-gl_MSVC_INVAL
-if test $HAVE_MSVC_INVALID_PARAMETER_HANDLER = 1; then
-  AC_LIBOBJ([msvc-inval])
-fi
-gl_MSVC_NOTHROW
-if test $HAVE_MSVC_INVALID_PARAMETER_HANDLER = 1; then
-  AC_LIBOBJ([msvc-nothrow])
-fi
-AC_CHECK_DECLS([program_invocation_name], [], [], [#include <errno.h>])
-AC_CHECK_DECLS([program_invocation_short_name], [], [], [#include <errno.h>])
-gt_TYPE_SSIZE_T
-gl_STDARG_H
-AM_STDBOOL_H
-gl_STDDEF_H
-gl_FUNC_STRERROR
-if test $REPLACE_STRERROR = 1; then
-  AC_LIBOBJ([strerror])
-fi
-gl_MODULE_INDICATOR([strerror])
-gl_STRING_MODULE_INDICATOR([strerror])
-AC_REQUIRE([gl_HEADER_ERRNO_H])
-AC_REQUIRE([gl_FUNC_STRERROR_0])
-if test -n "$ERRNO_H" || test $REPLACE_STRERROR_0 = 1; then
-  AC_LIBOBJ([strerror-override])
-  gl_PREREQ_SYS_H_WINSOCK2
-fi
-gl_HEADER_STRING_H
-gl_SYS_TYPES_H
-AC_PROG_MKDIR_P
-gl_UNISTD_H
-gl_VERSION_ETC
+  gl_FUNC_BASE64
+  gl_HEADER_ERRNO_H
+  gl_ERROR
+  if test $ac_cv_lib_error_at_line = no; then
+    AC_LIBOBJ([error])
+    gl_PREREQ_ERROR
+  fi
+  m4_ifdef([AM_XGETTEXT_OPTION],
+    [AM_][XGETTEXT_OPTION([--flag=error:3:c-format])
+     AM_][XGETTEXT_OPTION([--flag=error_at_line:5:c-format])])
+  gl_FUNC_FSEEK
+  if test $REPLACE_FSEEK = 1; then
+    AC_LIBOBJ([fseek])
+  fi
+  gl_STDIO_MODULE_INDICATOR([fseek])
+  gl_FUNC_FSEEKO
+  if test $HAVE_FSEEKO = 0 || test $REPLACE_FSEEKO = 1; then
+    AC_LIBOBJ([fseeko])
+    gl_PREREQ_FSEEKO
+  fi
+  gl_STDIO_MODULE_INDICATOR([fseeko])
+  gl_FUNC_FSTAT
+  if test $REPLACE_FSTAT = 1; then
+    AC_LIBOBJ([fstat])
+    gl_PREREQ_FSTAT
+  fi
+  gl_SYS_STAT_MODULE_INDICATOR([fstat])
+  gl_FUNC_GETDELIM
+  if test $HAVE_GETDELIM = 0 || test $REPLACE_GETDELIM = 1; then
+    AC_LIBOBJ([getdelim])
+    gl_PREREQ_GETDELIM
+  fi
+  gl_STDIO_MODULE_INDICATOR([getdelim])
+  gl_FUNC_GETLINE
+  if test $REPLACE_GETLINE = 1; then
+    AC_LIBOBJ([getline])
+    gl_PREREQ_GETLINE
+  fi
+  gl_STDIO_MODULE_INDICATOR([getline])
+  gl_FUNC_GETOPT_GNU
+  if test $REPLACE_GETOPT = 1; then
+    AC_LIBOBJ([getopt])
+    AC_LIBOBJ([getopt1])
+    gl_PREREQ_GETOPT
+    dnl Arrange for unistd.h to include getopt.h.
+    GNULIB_GL_SRCGL_UNISTD_H_GETOPT=1
+  fi
+  AC_SUBST([GNULIB_GL_SRCGL_UNISTD_H_GETOPT])
+  gl_MODULE_INDICATOR_FOR_TESTS([getopt-gnu])
+  gl_FUNC_GETOPT_POSIX
+  if test $REPLACE_GETOPT = 1; then
+    AC_LIBOBJ([getopt])
+    AC_LIBOBJ([getopt1])
+    gl_PREREQ_GETOPT
+    dnl Arrange for unistd.h to include getopt.h.
+    GNULIB_GL_SRCGL_UNISTD_H_GETOPT=1
+  fi
+  AC_SUBST([GNULIB_GL_SRCGL_UNISTD_H_GETOPT])
+  gl_FUNC_GETPASS_GNU
+  if test $REPLACE_GETPASS = 1; then
+    AC_LIBOBJ([getpass])
+    gl_PREREQ_GETPASS
+  fi
+  AC_SUBST([LIBINTL])
+  AC_SUBST([LTLIBINTL])
+  AC_REQUIRE([gl_LARGEFILE])
+  gl_FUNC_LSEEK
+  if test $REPLACE_LSEEK = 1; then
+    AC_LIBOBJ([lseek])
+  fi
+  gl_UNISTD_MODULE_INDICATOR([lseek])
+  gl_FUNC_MEMCHR
+  if test $HAVE_MEMCHR = 0 || test $REPLACE_MEMCHR = 1; then
+    AC_LIBOBJ([memchr])
+    gl_PREREQ_MEMCHR
+  fi
+  gl_STRING_MODULE_INDICATOR([memchr])
+  gl_MSVC_INVAL
+  if test $HAVE_MSVC_INVALID_PARAMETER_HANDLER = 1; then
+    AC_LIBOBJ([msvc-inval])
+  fi
+  gl_MSVC_NOTHROW
+  if test $HAVE_MSVC_INVALID_PARAMETER_HANDLER = 1; then
+    AC_LIBOBJ([msvc-nothrow])
+  fi
+  gl_MULTIARCH
+  AC_CHECK_DECLS([program_invocation_name], [], [], [#include <errno.h>])
+  AC_CHECK_DECLS([program_invocation_short_name], [], [], [#include <errno.h>])
+  gl_FUNC_REALLOC_POSIX
+  if test $REPLACE_REALLOC = 1; then
+    AC_LIBOBJ([realloc])
+  fi
+  gl_STDLIB_MODULE_INDICATOR([realloc-posix])
+  gt_TYPE_SSIZE_T
+  gl_STDARG_H
+  AM_STDBOOL_H
+  gl_STDDEF_H
+  gl_STDINT_H
+  gl_STDIO_H
+  gl_STDLIB_H
+  gl_FUNC_STRERROR
+  if test $REPLACE_STRERROR = 1; then
+    AC_LIBOBJ([strerror])
+  fi
+  gl_MODULE_INDICATOR([strerror])
+  gl_STRING_MODULE_INDICATOR([strerror])
+  AC_REQUIRE([gl_HEADER_ERRNO_H])
+  AC_REQUIRE([gl_FUNC_STRERROR_0])
+  if test -n "$ERRNO_H" || test $REPLACE_STRERROR_0 = 1; then
+    AC_LIBOBJ([strerror-override])
+    gl_PREREQ_SYS_H_WINSOCK2
+  fi
+  gl_HEADER_STRING_H
+  gl_HEADER_SYS_STAT_H
+  AC_PROG_MKDIR_P
+  gl_SYS_TYPES_H
+  AC_PROG_MKDIR_P
+  gl_HEADER_TIME_H
+  gl_UNISTD_H
+  gl_VERSION_ETC
   # End of code from modules
   m4_ifval(srcgl_LIBSOURCES_LIST, [
     m4_syscmd([test ! -d ]m4_defn([srcgl_LIBSOURCES_DIR])[ ||
@@ -292,6 +362,7 @@ AC_DEFUN([srcgltests_LIBSOURCES], [
 # This macro records the list of files which have been installed by
 # gnulib-tool and may be removed by future gnulib-tool invocations.
 AC_DEFUN([srcgl_FILE_LIST], [
+  build-aux/snippet/_Noreturn.h
   build-aux/snippet/arg-nonnull.h
   build-aux/snippet/c++defs.h
   build-aux/snippet/warn-on-use.h
@@ -300,12 +371,20 @@ AC_DEFUN([srcgl_FILE_LIST], [
   lib/errno.in.h
   lib/error.c
   lib/error.h
+  lib/fseek.c
+  lib/fseeko.c
+  lib/fstat.c
+  lib/getdelim.c
+  lib/getline.c
   lib/getopt.c
   lib/getopt.in.h
   lib/getopt1.c
   lib/getopt_int.h
+  lib/getpass.c
+  lib/getpass.h
   lib/gettext.h
   lib/intprops.h
+  lib/lseek.c
   lib/memchr.c
   lib/memchr.valgrind
   lib/msvc-inval.c
@@ -314,14 +393,21 @@ AC_DEFUN([srcgl_FILE_LIST], [
   lib/msvc-nothrow.h
   lib/progname.c
   lib/progname.h
+  lib/realloc.c
   lib/stdarg.in.h
   lib/stdbool.in.h
   lib/stddef.in.h
+  lib/stdint.in.h
+  lib/stdio-impl.h
+  lib/stdio.in.h
+  lib/stdlib.in.h
   lib/strerror-override.c
   lib/strerror-override.h
   lib/strerror.c
   lib/string.in.h
+  lib/sys_stat.in.h
   lib/sys_types.in.h
+  lib/time.in.h
   lib/unistd.in.h
   lib/verify.h
   lib/version-etc.c
@@ -331,23 +417,40 @@ AC_DEFUN([srcgl_FILE_LIST], [
   m4/errno_h.m4
   m4/error.m4
   m4/extensions.m4
+  m4/fseek.m4
+  m4/fseeko.m4
+  m4/fstat.m4
+  m4/getdelim.m4
+  m4/getline.m4
   m4/getopt.m4
+  m4/getpass.m4
   m4/gnulib-common.m4
   m4/include_next.m4
+  m4/largefile.m4
+  m4/longlong.m4
+  m4/lseek.m4
+  m4/malloc.m4
   m4/memchr.m4
   m4/mmap-anon.m4
   m4/msvc-inval.m4
   m4/msvc-nothrow.m4
+  m4/multiarch.m4
   m4/nocrash.m4
   m4/off_t.m4
+  m4/realloc.m4
   m4/ssize_t.m4
   m4/stdarg.m4
   m4/stdbool.m4
   m4/stddef_h.m4
+  m4/stdint.m4
+  m4/stdio_h.m4
+  m4/stdlib_h.m4
   m4/strerror.m4
   m4/string_h.m4
   m4/sys_socket_h.m4
+  m4/sys_stat_h.m4
   m4/sys_types_h.m4
+  m4/time_h.m4
   m4/unistd_h.m4
   m4/version-etc.m4
   m4/warn-on-use.m4

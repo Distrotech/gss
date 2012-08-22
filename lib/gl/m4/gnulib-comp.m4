@@ -81,46 +81,46 @@ AC_DEFUN([libgl_INIT],
   m4_pushdef([libgl_LIBSOURCES_DIR], [])
   gl_COMMON
   gl_source_base='lib/gl'
-gl_FUNC_BASE64
-gl_GC
-if test "$ac_cv_libgcrypt" = yes; then
-  AC_LIBOBJ([gc-libgcrypt])
-else
-  AC_LIBOBJ([gc-gnulib])
-fi
-if test $gl_cond_libtool = false; then
-  gl_ltlibdeps="$gl_ltlibdeps $LTLIBGCRYPT"
-  gl_libdeps="$gl_libdeps $LIBGCRYPT"
-fi
-gl_GC_HMAC_SHA1
-gl_MODULE_INDICATOR([gc-hmac-sha1])
-gl_GC_RANDOM
-gl_MODULE_INDICATOR([gc-random])
-gl_GC_SHA1
-gl_MODULE_INDICATOR([gc-sha1])
-gl_SHA1
-AC_SUBST([LIBINTL])
-AC_SUBST([LTLIBINTL])
-gl_LD_OUTPUT_DEF
-gl_FUNC_MEMCHR
-if test $HAVE_MEMCHR = 0 || test $REPLACE_MEMCHR = 1; then
-  AC_LIBOBJ([memchr])
-  gl_PREREQ_MEMCHR
-fi
-gl_STRING_MODULE_INDICATOR([memchr])
-gl_MEMXOR
-gl_MULTIARCH
-gl_STDALIGN_H
-AM_STDBOOL_H
-gl_STDDEF_H
-gl_STDINT_H
-gl_HEADER_STRING_H
-gl_FUNC_STRVERSCMP
-if test $HAVE_STRVERSCMP = 0; then
-  AC_LIBOBJ([strverscmp])
-  gl_PREREQ_STRVERSCMP
-fi
-gl_STRING_MODULE_INDICATOR([strverscmp])
+  gl_FUNC_BASE64
+  gl_GC
+  if test "$ac_cv_libgcrypt" = yes; then
+    AC_LIBOBJ([gc-libgcrypt])
+  else
+    AC_LIBOBJ([gc-gnulib])
+  fi
+  if test $gl_cond_libtool = false; then
+    gl_ltlibdeps="$gl_ltlibdeps $LTLIBGCRYPT"
+    gl_libdeps="$gl_libdeps $LIBGCRYPT"
+  fi
+  gl_GC_HMAC_SHA1
+  gl_MODULE_INDICATOR([gc-hmac-sha1])
+  gl_GC_RANDOM
+  gl_MODULE_INDICATOR([gc-random])
+  gl_GC_SHA1
+  gl_MODULE_INDICATOR([gc-sha1])
+  gl_SHA1
+  AC_SUBST([LIBINTL])
+  AC_SUBST([LTLIBINTL])
+  gl_LD_OUTPUT_DEF
+  gl_FUNC_MEMCHR
+  if test $HAVE_MEMCHR = 0 || test $REPLACE_MEMCHR = 1; then
+    AC_LIBOBJ([memchr])
+    gl_PREREQ_MEMCHR
+  fi
+  gl_STRING_MODULE_INDICATOR([memchr])
+  gl_MEMXOR
+  gl_MULTIARCH
+  gl_STDALIGN_H
+  AM_STDBOOL_H
+  gl_STDDEF_H
+  gl_STDINT_H
+  gl_HEADER_STRING_H
+  gl_FUNC_STRVERSCMP
+  if test $HAVE_STRVERSCMP = 0; then
+    AC_LIBOBJ([strverscmp])
+    gl_PREREQ_STRVERSCMP
+  fi
+  gl_STRING_MODULE_INDICATOR([strverscmp])
   # End of code from modules
   m4_ifval(libgl_LIBSOURCES_LIST, [
     m4_syscmd([test ! -d ]m4_defn([libgl_LIBSOURCES_DIR])[ ||

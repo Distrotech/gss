@@ -25,4 +25,5 @@ option "list-mechanisms" l "See gss.c for doc string" no
 option "accept-sec-context" a "See gss.c for doc string" argoptional string no
 option "init-sec-context" i "See gss.c for doc string" string no
 option "server-name" n "See gss.c for doc string" string no
+option "password" p "See gss.c for doc string" argoptional string no
 option "quiet" q "Silent operation" flag off

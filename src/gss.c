@@ -43,6 +43,7 @@
 #include "error.h"
 #include "progname.h"
 #include "version-etc.h"
+#include "getpass.h"
 
 const char version_etc_copyright[] =
   /* Do *not* mark this string for translation.  %s is a copyright
@@ -99,6 +100,8 @@ Mandatory arguments to long options are mandatory for short options too.\n\
   -n, --server-name=SERVICE@HOSTNAME\n\
                     For -i and -a, set the name of the remote host.\n\
                     For example, \"imap@mail.example.com\".\n\
+  -p, --password[=PASSWORD]\n\
+                    For -i, prompt or set the password to use.\n\
 "), stdout);
       fputs (_("\
   -q, --quiet       Silent operation (default=off).\n\
@@ -315,10 +318,12 @@ gettrimline (char **line, size_t * n, FILE * fh)
 }
 
 static int
-init_sec_context (unsigned quiet, const char *mech, const char *server)
+init_sec_context (unsigned quiet, const char *mech, const char *server,
+		  unsigned int password_given, const char *password)
 {
   OM_uint32 maj, min;
   gss_ctx_id_t ctx = GSS_C_NO_CONTEXT;
+  gss_cred_id_t cred = GSS_C_NO_CREDENTIAL;
   gss_name_t servername = GSS_C_NO_NAME;
   gss_buffer_desc inbuf_desc;
   gss_buffer_t inbuf = GSS_C_NO_BUFFER;
@@ -356,10 +361,35 @@ init_sec_context (unsigned quiet, const char *mech, const char *server)
 	       server, maj, min);
     }
 
+  if (password_given)
+    {
+      gss_buffer_desc pw;
+
+      if (!password)
+	password = getpass ("Password: ");
+
+      pw.value = (void *) password;
+      pw.length = strlen (password);
+
+      maj = gss_acquire_cred_with_password (&min,
+					    GSS_C_NO_NAME,
+					    &pw,
+					    GSS_C_INDEFINITE,
+					    GSS_C_NO_OID_SET,
+					    GSS_C_INITIATE,
+					    &cred,
+					    NULL,
+					    NULL);
+      if (GSS_ERROR (maj))
+	error (EXIT_FAILURE, 0,
+	       _("failed to acquire credential from password (%d/%d)"),
+	       maj, min);
+  }
+
   do
     {
       maj = gss_init_sec_context (&min,
-				  GSS_C_NO_CREDENTIAL,
+				  cred,
 				  &ctx,
 				  servername,
 				  mech_type,
@@ -616,7 +646,8 @@ main (int argc, char *argv[])
     rc = list_mechanisms (args.quiet_given);
   else if (args.init_sec_context_given)
     rc = init_sec_context (args.quiet_given, args.init_sec_context_arg,
-			   args.server_name_arg);
+			   args.server_name_arg, args.password_given,
+			   args.password_arg);
   else if (args.accept_sec_context_given)
     rc = accept_sec_context (args.quiet_given, args.accept_sec_context_arg,
 			     args.server_name_arg);
