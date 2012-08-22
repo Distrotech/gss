@@ -50,6 +50,7 @@ typedef struct _gss_scram_ctx_struct
   struct scram_client_final cl;
   struct scram_server_first sf;
   struct scram_server_final sl;
+  int step;
   char *salt;
   char *cnonce;
   char *snonce;
@@ -263,7 +264,7 @@ client_final (OM_uint32 * minor_status,
     {
       if (minor_status)
 	*minor_status = 0;
-      // return GSS_S_FAILURE;
+       return GSS_S_FAILURE;
     }
 
   sctx->cl.nonce = strdup (sctx->sf.nonce);
@@ -315,6 +316,41 @@ client_final (OM_uint32 * minor_status,
   printf ("C: C: %.*s\n", (int) output_token->length,
 	  (char *) output_token->value);
 
+  return GSS_S_CONTINUE_NEEDED;
+}
+
+/* Parse SCRAM server-final message.  Returns GSS_S_COMPLETE on
+   success, or an error code.  Does not return any output.  */
+static OM_uint32
+client_parse_server_final (OM_uint32 * minor_status,
+			   _gss_scram_ctx_t sctx,
+			   const gss_buffer_t input_token,
+			   gss_buffer_t output_token)
+{
+  int rc;
+
+  printf ("C: S: %.*s\n", (int) input_token->length,
+	  (char *) input_token->value);
+
+  rc = scram_parse_server_final (input_token->value, input_token->length,
+				 &sctx->sl);
+  if (rc < 0)
+    {
+      if (minor_status)
+	*minor_status = rc;
+      return GSS_S_FAILURE;
+    }
+
+  if (strcmp (sctx->sl.verifier, sctx->serversignature) != 0)
+    {
+      if (minor_status)
+	*minor_status = -2;
+      return GSS_S_FAILURE;
+    }
+
+  output_token->length = 0;
+  output_token->value = NULL;
+
   return GSS_S_COMPLETE;
 }
 
@@ -335,6 +371,7 @@ gss_scram_init_sec_context (OM_uint32 * minor_status,
 {
   gss_ctx_id_t ctx = *context_handle;
   _gss_scram_ctx_t sctx = ctx->scram;
+  int maj;
 
   if (minor_status)
     *minor_status = 0;
@@ -352,11 +389,44 @@ gss_scram_init_sec_context (OM_uint32 * minor_status,
 	  return GSS_S_FAILURE;
 	}
 
-      return client_first (minor_status, sctx, output_token);
+      if (ret_flags)
+	*ret_flags = 0;
+
+      if (time_rec)
+	*time_rec = GSS_C_INDEFINITE;
+
+      maj = client_first (minor_status, sctx, output_token);
+
+      if (maj != GSS_S_CONTINUE_NEEDED)
+	sctx->step = 10;
+
+      return maj;
+    }
+  else if (sctx->step == 0)
+    {
+      sctx->step++;
+
+      if (ret_flags)
+	*ret_flags |= GSS_C_PROT_READY_FLAG;
+
+      maj = client_final (minor_status, sctx, input_chan_bindings,
+			  input_token, output_token);
+
+      if (maj != GSS_S_CONTINUE_NEEDED)
+	sctx->step = 10;
+
+      return maj;
+    }
+  else if (sctx->step == 1)
+    {
+      sctx->step++;
+      return client_parse_server_final (minor_status, sctx,
+					input_token, output_token);
     }
 
-  return client_final (minor_status, sctx, input_chan_bindings,
-		       input_token, output_token);
+  if (minor_status)
+    *minor_status = 0;
+  return GSS_S_FAILURE;
 }
 
 /* SCRAM server. */
@@ -504,7 +574,7 @@ server_final (OM_uint32 * minor_status,
 
   /* XXX proof */
 
-  sctx->sl.verifier = strdup ("ver"); /* XXX */
+  sctx->sl.verifier = strdup ("verifier"); /* XXX */
 
   rc = scram_print_server_final (&sctx->sl, (char **) &output_token->value);
   if (rc != 0)
