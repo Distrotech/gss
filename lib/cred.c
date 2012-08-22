@@ -574,7 +574,27 @@ gss_acquire_cred_with_password (OM_uint32 *minor_status,
 				gss_OID_set *actual_mechs,
 				OM_uint32 *time_rec)
 {
-  return -1;
+  if (!output_cred_handle)
+    {
+      if (minor_status)
+	*minor_status = 0;
+      return GSS_S_NO_CRED | GSS_S_CALL_INACCESSIBLE_WRITE;
+    }
+
+  *output_cred_handle = calloc (sizeof (**output_cred_handle), 1);
+  if (!*output_cred_handle)
+    {
+      if (minor_status)
+	*minor_status = ENOMEM;
+      return GSS_S_FAILURE;
+    }
+
+  (*output_cred_handle)->mech = &GSS_SCRAMSHA1_static;
+  (*output_cred_handle)->password = password;
+
+  /* XXX deal with other parameters -- where is the semantic specified? */
+
+  return GSS_S_COMPLETE;
 }
 
 OM_uint32

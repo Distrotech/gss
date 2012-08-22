@@ -55,6 +55,7 @@ typedef struct gss_cred_id_struct
 #ifdef USE_KERBEROS5
   struct _gss_krb5_cred_struct *krb5;
 #endif
+  gss_buffer_t password;
 } gss_cred_id_desc;
 
 typedef struct gss_ctx_id_struct

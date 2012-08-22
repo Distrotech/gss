@@ -121,6 +121,7 @@ client_first (OM_uint32 * minor_status,
 static OM_uint32
 client_final_proof (OM_uint32 * minor_status,
 		    _gss_scram_ctx_t sctx,
+		    gss_buffer_t password,
 		    const gss_buffer_t input_token)
 {
   char saltedpassword[20];
@@ -132,7 +133,6 @@ client_final_proof (OM_uint32 * minor_status,
 
   /* Get SaltedPassword. */
   {
-    const char *pass = "pencil"; /* XXX */
     Gc_rc err;
     char *salt;
     size_t saltlen;
@@ -146,7 +146,7 @@ client_final_proof (OM_uint32 * minor_status,
       return -1;
 
     /* SaltedPassword := Hi(password, salt) */
-    err = gc_pbkdf2_sha1 (pass, strlen (pass),
+    err = gc_pbkdf2_sha1 (password->value, password->length,
 			  salt, saltlen,
 			  sctx->sf.iter, saltedpassword, 20);
     free (salt);
@@ -240,6 +240,7 @@ client_final_proof (OM_uint32 * minor_status,
 static OM_uint32
 client_final (OM_uint32 * minor_status,
 	      _gss_scram_ctx_t sctx,
+	      gss_buffer_t password,
 	      const gss_channel_bindings_t input_chan_bindings,
 	      const gss_buffer_t input_token,
 	      gss_buffer_t output_token)
@@ -295,7 +296,7 @@ client_final (OM_uint32 * minor_status,
 	}
     }
 
-  rc = client_final_proof (minor_status, sctx, input_token);
+  rc = client_final_proof (minor_status, sctx, password, input_token);
   if (rc != GSS_S_COMPLETE)
     {
       if (minor_status)
@@ -376,7 +377,7 @@ gss_scram_init_sec_context (OM_uint32 * minor_status,
   if (minor_status)
     *minor_status = 0;
 
-  if (initiator_cred_handle)
+  if (!initiator_cred_handle || !initiator_cred_handle->password)
     return GSS_S_NO_CRED;
 
   if (sctx == NULL)
@@ -409,7 +410,8 @@ gss_scram_init_sec_context (OM_uint32 * minor_status,
       if (ret_flags)
 	*ret_flags |= GSS_C_PROT_READY_FLAG;
 
-      maj = client_final (minor_status, sctx, input_chan_bindings,
+      maj = client_final (minor_status, sctx, initiator_cred_handle->password,
+			  input_chan_bindings,
 			  input_token, output_token);
 
       if (maj != GSS_S_CONTINUE_NEEDED)
