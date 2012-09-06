@@ -1,5 +1,5 @@
 /* meta.h --- Prototypes for internally visible symbols from meta.c.
- * Copyright (C) 2003-2012 Simon Josefsson
+ * Copyright (C) 2003-2013 Simon Josefsson
  *
  * This file is part of the Generic Security Service (GSS).
  *
