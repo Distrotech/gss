@@ -1,0 +1,111 @@
+@subheading gss_acquire_cred
+@anchor{gss_acquire_cred}
+@deftypefun {OM_uint32} {gss_acquire_cred} (OM_uint32 * @var{minor_status}, const gss_name_t @var{desired_name}, OM_uint32 @var{time_req}, const gss_OID_set @var{desired_mechs}, gss_cred_usage_t @var{cred_usage}, gss_cred_id_t * @var{output_cred_handle}, gss_OID_set * @var{actual_mechs}, OM_uint32 * @var{time_rec})
+@var{minor_status}: (integer, modify) Mechanism specific status code.
+
+@var{desired_name}: (gss_name_t, read) Name of principal whose
+credential should be acquired.
+
+@var{time_req}: (Integer, read, optional) Number of seconds that
+credentials should remain valid. Specify GSS_C_INDEFINITE to
+request that the credentials have the maximum permitted lifetime.
+
+@var{desired_mechs}: (Set of Object IDs, read, optional) Set of
+underlying security mechanisms that may be used.
+GSS_C_NO_OID_SET may be used to obtain an implementation-specific
+default.
+
+@var{cred_usage}: (gss_cred_usage_t, read) GSS_C_BOTH - Credentials may
+be used either to initiate or accept security contexts.
+GSS_C_INITIATE - Credentials will only be used to initiate
+security contexts.  GSS_C_ACCEPT - Credentials will only be used
+to accept security contexts.
+
+@var{output_cred_handle}: (gss_cred_id_t, modify) The returned
+credential handle.  Resources associated with this credential
+handle must be released by the application after use with a call
+to gss_release_cred().
+
+@var{actual_mechs}: (Set of Object IDs, modify, optional) The set of
+mechanisms for which the credential is valid.  Storage associated
+with the returned OID-set must be released by the application
+after use with a call to gss_release_oid_set().  Specify NULL if
+not required.
+
+@var{time_rec}: (Integer, modify, optional) Actual number of seconds for
+which the returned credentials will remain valid.  If the
+implementation does not support expiration of credentials, the
+value GSS_C_INDEFINITE will be returned. Specify NULL if not
+required.
+
+
+Allows an application to acquire a handle for a pre-existing
+credential by name.  GSS-API implementations must impose a local
+access-control policy on callers of this routine to prevent
+unauthorized callers from acquiring credentials to which they are
+not entitled.  This routine is not intended to provide a "login to
+the network" function, as such a function would involve the
+creation of new credentials rather than merely acquiring a handle
+to existing credentials.  Such functions, if required, should be
+defined in implementation-specific extensions to the API.
+
+
+If desired_name is GSS_C_NO_NAME, the call is interpreted as a
+request for a credential handle that will invoke default behavior
+when passed to gss_init_sec_context() (if cred_usage is
+GSS_C_INITIATE or GSS_C_BOTH) or gss_accept_sec_context() (if
+cred_usage is GSS_C_ACCEPT or GSS_C_BOTH).
+
+
+Mechanisms should honor the desired_mechs parameter, and return a
+credential that is suitable to use only with the requested
+mechanisms.  An exception to this is the case where one underlying
+credential element can be shared by multiple mechanisms; in this
+case it is permissible for an implementation to indicate all
+mechanisms with which the credential element may be used.  If
+desired_mechs is an empty set, behavior is undefined.
+
+
+This routine is expected to be used primarily by context acceptors,
+since implementations are likely to provide mechanism-specific ways
+of obtaining GSS-API initiator credentials from the system login
+process.  Some implementations may therefore not support the
+acquisition of GSS_C_INITIATE or GSS_C_BOTH credentials via
+gss_acquire_cred for any name other than GSS_C_NO_NAME, or a name
+produced by applying either gss_inquire_cred to a valid credential,
+or gss_inquire_context to an active context.
+
+
+If credential acquisition is time-consuming for a mechanism, the
+mechanism may choose to delay the actual acquisition until the
+credential is required (e.g. by gss_init_sec_context or
+gss_accept_sec_context).  Such mechanism-specific implementation
+decisions should be invisible to the calling application; thus a
+call of gss_inquire_cred immediately following the call of
+gss_acquire_cred must return valid credential data, and may
+therefore incur the overhead of a deferred credential acquisition.
+
+Return value:
+
+
+@code{GSS_S_COMPLETE}: Successful completion.
+
+
+@code{GSS_S_BAD_MECH}: Unavailable mechanism requested.
+
+
+@code{GSS_S_BAD_NAMETYPE}: Type contained within desired_name parameter
+is not supported.
+
+
+@code{GSS_S_BAD_NAME}: Value supplied for desired_name parameter is ill
+formed.
+
+
+@code{GSS_S_CREDENTIALS_EXPIRED}: The credentials could not be acquired
+Because they have expired.
+
+
+@code{GSS_S_NO_CRED}: No credentials were found for the specified name.
+@end deftypefun
+

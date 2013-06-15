@@ -1,0 +1,94 @@
+@subheading gss_display_status
+@anchor{gss_display_status}
+@deftypefun {OM_uint32} {gss_display_status} (OM_uint32 * @var{minor_status}, OM_uint32 @var{status_value}, int @var{status_type}, const gss_OID @var{mech_type}, OM_uint32 * @var{message_context}, gss_buffer_t @var{status_string})
+@var{minor_status}: (integer, modify) Mechanism specific status code.
+
+@var{status_value}: (Integer, read) Status value to be converted.
+
+@var{status_type}: (Integer, read) GSS_C_GSS_CODE - status_value is a
+GSS status code. GSS_C_MECH_CODE - status_value is a mechanism
+status code.
+
+@var{mech_type}: (Object ID, read, optional) Underlying mechanism (used
+to interpret a minor status value). Supply GSS_C_NO_OID to obtain
+the system default.
+
+@var{message_context}: (Integer, read/modify) Should be initialized to
+zero by the application prior to the first call.  On return from
+gss_display_status(), a non-zero status_value parameter indicates
+that additional messages may be extracted from the status code
+via subsequent calls to gss_display_status(), passing the same
+status_value, status_type, mech_type, and message_context
+parameters.
+
+@var{status_string}: (buffer, character string, modify) Textual
+interpretation of the status_value.  Storage associated with this
+parameter must be freed by the application after use with a call
+to gss_release_buffer().
+
+
+Allows an application to obtain a textual representation of a
+GSS-API status code, for display to the user or for logging
+purposes.  Since some status values may indicate multiple
+conditions, applications may need to call gss_display_status
+multiple times, each call generating a single text string.  The
+message_context parameter is used by gss_display_status to store
+state information about which error messages have already been
+extracted from a given status_value; message_context must be
+initialized to 0 by the application prior to the first call, and
+gss_display_status will return a non-zero value in this parameter
+if there are further messages to extract.
+
+
+The message_context parameter contains all state information
+required by gss_display_status in order to extract further messages
+from the status_value; even when a non-zero value is returned in
+this parameter, the application is not required to call
+gss_display_status again unless subsequent messages are desired.
+The following code extracts all messages from a given status code
+and prints them to stderr:
+
+@example
+OM_uint32 message_context;
+OM_uint32 status_code;
+OM_uint32 maj_status;
+OM_uint32 min_status;
+gss_buffer_desc status_string;
+
+       ...
+
+message_context = 0;
+
+do @{
+  maj_status = gss_display_status (
+                  &min_status,
+                  status_code,
+                  GSS_C_GSS_CODE,
+                  GSS_C_NO_OID,
+                  &message_context,
+                  &status_string)
+
+  fprintf(stderr,
+          "%.*s\n",
+         (int)status_string.length,
+
+         (char *)status_string.value);
+
+  gss_release_buffer(&min_status, &status_string);
+
+@} while (message_context != 0);
+@end example
+Return value:
+
+
+@code{GSS_S_COMPLETE}: Successful completion.
+
+
+@code{GSS_S_BAD_MECH}: Indicates that translation in accordance with an
+unsupported mechanism type was requested.
+
+
+@code{GSS_S_BAD_STATUS}: The status value was not recognized, or the
+status type was neither GSS_C_GSS_CODE nor GSS_C_MECH_CODE.
+@end deftypefun
+

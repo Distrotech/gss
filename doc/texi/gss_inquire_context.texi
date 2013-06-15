@@ -1,0 +1,201 @@
+@subheading gss_inquire_context
+@anchor{gss_inquire_context}
+@deftypefun {OM_uint32} {gss_inquire_context} (OM_uint32 * @var{minor_status}, const gss_ctx_id_t @var{context_handle}, gss_name_t * @var{src_name}, gss_name_t * @var{targ_name}, OM_uint32 * @var{lifetime_rec}, gss_OID * @var{mech_type}, OM_uint32 * @var{ctx_flags}, int * @var{locally_initiated}, int * @var{open})
+@var{minor_status}: (Integer, modify) Mechanism specific status code.
+
+@var{context_handle}: (gss_ctx_id_t, read) A handle that refers to the
+security context.
+
+@var{src_name}: (gss_name_t, modify, optional) The name of the context
+initiator.  If the context was established using anonymous
+authentication, and if the application invoking
+gss_inquire_context is the context acceptor, an anonymous name
+will be returned.  Storage associated with this name must be
+freed by the application after use with a call to
+gss_release_name().  Specify NULL if not required.
+
+@var{targ_name}: (gss_name_t, modify, optional) The name of the context
+acceptor.  Storage associated with this name must be freed by the
+application after use with a call to gss_release_name().  If the
+context acceptor did not authenticate itself, and if the
+initiator did not specify a target name in its call to
+gss_init_sec_context(), the value GSS_C_NO_NAME will be returned.
+Specify NULL if not required.
+
+@var{lifetime_rec}: (Integer, modify, optional) The number of seconds
+for which the context will remain valid.  If the context has
+expired, this parameter will be set to zero.  If the
+implementation does not support context expiration, the value
+GSS_C_INDEFINITE will be returned.  Specify NULL if not required.
+
+@var{mech_type}: (gss_OID, modify, optional) The security mechanism
+providing the context.  The returned OID will be a pointer to
+static storage that should be treated as read-only by the
+application; in particular the application should not attempt to
+free it.  Specify NULL if not required.
+
+@var{ctx_flags}: (bit-mask, modify, optional) Contains various
+independent flags, each of which indicates that the context
+supports (or is expected to support, if ctx_open is false) a
+specific service option.  If not needed, specify NULL.  Symbolic
+names are provided for each flag, and the symbolic names
+corresponding to the required flags should be logically-ANDed
+with the ret_flags value to test whether a given option is
+supported by the context.  See below for the flags.
+
+@var{locally_initiated}: (Boolean, modify) Non-zero if the invoking
+application is the context initiator.  Specify NULL if not
+required.
+
+@var{open}: (Boolean, modify) Non-zero if the context is fully
+established; Zero if a context-establishment token is expected
+from the peer application.  Specify NULL if not required.
+
+
+Obtains information about a security context.  The caller must
+already have obtained a handle that refers to the context, although
+the context need not be fully established.
+
+
+The @code{ctx_flags} values:
+
+@table @asis
+@item
+@code{GSS_C_DELEG_FLAG}
+
+
+
+@itemize @bullet
+@item
+True - Credentials were delegated from the initiator to the
+acceptor.
+
+@item
+False - No credentials were delegated.
+
+@end itemize
+@item
+@code{GSS_C_MUTUAL_FLAG}
+
+
+
+@itemize @bullet
+@item
+True - The acceptor was authenticated to the initiator.
+
+@item
+False - The acceptor did not authenticate itself.
+
+@end itemize
+@item
+@code{GSS_C_REPLAY_FLAG}
+
+
+
+@itemize @bullet
+@item
+True - replay of protected messages will be detected.
+
+@item
+False - replayed messages will not be detected.
+
+@end itemize
+@item
+@code{GSS_C_SEQUENCE_FLAG}
+
+
+
+@itemize @bullet
+@item
+True - out-of-sequence protected messages will be detected.
+
+@item
+False - out-of-sequence messages will not be detected.
+
+@end itemize
+@item
+@code{GSS_C_CONF_FLAG}
+
+
+
+@itemize @bullet
+@item
+True - Confidentiality service may be invoked by calling gss_wrap
+routine.
+
+@item
+False - No confidentiality service (via gss_wrap)
+available. gss_wrap will provide message encapsulation, data-origin
+authentication and integrity services only.
+
+@end itemize
+@item
+@code{GSS_C_INTEG_FLAG}
+
+
+
+@itemize @bullet
+@item
+True - Integrity service may be invoked by calling either
+gss_get_mic or gss_wrap routines.
+
+@item
+False - Per-message integrity service unavailable.
+
+@end itemize
+@item
+@code{GSS_C_ANON_FLAG}
+
+
+
+@itemize @bullet
+@item
+True - The initiator's identity will not be revealed to the
+acceptor.  The src_name parameter (if requested) contains an
+anonymous internal name.
+
+@item
+False - The initiator has been authenticated normally.
+
+@end itemize
+@item
+@code{GSS_C_PROT_READY_FLAG}
+
+
+
+@itemize @bullet
+@item
+True - Protection services (as specified by the states of the
+GSS_C_CONF_FLAG and GSS_C_INTEG_FLAG) are available for use.
+
+@item
+False - Protection services (as specified by the states of the
+GSS_C_CONF_FLAG and GSS_C_INTEG_FLAG) are available only if the
+context is fully established (i.e. if the open parameter is
+non-zero).
+
+@end itemize
+@item
+@code{GSS_C_TRANS_FLAG}
+
+
+
+@itemize @bullet
+@item
+True - The resultant security context may be transferred to other
+processes via a call to gss_export_sec_context().
+
+@item
+False - The security context is not transferable.
+
+@end itemize
+@end table
+Return value:
+
+
+@code{GSS_S_COMPLETE}: Successful completion.
+
+
+@code{GSS_S_NO_CONTEXT}: The referenced context could not be accessed.
+@end deftypefun
+

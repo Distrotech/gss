@@ -1,0 +1,26 @@
+@subheading gss_duplicate_name
+@anchor{gss_duplicate_name}
+@deftypefun {OM_uint32} {gss_duplicate_name} (OM_uint32 * @var{minor_status}, const gss_name_t @var{src_name}, gss_name_t * @var{dest_name})
+@var{minor_status}: (Integer, modify) Mechanism specific status code.
+
+@var{src_name}: (gss_name_t, read) Internal name to be duplicated.
+
+@var{dest_name}: (gss_name_t, modify) The resultant copy of @@src_name.
+Storage associated with this name must be freed by the application
+after use with a call to gss_release_name().
+
+
+Create an exact duplicate of the existing internal name @@src_name.
+The new @@dest_name will be independent of src_name (i.e. @@src_name
+and @@dest_name must both be released, and the release of one shall
+not affect the validity of the other).
+
+Return value:
+
+
+@code{GSS_S_COMPLETE}: Successful completion.
+
+
+@code{GSS_S_BAD_NAME}: The src_name parameter was ill-formed.
+@end deftypefun
+

@@ -1,0 +1,65 @@
+@subheading gss_verify_mic
+@anchor{gss_verify_mic}
+@deftypefun {OM_uint32} {gss_verify_mic} (OM_uint32 * @var{minor_status}, const gss_ctx_id_t @var{context_handle}, const gss_buffer_t @var{message_buffer}, const gss_buffer_t @var{token_buffer}, gss_qop_t * @var{qop_state})
+@var{minor_status}: (Integer, modify) Mechanism specific status code.
+
+@var{context_handle}: (gss_ctx_id_t, read) Identifies the context on
+which the message arrived.
+
+@var{message_buffer}: (buffer, opaque, read) Message to be verified.
+
+@var{token_buffer}: (buffer, opaque, read) Token associated with
+message.
+
+@var{qop_state}: (gss_qop_t, modify, optional) Quality of protection
+gained from MIC Specify NULL if not required.
+
+
+Verifies that a cryptographic MIC, contained in the token
+parameter, fits the supplied message.  The qop_state parameter
+allows a message recipient to determine the strength of protection
+that was applied to the message.
+
+
+Since some application-level protocols may wish to use tokens
+emitted by gss_wrap() to provide "secure framing", implementations
+must support the calculation and verification of MICs over
+zero-length messages.
+
+Return value:
+
+
+@code{GSS_S_COMPLETE}: Successful completion.
+
+
+@code{GSS_S_DEFECTIVE_TOKEN}: The token failed consistency checks.
+
+
+@code{GSS_S_BAD_SIG}: The MIC was incorrect.
+
+
+@code{GSS_S_DUPLICATE_TOKEN}: The token was valid, and contained a
+correct MIC for the message, but it had already been processed.
+
+
+@code{GSS_S_OLD_TOKEN}: The token was valid, and contained a correct MIC
+for the message, but it is too old to check for duplication.
+
+
+@code{GSS_S_UNSEQ_TOKEN}: The token was valid, and contained a correct
+MIC for the message, but has been verified out of sequence; a later
+token has already been received.
+
+
+@code{GSS_S_GAP_TOKEN}: The token was valid, and contained a correct MIC
+for the message, but has been verified out of sequence; an earlier
+expected token has not yet been received.
+
+
+@code{GSS_S_CONTEXT_EXPIRED}: The context has already expired.
+
+
+@code{GSS_S_NO_CONTEXT}: The context_handle parameter did not identify a
+valid context.
+@end deftypefun
+

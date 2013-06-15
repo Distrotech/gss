@@ -1,0 +1,26 @@
+@subheading gss_test_oid_set_member
+@anchor{gss_test_oid_set_member}
+@deftypefun {OM_uint32} {gss_test_oid_set_member} (OM_uint32 * @var{minor_status}, const gss_OID @var{member}, const gss_OID_set @var{set}, int * @var{present})
+@var{minor_status}: (integer, modify) Mechanism specific status code.
+
+@var{member}: (Object ID, read) The object identifier whose presence is
+to be tested.
+
+@var{set}: (Set of Object ID, read) The Object Identifier set.
+
+@var{present}: (Boolean, modify) Non-zero if the specified OID is a
+member of the set, zero if not.
+
+
+Interrogate an Object Identifier set to determine whether a
+specified Object Identifier is a member.  This routine is intended
+to be used with OID sets returned by gss_indicate_mechs(),
+gss_acquire_cred(), and gss_inquire_cred(), but will also work with
+user-generated sets.
+
+Return value:
+
+
+@code{GSS_S_COMPLETE}: Successful completion.
+@end deftypefun
+

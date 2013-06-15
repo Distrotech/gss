@@ -1,0 +1,43 @@
+@subheading gss_inquire_mechs_for_name
+@anchor{gss_inquire_mechs_for_name}
+@deftypefun {OM_uint32} {gss_inquire_mechs_for_name} (OM_uint32 * @var{minor_status}, const gss_name_t @var{input_name}, gss_OID_set * @var{mech_types})
+@var{minor_status}: (Integer, modify) Mechanism specific status code.
+
+@var{input_name}: (gss_name_t, read) The name to which the inquiry
+relates.
+
+@var{mech_types}: (gss_OID_set, modify) Set of mechanisms that may
+support the specified name.  The returned OID set must be freed
+by the caller after use with a call to gss_release_oid_set().
+
+
+Returns the set of mechanisms supported by the GSS-API
+implementation that may be able to process the specified name.
+
+
+Each mechanism returned will recognize at least one element within
+the name.  It is permissible for this routine to be implemented
+within a mechanism-independent GSS-API layer, using the type
+information contained within the presented name, and based on
+registration information provided by individual mechanism
+implementations.  This means that the returned mech_types set may
+indicate that a particular mechanism will understand the name when
+in fact it would refuse to accept the name as input to
+gss_canonicalize_name, gss_init_sec_context, gss_acquire_cred or
+gss_add_cred (due to some property of the specific name, as opposed
+to the name type).  Thus this routine should be used only as a
+prefilter for a call to a subsequent mechanism-specific routine.
+
+Return value:
+
+
+@code{GSS_S_COMPLETE}: Successful completion.
+
+
+@code{GSS_S_BAD_NAME}: The input_name parameter was ill-formed.
+
+
+@code{GSS_S_BAD_NAMETYPE}: The input_name parameter contained an invalid
+or unsupported type of name.
+@end deftypefun
+

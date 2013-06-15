@@ -1,0 +1,30 @@
+@subheading gss_context_time
+@anchor{gss_context_time}
+@deftypefun {OM_uint32} {gss_context_time} (OM_uint32 * @var{minor_status}, const gss_ctx_id_t @var{context_handle}, OM_uint32 * @var{time_rec})
+@var{minor_status}: (Integer, modify) Implementation specific status
+code.
+
+@var{context_handle}: (gss_ctx_id_t, read) Identifies the context to be
+interrogated.
+
+@var{time_rec}: (Integer, modify) Number of seconds that the context
+will remain valid.  If the context has already expired, zero will
+be returned.
+
+
+Determines the number of seconds for which the specified context
+will remain valid.
+
+Return value:
+
+
+@code{GSS_S_COMPLETE}: Successful completion.
+
+
+@code{GSS_S_CONTEXT_EXPIRED}: The context has already expired.
+
+
+@code{GSS_S_NO_CONTEXT}: The context_handle parameter did not identify a
+valid context
+@end deftypefun
+

@@ -1,0 +1,32 @@
+@subheading gss_decapsulate_token
+@anchor{gss_decapsulate_token}
+@deftypefun {OM_uint32} {gss_decapsulate_token} (gss_const_buffer_t @var{input_token}, gss_const_OID @var{token_oid}, gss_buffer_t @var{output_token})
+@var{input_token}: (buffer, opaque, read) Buffer with GSS-API context token.
+
+@var{token_oid}: (Object ID, read) Expected object identifier of token.
+
+@var{output_token}: (buffer, opaque, modify) Decapsulated token data;
+caller must release with gss_release_buffer().
+
+
+Remove the mechanism-independent token header from an initial
+GSS-API context token.  Unwrap a buffer in the
+mechanism-independent token format.  This is the reverse of
+gss_encapsulate_token().  The translation is loss-less, all data is
+preserved as is.  This function is standardized in RFC 6339.
+
+Return value:
+
+
+@code{GSS_S_COMPLETE}: Indicates successful completion, and that output
+parameters holds correct information.
+
+
+@code{GSS_S_DEFECTIVE_TOKEN}: Means that the token failed consistency
+checks (e.g., OID mismatch or ASN.1 DER length errors).
+
+
+@code{GSS_S_FAILURE}: Indicates that decapsulation failed for reasons
+unspecified at the GSS-API level.
+@end deftypefun
+

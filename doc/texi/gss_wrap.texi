@@ -1,0 +1,59 @@
+@subheading gss_wrap
+@anchor{gss_wrap}
+@deftypefun {OM_uint32} {gss_wrap} (OM_uint32 * @var{minor_status}, const gss_ctx_id_t @var{context_handle}, int @var{conf_req_flag}, gss_qop_t @var{qop_req}, const gss_buffer_t @var{input_message_buffer}, int * @var{conf_state}, gss_buffer_t @var{output_message_buffer})
+@var{minor_status}: (Integer, modify) Mechanism specific status code.
+
+@var{context_handle}: (gss_ctx_id_t, read) Identifies the context on
+which the message will be sent.
+
+@var{conf_req_flag}: (boolean, read) Non-zero - Both confidentiality and
+integrity services are requested. Zero - Only integrity service is
+requested.
+
+@var{qop_req}: (gss_qop_t, read, optional) Specifies required quality of
+protection.  A mechanism-specific default may be requested by
+setting qop_req to GSS_C_QOP_DEFAULT.  If an unsupported
+protection strength is requested, gss_wrap will return a
+major_status of GSS_S_BAD_QOP.
+
+@var{input_message_buffer}: (buffer, opaque, read) Message to be
+protected.
+
+@var{conf_state}: (boolean, modify, optional) Non-zero -
+Confidentiality, data origin authentication and integrity
+services have been applied. Zero - Integrity and data origin
+services only has been applied.  Specify NULL if not required.
+
+@var{output_message_buffer}: (buffer, opaque, modify) Buffer to receive
+protected message.  Storage associated with this message must be
+freed by the application after use with a call to
+gss_release_buffer().
+
+
+Attaches a cryptographic MIC and optionally encrypts the specified
+input_message.  The output_message contains both the MIC and the
+message.  The qop_req parameter allows a choice between several
+cryptographic algorithms, if supported by the chosen mechanism.
+
+
+Since some application-level protocols may wish to use tokens
+emitted by gss_wrap() to provide "secure framing", implementations
+must support the wrapping of zero-length messages.
+
+Return value:
+
+
+@code{GSS_S_COMPLETE}: Successful completion.
+
+
+@code{GSS_S_CONTEXT_EXPIRED}: The context has already expired.
+
+
+@code{GSS_S_NO_CONTEXT}: The context_handle parameter did not identify a
+ valid context.
+
+
+@code{GSS_S_BAD_QOP}: The specified QOP is not supported by the
+mechanism.
+@end deftypefun
+

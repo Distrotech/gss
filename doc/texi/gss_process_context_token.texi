@@ -1,0 +1,41 @@
+@subheading gss_process_context_token
+@anchor{gss_process_context_token}
+@deftypefun {OM_uint32} {gss_process_context_token} (OM_uint32 * @var{minor_status}, const gss_ctx_id_t @var{context_handle}, const gss_buffer_t @var{token_buffer})
+@var{minor_status}: (Integer, modify) Implementation specific status code.
+
+@var{context_handle}: (gss_ctx_id_t, read) Context handle of context on
+which token is to be processed
+
+@var{token_buffer}: (buffer, opaque, read) Token to process.
+
+
+Provides a way to pass an asynchronous token to the security
+service.  Most context-level tokens are emitted and processed
+synchronously by gss_init_sec_context and gss_accept_sec_context,
+and the application is informed as to whether further tokens are
+expected by the GSS_C_CONTINUE_NEEDED major status bit.
+Occasionally, a mechanism may need to emit a context-level token at
+a point when the peer entity is not expecting a token.  For
+example, the initiator's final call to gss_init_sec_context may
+emit a token and return a status of GSS_S_COMPLETE, but the
+acceptor's call to gss_accept_sec_context may fail.  The acceptor's
+mechanism may wish to send a token containing an error indication
+to the initiator, but the initiator is not expecting a token at
+this point, believing that the context is fully established.
+Gss_process_context_token provides a way to pass such a token to
+the mechanism at any time.
+
+Return value:
+
+
+@code{GSS_S_COMPLETE}: Successful completion.
+
+
+@code{GSS_S_DEFECTIVE_TOKEN}: Indicates that consistency checks
+performed on the token failed.
+
+
+@code{GSS_S_NO_CONTEXT}: The context_handle did not refer to a valid
+context.
+@end deftypefun
+

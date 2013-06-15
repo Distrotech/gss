@@ -1,0 +1,49 @@
+@subheading gss_inquire_cred
+@anchor{gss_inquire_cred}
+@deftypefun {OM_uint32} {gss_inquire_cred} (OM_uint32 * @var{minor_status}, const gss_cred_id_t @var{cred_handle}, gss_name_t * @var{name}, OM_uint32 * @var{lifetime}, gss_cred_usage_t * @var{cred_usage}, gss_OID_set * @var{mechanisms})
+@var{minor_status}: (integer, modify) Mechanism specific status code.
+
+@var{cred_handle}: (gss_cred_id_t, read) A handle that refers to the
+target credential.  Specify GSS_C_NO_CREDENTIAL to inquire about
+the default initiator principal.
+
+@var{name}: (gss_name_t, modify, optional) The name whose identity the
+credential asserts.  Storage associated with this name should be
+freed by the application after use with a call to
+gss_release_name().  Specify NULL if not required.
+
+@var{lifetime}: (Integer, modify, optional) The number of seconds for
+which the credential will remain valid.  If the credential has
+expired, this parameter will be set to zero.  If the
+implementation does not support credential expiration, the value
+GSS_C_INDEFINITE will be returned.  Specify NULL if not required.
+
+@var{cred_usage}: (gss_cred_usage_t, modify, optional) How the
+credential may be used.  One of the following: GSS_C_INITIATE,
+GSS_C_ACCEPT, GSS_C_BOTH. Specify NULL if not required.
+
+@var{mechanisms}: (gss_OID_set, modify, optional) Set of mechanisms
+supported by the credential.  Storage associated with this OID
+set must be freed by the application after use with a call to
+gss_release_oid_set().  Specify NULL if not required.
+
+
+Obtains information about a credential.
+
+Return value:
+
+
+@code{GSS_S_COMPLETE}: Successful completion.
+
+
+@code{GSS_S_NO_CRED}: The referenced credentials could not be accessed.
+
+
+@code{GSS_S_DEFECTIVE_CREDENTIAL}: The referenced credentials were invalid.
+
+
+@code{GSS_S_CREDENTIALS_EXPIRED}: The referenced credentials have
+expired.  If the lifetime parameter was not passed as NULL, it will
+be set to 0.
+@end deftypefun
+

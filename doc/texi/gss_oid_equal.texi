@@ -1,0 +1,17 @@
+@subheading gss_oid_equal
+@anchor{gss_oid_equal}
+@deftypefun {int} {gss_oid_equal} (gss_const_OID @var{first_oid}, gss_const_OID @var{second_oid})
+@var{first_oid}: (Object ID, read) First Object identifier.
+
+@var{second_oid}: (Object ID, read) First Object identifier.
+
+
+Compare two OIDs for equality.  The comparison is "deep", i.e., the
+actual byte sequences of the OIDs are compared instead of just the
+pointer equality.  This function is standardized in RFC 6339.
+
+Return value:
+Returns boolean value true when the two OIDs are
+  equal, otherwise false.
+@end deftypefun
+

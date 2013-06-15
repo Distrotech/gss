@@ -1,0 +1,21 @@
+@subheading gss_release_name
+@anchor{gss_release_name}
+@deftypefun {OM_uint32} {gss_release_name} (OM_uint32 * @var{minor_status}, gss_name_t * @var{name})
+@var{minor_status}: (Integer, modify) Mechanism specific status code.
+
+@var{name}: (gss_name_t, modify) The name to be deleted.
+
+
+Free GSSAPI-allocated storage associated with an internal-form
+name.  The name is set to GSS_C_NO_NAME on successful completion of
+this call.
+
+Return value:
+
+
+@code{GSS_S_COMPLETE}: Successful completion.
+
+
+@code{GSS_S_BAD_NAME}: The name parameter did not contain a valid name.
+@end deftypefun
+

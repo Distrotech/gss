@@ -1,0 +1,337 @@
+# Messages français pour GNU gss.
+# Copyright © 2010 Free Software Foundation, Inc.
+# Copyright (C) 2010 Simon Josefsson
+# This file is distributed under the same license as the gss package.
+# Michel Robitaille <robitail@IRO.UMontreal.CA>, traducteur depuis/since 1996.
+# Nicolas Provost <nprovost@quadriv.com>, 2010.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: GNU gss 1.0.1\n"
+"Report-Msgid-Bugs-To: bug-gss@gnu.org\n"
+"POT-Creation-Date: 2013-06-15 10:18+0200\n"
+"PO-Revision-Date: 2010-12-21 10:59+0100\n"
+"Last-Translator: Nicolas Provost <nprovost@quadriv.com>\n"
+"Language-Team: French <traduc@traduc.org>\n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=ISO-8859-1\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: lib/meta.c:37
+msgid "Kerberos V5 GSS-API mechanism"
+msgstr "Mécanisme Kerberos V5 GSS-API"
+
+#: lib/error.c:37
+msgid "A required input parameter could not be read"
+msgstr "Un paramètre requis à l'entrée n'a pas pu être lu"
+
+#: lib/error.c:39
+msgid "A required output parameter could not be written"
+msgstr "Un paramètre requis à la sortie n'a pas pu être écrit"
+
+#: lib/error.c:41
+msgid "A parameter was malformed"
+msgstr "Un paramètre était mal formé"
+
+#: lib/error.c:46
+msgid "An unsupported mechanism was requested"
+msgstr "Un mécanisme non supporté était requis"
+
+#: lib/error.c:48
+msgid "An invalid name was supplied"
+msgstr "Un nom invalide a été fourni"
+
+#: lib/error.c:50
+msgid "A supplied name was of an unsupported type"
+msgstr "Un nom fourni était de type non supporté"
+
+#: lib/error.c:52
+msgid "Incorrect channel bindings were supplied"
+msgstr "Une liaison incorrecte de canal a été fournie"
+
+#: lib/error.c:54
+msgid "An invalid status code was supplied"
+msgstr "Un code d'état invalide a été fourni"
+
+#: lib/error.c:56
+msgid "A token had an invalid MIC"
+msgstr "Un jeton a un MIC invalide"
+
+#: lib/error.c:58
+msgid ""
+"No credentials were supplied, or the credentials were unavailable or "
+"inaccessible"
+msgstr ""
+"Aucune référence n'a été fournie ou les références n'étaient pas disponibles "
+"ou inaccessibles"
+
+#: lib/error.c:61
+msgid "No context has been established"
+msgstr "Aucun contexte n'a été établi"
+
+#: lib/error.c:63
+msgid "A token was invalid"
+msgstr "Un jeton était invalide"
+
+#: lib/error.c:65
+msgid "A credential was invalid"
+msgstr "Une référence était invalide"
+
+#: lib/error.c:67
+msgid "The referenced credentials have expired"
+msgstr "Les références fournies ont expirées"
+
+#: lib/error.c:69
+msgid "The context has expired"
+msgstr "Le contexte a expiré"
+
+#: lib/error.c:71
+msgid "Unspecified error in underlying mechanism"
+msgstr "Erreur non spécifiée dans le mécanisme sous-jacent"
+
+#: lib/error.c:73
+msgid "The quality-of-protection requested could not be provided"
+msgstr "La qualité de protection requise ne peut être fournie"
+
+#: lib/error.c:75
+msgid "The operation is forbidden by local security policy"
+msgstr "L'opération est interdite par la politique locale de sécurité"
+
+#: lib/error.c:77
+msgid "The operation or option is unavailable"
+msgstr "L'opération ou l'option n'est pas disponible"
+
+#: lib/error.c:79
+msgid "The requested credential element already exists"
+msgstr "L'élément de référence requis existe déjà"
+
+#: lib/error.c:81
+msgid "The provided name was not a mechanism name"
+msgstr "Le nom fourni n'est pas un nom de mécanisme"
+
+#: lib/error.c:86
+msgid ""
+"The gss_init_sec_context() or gss_accept_sec_context() function must be "
+"called again to complete its function"
+msgstr ""
+"La fonction gss_init_sec_context() ou gss_accept_sec_context() doit être "
+"appellée à nous pour compléter la fonction"
+
+#: lib/error.c:89
+msgid "The token was a duplicate of an earlier token"
+msgstr "Le jeton est le duplicata d'un jeton précédent"
+
+#: lib/error.c:91
+msgid "The token's validity period has expired"
+msgstr "La période de validité du jeton a expiré"
+
+#: lib/error.c:93
+msgid "A later token has already been processed"
+msgstr "Un jeton antérieur a déjà été traité"
+
+#: lib/error.c:95
+msgid "An expected per-message token was not received"
+msgstr "Un jeton attendu par message n'a pas été reçu"
+
+#: lib/error.c:312
+msgid "No error"
+msgstr "Aucune erreur"
+
+#: lib/krb5/error.c:36
+msgid "No @ in SERVICE-NAME name string"
+msgstr "Aucun @ dans la chaîne du nom SERVICE-NAME"
+
+#: lib/krb5/error.c:38
+msgid "STRING-UID-NAME contains nondigits"
+msgstr "STRING-UID-NAME ne contient aucun chiffre"
+
+#: lib/krb5/error.c:40
+msgid "UID does not resolve to username"
+msgstr "UID ne peut permettre d'identifier le nom d'usager"
+
+#: lib/krb5/error.c:42
+msgid "Validation error"
+msgstr "Erreur de validation"
+
+#: lib/krb5/error.c:44
+msgid "Couldn't allocate gss_buffer_t data"
+msgstr "Impossible d'allouer le tampon de données gss_buffer_t"
+
+#: lib/krb5/error.c:46
+msgid "Message context invalid"
+msgstr "Message de contexte non valide"
+
+#: lib/krb5/error.c:48
+msgid "Buffer is the wrong size"
+msgstr "Le tampon est de taille erronée"
+
+#: lib/krb5/error.c:50
+msgid "Credential usage type is unknown"
+msgstr "L'usage du type de référence est inconnu"
+
+#: lib/krb5/error.c:52
+msgid "Unknown quality of protection specified"
+msgstr "La qualité de protection spécifiée est inconnue"
+
+#: lib/krb5/error.c:55
+msgid "Principal in credential cache does not match desired name"
+msgstr ""
+"Le nom principal dans le cache des références ne concorde pas avec le nom "
+"recherché"
+
+#: lib/krb5/error.c:57
+msgid "No principal in keytab matches desired name"
+msgstr ""
+"Aucun nom principal dans la table des clés ne concorde avec le nom recherché"
+
+#: lib/krb5/error.c:59
+msgid "Credential cache has no TGT"
+msgstr "La cache des références n'a pas de TGT"
+
+#: lib/krb5/error.c:61
+msgid "Authenticator has no subkey"
+msgstr "L'authentificateur n'a pas de sous-clé"
+
+#: lib/krb5/error.c:63
+msgid "Context is already fully established"
+msgstr "Le contexte est déjà complètement établi"
+
+#: lib/krb5/error.c:65
+msgid "Unknown signature type in token"
+msgstr "Type de signature inconnu dans le jeton"
+
+#: lib/krb5/error.c:67
+msgid "Invalid field length in token"
+msgstr "Longueur invalide du champ dans le jeton"
+
+#: lib/krb5/error.c:69
+msgid "Attempt to use incomplete security context"
+msgstr "Tentative d'utilisation d'un contexte incomplet de sécurité"
+
+#: lib/krb5/error.c:86
+msgid "No krb5 error"
+msgstr "Pas d'erreur KRB5"
+
+#: lib/krb5/error.c:127
+msgid "Unknown krb5 error"
+msgstr "Erreur KRB5 inconnue"
+
+#: src/gss.c:65
+#, c-format
+msgid "Try `%s --help' for more information.\n"
+msgstr "Essayer `%s --help' pour plus d'information.\n"
+
+#: src/gss.c:69
+#, c-format
+msgid "Usage: %s OPTIONS...\n"
+msgstr "Usage : %s OPTIONS...\n"
+
+#: src/gss.c:72
+msgid ""
+"Command line interface to GSS, used to explain error codes.\n"
+"\n"
+msgstr ""
+"Interface en ligne de commande GSS, pour détailler les codes d'erreur.\n"
+"\n"
+
+#: src/gss.c:76
+msgid ""
+"Mandatory arguments to long options are mandatory for short options too.\n"
+msgstr ""
+"Les arguments obligatoires des options longues le sont aussi pour les "
+"courtes.\n"
+
+#: src/gss.c:79
+msgid ""
+"  -h, --help        Print help and exit.\n"
+"  -V, --version     Print version and exit.\n"
+"  -l, --list-mechanisms\n"
+"                    List information about supported mechanisms\n"
+"                    in a human readable format.\n"
+"  -m, --major=LONG  Describe a `major status' error code value.\n"
+msgstr ""
+"  -h, --help        Affiche l'aide et quitte.\n"
+"  -V, --version     Affiche la version et quitte.\n"
+"  -l, --list-mechanisms\n"
+"                    Liste des infos sur les mécanismes disponibles\n"
+"                    dans un format humainement compréhensible.\n"
+"  -m, --major=LONG  Décrit un code d'erreur d'état principal.\n"
+
+#: src/gss.c:87
+msgid "  -q, --quiet       Silent operation (default=off).\n"
+msgstr "  -q, --quiet       Opère en silence (non par défaut).\n"
+
+#: src/gss.c:106
+#, c-format
+msgid ""
+"GSS-API major status code %ld (0x%lx).\n"
+"\n"
+msgstr ""
+"GSS-API code majeur d'état %ld (0x%lx).\n"
+"\n"
+
+#: src/gss.c:109
+#, c-format
+msgid ""
+"   MSB                                                                 LSB\n"
+"   +-----------------+-----------------+---------------------------------+\n"
+"   |  Calling Error  |  Routine Error  |       Supplementary Info        |\n"
+"   | "
+msgstr ""
+"   MSB                                                                 LSB\n"
+"   +-----------------+-----------------+---------------------------------+\n"
+"   | Erreur appel    |Routine erreur|     Infos supplémentaires     |\n"
+"   | "
+
+#: src/gss.c:123
+#, c-format
+msgid ""
+"|\n"
+"   +-----------------+-----------------+---------------------------------+\n"
+"Bit 31            24  23            16  15                             0\n"
+"\n"
+msgstr ""
+"|\n"
+"   +-----------------+-----------------+---------------------------------+\n"
+"Bit 31            24  23            16  15                             0\n"
+"\n"
+
+#: src/gss.c:133
+#, c-format
+msgid "Masked routine error %ld (0x%lx) shifted into %ld (0x%lx):\n"
+msgstr "Erreur routine masquée %ld (0x%lx) décalé dans %ld (0x%lx):\n"
+
+#: src/gss.c:150 src/gss.c:184 src/gss.c:221
+#, c-format
+msgid "displaying status code failed (%d)"
+msgstr "échec d'affichage du code d'état (%d)"
+
+#: src/gss.c:170
+#, c-format
+msgid "Masked calling error %ld (0x%lx) shifted into %ld (0x%lx):\n"
+msgstr "Erreur d'appel masquée %ld (0x%lx) décalé dans %ld (0x%lx):\n"
+
+#: src/gss.c:203
+#, c-format
+msgid "Masked supplementary info %ld (0x%lx) shifted into %ld (0x%lx):\n"
+msgstr "Infos supplémentaires masquées %ld (0x%lx) décalé dans %ld (0x%lx):\n"
+
+#: src/gss.c:238
+#, c-format
+msgid "No error\n"
+msgstr "Aucune erreur\n"
+
+#: src/gss.c:256
+#, c-format
+msgid "indicating mechanisms failed (%d)"
+msgstr "échec de récupération des mécanismes (%d)"
+
+#: src/gss.c:271
+#, c-format
+msgid "inquiring information about mechanism failed (%d)"
+msgstr "impossible d'obtenir des informations sur le mécanisme (%d)"
+
+#~ msgid "%s: missing parameter\n"
+#~ msgstr "%s: paramètre manquant\n"

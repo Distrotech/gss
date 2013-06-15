@@ -1,0 +1,25 @@
+@subheading gss_release_oid_set
+@anchor{gss_release_oid_set}
+@deftypefun {OM_uint32} {gss_release_oid_set} (OM_uint32 * @var{minor_status}, gss_OID_set * @var{set})
+@var{minor_status}: (integer, modify) Mechanism specific status code.
+
+@var{set}: (Set of Object IDs, modify) The storage associated with the
+gss_OID_set will be deleted.
+
+
+Free storage associated with a GSSAPI-generated gss_OID_set object.
+The set parameter must refer to an OID-set that was returned from a
+GSS-API routine.  gss_release_oid_set() will free the storage
+associated with each individual member OID, the OID set's elements
+array, and the gss_OID_set_desc.
+
+
+The gss_OID_set parameter is set to GSS_C_NO_OID_SET on successful
+completion of this routine.
+
+Return value:
+
+
+@code{GSS_S_COMPLETE}: Successful completion.
+@end deftypefun
+

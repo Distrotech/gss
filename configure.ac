@@ -37,6 +37,7 @@ AC_SUBST(LT_AGE, 0)
 
 # Checks for programs.
 AC_PROG_CC
+AM_PROG_AR
 gl_EARLY
 libgl_EARLY
 srcgl_EARLY
@@ -51,7 +52,7 @@ AC_SUBST(DLL_VERSION)
 
 # Internationalization.
 AM_GNU_GETTEXT([external])
-AM_GNU_GETTEXT_VERSION([0.18.1])
+AM_GNU_GETTEXT_VERSION([0.18.2])
 
 # For gnulib stuff.
 gl_INIT

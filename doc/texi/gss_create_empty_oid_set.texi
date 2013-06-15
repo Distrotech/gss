@@ -1,0 +1,23 @@
+@subheading gss_create_empty_oid_set
+@anchor{gss_create_empty_oid_set}
+@deftypefun {OM_uint32} {gss_create_empty_oid_set} (OM_uint32 * @var{minor_status}, gss_OID_set * @var{oid_set})
+@var{minor_status}: (integer, modify) Mechanism specific status code.
+
+@var{oid_set}: (Set of Object IDs, modify) The empty object identifier
+set.  The routine will allocate the gss_OID_set_desc object,
+which the application must free after use with a call to
+gss_release_oid_set().
+
+
+Create an object-identifier set containing no object identifiers,
+to which members may be subsequently added using the
+gss_add_oid_set_member() routine.  These routines are intended to
+be used to construct sets of mechanism object identifiers, for
+input to gss_acquire_cred.
+
+Return value:
+
+
+@code{GSS_S_COMPLETE}: Successful completion.
+@end deftypefun
+

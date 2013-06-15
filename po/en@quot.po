@@ -1,0 +1,350 @@
+# English translations for gss package.
+# Copyright (C) 2013 Simon Josefsson
+# This file is distributed under the same license as the gss package.
+# Automatically generated, 2013.
+#
+# All this catalog "translates" are quotation characters.
+# The msgids must be ASCII and therefore cannot contain real quotation
+# characters, only substitutes like grave accent (0x60), apostrophe (0x27)
+# and double quote (0x22). These substitutes look strange; see
+# http://www.cl.cam.ac.uk/~mgk25/ucs/quotes.html
+#
+# This catalog translates grave accent (0x60) and apostrophe (0x27) to
+# left single quotation mark (U+2018) and right single quotation mark (U+2019).
+# It also translates pairs of apostrophe (0x27) to
+# left single quotation mark (U+2018) and right single quotation mark (U+2019)
+# and pairs of quotation mark (0x22) to
+# left double quotation mark (U+201C) and right double quotation mark (U+201D).
+#
+# When output to an UTF-8 terminal, the quotation characters appear perfectly.
+# When output to an ISO-8859-1 terminal, the single quotation marks are
+# transliterated to apostrophes (by iconv in glibc 2.2 or newer) or to
+# grave/acute accent (by libiconv), and the double quotation marks are
+# transliterated to 0x22.
+# When output to an ASCII terminal, the single quotation marks are
+# transliterated to apostrophes, and the double quotation marks are
+# transliterated to 0x22.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: gss 1.0.2\n"
+"Report-Msgid-Bugs-To: bug-gss@gnu.org\n"
+"POT-Creation-Date: 2013-06-15 10:18+0200\n"
+"PO-Revision-Date: 2013-06-15 10:18+0200\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"Language: en@quot\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: lib/meta.c:37
+msgid "Kerberos V5 GSS-API mechanism"
+msgstr "Kerberos V5 GSS-API mechanism"
+
+#: lib/error.c:37
+msgid "A required input parameter could not be read"
+msgstr "A required input parameter could not be read"
+
+#: lib/error.c:39
+msgid "A required output parameter could not be written"
+msgstr "A required output parameter could not be written"
+
+#: lib/error.c:41
+msgid "A parameter was malformed"
+msgstr "A parameter was malformed"
+
+#: lib/error.c:46
+msgid "An unsupported mechanism was requested"
+msgstr "An unsupported mechanism was requested"
+
+#: lib/error.c:48
+msgid "An invalid name was supplied"
+msgstr "An invalid name was supplied"
+
+#: lib/error.c:50
+msgid "A supplied name was of an unsupported type"
+msgstr "A supplied name was of an unsupported type"
+
+#: lib/error.c:52
+msgid "Incorrect channel bindings were supplied"
+msgstr "Incorrect channel bindings were supplied"
+
+#: lib/error.c:54
+msgid "An invalid status code was supplied"
+msgstr "An invalid status code was supplied"
+
+#: lib/error.c:56
+msgid "A token had an invalid MIC"
+msgstr "A token had an invalid MIC"
+
+#: lib/error.c:58
+msgid ""
+"No credentials were supplied, or the credentials were unavailable or "
+"inaccessible"
+msgstr ""
+"No credentials were supplied, or the credentials were unavailable or "
+"inaccessible"
+
+#: lib/error.c:61
+msgid "No context has been established"
+msgstr "No context has been established"
+
+#: lib/error.c:63
+msgid "A token was invalid"
+msgstr "A token was invalid"
+
+#: lib/error.c:65
+msgid "A credential was invalid"
+msgstr "A credential was invalid"
+
+#: lib/error.c:67
+msgid "The referenced credentials have expired"
+msgstr "The referenced credentials have expired"
+
+#: lib/error.c:69
+msgid "The context has expired"
+msgstr "The context has expired"
+
+#: lib/error.c:71
+msgid "Unspecified error in underlying mechanism"
+msgstr "Unspecified error in underlying mechanism"
+
+#: lib/error.c:73
+msgid "The quality-of-protection requested could not be provided"
+msgstr "The quality-of-protection requested could not be provided"
+
+#: lib/error.c:75
+msgid "The operation is forbidden by local security policy"
+msgstr "The operation is forbidden by local security policy"
+
+#: lib/error.c:77
+msgid "The operation or option is unavailable"
+msgstr "The operation or option is unavailable"
+
+#: lib/error.c:79
+msgid "The requested credential element already exists"
+msgstr "The requested credential element already exists"
+
+#: lib/error.c:81
+msgid "The provided name was not a mechanism name"
+msgstr "The provided name was not a mechanism name"
+
+#: lib/error.c:86
+msgid ""
+"The gss_init_sec_context() or gss_accept_sec_context() function must be "
+"called again to complete its function"
+msgstr ""
+"The gss_init_sec_context() or gss_accept_sec_context() function must be "
+"called again to complete its function"
+
+#: lib/error.c:89
+msgid "The token was a duplicate of an earlier token"
+msgstr "The token was a duplicate of an earlier token"
+
+#: lib/error.c:91
+msgid "The token's validity period has expired"
+msgstr "The token's validity period has expired"
+
+#: lib/error.c:93
+msgid "A later token has already been processed"
+msgstr "A later token has already been processed"
+
+#: lib/error.c:95
+msgid "An expected per-message token was not received"
+msgstr "An expected per-message token was not received"
+
+#: lib/error.c:312
+msgid "No error"
+msgstr "No error"
+
+#: lib/krb5/error.c:36
+msgid "No @ in SERVICE-NAME name string"
+msgstr "No @ in SERVICE-NAME name string"
+
+#: lib/krb5/error.c:38
+msgid "STRING-UID-NAME contains nondigits"
+msgstr "STRING-UID-NAME contains nondigits"
+
+#: lib/krb5/error.c:40
+msgid "UID does not resolve to username"
+msgstr "UID does not resolve to username"
+
+#: lib/krb5/error.c:42
+msgid "Validation error"
+msgstr "Validation error"
+
+#: lib/krb5/error.c:44
+msgid "Couldn't allocate gss_buffer_t data"
+msgstr "Couldn't allocate gss_buffer_t data"
+
+#: lib/krb5/error.c:46
+msgid "Message context invalid"
+msgstr "Message context invalid"
+
+#: lib/krb5/error.c:48
+msgid "Buffer is the wrong size"
+msgstr "Buffer is the wrong size"
+
+#: lib/krb5/error.c:50
+msgid "Credential usage type is unknown"
+msgstr "Credential usage type is unknown"
+
+#: lib/krb5/error.c:52
+msgid "Unknown quality of protection specified"
+msgstr "Unknown quality of protection specified"
+
+#: lib/krb5/error.c:55
+msgid "Principal in credential cache does not match desired name"
+msgstr "Principal in credential cache does not match desired name"
+
+#: lib/krb5/error.c:57
+msgid "No principal in keytab matches desired name"
+msgstr "No principal in keytab matches desired name"
+
+#: lib/krb5/error.c:59
+msgid "Credential cache has no TGT"
+msgstr "Credential cache has no TGT"
+
+#: lib/krb5/error.c:61
+msgid "Authenticator has no subkey"
+msgstr "Authenticator has no subkey"
+
+#: lib/krb5/error.c:63
+msgid "Context is already fully established"
+msgstr "Context is already fully established"
+
+#: lib/krb5/error.c:65
+msgid "Unknown signature type in token"
+msgstr "Unknown signature type in token"
+
+#: lib/krb5/error.c:67
+msgid "Invalid field length in token"
+msgstr "Invalid field length in token"
+
+#: lib/krb5/error.c:69
+msgid "Attempt to use incomplete security context"
+msgstr "Attempt to use incomplete security context"
+
+#: lib/krb5/error.c:86
+msgid "No krb5 error"
+msgstr "No krb5 error"
+
+#: lib/krb5/error.c:127
+msgid "Unknown krb5 error"
+msgstr "Unknown krb5 error"
+
+#: src/gss.c:65
+#, c-format
+msgid "Try `%s --help' for more information.\n"
+msgstr "Try ‘%s --help’ for more information.\n"
+
+#: src/gss.c:69
+#, c-format
+msgid "Usage: %s OPTIONS...\n"
+msgstr "Usage: %s OPTIONS...\n"
+
+#: src/gss.c:72
+msgid ""
+"Command line interface to GSS, used to explain error codes.\n"
+"\n"
+msgstr ""
+"Command line interface to GSS, used to explain error codes.\n"
+"\n"
+
+#: src/gss.c:76
+msgid ""
+"Mandatory arguments to long options are mandatory for short options too.\n"
+msgstr ""
+"Mandatory arguments to long options are mandatory for short options too.\n"
+
+#: src/gss.c:79
+msgid ""
+"  -h, --help        Print help and exit.\n"
+"  -V, --version     Print version and exit.\n"
+"  -l, --list-mechanisms\n"
+"                    List information about supported mechanisms\n"
+"                    in a human readable format.\n"
+"  -m, --major=LONG  Describe a `major status' error code value.\n"
+msgstr ""
+"  -h, --help        Print help and exit.\n"
+"  -V, --version     Print version and exit.\n"
+"  -l, --list-mechanisms\n"
+"                    List information about supported mechanisms\n"
+"                    in a human readable format.\n"
+"  -m, --major=LONG  Describe a ‘major status’ error code value.\n"
+
+#: src/gss.c:87
+msgid "  -q, --quiet       Silent operation (default=off).\n"
+msgstr "  -q, --quiet       Silent operation (default=off).\n"
+
+#: src/gss.c:106
+#, c-format
+msgid ""
+"GSS-API major status code %ld (0x%lx).\n"
+"\n"
+msgstr ""
+"GSS-API major status code %ld (0x%lx).\n"
+"\n"
+
+#: src/gss.c:109
+#, c-format
+msgid ""
+"   MSB                                                                 LSB\n"
+"   +-----------------+-----------------+---------------------------------+\n"
+"   |  Calling Error  |  Routine Error  |       Supplementary Info        |\n"
+"   | "
+msgstr ""
+"   MSB                                                                 LSB\n"
+"   +-----------------+-----------------+---------------------------------+\n"
+"   |  Calling Error  |  Routine Error  |       Supplementary Info        |\n"
+"   | "
+
+#: src/gss.c:123
+#, c-format
+msgid ""
+"|\n"
+"   +-----------------+-----------------+---------------------------------+\n"
+"Bit 31            24  23            16  15                             0\n"
+"\n"
+msgstr ""
+"|\n"
+"   +-----------------+-----------------+---------------------------------+\n"
+"Bit 31            24  23            16  15                             0\n"
+"\n"
+
+#: src/gss.c:133
+#, c-format
+msgid "Masked routine error %ld (0x%lx) shifted into %ld (0x%lx):\n"
+msgstr "Masked routine error %ld (0x%lx) shifted into %ld (0x%lx):\n"
+
+#: src/gss.c:150 src/gss.c:184 src/gss.c:221
+#, c-format
+msgid "displaying status code failed (%d)"
+msgstr "displaying status code failed (%d)"
+
+#: src/gss.c:170
+#, c-format
+msgid "Masked calling error %ld (0x%lx) shifted into %ld (0x%lx):\n"
+msgstr "Masked calling error %ld (0x%lx) shifted into %ld (0x%lx):\n"
+
+#: src/gss.c:203
+#, c-format
+msgid "Masked supplementary info %ld (0x%lx) shifted into %ld (0x%lx):\n"
+msgstr "Masked supplementary info %ld (0x%lx) shifted into %ld (0x%lx):\n"
+
+#: src/gss.c:238
+#, c-format
+msgid "No error\n"
+msgstr "No error\n"
+
+#: src/gss.c:256
+#, c-format
+msgid "indicating mechanisms failed (%d)"
+msgstr "indicating mechanisms failed (%d)"
+
+#: src/gss.c:271
+#, c-format
+msgid "inquiring information about mechanism failed (%d)"
+msgstr "inquiring information about mechanism failed (%d)"

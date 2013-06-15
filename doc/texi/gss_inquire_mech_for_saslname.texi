@@ -1,0 +1,27 @@
+@subheading gss_inquire_mech_for_saslname
+@anchor{gss_inquire_mech_for_saslname}
+@deftypefun {OM_uint32} {gss_inquire_mech_for_saslname} (OM_uint32 * @var{minor_status}, const gss_buffer_t @var{sasl_mech_name}, gss_OID * @var{mech_type})
+@var{minor_status}: (Integer, modify) Mechanism specific status code.
+
+@var{sasl_mech_name}: (buffer, character-string, read) Buffer with SASL
+mechanism name.
+
+@var{mech_type}: (OID, modify, optional) Actual mechanism used.  The OID
+returned via this parameter will be a pointer to static storage
+that should be treated as read-only; In particular the
+application should not attempt to free it.  Specify NULL if not
+required.
+
+
+Output GSS-API mechanism OID of mechanism associated with given
+@@sasl_mech_name.
+
+Returns:
+
+
+@code{GSS_S_COMPLETE}: Successful completion.
+
+
+@code{GSS_S_BAD_MECH}: There is no GSS-API mechanism known as @@sasl_mech_name.
+@end deftypefun
+

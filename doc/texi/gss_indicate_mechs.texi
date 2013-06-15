@@ -1,0 +1,21 @@
+@subheading gss_indicate_mechs
+@anchor{gss_indicate_mechs}
+@deftypefun {OM_uint32} {gss_indicate_mechs} (OM_uint32 * @var{minor_status}, gss_OID_set * @var{mech_set})
+@var{minor_status}: (integer, modify) Mechanism specific status code.
+
+@var{mech_set}: (set of Object IDs, modify) Set of
+implementation-supported mechanisms.  The returned gss_OID_set
+value will be a dynamically-allocated OID set, that should be
+released by the caller after use with a call to
+gss_release_oid_set().
+
+
+Allows an application to determine which underlying security
+mechanisms are available.
+
+Return value:
+
+
+@code{GSS_S_COMPLETE}: Successful completion.
+@end deftypefun
+

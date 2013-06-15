@@ -1,0 +1,38 @@
+@subheading gss_import_sec_context
+@anchor{gss_import_sec_context}
+@deftypefun {OM_uint32} {gss_import_sec_context} (OM_uint32 * @var{minor_status}, const gss_buffer_t @var{interprocess_token}, gss_ctx_id_t * @var{context_handle})
+@var{minor_status}: (Integer, modify) Mechanism specific status code.
+
+@var{interprocess_token}: (buffer, opaque, modify) Token received from
+exporting process
+
+@var{context_handle}: (gss_ctx_id_t, modify) Context handle of newly
+reactivated context.  Resources associated with this context
+handle must be released by the application after use with a call
+to gss_delete_sec_context().
+
+
+Allows a process to import a security context established by
+another process.  A given interprocess token may be imported only
+once.  See gss_export_sec_context.
+
+Return value:
+
+
+@code{GSS_S_COMPLETE}: Successful completion.
+
+
+@code{GSS_S_NO_CONTEXT}: The token did not contain a valid context
+reference.
+
+
+@code{GSS_S_DEFECTIVE_TOKEN}: The token was invalid.
+
+
+@code{GSS_S_UNAVAILABLE}: The operation is unavailable.
+
+
+@code{GSS_S_UNAUTHORIZED}: Local policy prevents the import of this
+ context by the current process.
+@end deftypefun
+

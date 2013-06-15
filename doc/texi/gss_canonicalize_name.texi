@@ -1,0 +1,31 @@
+@subheading gss_canonicalize_name
+@anchor{gss_canonicalize_name}
+@deftypefun {OM_uint32} {gss_canonicalize_name} (OM_uint32 * @var{minor_status}, const gss_name_t @var{input_name}, const gss_OID @var{mech_type}, gss_name_t * @var{output_name})
+@var{minor_status}: (Integer, modify) Mechanism specific status code.
+
+@var{input_name}: (gss_name_t, read) The name for which a canonical form
+is desired.
+
+@var{mech_type}: (Object ID, read) The authentication mechanism for
+which the canonical form of the name is desired.  The desired
+mechanism must be specified explicitly; no default is provided.
+
+@var{output_name}: (gss_name_t, modify) The resultant canonical name.
+Storage associated with this name must be freed by the
+application after use with a call to gss_release_name().
+
+
+Generate a canonical mechanism name (MN) from an arbitrary internal
+name.  The mechanism name is the name that would be returned to a
+context acceptor on successful authentication of a context where
+the initiator used the input_name in a successful call to
+gss_acquire_cred, specifying an OID set containing @@mech_type as
+its only member, followed by a call to gss_init_sec_context(),
+specifying @@mech_type as the authentication mechanism.
+
+Return value:
+
+
+@code{GSS_S_COMPLETE}: Successful completion.
+@end deftypefun
+

@@ -1,0 +1,25 @@
+@subheading gss_release_buffer
+@anchor{gss_release_buffer}
+@deftypefun {OM_uint32} {gss_release_buffer} (OM_uint32 * @var{minor_status}, gss_buffer_t @var{buffer})
+@var{minor_status}: (integer, modify) Mechanism specific status code.
+
+@var{buffer}: (buffer, modify) The storage associated with the buffer
+will be deleted.  The gss_buffer_desc object will not be freed,
+but its length field will be zeroed.
+
+
+Free storage associated with a buffer.  The storage must have been
+allocated by a GSS-API routine.  In addition to freeing the
+associated storage, the routine will zero the length field in the
+descriptor to which the buffer parameter refers, and
+implementations are encouraged to additionally set the pointer
+field in the descriptor to NULL.  Any buffer object returned by a
+GSS-API routine may be passed to gss_release_buffer (even if there
+is no storage associated with the buffer).
+
+Return value:
+
+
+@code{GSS_S_COMPLETE}: Successful completion.
+@end deftypefun
+

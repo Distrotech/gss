@@ -1,0 +1,50 @@
+@subheading gss_get_mic
+@anchor{gss_get_mic}
+@deftypefun {OM_uint32} {gss_get_mic} (OM_uint32 * @var{minor_status}, const gss_ctx_id_t @var{context_handle}, gss_qop_t @var{qop_req}, const gss_buffer_t @var{message_buffer}, gss_buffer_t @var{message_token})
+@var{minor_status}: (Integer, modify) Mechanism specific status code.
+
+@var{context_handle}: (gss_ctx_id_t, read) Identifies the context on
+which the message will be sent.
+
+@var{qop_req}: (gss_qop_t, read, optional) Specifies requested quality
+of protection.  Callers are encouraged, on portability grounds,
+to accept the default quality of protection offered by the chosen
+mechanism, which may be requested by specifying GSS_C_QOP_DEFAULT
+for this parameter.  If an unsupported protection strength is
+requested, gss_get_mic will return a major_status of
+GSS_S_BAD_QOP.
+
+@var{message_buffer}: (buffer, opaque, read) Message to be protected.
+
+@var{message_token}: (buffer, opaque, modify) Buffer to receive token.  The
+application must free storage associated with this buffer after
+use with a call to gss_release_buffer().
+
+
+Generates a cryptographic MIC for the supplied message, and places
+the MIC in a token for transfer to the peer application. The
+qop_req parameter allows a choice between several cryptographic
+algorithms, if supported by the chosen mechanism.
+
+
+Since some application-level protocols may wish to use tokens
+emitted by gss_wrap() to provide "secure framing", implementations
+must support derivation of MICs from zero-length messages.
+
+Return value:
+
+
+@code{GSS_S_COMPLETE}: Successful completion.
+
+
+@code{GSS_S_CONTEXT_EXPIRED}: The context has already expired.
+
+
+@code{GSS_S_NO_CONTEXT}: The context_handle parameter did not identify a
+valid context.
+
+
+@code{GSS_S_BAD_QOP}: The specified QOP is not supported by the
+mechanism.
+@end deftypefun
+

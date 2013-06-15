@@ -1,0 +1,317 @@
+# Esperanto translation.
+# Copyright (C) 2011 Free Software Foundation, Inc.
+# This file is distributed under the same license as the gss package.
+# Felipe Castro <fefcas@gmail.com>, 2011.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: gss 1.0.1\n"
+"Report-Msgid-Bugs-To: bug-gss@gnu.org\n"
+"POT-Creation-Date: 2010-05-20 15:38+0200\n"
+"PO-Revision-Date: 2011-03-13 13:15-0300\n"
+"Last-Translator: Felipe Castro <fefcas@gmail.com>\n"
+"Language-Team: Esperanto <translation-team-eo@lists.sourceforge.net>\n"
+"Language: eo\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: lib/meta.c:37
+msgid "Kerberos V5 GSS-API mechanism"
+msgstr "Mekanismo Kerberos V5 GSS-API"
+
+#: lib/error.c:37
+msgid "A required input parameter could not be read"
+msgstr "Bezonata eniga parametro ne povis esti legata"
+
+#: lib/error.c:39
+msgid "A required output parameter could not be written"
+msgstr "Bezonata eliga parametro ne povis esti skribata"
+
+#: lib/error.c:41
+msgid "A parameter was malformed"
+msgstr "Parametro estis misformata"
+
+#: lib/error.c:46
+msgid "An unsupported mechanism was requested"
+msgstr "Nesubtenata mekanismo estis petata"
+
+#: lib/error.c:48
+msgid "An invalid name was supplied"
+msgstr "Malvalida nomo estis donata"
+
+#: lib/error.c:50
+msgid "A supplied name was of an unsupported type"
+msgstr "Donata nomo estis el nesubtenata tipo"
+
+#: lib/error.c:52
+msgid "Incorrect channel bindings were supplied"
+msgstr "Malĝusta kanal-ligoj estis donataj"
+
+#: lib/error.c:54
+msgid "An invalid status code was supplied"
+msgstr "Malvalita stat-kodo estis donata"
+
+#: lib/error.c:56
+msgid "A token had an invalid MIC"
+msgstr "Ĵetono havis malvalidan MIC"
+
+#: lib/error.c:58
+msgid "No credentials were supplied, or the credentials were unavailable or inaccessible"
+msgstr "Neniu legitimilo estis donata, aŭ la legitimiloj estis nedisponeblaj aŭ neatingeblaj"
+
+#: lib/error.c:61
+msgid "No context has been established"
+msgstr "Neniu kunteksto estas starigita"
+
+#: lib/error.c:63
+msgid "A token was invalid"
+msgstr "Ĵetono estis malvalida"
+
+#: lib/error.c:65
+msgid "A credential was invalid"
+msgstr "Legitimilo estis malvalida"
+
+#: lib/error.c:67
+msgid "The referenced credentials have expired"
+msgstr "La referencitaj legitimiloj senvalidiĝis"
+
+#: lib/error.c:69
+msgid "The context has expired"
+msgstr "La kunteksto senvalidiĝis"
+
+#: lib/error.c:71
+msgid "Unspecified error in underlying mechanism"
+msgstr "Nespecifita eraro en implicita mekanismo"
+
+#: lib/error.c:73
+msgid "The quality-of-protection requested could not be provided"
+msgstr "La peto kvalito-de-protekto ne povis esti provizata"
+
+#: lib/error.c:75
+msgid "The operation is forbidden by local security policy"
+msgstr "La operacio estas malpermesata de loka sekurec-politiko"
+
+#: lib/error.c:77
+msgid "The operation or option is unavailable"
+msgstr "La operacio aŭ elekto ne estas disponebla"
+
+#: lib/error.c:79
+msgid "The requested credential element already exists"
+msgstr "La petita legitimila elemento jam ekzistas"
+
+#: lib/error.c:81
+msgid "The provided name was not a mechanism name"
+msgstr "La donita nomo ne estis mekanismo-nomo"
+
+#: lib/error.c:86
+msgid "The gss_init_sec_context() or gss_accept_sec_context() function must be called again to complete its function"
+msgstr "La funkcio gss_init_sec_context() aŭ gss_accept_sec_context() devas esti vokata refoje por plenumigi ĝian funkcion"
+
+#: lib/error.c:89
+msgid "The token was a duplicate of an earlier token"
+msgstr "La ĵetono estis ripetaĵo de pli frua ĵetono"
+
+#: lib/error.c:91
+msgid "The token's validity period has expired"
+msgstr "La valideca templimo de ĵetono finiĝis"
+
+#: lib/error.c:93
+msgid "A later token has already been processed"
+msgstr "Posta ĵetono jam estas procezita"
+
+#: lib/error.c:95
+msgid "An expected per-message token was not received"
+msgstr "Atendita po-mesaĝa ĵetono ne estis ricevata"
+
+#: lib/error.c:312
+msgid "No error"
+msgstr "Neniu eraro"
+
+#: lib/krb5/error.c:36
+msgid "No @ in SERVICE-NAME name string"
+msgstr "Neniu @ en nom-ĉeno SERVICE-NAME"
+
+#: lib/krb5/error.c:38
+msgid "STRING-UID-NAME contains nondigits"
+msgstr "STRING-UID-NAME enhavas ne-ciferojn"
+
+#: lib/krb5/error.c:40
+msgid "UID does not resolve to username"
+msgstr "UID ne solviĝas al uzantnomo"
+
+#: lib/krb5/error.c:42
+msgid "Validation error"
+msgstr "Validiga eraro"
+
+#: lib/krb5/error.c:44
+msgid "Couldn't allocate gss_buffer_t data"
+msgstr "Ni ne povis rezervi datumaron gss_buffer_t"
+
+#: lib/krb5/error.c:46
+msgid "Message context invalid"
+msgstr "Mesaĝo-kunteksto estas malvalida"
+
+#: lib/krb5/error.c:48
+msgid "Buffer is the wrong size"
+msgstr "Bufro havas malĝustan grandon"
+
+#: lib/krb5/error.c:50
+msgid "Credential usage type is unknown"
+msgstr "Legitimila uzad-tipo estas nekonata"
+
+#: lib/krb5/error.c:52
+msgid "Unknown quality of protection specified"
+msgstr "Nekonata kvalito de protekto estis indikata"
+
+#: lib/krb5/error.c:55
+msgid "Principal in credential cache does not match desired name"
+msgstr "Ĉefo en legitimila kaŝmemoro ne kongruas al dezirata nomo"
+
+#: lib/krb5/error.c:57
+msgid "No principal in keytab matches desired name"
+msgstr "Neniu ĉefo en keytab kongruas al dezirata nomo"
+
+#: lib/krb5/error.c:59
+msgid "Credential cache has no TGT"
+msgstr "Legitimila kaŝmemoro havas neniu TGT"
+
+#: lib/krb5/error.c:61
+msgid "Authenticator has no subkey"
+msgstr "Aŭtentikanto havas neniun subkey"
+
+#: lib/krb5/error.c:63
+msgid "Context is already fully established"
+msgstr "Kunteksto jam estas plene starigita"
+
+#: lib/krb5/error.c:65
+msgid "Unknown signature type in token"
+msgstr "Nekonata subskriba tipo en ĵetono"
+
+#: lib/krb5/error.c:67
+msgid "Invalid field length in token"
+msgstr "Malvalida kampo-longo en ĵetono"
+
+#: lib/krb5/error.c:69
+msgid "Attempt to use incomplete security context"
+msgstr "Provo uzi malkompletan sekurecan kuntekston"
+
+#: lib/krb5/error.c:86
+msgid "No krb5 error"
+msgstr "Neniu eraro krb5"
+
+#: lib/krb5/error.c:127
+msgid "Unknown krb5 error"
+msgstr "Nekonata eraro krb5"
+
+#: src/gss.c:65
+#, c-format
+msgid "Try `%s --help' for more information.\n"
+msgstr "Provu '%s --help' por pli da informoj.\n"
+
+#: src/gss.c:69
+#, c-format
+msgid "Usage: %s OPTIONS...\n"
+msgstr "Uzado: %s ELEKTILOJ...\n"
+
+#: src/gss.c:72
+msgid ""
+"Command line interface to GSS, used to explain error codes.\n"
+"\n"
+msgstr ""
+"Komand-linia interfaco al GSS, uzata por klarigi erar-kodojn.\n"
+"\n"
+
+#: src/gss.c:76
+msgid "Mandatory arguments to long options are mandatory for short options too.\n"
+msgstr "Devigaj argumentoj por longaj elektiloj estas same devigaj por mallongaj.\n"
+
+#: src/gss.c:79
+msgid ""
+"  -h, --help        Print help and exit.\n"
+"  -V, --version     Print version and exit.\n"
+"  -l, --list-mechanisms\n"
+"                    List information about supported mechanisms\n"
+"                    in a human readable format.\n"
+"  -m, --major=LONG  Describe a `major status' error code value.\n"
+msgstr ""
+"  -h, --help        Montri tiun ĉi helpon kaj eliri.\n"
+"  -V, --version     Montri version kaj eliri.\n"
+"  -l, --list-mechanisms\n"
+"                    Listigi informon pri subtenataj mekanismoj\n"
+"                    laŭ hom-legebla formo.\n"
+"  -m, --major=LONG  Priskribi 'plejgrav-statan' erar-kodan valoron.\n"
+
+#: src/gss.c:87
+msgid "  -q, --quiet       Silent operation (default=off).\n"
+msgstr "  -q, --quiet       Silenta funkciado (apriore=ne).\n"
+
+#: src/gss.c:106
+#, c-format
+msgid ""
+"GSS-API major status code %ld (0x%lx).\n"
+"\n"
+msgstr ""
+"GSS-API plejgrava stat-kodo %ld (0x%lx).\n"
+"\n"
+
+#: src/gss.c:109
+#, c-format
+msgid ""
+"   MSB                                                                 LSB\n"
+"   +-----------------+-----------------+---------------------------------+\n"
+"   |  Calling Error  |  Routine Error  |       Supplementary Info        |\n"
+"   | "
+msgstr ""
+"   MSB                                                                 LSB\n"
+"   +-----------------+-----------------+---------------------------------+\n"
+"   |    Vok-Eraro    |  Procedur-Eraro |          Kroma Informo          |\n"
+"   | "
+
+#: src/gss.c:123
+#, c-format
+msgid ""
+"|\n"
+"   +-----------------+-----------------+---------------------------------+\n"
+"Bit 31            24  23            16  15                             0\n"
+"\n"
+msgstr ""
+"|\n"
+"   +-----------------+-----------------+---------------------------------+\n"
+"Bito 31           24  23            16  15                             0\n"
+"\n"
+
+#: src/gss.c:133
+#, c-format
+msgid "Masked routine error %ld (0x%lx) shifted into %ld (0x%lx):\n"
+msgstr "Maskita procedura eraro %ld (0x%lx) ŝoviĝis al %ld (0x%lx):\n"
+
+#: src/gss.c:150 src/gss.c:184 src/gss.c:221
+#, c-format
+msgid "displaying status code failed (%d)"
+msgstr "montrigo de stat-kodo malsukcesis (%d)"
+
+#: src/gss.c:170
+#, c-format
+msgid "Masked calling error %ld (0x%lx) shifted into %ld (0x%lx):\n"
+msgstr "Maskita vok-eraro %ld (0x%lx) ŝoviĝis al %ld (0x%lx):\n"
+
+#: src/gss.c:203
+#, c-format
+msgid "Masked supplementary info %ld (0x%lx) shifted into %ld (0x%lx):\n"
+msgstr "Maskita kroma informo %ld (0x%lx) ŝoviĝis al %ld (0x%lx):\n"
+
+#: src/gss.c:238
+#, c-format
+msgid "No error\n"
+msgstr "Neniu eraro\n"
+
+#: src/gss.c:256
+#, c-format
+msgid "indicating mechanisms failed (%d)"
+msgstr "indikado de mekanismoj malsukcesis (%d)"
+
+#: src/gss.c:271
+#, c-format
+msgid "inquiring information about mechanism failed (%d)"
+msgstr "petado de informo pri mekanismo malsukcesis (%d)"

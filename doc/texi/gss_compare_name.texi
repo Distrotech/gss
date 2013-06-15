@@ -1,0 +1,34 @@
+@subheading gss_compare_name
+@anchor{gss_compare_name}
+@deftypefun {OM_uint32} {gss_compare_name} (OM_uint32 * @var{minor_status}, const gss_name_t @var{name1}, const gss_name_t @var{name2}, int * @var{name_equal})
+@var{minor_status}: (Integer, modify) Mechanism specific status code.
+
+@var{name1}: (gss_name_t, read) Internal-form name.
+
+@var{name2}: (gss_name_t, read) Internal-form name.
+
+@var{name_equal}: (boolean, modify) Non-zero - names refer to same
+entity. Zero - names refer to different entities (strictly, the
+names are not known to refer to the same identity).
+
+
+Allows an application to compare two internal-form names to
+determine whether they refer to the same entity.
+
+
+If either name presented to gss_compare_name denotes an anonymous
+principal, the routines should indicate that the two names do not
+refer to the same identity.
+
+Return value:
+
+
+@code{GSS_S_COMPLETE}: Successful completion.
+
+
+@code{GSS_S_BAD_NAMETYPE}: The two names were of incomparable types.
+
+
+@code{GSS_S_BAD_NAME}: One or both of name1 or name2 was ill-formed.
+@end deftypefun
+

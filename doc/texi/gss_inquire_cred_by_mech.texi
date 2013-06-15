@@ -1,0 +1,60 @@
+@subheading gss_inquire_cred_by_mech
+@anchor{gss_inquire_cred_by_mech}
+@deftypefun {OM_uint32} {gss_inquire_cred_by_mech} (OM_uint32 * @var{minor_status}, const gss_cred_id_t @var{cred_handle}, const gss_OID @var{mech_type}, gss_name_t * @var{name}, OM_uint32 * @var{initiator_lifetime}, OM_uint32 * @var{acceptor_lifetime}, gss_cred_usage_t * @var{cred_usage})
+@var{minor_status}: (Integer, modify) Mechanism specific status code.
+
+@var{cred_handle}: (gss_cred_id_t, read) A handle that refers to the
+target credential.  Specify GSS_C_NO_CREDENTIAL to inquire about
+the default initiator principal.
+
+@var{mech_type}: (gss_OID, read) The mechanism for which information
+should be returned.
+
+@var{name}: (gss_name_t, modify, optional) The name whose identity the
+credential asserts.  Storage associated with this name must be
+freed by the application after use with a call to
+gss_release_name().  Specify NULL if not required.
+
+@var{initiator_lifetime}: (Integer, modify, optional) The number of
+seconds for which the credential will remain capable of
+initiating security contexts under the specified mechanism.  If
+the credential can no longer be used to initiate contexts, or if
+the credential usage for this mechanism is GSS_C_ACCEPT, this
+parameter will be set to zero.  If the implementation does not
+support expiration of initiator credentials, the value
+GSS_C_INDEFINITE will be returned.  Specify NULL if not required.
+
+@var{acceptor_lifetime}: (Integer, modify, optional) The number of
+seconds for which the credential will remain capable of accepting
+security contexts under the specified mechanism.  If the
+credential can no longer be used to accept contexts, or if the
+credential usage for this mechanism is GSS_C_INITIATE, this
+parameter will be set to zero.  If the implementation does not
+support expiration of acceptor credentials, the value
+GSS_C_INDEFINITE will be returned.  Specify NULL if not required.
+
+@var{cred_usage}: (gss_cred_usage_t, modify, optional) How the
+credential may be used with the specified mechanism.  One of the
+following: GSS_C_INITIATE, GSS_C_ACCEPT, GSS_C_BOTH. Specify NULL
+if not required.
+
+
+Obtains per-mechanism information about a credential.
+
+Return value:
+
+
+@code{GSS_S_COMPLETE}: Successful completion.
+
+
+@code{GSS_S_NO_CRED}: The referenced credentials could not be accessed.
+
+
+@code{GSS_S_DEFECTIVE_CREDENTIAL}: The referenced credentials were invalid.
+
+
+@code{GSS_S_CREDENTIALS_EXPIRED}: The referenced credentials have
+expired.  If the lifetime parameter was not passed as NULL, it will
+be set to 0.
+@end deftypefun
+
