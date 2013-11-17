@@ -1,6 +1,7 @@
 This is gss.info, produced by makeinfo version 4.13 from gss.texi.
 
-This manual is last updated 15 June 2013 for version 1.0.2 of GNU GSS.
+This manual is last updated 17 November 2013 for version 1.0.2 of GNU
+GSS.
 
    Copyright (C) 2003-2011 Simon Josefsson.
 
@@ -22,7 +23,8 @@ File: gss.info,  Node: Top,  Next: Introduction,  Up: (dir)
 GNU Generic Security Service Library
 ************************************
 
-This manual is last updated 15 June 2013 for version 1.0.2 of GNU GSS.
+This manual is last updated 17 November 2013 for version 1.0.2 of GNU
+GSS.
 
    Copyright (C) 2003-2011 Simon Josefsson.
 
@@ -5376,84 +5378,84 @@ API Index
 
 
 Tag Table:
-Node: Top709
-Node: Introduction2053
-Node: Getting Started2931
-Node: Features3945
-Node: GSS-API Overview4707
-Node: Supported Platforms8416
-Node: Commercial Support10962
-Node: Downloading and Installing11851
-Node: Bug Reports12904
-Node: Contributing14284
-Node: Planned Features16396
-Node: Preparation17010
-Node: Header17665
-Node: Initialization19228
-Node: Version Check19794
-Node: Building the source20731
-Node: Out of Memory handling22586
-Node: Standard GSS API22900
-Node: Simple Data Types23686
-Ref: Object Identifiers26453
-Node: Complex Data Types29059
-Node: Optional Parameters43212
-Node: Error Handling44444
-Node: Credential Management53242
-Ref: gss_acquire_cred54186
-Ref: gss_add_cred59167
-Ref: gss_inquire_cred67182
-Ref: gss_inquire_cred_by_mech69178
-Ref: gss_release_cred71812
-Node: Context-Level Routines72567
-Ref: gss_init_sec_context73912
-Ref: gss_accept_sec_context89931
-Ref: gss_delete_sec_context103036
-Ref: gss_process_context_token105586
-Ref: gss_context_time107276
-Ref: gss_inquire_context108100
-Ref: gss_wrap_size_limit113645
-Ref: gss_export_sec_context116322
-Ref: gss_import_sec_context119588
-Node: Per-Message Routines120701
-Ref: gss_get_mic121814
-Ref: gss_verify_mic123676
-Ref: gss_wrap125816
-Ref: gss_unwrap128076
-Node: Name Manipulation130627
-Ref: gss_import_name131779
-Ref: gss_display_name133498
-Ref: gss_compare_name135210
-Ref: gss_release_name136269
-Ref: gss_inquire_names_for_mech136846
-Ref: gss_inquire_mechs_for_name137536
-Ref: gss_canonicalize_name139279
-Ref: gss_export_name140584
-Ref: gss_duplicate_name141839
-Node: Miscellaneous Routines142691
-Ref: gss_add_oid_set_member143968
-Ref: gss_display_status145281
-Ref: gss_indicate_mechs148964
-Ref: gss_release_buffer149609
-Ref: gss_release_oid_set150595
-Ref: gss_create_empty_oid_set151418
-Ref: gss_test_oid_set_member152241
-Ref: gss_encapsulate_token153138
-Ref: gss_decapsulate_token154272
-Ref: gss_oid_equal155430
-Node: SASL GS2 Routines155956
-Ref: gss_inquire_mech_for_saslname156162
-Ref: gss_inquire_saslname_for_mech157063
-Node: Extended GSS API158412
-Ref: gss_check_version158777
-Ref: gss_userok159238
-Node: Invoking gss159737
-Node: Acknowledgements160734
-Node: Criticism of GSS160957
-Node: Copying Information166993
-Node: GNU Free Documentation License167310
-Node: GNU GPL192456
-Node: Concept Index230019
-Node: API Index233135
+Node: Top713
+Node: Introduction2061
+Node: Getting Started2939
+Node: Features3953
+Node: GSS-API Overview4715
+Node: Supported Platforms8424
+Node: Commercial Support10970
+Node: Downloading and Installing11859
+Node: Bug Reports12912
+Node: Contributing14292
+Node: Planned Features16404
+Node: Preparation17018
+Node: Header17673
+Node: Initialization19236
+Node: Version Check19802
+Node: Building the source20739
+Node: Out of Memory handling22594
+Node: Standard GSS API22908
+Node: Simple Data Types23694
+Ref: Object Identifiers26461
+Node: Complex Data Types29067
+Node: Optional Parameters43220
+Node: Error Handling44452
+Node: Credential Management53250
+Ref: gss_acquire_cred54194
+Ref: gss_add_cred59175
+Ref: gss_inquire_cred67190
+Ref: gss_inquire_cred_by_mech69186
+Ref: gss_release_cred71820
+Node: Context-Level Routines72575
+Ref: gss_init_sec_context73920
+Ref: gss_accept_sec_context89939
+Ref: gss_delete_sec_context103044
+Ref: gss_process_context_token105594
+Ref: gss_context_time107284
+Ref: gss_inquire_context108108
+Ref: gss_wrap_size_limit113653
+Ref: gss_export_sec_context116330
+Ref: gss_import_sec_context119596
+Node: Per-Message Routines120709
+Ref: gss_get_mic121822
+Ref: gss_verify_mic123684
+Ref: gss_wrap125824
+Ref: gss_unwrap128084
+Node: Name Manipulation130635
+Ref: gss_import_name131787
+Ref: gss_display_name133506
+Ref: gss_compare_name135218
+Ref: gss_release_name136277
+Ref: gss_inquire_names_for_mech136854
+Ref: gss_inquire_mechs_for_name137544
+Ref: gss_canonicalize_name139287
+Ref: gss_export_name140592
+Ref: gss_duplicate_name141847
+Node: Miscellaneous Routines142699
+Ref: gss_add_oid_set_member143976
+Ref: gss_display_status145289
+Ref: gss_indicate_mechs148972
+Ref: gss_release_buffer149617
+Ref: gss_release_oid_set150603
+Ref: gss_create_empty_oid_set151426
+Ref: gss_test_oid_set_member152249
+Ref: gss_encapsulate_token153146
+Ref: gss_decapsulate_token154280
+Ref: gss_oid_equal155438
+Node: SASL GS2 Routines155964
+Ref: gss_inquire_mech_for_saslname156170
+Ref: gss_inquire_saslname_for_mech157071
+Node: Extended GSS API158420
+Ref: gss_check_version158785
+Ref: gss_userok159246
+Node: Invoking gss159745
+Node: Acknowledgements160742
+Node: Criticism of GSS160965
+Node: Copying Information167001
+Node: GNU Free Documentation License167318
+Node: GNU GPL192464
+Node: Concept Index230027
+Node: API Index233143
 
 End Tag Table
