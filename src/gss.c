@@ -406,7 +406,7 @@ init_sec_context (unsigned quiet, const char *mech, const char *server)
       if (s == -1 && !feof (stdin))
 	error (EXIT_FAILURE, errno, _("getline"));
       if (s == -1)
-	error (EXIT_FAILURE, 0, _("EOF"));
+	error (EXIT_FAILURE, 0, _("end of file"));
 
       ok = base64_decode_alloc (line, strlen (line), &out, &outlen);
       if (!ok)
@@ -536,7 +536,7 @@ accept_sec_context (unsigned quiet, const char *mech, const char *server)
       if (s == -1 && !feof (stdin))
 	error (EXIT_FAILURE, errno, _("getline"));
       if (s == -1)
-	error (EXIT_FAILURE, 0, _("EOF"));
+	error (EXIT_FAILURE, 0, _("end of file"));
 
       ok = base64_decode_alloc (line, strlen (line), &out, &outlen);
       if (!ok)
