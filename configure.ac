@@ -40,9 +40,8 @@ AC_PROG_CC
 gl_EARLY
 libgl_EARLY
 srcgl_EARLY
-AC_LIBTOOL_WIN32_DLL
 AM_PROG_AR
-AC_PROG_LIBTOOL
+LT_INIT([win32-dll])
 AM_MISSING_PROG(PERL, perl, $missing_dir)
 AM_MISSING_PROG(HELP2MAN, help2man, $missing_dir)
 
@@ -52,7 +51,7 @@ AC_SUBST(DLL_VERSION)
 
 # Internationalization.
 AM_GNU_GETTEXT([external])
-AM_GNU_GETTEXT_VERSION([0.18.1])
+AM_GNU_GETTEXT_VERSION([0.19.2])
 
 # For gnulib stuff.
 gl_INIT
