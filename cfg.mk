@@ -77,7 +77,7 @@ ChangeLog:
 tag = $(PACKAGE)-`echo $(VERSION) | sed 's/\./-/g'`
 htmldir = ../www-$(PACKAGE)
 
-release: prepare upload web upload-web
+release: prepare upload2 web upload-web
 
 prepare:
 	! git tag -l $(tag) | grep $(PACKAGE) > /dev/null
@@ -86,7 +86,7 @@ prepare:
 	git commit -m Generated. ChangeLog
 	git tag -s -m $(VERSION) $(tag)
 
-upload:
+upload2:
 	git push
 	git push --tags
 	build-aux/gnupload --to ftp.gnu.org:gss $(distdir).tar.gz
