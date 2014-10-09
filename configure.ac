@@ -1,6 +1,6 @@
 dnl Process this file with autoconf to produce a configure script.
 
-# Copyright (C) 2003-2013 Simon Josefsson
+# Copyright (C) 2003-2014 Simon Josefsson
 #
 # This file is part of the Generic Security Service (GSS).
 #
@@ -24,7 +24,7 @@ AC_INIT([GNU Generic Security Service], [1.0.3], [bug-gss@gnu.org], [gss])
 AC_CONFIG_AUX_DIR([build-aux])
 AC_CONFIG_MACRO_DIR([m4])
 AC_CONFIG_HEADERS(config.h)
-AM_INIT_AUTOMAKE([1.10 -Wall -Werror -Wno-override])
+AM_INIT_AUTOMAKE([1.10 -Wall -Wno-override])
 AM_SILENT_RULES([yes])
 
 # Library code modified:                              REVISION++
@@ -41,6 +41,7 @@ gl_EARLY
 libgl_EARLY
 srcgl_EARLY
 AC_LIBTOOL_WIN32_DLL
+AM_PROG_AR
 AC_PROG_LIBTOOL
 AM_MISSING_PROG(PERL, perl, $missing_dir)
 AM_MISSING_PROG(HELP2MAN, help2man, $missing_dir)
