@@ -84,7 +84,7 @@ prepare:
 	rm -f ChangeLog
 	$(MAKE) ChangeLog distcheck
 	git commit -m Generated. ChangeLog
-	git tag -u b565716f! -m $(VERSION) $(tag)
+	git tag -s -m $(VERSION) $(tag)
 
 upload:
 	git push
