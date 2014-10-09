@@ -1,5 +1,5 @@
 /* krb5/msg.c --- Implementation of Kerberos 5 GSS-API Per-Message functions.
- * Copyright (C) 2003-2013 Simon Josefsson
+ * Copyright (C) 2003-2014 Simon Josefsson
  *
  * This file is part of the Generic Security Service (GSS).
  *

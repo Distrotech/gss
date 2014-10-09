@@ -1,5 +1,5 @@
 /* protos.h --- Export Kerberos 5 GSS functions to core GSS library.
- * Copyright (C) 2003-2013 Simon Josefsson
+ * Copyright (C) 2003-2014 Simon Josefsson
  *
  * This file is part of the Generic Security Service (GSS).
  *
