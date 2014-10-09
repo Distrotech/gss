@@ -1,5 +1,5 @@
 # DO NOT EDIT! GENERATED AUTOMATICALLY!
-# Copyright (C) 2002-2012 Free Software Foundation, Inc.
+# Copyright (C) 2002-2014 Free Software Foundation, Inc.
 #
 # This file is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -38,8 +38,10 @@ AC_DEFUN([libgl_EARLY],
   m4_pattern_allow([^gl_LIBOBJS$])dnl a variable
   m4_pattern_allow([^gl_LTLIBOBJS$])dnl a variable
   AC_REQUIRE([gl_PROG_AR_RANLIB])
+  # Code from module absolute-header:
   # Code from module extensions:
   AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
+  # Code from module extern-inline:
   # Code from module gettext-h:
   # Code from module include_next:
   # Code from module lib-msvc-compat:
@@ -65,17 +67,18 @@ AC_DEFUN([libgl_INIT],
   m4_pushdef([libgl_LIBSOURCES_DIR], [])
   gl_COMMON
   gl_source_base='lib/gl'
-AC_SUBST([LIBINTL])
-AC_SUBST([LTLIBINTL])
-gl_LD_OUTPUT_DEF
-gl_STDDEF_H
-gl_HEADER_STRING_H
-gl_FUNC_STRVERSCMP
-if test $HAVE_STRVERSCMP = 0; then
-  AC_LIBOBJ([strverscmp])
-  gl_PREREQ_STRVERSCMP
-fi
-gl_STRING_MODULE_INDICATOR([strverscmp])
+  AC_REQUIRE([gl_EXTERN_INLINE])
+  AC_SUBST([LIBINTL])
+  AC_SUBST([LTLIBINTL])
+  gl_LD_OUTPUT_DEF
+  gl_STDDEF_H
+  gl_HEADER_STRING_H
+  gl_FUNC_STRVERSCMP
+  if test $HAVE_STRVERSCMP = 0; then
+    AC_LIBOBJ([strverscmp])
+    gl_PREREQ_STRVERSCMP
+  fi
+  gl_STRING_MODULE_INDICATOR([strverscmp])
   # End of code from modules
   m4_ifval(libgl_LIBSOURCES_LIST, [
     m4_syscmd([test ! -d ]m4_defn([libgl_LIBSOURCES_DIR])[ ||
@@ -221,7 +224,9 @@ AC_DEFUN([libgl_FILE_LIST], [
   lib/string.in.h
   lib/strverscmp.c
   m4/00gnulib.m4
+  m4/absolute-header.m4
   m4/extensions.m4
+  m4/extern-inline.m4
   m4/gnulib-common.m4
   m4/include_next.m4
   m4/ld-output-def.m4
